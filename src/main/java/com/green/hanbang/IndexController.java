@@ -8,8 +8,6 @@ public class IndexController {
     // 시작페이지
     @GetMapping("/")
     public String main(){
-        System.out.println(":)");
-        System.out.println("환영합니다~");
         return "index";
     }
 }
