@@ -4,11 +4,12 @@ import lombok.Data;
 
 @Data
 public class MemberVO {
-    private String id;
+    private String userNo;
+    private String userName;
     private String passWord;
-    private String passWordCheck;
-    private String nickName;
+    private String loginType;
     private String phone;
+    private String nickName;
     private String profileImage;
-    private String roll;
+    private String joinDate;
 }

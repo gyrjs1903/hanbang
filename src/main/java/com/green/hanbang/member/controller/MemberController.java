@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/member")
@@ -31,7 +30,7 @@ public class MemberController {
 
     // 로그인 페이지 이동
     @GetMapping("loginForm")
-    public String loginForm(){
+    public String loginForm(MemberVO memberVO){
         return "content/member/login";
     }
 
@@ -52,13 +51,6 @@ public class MemberController {
     public String logout(HttpSession session){
         session.removeAttribute("loginInfo");
         return "redirect:/";
-    }
-
-    // 아이디 중복 확인
-    @ResponseBody
-    @PostMapping("/idCheckFetch")
-    public boolean idCheck(String id){
-        return memberService.idCheck(id);
     }
 
     // 내 정보 관리 페이지
