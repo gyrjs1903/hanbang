@@ -19,6 +19,16 @@
         <result column="ATTACHED_LICENSE_FILE_NAME" property="attachedLicenseFileName"/>
         <result column="REALTOR_CODE" property="realtorCode"/>
     </resultMap>
+
+    <!-- 공인중개사 마이페이지 정보 조회 -->
+    <select id="selectRealtorMyPage" resultMap="memberMapper.member">
+        SELECT USER_NAME
+            , NICK_NAME
+            , PHONE
+            , AUTHORITY
+        FROM MEMBER_USER, REALTOR_DETAIL
+        WHERE MEMBER_USER.USER_NO = REALTOR_DETAIL.USER_NO
+    </select>
 </mapper>
 
 
