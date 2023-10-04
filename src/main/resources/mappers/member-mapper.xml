@@ -16,17 +16,21 @@
     <!-- 회원 가입 -->
     <insert id="join">
         INSERT INTO MEMBER_USER (
-            USER_NAME
+            USER_NO
+            , USER_NAME
             , PASSWORD
         ) VALUES (
-            #{userName}
+            (SELECT NVL(MAX(USER_NO)+1, 0)
+            FROM MEMBER_USER)
+            , #{userName}
             , #{passWord}
         )
     </insert>
 
     <!-- 로그인 -->
     <select id="login" resultMap="member">
-        SELECT USER_NAME
+        SELECT USER_NO
+            , USER_NAME
             , LOGIN_TYPE
             , NICK_NAME
             , PROFILE_IMAGE
