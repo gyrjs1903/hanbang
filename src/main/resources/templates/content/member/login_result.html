@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>로그인 결과 페이지</title>
+</head>
+<body>
+    <th:block th:if="${session.loginInfo == null}">
+    <input type="hidden" id="inputId" th:value="${memberVO.userName}">
+    <script>
+        const id = document.querySelector("#inputId").value;
+        alert('ID 및 PW 확인!');
+        location.href = `/member/loginForm?id=${id}`;
+    </script>
+</th:block>
+<th:block th:if="${session.loginInfo != null}">
+    <input type="hidden" id="roll" th:value="${session.loginInfo.loginType}">
+    <script>
+        alert('로그인 완료');
+        const roll = document.querySelector('#roll').value;
+
+        location.href = roll == 'USER' ? '/' : '/';
+    </script>
+</th:block>
+</body>
+</html>

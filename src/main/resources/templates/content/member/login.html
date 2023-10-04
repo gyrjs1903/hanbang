@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>로그인 페이지</title>
+</head>
+<body>
+    <div>
+        <form action="/member/login" method="post">
+            <div>
+                <input type="text" class="" name="userName" th:value="${memberVO.userName}">
+            </div>
+            <div>
+                <input type="password" class="" name="passWord">
+            </div>
+            <div>
+                <input type="submit" class="" value="로그인">
+            </div>
+        </form>
+        <input type="button" value="비밀번호 재설정" onclick="location.href='/member/passwordSetForm';">
+        <input type="button" value="이메일로 가입하기" onclick="location.href='/member/joinForm';">
+    </div>
+</body>
+</html>
