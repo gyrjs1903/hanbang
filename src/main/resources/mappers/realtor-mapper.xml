@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 복사해서 사용 -->
+<mapper namespace="realtorMapper">
+    <resultMap id="realtorDetail" type="com.green.hanbang.realtor.vo.RealtorDetailVO">
+        <id column="REALTOR_CODE" property="realtorCode"/>
+        <result column="USER_NO" property="userNo"/>
+        <result column="OFFICE_NAME" property="officeName"/>
+        <result column="IDENTIFICATION_NUM" property="identificationNum"/>
+        <result column="LICENSE_FILE_NAME" property="licenseFileName"/>
+        <result column="AUTHORITY" property="authority"/>
+        <result column="REQUEST_DATE" property="requestDate"/>
+    </resultMap>
+
+    <resultMap id="licenseImg" type="com.green.hanbang.realtor.vo.LicenseImgVO">
+        <id column="LICENSE_CODE" property="licenseCode"/>
+        <result column="ORIGIN_LICENSE_FILE_NAME" property="originLicenseFileName"/>
+        <result column="ATTACHED_LICENSE_FILE_NAME" property="attachedLicenseFileName"/>
+        <result column="REALTOR_CODE" property="realtorCode"/>
+    </resultMap>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

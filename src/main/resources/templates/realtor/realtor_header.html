@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko" xlmns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>공인중개사 전용 페이지</title>
+</head>
+<body>
+    <th:block th:fragment="headerFragment">
+        <link rel="stylesheet" href="/css/realtor_header.css">
+        <div class="row mb-3 pt-2">
+            <div class="col text-center">
+                <span>방 찾기</span>
+                <span>매물 승인하기</span>
+                <span onclick="location.href='/realtor/myPage';" class="cursor">마이페이지</span>
+                <span>로그아웃</span>
+            </div>
+        </div>
+    </th:block>
+</body>
+</html>
