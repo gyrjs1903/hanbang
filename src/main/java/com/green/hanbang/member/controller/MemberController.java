@@ -41,6 +41,9 @@ public class MemberController {
 
         if(loginInfo != null){
             session.setAttribute("loginInfo", loginInfo);
+//            if(loginInfo.getLoginType().equals("realtor")){
+//                return "redirect:/realtor/main";
+//            }
         }
 
         return "content/member/login_result";
