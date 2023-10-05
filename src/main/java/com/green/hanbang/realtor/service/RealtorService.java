@@ -4,5 +4,5 @@ import com.green.hanbang.member.vo.MemberVO;
 
 public interface RealtorService {
 
-    public MemberVO selectRealtorMyPage();
+    public MemberVO selectRealtorMyPage(String userNo);
 }

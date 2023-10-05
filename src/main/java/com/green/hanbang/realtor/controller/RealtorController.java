@@ -1,5 +1,6 @@
 package com.green.hanbang.realtor.controller;
 
+import com.green.hanbang.member.vo.MemberVO;
 import com.green.hanbang.realtor.service.RealtorService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +21,9 @@ public class RealtorController {
     }
 
     @GetMapping("/myPage")
-    public String myPage(Model model){
-        model.addAttribute("realtorInfo",realtorService.selectRealtorMyPage());
+    public String myPage(Model model,HttpSession session){
+        MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
+        model.addAttribute("realtorInfo",realtorService.selectRealtorMyPage(loginInfo.getUserNo()));
         return "realtor/realtor_mypage";
     }
 

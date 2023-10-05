@@ -11,7 +11,7 @@ public class RealtorServiceImpl implements RealtorService{
     private final SqlSessionTemplate sqlSession;
 
     @Override
-    public MemberVO selectRealtorMyPage() {
-        return sqlSession.selectOne("realtorMapper.selectRealtorMyPage");
+    public MemberVO selectRealtorMyPage(String userNo) {
+        return sqlSession.selectOne("realtorMapper.selectRealtorMyPage",userNo);
     }
 }

@@ -25,9 +25,8 @@
         SELECT USER_NAME
             , NICK_NAME
             , PHONE
-            , AUTHORITY
-        FROM MEMBER_USER, REALTOR_DETAIL
-        WHERE MEMBER_USER.USER_NO = REALTOR_DETAIL.USER_NO
+        FROM MEMBER_USER
+        WHERE MEMBER_USER.USER_NO = #{userNo}
     </select>
 </mapper>
 
