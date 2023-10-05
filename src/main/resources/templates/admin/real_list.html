@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<head>
+<meta charset="UTF-8">
+<title>공인중개사 목록</title>
+</head>
+<body>
+    <table>
+        <colgroup>
+            <col width="5%">
+            <col width="10%">
+            <col width="10%">
+            <col width="5%">
+            <col width="10%">
+            <col width="10%">
+            <col width="10%">
+        </colgroup>
+        <thead>
+            <tr>
+                <td>No</td>
+                <td>코드</td>
+                <td>공인중개사명</td>
+                <td>사업자번호</td>
+                <td>자격증 파일</td>
+                <td>권한 여부</td>
+                <td>유형</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="real : ${realList}">
+                <td>[[${real.userNo}]]</td>
+                <td>[[${real.realTorCode}]]</td>
+                <td>[[${real.officeName}]]</td>
+                <td>[[${real.identificationNum}]]</td>
+                <td>[[${real.licenseFileName}]]</td>
+                <td>
+                    [[${real.authority}]]
+                    <div th:style="${real.authority == 'N' ? 'display : block':'display : none'}">
+                        <input type="button" value="승인" >    
+                    </div>
+                </td>
+                <td>[[${real.loginType}]]</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

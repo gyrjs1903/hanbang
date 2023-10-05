@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="adminMapper">
+    <resultMap id="manager" type="com.green.hanbang.admin.vo.MemberManageVO">
+        <id column="USER_NO"                 property="userNo"/>
+        <result column="USER_NAME"       property="userName"/>
+        <result column="PASSWORD"       property="password"/>
+        <result column="LOGIN_TYPE"      property="loginType"/>
+        <result column="NICK_NAME"      property="nickName"/>
+        <result column="PHONE"      property="phone"/>
+        <result column="JOIN_DATE"  property="joinDate"/>
+        <result column="REALTOR_CODE"  property="realTorCode"/>
+        <result column="OFFICE_NAME"  property="officeName"/>
+        <result column="IDENTIFICATION_NUM"  property="identificationNum"/>
+        <result column="LICENSE_FILE_NAME"  property="licenseFileName"/>
+        <result column="AUTHORITY"  property="authority"/>
+    </resultMap>
+
+    <select id="userManage" resultMap="manager">
+        SELECT MEM.USER_NO 
+            , USER_NAME
+            , PASSWORD
+            , LOGIN_TYPE
+            , NICK_NAME
+            , PHONE
+            , JOIN_DATE
+        FROM MEMBER_USER MEM, REALTOR_DETAIL REAL
+        WHERE LOGIN_TYPE = 'USER'
+    </select>
+    
+    <select id="realManage" resultMap="manager">
+        SELECT REALTOR_CODE
+            , OFFICE_NAME
+            , IDENTIFICATION_NUM
+            , LICENSE_FILE_NAME
+            , AUTHORITY
+            , LOGIN_TYPE
+            , REAL.USER_NO
+        FROM MEMBER_USER MEM, REALTOR_DETAIL REAL
+        WHERE LOGIN_TYPE = 'REALTOR'
+    </select>
+
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
