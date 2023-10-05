@@ -3,7 +3,26 @@
 
 <!-- 복사해서 사용 -->
 <mapper namespace="roomMapper">
+    <resultMap id="options" type="com.green.hanbang.room.vo.OptionsVO">
+        <id column="OPTION_CODE" property="optionCode"/>
+        <result column="OPTION_NAME" property="optionName"/>
+        <collection property="detailOptionList" resultMap="detailOptions"/>
+    </resultMap>
+    <resultMap id="detailOptions" type="com.green.hanbang.room.vo.DetailOptionsVO">
+        <id column="DETAIL_OPTION_CODE" property="detailOptionCode"/>
+        <result column="DETAIL_OPTION_NAME" property="detailOptionName"/>
+        <result column="OPTION_CODE" property="optionCode"/>
+    </resultMap>
 
+    <!--option select-->
+    <select id="selectOptions" resultMap="options">
+        SELECT OP.OPTION_CODE
+        , OPTION_NAME
+        , DETAIL_OPTION_CODE
+        , DETAIL_OPTION_NAME
+        FROM OPTIONS OP, DETAIL_OPTIONS DTOP
+        WHERE OP.OPTION_CODE = DTOP.OPTION_CODE
+    </select>
 </mapper>
 
 

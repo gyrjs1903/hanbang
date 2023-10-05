@@ -11,6 +11,7 @@
         <result column="NICK_NAME"      property="nickName"/>
         <result column="PROFILE_IMAGE"  property="profile_image"/>
         <result column="JOIN_DATE"  property="joinDate"/>
+        <association property="realtorDetailVO" resultMap="realtorMapper.realtorDetail"/>
     </resultMap>
 
     <!-- 회원 가입 -->

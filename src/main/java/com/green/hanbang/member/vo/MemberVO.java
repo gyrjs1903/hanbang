@@ -1,5 +1,6 @@
 package com.green.hanbang.member.vo;
 
+import com.green.hanbang.realtor.vo.RealtorDetailVO;
 import lombok.Data;
 
 @Data
@@ -12,4 +13,5 @@ public class MemberVO {
     private String nickName;
     private String profileImage;
     private String joinDate;
+    private RealtorDetailVO realtorDetailVO;
 }
