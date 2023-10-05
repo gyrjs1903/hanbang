@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{room/room_layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+    <th:block layout:fragment="content">
+        <h1>방내놓기</h1>
+        <div>
+            <ul>
+                <li>전/ 월세 매물만 등록할 수 있습니다.</li>
+                <li>1개의 매물만 등록 가능하며, 다방에서 직거래로 표시됩니다.</li>
+                <li>주소를 다르게 입력할 경우 허위매물로 신고될 수 있으니 꼭 동일하게 입력 바랍니다.</li>
+            </ul>
+        </div>
+        <div>
+            <form action="/insertRoom" method="post">
+                <div>
+                    <h2>매물정보</h2>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>매물유형 <span>*</span></th>
+                                <td>
+                                    <header>대분류</header>
+                                    <div>
+                                        <button value="" name=""></button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <header>소분류</header>
+                                    <div>
+                                        <input type="radio" name="" value="">
+                                        <label></label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>매물주소 <span>*</span></th>
+                                <td>
+                                    <div>
+                                        <div>
+                                            <label>주소검색</label>
+                                            <input type="text" name="">
+                                            <input type="button" value="검색">
+                                            <label>상세주소</label>
+                                            <input type="text" name="">
+                                        </div>
+                                        <div>
+                                            <div>지도API</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>매물크기 <span>*</span></th>
+                                <td>
+                                    <div>
+                                        <div>
+                                            <label>전용면적</label>
+                                            <input type="text" name="" placeholder="평수 입력">
+                                            <span> = </span>
+                                            <input type="text" name="" placeholder="m&#178; 입력">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>방 정보 <span>*</span></th>
+                                <td>
+                                    <div>
+                                        <div>
+                                            <label>방 수</label>
+                                            <input type="text" name="" placeholder="평수 입력">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <h2>거래 정보</h2>
+                    <table>
+                        <tr>
+                            <th>거래 종류 <span>*</span></th>
+                            <td>
+                                <div><input type="radio" value=""> 전세</div>
+                                <div><input type="radio" value=""> 월세</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>가격 정보 <span>*</span></th>
+                            <td>
+                                <div>
+                                    <label for="">전세가</label>
+                                    <input type="text" name="">
+                                    <p>만원</p>
+                                </div>
+                                <div>
+                                    <label for="">보증금</label>
+                                    <input type="text" name="">
+                                    <p>만원</p>
+                                    <label for="">월세</label>
+                                    <input type="text" name="">
+                                    <p>만원</p>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>공용관리비 <span>*</span></th>
+                            <td>
+                                <div>
+                                    <label>관리비 여부</label>
+                                    <input type="radio" name="" id=""> 없음
+                                    <input type="radio" name="" id=""> 있음
+                                </div>
+                                <div>
+                                    <label for="">관리비</label>
+                                    <input type="text" name="" value="">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>입주 가능 일자 <span>*</span></th>
+                            <div>
+                                <label for=""></label>
+                                <input type="radio"> 즉시 입주
+                                <input type="radio"> 일자 선택
+                            </div>
+                        </tr>
+                    </table>
+                </div>
+                <div>
+                    <h2>시설정보</h2>
+                    <table>
+                    
+                            <tr th:each="option : ${optionsList}">
+                                <th>[[${option.optionName}]] <span>*</span></th>
+                                <td>
+                                    <div th:each="detailOption : ${option.detailOptionList}"><input type="text">[[${detailOption.detailOptionName}]]</div>
+                                </td>
+                            </tr>
+                        
+                    </table>
+                </div>
+                <div>
+                    <h2>사진 등록</h2>
+                    <table>
+                        <tr>
+                            <th>일반사진 <span>*</span></th>
+                        </tr>
+                    </table>
+                </div>
+                <div>
+                    <h2>상세 설명</h2>
+                    <table>
+                        <tr>
+                            <th>제목 <span>*</span></th>
+                            <td>
+                                <input type="text" name="" placeholder="리스트에 노출되는 문구입니다. 40자 이내로 작성해 주세요.">
+                                <div>0/40</div>
+                                <span>- 한글, 영어, 숫자, 허용된 특수문자(+ - / , . ㎡) 이외에 문자는 입력할 수 없습니다. 평형, 평, 기타 특수문자, 매물과 관련 없는 정보는 삭제 처리 됩니다.</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>상제설명 <span>*</span></th>
+                            <td>
+                                <textarea name="" id="" cols="30" rows="10" placeholder="매물 상세 페이지에 노출되는 문구입니다. 1000자 이내로 작성해주세요"></textarea>
+                                <div>0/1000</div>
+                                <span>- 매물 정보와 관련없는 홍보성 정보는 입력할 수 없습니다.</span>
+                                <span>- 매물등록규정에 위반되는 금칙어는 입력할 수 없습니다.</span>
+                                <span>- 위 주의사항 위반시 임의로 매물 삭제 혹은 서비스 이용이 제한될 수 있습니다.</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </form>
+        </div>
+    </th:block>
+</body>
+
+</html>
