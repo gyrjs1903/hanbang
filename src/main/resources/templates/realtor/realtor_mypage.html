@@ -9,7 +9,19 @@ layout:decorate="~{realtor/realtor_layout}">
 <body>
     <th:block layout:fragment="content">
         <h2>공인중개사 마이페이지</h2>
+        <div>이메일주소</div>
         <span>[[${realtorInfo.userName}]]</span>
+        <span>[[${realtorInfo.userNo}]]</span>
+        <div>비밀번호</div>
+        <div>비밀번호 확인</div>
+        <div>닉네임</div>
+        <div>전화번호</div>
+        <br>
+        <div>구분</div>
+        <span>공인중개사</span>
+        <span onclick="location.href='/realtor/certificationForm';" class="cursor">인증하기</span>
+        <br>
+        <button>수정하기</button>
     </th:block>
 </body>
 </html>

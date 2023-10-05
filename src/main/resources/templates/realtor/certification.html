@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko" xlmns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{realtor/realtor_layout}">
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+    <th:block layout:fragment="content">
+        중개사무소 정보
+        <form action="/realtor/certification" method="post" enctype="multipart/form-data">
+            <div>중개사무소명</div>
+            <div><input type="text" name="officeName"></div>
+            <div>사업자등록번호</div>
+            <div><input type="text" name="identificationNum"></div>
+            <div>사업자등록증</div>
+            <div><input type="file" class="form-control" name="licenseImg"></div>
+            <input type="submit" value="공인중개사 인증하기">
+        </form>
+
+    </th:block>
+</body>
+</html>

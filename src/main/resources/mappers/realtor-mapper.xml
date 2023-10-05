@@ -11,6 +11,7 @@
         <result column="LICENSE_FILE_NAME" property="licenseFileName"/>
         <result column="AUTHORITY" property="authority"/>
         <result column="REQUEST_DATE" property="requestDate"/>
+        <association property="licenseImgVO" resultMap="licenseImg"/>
     </resultMap>
 
     <resultMap id="licenseImg" type="com.green.hanbang.realtor.vo.LicenseImgVO">
@@ -28,6 +29,41 @@
         FROM MEMBER_USER
         WHERE MEMBER_USER.USER_NO = #{userNo}
     </select>
+
+    <!-- 다음에 들어가야할 REALTOR_CODE 조회 -->
+    <select id="selectNextRealtorCode" resultType="String">
+        SELECT 'RT_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(REALTOR_CODE,3))),0) + 1 ,3,'0') REALTOR_CODE
+        FROM REALTOR_DETAIL
+    </select>
+
+    <insert id="insertRealtorDetail">
+        INSERT INTO REALTOR_DETAIL (
+            REALTOR_CODE
+            , OFFICE_NAME
+            , IDENTIFICATION_NUM
+            , LICENSE_FILE_NAME
+        ) VALUES (
+            #{realtorCode}
+            , #{officeName}
+            , #{identificationNum}
+            , #{licenseFileName}
+        )
+    </insert>
+
+    <insert id="insertLicenseImg">
+        INSERT INTO LICENSE_IMG (
+            LICENSE_CODE
+            , ORIGIN_LICENSE_FILE_NAME
+            , ATTACHED_LICENSE_FILE_NAME
+            , REALTOR_CODE
+        ) VALUES (
+            (SELECT 'LC_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(LICENSE_CODE,3))),0) + 1 ,3,'0') LICENSE_CODE
+            FROM LICENSE_IMG)
+            , #{originLicenseFileName}
+            , #{attachedLicenseFileName}
+            , #{realtorCode}
+        )
+    </insert>
 </mapper>
 
 
