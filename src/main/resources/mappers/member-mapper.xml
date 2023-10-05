@@ -19,11 +19,13 @@
             USER_NO
             , USER_NAME
             , PASSWORD
+            , LOGIN_TYPE
         ) VALUES (
             (SELECT NVL(MAX(USER_NO)+1, 0)
             FROM MEMBER_USER)
             , #{userName}
             , #{passWord}
+            , #{loginType}
         )
     </insert>
 
@@ -40,34 +42,3 @@
     </select>
 
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
