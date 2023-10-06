@@ -45,13 +45,13 @@
                                     <div>
                                         <div>
                                             <label>주소검색</label>
-                                            <input type="text" name="">
-                                            <input type="button" value="검색">
+                                            <input type="text" id="addr" name="addr" readonly>
+                                            <input type="button" value="검색" id="select" onclick="openPost();" >
                                             <label>상세주소</label>
                                             <input type="text" name="">
                                         </div>
-                                        <div>
-                                            <div>지도API</div>
+                                        <div id="map" style="width:500px;height:400px;">
+                                            
                                         </div>
                                     </div>
                                 </td>
@@ -191,6 +191,11 @@
                 </div>
             </form>
         </div>
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+        <!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=22ce9cdc2a0d0a47b1149d42f3bab1c0"></script> -->
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=22ce9cdc2a0d0a47b1149d42f3bab1c0&libraries=services,clusterer,drawing"></script>
+        <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <script src="/js/room/room.js"></script>
     </th:block>
 </body>
 
