@@ -26,13 +26,14 @@
         SELECT USER_NAME
             , NICK_NAME
             , PHONE
+            , USER_NO
         FROM MEMBER_USER
         WHERE MEMBER_USER.USER_NO = #{userNo}
     </select>
 
     <!-- 다음에 들어가야할 REALTOR_CODE 조회 -->
     <select id="selectNextRealtorCode" resultType="String">
-        SELECT 'RT_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(REALTOR_CODE,3))),0) + 1 ,3,'0') REALTOR_CODE
+        SELECT 'RT_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(REALTOR_CODE,4))),0) + 1 ,3,'0') REALTOR_CODE
         FROM REALTOR_DETAIL
     </select>
 
@@ -59,13 +60,18 @@
             , ATTACHED_LICENSE_FILE_NAME
             , REALTOR_CODE
         ) VALUES (
-            (SELECT 'LC_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(LICENSE_CODE,3))),0) + 1 ,3,'0') LICENSE_CODE
+            (SELECT 'LC_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(LICENSE_CODE,4))),0) + 1 ,3,'0') LICENSE_CODE
             FROM LICENSE_IMG)
             , #{licenseImgVO.originLicenseFileName}
             , #{licenseImgVO.attachedLicenseFileName}
             , #{realtorCode}
         )
     </insert>
+    <select id="selectAuthorityStatue" resultType="String">
+        SELECT AUTHORITY
+        FROM REALTOR_DETAIL
+        WHERE USER_NO = #{userNo}
+    </select>
 </mapper>
 
 

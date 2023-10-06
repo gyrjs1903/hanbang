@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<head>
+<meta charset="UTF-8">
+<title> Header Fragment </title>
+</head>
+<body>
+<th:block th:fragment="mainHeaderFragment">
+    <header>
+        <img src="" title="한방">
+        <nav>
+            <ul>
+                <li><a href="">지도</a></li>
+                <li><a href="">분양정보</a></li>
+                <li><a href="">찜목록</a></li>
+                <li><a href="">알림</a></li>
+                <div>
+                    <a href="">[프사][닉네임]님</a>
+                    <ul class="my_menu">
+                        <li><a href="">문의</a></li>
+                        <li><a href="">허위매물 신고내역</a></li>
+                        <li><a href="">내 정보</a></li>
+                        <li><a href="">로그아웃[이미지]</a></li>
+                    </ul>
+                </div>
+            </ul>
+        </nav>
+    </header>
+</th:block>
+</body>
+</html>

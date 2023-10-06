@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{fragment/main_layout}">
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+    <th:block layout:fragment="content">
+        <div>어떤 방을 찾으세요?[검색/ 옵션 2개(매물/분양)]</div>
+        <div>Ai 추천 매물[Button 더 많은 방 보기 >]</div>
+        <div>OO동은 어떤 동네일까요?[케러셀]
+            원룸 평균 매물가 [월세, 전세 p태그 *전용면적 33m^2(10평)이하]
+            , 투·쓰리룸 평균 매물가 [월세, 전세 p태그 *전용면적 60m^2(18평)이하]
+            , 오피스텔 평균 매물가 [월세, 전세 p태그 *전용면적 33m^2(10평)이하]
+            , 이 지역 평당가 [매매, 전세]
+            , 편의시설 [카페, 편의점, 수퍼마켓, 미용실, 세탁/빨래방, 실내운동]
+            , OO동에서는 OO상담이 가장 많아요. [오피스텔, 원룸, 아파트 *최근 7일간 문자/전화문의 수 기준]
+        </div>
+        <div>분양정보[Button 더 많은 분양 정보 보기 >]</div>
+        <div>부동산 가이드 [부동산 상식, 생활 꿀팁, 한방 이야기]</div>
+        <div>형태별 검색, 상품소개, 한방 뉴스, 고객지원, About한방</div>
+    </th:block>
+</body>
+</html>

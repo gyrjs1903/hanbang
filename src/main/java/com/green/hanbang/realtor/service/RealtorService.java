@@ -13,4 +13,7 @@ public interface RealtorService {
 
     //공인중개사 상세정보 입력
     public void insertRealtorDetail(RealtorDetailVO realtorDetailVO);
+
+    //공인중개사 인증완료 여부
+    public String selectAuthorityStatue(String userNo);
 }

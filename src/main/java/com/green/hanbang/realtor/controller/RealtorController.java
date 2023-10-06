@@ -29,6 +29,7 @@ public class RealtorController {
     public String myPage(Model model,HttpSession session){
         MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
         model.addAttribute("realtorInfo",realtorService.selectRealtorMyPage(loginInfo.getUserNo()));
+        model.addAttribute("authority",realtorService.selectAuthorityStatue(loginInfo.getUserNo()));
         return "realtor/realtor_mypage";
     }
 

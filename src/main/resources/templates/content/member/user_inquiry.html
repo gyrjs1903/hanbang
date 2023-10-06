@@ -1,37 +1,40 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{fragment/main_layout}">
 <head>
 <meta charset="UTF-8">
 <title></title>
 </head>
 <body>
-    <header class="">
+    <th:block th:fragment="content">
+        <header class="">
+            <div>
+                <h1 class="">내 정보 관리</h1>
+                <div class="">
+                    <a href="/user_sms">문자문의</a>
+                    <a href="/user_call" aria-current="page" class="active">전화문의</a>
+                    <a href="/user_inquiry">1:1 문의내역</a>
+                    <a href="/user_report">허위매물 신고내역</a>
+                    <a href="/user_account">내 정보</a>
+                </div>
+            </div>
+        </header>
         <div>
-            <h1 class="">내 정보 관리</h1>
+            <div>
+                <p>최근 6개월 이내의 문의 내역을 확인하실 수 있습니다.</p>
+                <p>문의하신 내용의 수정/삭제는 답변 등록 완료 시 불가능합니다.</p>
+                <p>고객센터 답변 가능 시간 : 평일 09:00 ~ 18:00 (토, 일요일, 공휴일 휴무)</p>
+            </div>
             <div class="">
-                <a href="/user_sms">문자문의</a>
-                <a href="/user_call" aria-current="page" class="active">전화문의</a>
-                <a href="/user_inquiry">1:1 문의내역</a>
-                <a href="/user_report">허위매물 신고내역</a>
-                <a href="/user_account">내 정보</a>
+                <button class="">
+                    <span>1:1 문의하기</span>
+                </button>
             </div>
         </div>
-    </header>
-    <div>
-        <div>
-            <p>최근 6개월 이내의 문의 내역을 확인하실 수 있습니다.</p>
-            <p>문의하신 내용의 수정/삭제는 답변 등록 완료 시 불가능합니다.</p>
-            <p>고객센터 답변 가능 시간 : 평일 09:00 ~ 18:00 (토, 일요일, 공휴일 휴무)</p>
-        </div>
         <div class="">
-            <button class="">
-                <span>1:1 문의하기</span>
-            </button>
+            <p>최근 6개월간 문의하신 내역이 없습니다.</p>
         </div>
-    </div>
-    <div class="">
-        <p>최근 6개월간 문의하신 내역이 없습니다.</p>
-    </div>
+    </th:block>
 </body>
 </html>
