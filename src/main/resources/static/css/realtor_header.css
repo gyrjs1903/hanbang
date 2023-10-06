@@ -1,6 +1,19 @@
 @charset "UTF-8";
 /* realtor_header.css */
-
+body{
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+}
+.gnb{
+    font-size: 20px;
+}
+.gnb span{
+    margin: 0 15px;
+}
+.gnb span:hover{
+    color: rgb(20, 128, 56);
+    font-weight: 500;
+}
 .cursor{
     cursor: pointer;
 }

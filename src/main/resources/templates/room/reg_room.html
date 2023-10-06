@@ -45,13 +45,13 @@
                                     <div>
                                         <div>
                                             <label>주소검색</label>
-                                            <input type="text" name="">
-                                            <input type="button" value="검색">
+                                            <input type="text" id="addr" name="addr" readonly>
+                                            <input type="button" value="검색" id="select" onclick="openPost();" >
                                             <label>상세주소</label>
                                             <input type="text" name="">
                                         </div>
-                                        <div>
-                                            <div>지도API</div>
+                                        <div id="map" style="width:500px;height:400px;">
+                                            
                                         </div>
                                     </div>
                                 </td>
@@ -138,14 +138,22 @@
                 <div>
                     <h2>시설정보</h2>
                     <table>
-                    
-                            <tr th:each="option : ${optionsList}">
-                                <th>[[${option.optionName}]] <span>*</span></th>
-                                <td>
-                                    <div th:each="detailOption : ${option.detailOptionList}"><input type="text">[[${detailOption.detailOptionName}]]</div>
-                                </td>
-                            </tr>
-                        
+                        <tr th:each="option, state : ${optionsList}">
+                            <th>[[${option.optionName}]] <span>*</span></th>
+                            <td>
+                                <div th:each="detailOption : ${option.detailOptionList}">
+                                    <th:block th:if="${state.index==0}">
+                                        <input type="radio" th:value="${detailOption.detailOptionCode}">
+
+                                    </th:block>
+                                    <th:block th:if="${state.index!=0}">
+                                        <input type="checkbox" th:value="${detailOption.detailOptionCode}">
+                                    </th:block>
+                                    [[${detailOption.detailOptionName}]]
+                                </div>
+                            </td>
+                        </tr>
+
                     </table>
                 </div>
                 <div>
@@ -164,13 +172,15 @@
                             <td>
                                 <input type="text" name="" placeholder="리스트에 노출되는 문구입니다. 40자 이내로 작성해 주세요.">
                                 <div>0/40</div>
-                                <span>- 한글, 영어, 숫자, 허용된 특수문자(+ - / , . ㎡) 이외에 문자는 입력할 수 없습니다. 평형, 평, 기타 특수문자, 매물과 관련 없는 정보는 삭제 처리 됩니다.</span>
+                                <span>- 한글, 영어, 숫자, 허용된 특수문자(+ - / , . ㎡) 이외에 문자는 입력할 수 없습니다. 평형, 평, 기타 특수문자, 매물과 관련 없는
+                                    정보는 삭제 처리 됩니다.</span>
                             </td>
                         </tr>
                         <tr>
                             <th>상제설명 <span>*</span></th>
                             <td>
-                                <textarea name="" id="" cols="30" rows="10" placeholder="매물 상세 페이지에 노출되는 문구입니다. 1000자 이내로 작성해주세요"></textarea>
+                                <textarea name="" id="" cols="30" rows="10"
+                                    placeholder="매물 상세 페이지에 노출되는 문구입니다. 1000자 이내로 작성해주세요"></textarea>
                                 <div>0/1000</div>
                                 <span>- 매물 정보와 관련없는 홍보성 정보는 입력할 수 없습니다.</span>
                                 <span>- 매물등록규정에 위반되는 금칙어는 입력할 수 없습니다.</span>
@@ -181,6 +191,11 @@
                 </div>
             </form>
         </div>
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+        <!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=22ce9cdc2a0d0a47b1149d42f3bab1c0"></script> -->
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=22ce9cdc2a0d0a47b1149d42f3bab1c0&libraries=services,clusterer,drawing"></script>
+        <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <script src="/js/room/room.js"></script>
     </th:block>
 </body>
 

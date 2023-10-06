@@ -8,12 +8,12 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <body>
     <th:block th:fragment="headerFragment">
         <link rel="stylesheet" href="/css/realtor_header.css">
-        <div class="row mb-3 pt-2">
-            <div class="col text-center">
+        <div class="row mb-3 pt-4">
+            <div class="col text-center gnb">
                 <span>방 찾기</span>
                 <span>매물 승인하기</span>
                 <span onclick="location.href='/realtor/myPage';" class="cursor">마이페이지</span>
-                <span>로그아웃</span>
+                <span onclick="location.href='/member/logout';" class="cursor">로그아웃</span>
             </div>
         </div>
     </th:block>
