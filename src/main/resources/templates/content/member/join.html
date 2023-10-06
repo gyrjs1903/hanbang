@@ -1,33 +1,46 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{fragment/main_layout}">
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="/static/css/member/join.css">
 <title>회원가입 페이지</title>
 </head>
 <body>
-        <div>
-            <form action="/member/join" method="post">
-                <div>
-                    <input type="text" class="" name="userName" placeholder="이메일 주소 입력">
-                </div>
-                <div>
-                    <input type="password" class="" name="passWord" placeholder="8자리 이상 영문,숫자,특수문자 포함">
-                </div>
-                <div>
-                    <input type="password" class="" placeholder="비밀번호 확인">
-                </div>
-                <div>
-                    <select name="loginType" id="loginType" th:value="${loginType}">
-                        <option value="USER">일반 회원</option>
-                        <option value="REALTOR">공인중개사</option>
-                    </select>
-                </div>
-                <div>
-                    <input type="submit" value="회원가입 완료">
-                </div>
-            </form>
-        </div>
-
+<th:block layout:fragment="content">
+    <div>
+        <form id="joinForm" action="/member/join" method="post">
+            <div>
+                <input type="text" id="userName" class="" name="userName" placeholder="이메일 주소 입력">
+                <p class="userNameFormGuide">이메일 주소 형식 - 예&#41; hanbang1@hanbang.com</p>
+                <p id="userNameInputCheck">이메일을 입력해주세요.</p>
+                <p id="userNameFormCheck">이메일 형식을 확인해주세요.</p>
+            </div>
+            <div>
+                <input id="passWord" type="password" class="" name="passWord" placeholder="8자리 이상 영문,숫자,특수문자 포함">
+                <button type="button" class="">[비밀번호 표시/숨기기 이미지]</button>
+                <p id="passWordInputCheck">비밀번호를 입력해주세요.</p>
+                <p id="passWordFormCheck">비밀번호는 문자, 숫자, 특수문자를 포함하여 8-20자 이내로 입력하세요.</p>
+            </div>
+            <div>
+                <input id="passWordCheck" type="password" class="" placeholder="비밀번호 확인">
+                <button type="button" class="">[비밀번호 표시/숨기기 이미지]</button>
+                <p id="passWordCheckInputCheck">비밀번호 확인를 입력해주세요.</p>
+                <p id="passWordCheckCheck">입력한 비밀번호가 서로 일치하지 않습니다.</p>
+            </div>
+            <div>
+                <select name="loginType" id="loginType" th:value="${loginType}">
+                    <option value="USER">일반 회원</option>
+                    <option value="REALTOR">공인중개사</option>
+                </select>
+            </div>
+            <div>
+                <input id="join-btn" type="submit" value="회원가입 완료">
+            </div>
+        </form>
+    </div>
+<script async src="/static/js/member/join.js"></script>
+</th:block>
 </body>
 </html>

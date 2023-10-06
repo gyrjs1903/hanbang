@@ -1,31 +1,34 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{fragment/main_layout}">
 <head>
 <meta charset="UTF-8">
 <title></title>
 </head>
 <body>
-    <header class="">
-        <div>
-            <h1 class="">내 정보 관리</h1>
-            <div class="">
-                <a href="/user_sms">문자문의</a>
-                <a href="/user_call" aria-current="page" class="active">전화문의</a>
-                <a href="/user_inquiry">1:1 문의내역</a>
-                <a href="/user_report">허위매물 신고내역</a>
-                <a href="/user_account">내 정보</a>
+    <th:block th:fragment="content">
+        <header class="">
+            <div>
+                <h1 class="">내 정보 관리</h1>
+                <div class="">
+                    <a href="/user_sms">문자문의</a>
+                    <a href="/user_call" aria-current="page" class="active">전화문의</a>
+                    <a href="/user_inquiry">1:1 문의내역</a>
+                    <a href="/user_report">허위매물 신고내역</a>
+                    <a href="/user_account">내 정보</a>
+                </div>
             </div>
+        </header>
+        <div class="">
+            <button class="">
+                <span>보상안내</span>
+            </button>
         </div>
-    </header>
-    <div class="">
-        <button class="">
-            <span>보상안내</span>
-        </button>
-    </div>
-    <div class="">
-        <p>전화 문의한 방이 없습니다.</p>
-        <p>관심있는 방을 문의 해보세요</p>
-    </div>
+        <div class="">
+            <p>전화 문의한 방이 없습니다.</p>
+            <p>관심있는 방을 문의 해보세요</p>
+        </div>
+    </th:block>
 </body>
 </html>

@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{fragment/main_layout}">
 <head>
 <meta charset="UTF-8">
 <title>로그인 결과 페이지</title>
 </head>
 <body>
     <th:block th:if="${session.loginInfo == null}">
-    <input type="hidden" id="inputId" th:value="${memberVO.userName}">
+    <input type="hidden" id="inputUserName" th:value="${memberVO.userName}">
     <script>
-        const id = document.querySelector("#inputId").value;
+        const userName = document.querySelector("#inputUserName").value;
         alert('ID 및 PW 확인!');
-        location.href = `/member/loginForm?id=${id}`;
+        location.href = `/member/loginForm?userName=${userName}`;
     </script>
 </th:block>
 <th:block th:if="${session.loginInfo != null}">
-    <input type="hidden" id="roll" th:value="${session.loginInfo.loginType}">
+    <input type="hidden" id="loginType" th:value="${session.loginInfo.loginType}">
     <script>
         alert('로그인 완료');
-        const roll = document.querySelector('#roll').value;
+        const loginType = document.querySelector('#loginType').value;
 
-        location.href = roll == 'USER' ? '/' : '/';
+        location.href = loginType == 'USER' ? '/member/member_main' : 
+        location.href = loginType == 'REALTOR' ? '/realtor/realtor_main'
+        : '/admin/admin_main';
     </script>
 </th:block>
 </body>
