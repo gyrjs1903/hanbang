@@ -16,7 +16,15 @@
         <result column="LICENSE_FILE_NAME"  property="licenseFileName"/>
         <result column="AUTHORITY"  property="authority"/>
     </resultMap>
+    
+    <resultMap id="board" type="com.green.hanbang.admin.vo.BoardVO">
+        <result column="BOARD_NUM" property="boardNum"/>
+        <result column="INFO_TITLE" property="infoTitle"/>
+        <result column="INFO_CONTENT" property="infoContent"/>
+        <result column="INFO_REGDATE" property="infoRegDate"/>
+    </resultMap>
 
+<!--    일반 회원 조회 -->
     <select id="userManage" resultMap="manager">
         SELECT MEM.USER_NO 
             , USER_NAME
@@ -24,11 +32,12 @@
             , LOGIN_TYPE
             , NICK_NAME
             , PHONE
-            , JOIN_DATE
+            , TO_CHAR(JOIN_DATE, 'YYYY-MM-DD') JOIN_DATE
         FROM MEMBER_USER MEM, REALTOR_DETAIL REAL
         WHERE LOGIN_TYPE = 'USER'
     </select>
-    
+
+<!--    공인 중개사 조회 -->
     <select id="realManage" resultMap="manager">
         SELECT REALTOR_CODE
             , OFFICE_NAME
@@ -37,11 +46,62 @@
             , AUTHORITY
             , LOGIN_TYPE
             , REAL.USER_NO
+            , TO_CHAR(REQUEST_DATE,'YYYY-MM-DD') REQUEST_DATE
         FROM MEMBER_USER MEM, REALTOR_DETAIL REAL
         WHERE LOGIN_TYPE = 'REALTOR'
     </select>
 
+<!-- 공인 중개사 승인 -->
+    <update id="updateAuthority">
+        UPDATE REALTOR_DETAIL
+        SET AUTHORITY = 'Y'
+        WHERE EXISTS (SELECT AUTHORITY
+                        FROM MEMBER_USER
+                        WHERE LOGIN_TYPE = 'REALTOR'
+                        AND REALTOR_CODE = #{realTorCode}
+                      )
 
+    </update>
+
+<!--   공지사항 조회하기-->
+    <select id="selectBoard" resultMap="board">
+        SELECT BOARD_NUM
+            , INFO_TITLE
+            , TO_CHAR(INFO_REGDATE, 'YYYY-MM-DD') INFO_REGDATE
+        FROM INFO_BOARD
+        ORDER BY INFO_REGDATE DESC
+    </select>
+
+<!-- 공지사항 등록하기 -->
+    <insert id="insertBoard" >
+        INSERT INTO INFO_BOARD(
+            BOARD_NUM
+            , INFO_TITLE
+            , INFO_CONTENT
+        )VALUES (
+            (SELECT NVL(MAX(BOARD_NUM),0)+1 FROM INFO_BOARD)
+            , #{infoTitle}
+            ,#{infoContent}
+        )
+    </insert>
+
+<!--   공지사항 상세 조회-->
+    <select id="detailBoard" resultMap="board">
+        SELECT BOARD_NUM
+            , INFO_TITLE
+            , INFO_CONTENT
+            , TO_CHAR(INFO_REGDATE, 'YYYY-MM-DD') INFO_REGDATE
+        FROM INFO_BOARD
+        WHERE BOARD_NUM = #{boardNum}
+    </select>
+
+    <update id="updateBoard">
+        UPDATE INFO_BOARD
+        SET
+            INFO_TITLE = #{infoTitle}
+            , INFO_CONTENT= #{infoContent}
+        WHERE BOARD_NUM= #{boardNum}
+    </update>
 
 </mapper>
 

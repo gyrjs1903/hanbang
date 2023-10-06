@@ -4,7 +4,8 @@ import lombok.Data;
 
 @Data
 public class BoardVO {
+    private int boardNum;
     private String infoTitle;
     private String infoContent;
-    private int infoRegDate;
+    private String infoRegDate;
 }

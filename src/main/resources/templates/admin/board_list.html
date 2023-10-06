@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<head>
+<meta charset="UTF-8">
+<title>공지사항</title>
+</head>
+<body>
+    <table>
+        <colgroup>
+            <col width="5%" style="display: none;">
+            <col width="15%">
+            <col width="15%">
+        </colgroup>
+        <thead>
+            <tr>
+                <td style="display: none;">NO</td>
+                <td>제목</td>
+                <td>날짜</td>
+            </tr>
+        </thead>
+        <tbody>
+            <th:block th:if="${#lists.size(boardList)==0}">
+                <tr>
+                    <td colspan="5">등록된 공지사항이 없습니다.</td>
+                </tr>
+            </th:block>
+            <th:block th:if="${#lists.size(boardList)!=0}">
+                <tr th:each="board, state : ${boardList}">
+                    <td th:style="${'display:none'}">[[${#lists.size(boardList)-state.index}]]</td>
+                    <td><a th:href="@{/admin/boardDetail(boardNum=${board.boardNum})}">[[${board.infoTitle}]]</a></td>
+                    <td>[[${board.infoRegDate}]]</td>
+                </tr>
+            </th:block>
+        </tbody>
+    </table>
+    <input type="button" value="등록하기" onclick="location.href='/admin/writeForm';">
+</body>
+</html>

@@ -22,4 +22,9 @@ public class MemberManageServiceImpl implements MemberManageService {
     public List<MemberManageVO> realList() {
         return sqlSession.selectList("adminMapper.realManage");
     }
+
+    @Override
+    public int updateAuthority(MemberManageVO memberManageVO) {
+        return sqlSession.update("adminMapper.updateAuthority", memberManageVO);
+    }
 }

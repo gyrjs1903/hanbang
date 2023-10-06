@@ -16,5 +16,9 @@ public class MemberManageVO {
     private  String licenseFileName;
     private  String authority;
     private  String userNo;
+    private  String requestDate;
+
+
+
 
 }

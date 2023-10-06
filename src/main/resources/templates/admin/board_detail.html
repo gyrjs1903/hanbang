@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<head>
+<meta charset="UTF-8">
+<title>공지사항 상세 조회</title>
+</head>
+<body>
+    <div>
+        <div> 글 제목 </div>
+        <div>[[${boardVO.infoTitle}]]</div>
+    </div>
+    <div>
+        <div> 내용 </div>
+        <div>
+            [[${boardVO.infoContent}]]
+        </div>
+    </div>
+    <div>
+        <div>작성 날짜</div>
+        <div>[[${boardVO.infoRegDate}]]</div>
+    </div>
+    <input type="button" value="수정" th:onclick="|location.href='@{/admin/updateBoardForm(boardNum=${boardVO.boardNum})}'|">
+    <input type="button" value="삭제" th:onclick="location.href='@{/admin/deleteBoard(boardNum=${boardVO.boardNum})}';">
+</body>
+</html>

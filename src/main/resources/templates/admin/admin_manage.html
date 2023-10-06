@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<head>
+<meta charset="UTF-8">
+<title>관리자 페이지</title>
+</head>
+<body>
+    <div>
+        <h3>회원관리</h3>
+        <div><a th:href="@{/admin/userList}">개인 회원</a></div>
+        <div><a th:href="@{/admin/realList}">공인 중개사</a></div>
+    </div>
+
+    <div>
+        <h3>공지사항</h3>
+        <div><a th:href="@{/admin/infoBoard}">공지사항 관리</a></div>
+    </div>
+</body>
+</html>

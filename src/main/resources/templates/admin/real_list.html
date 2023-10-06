@@ -25,6 +25,7 @@
                 <td>자격증 파일</td>
                 <td>권한 여부</td>
                 <td>유형</td>
+                <td>승인 신청 날짜</td>
             </tr>
         </thead>
         <tbody>
@@ -37,12 +38,14 @@
                 <td>
                     [[${real.authority}]]
                     <div th:style="${real.authority == 'N' ? 'display : block':'display : none'}">
-                        <input type="button" value="승인" >    
+                        <input type="button" value="승인" th:onclick = "updateAuthority([[${real.realTorCode}]]);">    
                     </div>
                 </td>
                 <td>[[${real.loginType}]]</td>
+                <td>[[${real.requestDate}]]</td>
             </tr>
         </tbody>
     </table>
+    <script src="/js/admin.js"></script>
 </body>
 </html>
