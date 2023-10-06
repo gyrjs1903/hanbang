@@ -1,0 +1,6 @@
+@charset "UTF-8";
+
+.joinForm > p:not(.userNameFormGuide){
+    color: #e61919;
+    display: none;
+}
