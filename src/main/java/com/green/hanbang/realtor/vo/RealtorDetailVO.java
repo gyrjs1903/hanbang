@@ -11,4 +11,5 @@ public class RealtorDetailVO {
     private String licenseFileName;
     private String authority;
     private String requestDate;
+    private LicenseImgVO licenseImgVO;
 }
