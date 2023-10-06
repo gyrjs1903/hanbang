@@ -1,0 +1,48 @@
+@charset "UTF-8";
+/* realtor_mypage.css */
+
+#wrap{
+    text-align: center;
+    position: relative;
+    max-width: 1440px;
+    margin: 0 auto;
+}
+.info{
+    width: 35%;
+    position: absolute;
+    top: 55px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.cate{
+    text-align: left;
+    margin-bottom: 5px;
+    color: #767474;
+}
+input{
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 3px;
+}
+.acceptanceBox{
+    position: relative;
+}
+.acceptance{
+    position: absolute;
+    top: 20px;
+    left: 0px;
+    padding-top: 10px;
+}
+.uncertification{
+    color: rgb(247, 42, 42);
+}
+.certification{
+    color: rgb(37, 37, 243);
+}
+.btn{
+    margin-top: 15px;
+}
+.btn.btn-light{
+    --bs-btn-bg:#cecfd1;
+    margin-top: 0;
+}
