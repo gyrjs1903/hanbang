@@ -38,7 +38,7 @@ public class RealtorController {
     }
 
     @PostMapping("/certification")
-    public String certification(RealtorDetailVO realtorDetailVO, MultipartFile licenseImg){
+    public String certification(RealtorDetailVO realtorDetailVO, MultipartFile licenseImg,HttpSession session){
         //공인중개사 상세페이지 등록
         //1. 다음에 들어가야할 REALTOR_CODE 조회
         String realtorCode = realtorService.selectNextRealtorCode();
@@ -47,14 +47,15 @@ public class RealtorController {
         LicenseImgVO img = LicenseUtil.licenseUtil(licenseImg);
         img.setRealtorCode(realtorCode);
 
+        //정보&파일 등록
+        realtorDetailVO.setRealtorCode(realtorCode);
+        realtorDetailVO.setLicenseFileName(img.getAttachedLicenseFileName());
+        realtorDetailVO.setLicenseImgVO(img);
+        MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
+        realtorDetailVO.setUserNo(loginInfo.getUserNo());
         System.out.println(realtorDetailVO);
 
-        //정보&파일 등록
-//        realtorDetailVO.setRealtorCode(realtorCode);
-//        realtorDetailVO.setLicenseFileName(img.getAttachedLicenseFileName());
-//        realtorDetailVO.setLicenseImgVO(img);
-//
-//        realtorService.insertRealtorDetail(realtorDetailVO);
+        realtorService.insertRealtorDetail(realtorDetailVO);
 
         return "redirect:/realtor/main";
     }
