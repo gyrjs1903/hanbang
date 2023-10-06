@@ -26,6 +26,7 @@
         SELECT USER_NAME
             , NICK_NAME
             , PHONE
+            , USER_NO
         FROM MEMBER_USER
         WHERE MEMBER_USER.USER_NO = #{userNo}
     </select>

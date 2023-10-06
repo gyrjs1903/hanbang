@@ -1,34 +1,45 @@
 <!DOCTYPE html>
-<html lang="ko" xlmns:th="http://www.thymeleaf.org"
-xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-layout:decorate="~{realtor/realtor_layout}">
+<html lang="ko" xlmns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{realtor/realtor_layout}">
+
 <head>
-<meta charset="UTF-8">
-<title></title>
+    <meta charset="UTF-8">
+    <title></title>
 </head>
+
 <body>
     <th:block layout:fragment="content">
-        <h2>공인중개사 마이페이지</h2>
-        <div>이메일주소</div>
-        <span>[[${realtorInfo.userName}]]</span>
-        <span>[[${realtorInfo.userNo}]]</span>
-        <div>비밀번호</div>
-        <div>비밀번호 확인</div>
-        <div>닉네임</div>
-        <div>전화번호</div>
-        <br>
-        <div>구분</div>
-        <span>공인중개사</span>
-        
-        <div>[[${authority}]]</div>
-        <div th:if="${authority == null or authority == 'N'}">
-            <span onclick="location.href='/realtor/certificationForm';" class="cursor">인증하기</span>
+        <link rel="stylesheet" href="/css/realtor_mypage.css">
+        <div id="wrap">
+            <h4>공인중개사 마이페이지</h4>
+            <div class="info">
+                <div class="cate">이메일</div>
+                <div><input type="text" th:value="${realtorInfo.userName}" readonly></div>
+                <div class="cate">비밀번호</div>
+                <div><input type="text" value="비밀번호" readonly></div>
+                <div><input type="text" value="비밀번호 확인" readonly></div>
+                <div class="cate">닉네임</div>
+                <div><input type="text" th:value="${realtorInfo.nickName}" readonly></div>
+                <div class="cate">전화번호</div>
+                <div><input type="text" th:value="${realtorInfo.phone}" readonly></div>
+                <br>
+                <div class="cate">구분</div>
+                <div class="acceptanceBox">
+                    <input type="text" value="공인중개사" readonly>
+                    <div th:if="${authority == null or authority == 'N'}">
+                        <div class="uncertification acceptance">인증되지 않은 공인중개사입니다.</div>
+                        <span onclick="location.href='/realtor/certificationForm';" class="cursor btn btn-primary" >인증하기</span>
+                    </div>
+                    <div th:if="${authority == 'Y' and authority != null}">
+                        <div class="certification acceptance">인증된 공인중개사입니다.</div>
+                        <span class="btn btn-primary">인증완료</span>
+                    </div>
+                </div>
+                <br>
+                <button class="btn btn-light">수정하기</button>
+            </div>
         </div>
-        <div th:if="${authority == 'Y' and authority != null}">
-            <span>인증완료</span>
-        </div>
-        <br>
-        <button>수정하기</button>
     </th:block>
 </body>
+
 </html>
