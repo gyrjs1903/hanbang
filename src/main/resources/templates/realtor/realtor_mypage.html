@@ -19,7 +19,14 @@ layout:decorate="~{realtor/realtor_layout}">
         <br>
         <div>구분</div>
         <span>공인중개사</span>
-        <span onclick="location.href='/realtor/certificationForm';" class="cursor">인증하기</span>
+        
+        <div>[[${authority}]]</div>
+        <div th:if="${authority == null or authority == 'N'}">
+            <span onclick="location.href='/realtor/certificationForm';" class="cursor">인증하기</span>
+        </div>
+        <div th:if="${authority == 'Y' and authority != null}">
+            <span>인증완료</span>
+        </div>
         <br>
         <button>수정하기</button>
     </th:block>

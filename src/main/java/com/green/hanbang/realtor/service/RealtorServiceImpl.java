@@ -26,4 +26,9 @@ public class RealtorServiceImpl implements RealtorService{
         sqlSession.insert("realtorMapper.insertLicenseImg",realtorDetailVO);
         sqlSession.insert("realtorMapper.insertRealtorDetail",realtorDetailVO);
     }
+
+    @Override
+    public String selectAuthorityStatue(String userNo) {
+        return sqlSession.selectOne("realtorMapper.selectAuthorityStatue",userNo);
+    }
 }
