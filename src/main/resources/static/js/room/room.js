@@ -20,6 +20,7 @@ function openPost() {
 
                 var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
+
                 // 결과값으로 받은 위치를 마커로 표시합니다
                 var marker = new kakao.maps.Marker({
                     map: map,
@@ -30,8 +31,6 @@ function openPost() {
             } 
         });    
 
-        //let pos = readPosition(data.roadAddress);
-        
     }
     }).open();
 }
@@ -40,7 +39,7 @@ function openPost() {
 function init(){
     let container = document.getElementById('map');
     let options = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
+        center: new kakao.maps.LatLng(35.5419831733752, 129.338238429286), //지도의 중심좌표.
         level: 3 //지도의 레벨(확대, 축소 정도)
     }
     // 지도를 생성합니다

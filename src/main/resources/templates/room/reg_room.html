@@ -27,16 +27,18 @@
                                 <th>매물유형 <span>*</span></th>
                                 <td>
                                     <header>대분류</header>
-                                    <div>
-                                        <button value="" name=""></button>
+                                    <div th:each="property : ${propertyList}">
+                                        <button th:value="${property.propertyTypeCode}">[[${property.propertyTypeName}]]</button>
                                     </div>
                                 </td>
                                 <td>
                                     <header>소분류</header>
-                                    <div>
-                                        <input type="radio" name="" value="">
-                                        <label></label>
-                                    </div>
+                                    <th:block th:each="property : ${propertyList}">
+                                        <th:block  th:each="subProperty : ${property.subPropertyTypeList}">
+                                            <input type="radio"  th:value="${subProperty.subPropertyTypeCode}">
+                                            <label>[[${subProperty.subPropertyTypeName}]]</label>
+                                        </th:block>
+                                    </th:block>
                                 </td>
                             </tr>
                             <tr>
@@ -46,12 +48,12 @@
                                         <div>
                                             <label>주소검색</label>
                                             <input type="text" id="addr" name="addr" readonly>
-                                            <input type="button" value="검색" id="select" onclick="openPost();" >
+                                            <input type="button" value="검색" id="select" onclick="openPost();">
                                             <label>상세주소</label>
                                             <input type="text" name="">
                                         </div>
                                         <div id="map" style="width:500px;height:400px;">
-                                            
+
                                         </div>
                                     </div>
                                 </td>
@@ -141,7 +143,7 @@
                         <tr th:each="option, state : ${optionsList}">
                             <th>[[${option.optionName}]] <span>*</span></th>
                             <td>
-                                <div th:each="detailOption : ${option.detailOptionList}">
+                                <th:block  th:each="detailOption : ${option.detailOptionList}">
                                     <th:block th:if="${state.index==0}">
                                         <input type="radio" th:value="${detailOption.detailOptionCode}">
 
@@ -150,7 +152,7 @@
                                         <input type="checkbox" th:value="${detailOption.detailOptionCode}">
                                     </th:block>
                                     [[${detailOption.detailOptionName}]]
-                                </div>
+                                </th:block>
                             </td>
                         </tr>
 
@@ -193,8 +195,9 @@
         </div>
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         <!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=22ce9cdc2a0d0a47b1149d42f3bab1c0"></script> -->
-        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=22ce9cdc2a0d0a47b1149d42f3bab1c0&libraries=services,clusterer,drawing"></script>
-        <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <script type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=22ce9cdc2a0d0a47b1149d42f3bab1c0&libraries=services,clusterer,drawing"></script>
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
         <script src="/js/room/room.js"></script>
     </th:block>
 </body>
