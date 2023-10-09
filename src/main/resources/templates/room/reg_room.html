@@ -28,14 +28,15 @@
                                 <td>
                                     <header>대분류</header>
                                     <div th:each="property : ${propertyList}">
-                                        <button th:value="${property.propertyTypeCode}">[[${property.propertyTypeName}]]</button>
+                                        <button
+                                            th:value="${property.propertyTypeCode}">[[${property.propertyTypeName}]]</button>
                                     </div>
                                 </td>
                                 <td>
                                     <header>소분류</header>
                                     <th:block th:each="property : ${propertyList}">
-                                        <th:block  th:each="subProperty : ${property.subPropertyTypeList}">
-                                            <input type="radio"  th:value="${subProperty.subPropertyTypeCode}">
+                                        <th:block th:each="subProperty : ${property.subPropertyTypeList}">
+                                            <input type="radio" th:value="${subProperty.subPropertyTypeCode}">
                                             <label>[[${subProperty.subPropertyTypeName}]]</label>
                                         </th:block>
                                     </th:block>
@@ -91,8 +92,11 @@
                         <tr>
                             <th>거래 종류 <span>*</span></th>
                             <td>
-                                <div><input type="radio" value=""> 전세</div>
-                                <div><input type="radio" value=""> 월세</div>
+                                <th:block th:each="tradeType : ${tradeTypeList}">
+                                    <input type="radio" th:value="${tradeType.tradeTypeCode}">
+                                    <span>[[${tradeType.tradeTypeName}]]</span>
+                                </th:block>
+                                
                             </td>
                         </tr>
                         <tr>
@@ -143,7 +147,7 @@
                         <tr th:each="option, state : ${optionsList}">
                             <th>[[${option.optionName}]] <span>*</span></th>
                             <td>
-                                <th:block  th:each="detailOption : ${option.detailOptionList}">
+                                <th:block th:each="detailOption : ${option.detailOptionList}">
                                     <th:block th:if="${state.index==0}">
                                         <input type="radio" th:value="${detailOption.detailOptionCode}">
 
@@ -163,6 +167,9 @@
                     <table>
                         <tr>
                             <th>일반사진 <span>*</span></th>
+                            <td>
+                                <input type="file" name="">
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -172,7 +179,7 @@
                         <tr>
                             <th>제목 <span>*</span></th>
                             <td>
-                                <input type="text" name="" placeholder="리스트에 노출되는 문구입니다. 40자 이내로 작성해 주세요.">
+                                <input type="text" name="title" placeholder="리스트에 노출되는 문구입니다. 40자 이내로 작성해 주세요.">
                                 <div>0/40</div>
                                 <span>- 한글, 영어, 숫자, 허용된 특수문자(+ - / , . ㎡) 이외에 문자는 입력할 수 없습니다. 평형, 평, 기타 특수문자, 매물과 관련 없는
                                     정보는 삭제 처리 됩니다.</span>
@@ -181,7 +188,7 @@
                         <tr>
                             <th>상제설명 <span>*</span></th>
                             <td>
-                                <textarea name="" id="" cols="30" rows="10"
+                                <textarea name="content" id="" cols="30" rows="10"
                                     placeholder="매물 상세 페이지에 노출되는 문구입니다. 1000자 이내로 작성해주세요"></textarea>
                                 <div>0/1000</div>
                                 <span>- 매물 정보와 관련없는 홍보성 정보는 입력할 수 없습니다.</span>

@@ -25,6 +25,11 @@
         <result column="SUB_PROPERTY_TYPE_NAME" property="subPropertyTypeName"/>
         <result column="PROPERTY_TYPE_CODE" property="propertyTypeCode"/>
     </resultMap>
+
+    <resultMap id="tradeType" type="com.green.hanbang.room.vo.TradeTypeVO">
+        <result column="TRADE_TYPE_CODE" property="tradeTypeCode"/>
+        <result column="TRADE_TYPE_NAME" property="tradeTypeName"/>
+    </resultMap>
     <!--option select-->
     <select id="selectOptions" resultMap="options">
         SELECT OP.OPTION_CODE
@@ -34,6 +39,7 @@
         FROM OPTIONS OP, DETAIL_OPTIONS DTOP
         WHERE OP.OPTION_CODE = DTOP.OPTION_CODE
     </select>
+    <!--매물 유형 셀렉트-->
     <select id="selectProperty" resultMap="propertyType">
         SELECT PT.PROPERTY_TYPE_CODE
         , PROPERTY_TYPE_NAME
@@ -41,6 +47,12 @@
         , SUB_PROPERTY_TYPE_NAME
         FROM PROPERTY_TYPE PT, SUB_PROPERTY_TYPE SPT
         WHERE PT.PROPERTY_TYPE_CODE = SPT.PROPERTY_TYPE_CODE
+    </select>
+    <!--전월세 셀렉트-->
+    <select id="selectTradeType" resultMap="tradeType">
+        SELECT TRADE_TYPE_CODE
+        , TRADE_TYPE_NAME
+        FROM TRADE_TYPE
     </select>
 </mapper>
 
