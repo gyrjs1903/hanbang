@@ -19,6 +19,7 @@
         </div>
         <div>
             <form action="/insertRoom" method="post">
+                <h3>[[${session.loginInfo.userNo}]]</h3>
                 <div>
                     <h2>매물정보</h2>
                     <table>
@@ -28,8 +29,8 @@
                                 <td>
                                     <header>대분류</header>
                                     <div th:each="property : ${propertyList}">
-                                        <button
-                                            th:value="${property.propertyTypeCode}">[[${property.propertyTypeName}]]</button>
+                                        <input type="radio"
+                                            th:value="${property.propertyTypeCode}">[[${property.propertyTypeName}]]</input>
                                     </div>
                                 </td>
                                 <td>
@@ -78,7 +79,7 @@
                                     <div>
                                         <div>
                                             <label>방 수</label>
-                                            <input type="text" name="" placeholder="평수 입력">
+                                            <input type="text" name="floor" placeholder="평수 입력">
                                         </div>
                                     </div>
                                 </td>
@@ -104,15 +105,15 @@
                             <td>
                                 <div>
                                     <label for="">전세가</label>
-                                    <input type="text" name="">
+                                    <input type="text" name="jeonseCost">
                                     <p>만원</p>
                                 </div>
                                 <div>
                                     <label for="">보증금</label>
-                                    <input type="text" name="">
+                                    <input type="text" name="deposit">
                                     <p>만원</p>
                                     <label for="">월세</label>
-                                    <input type="text" name="">
+                                    <input type="text" name="monthlyLease">
                                     <p>만원</p>
                                 </div>
                             </td>
@@ -122,12 +123,12 @@
                             <td>
                                 <div>
                                     <label>관리비 여부</label>
-                                    <input type="radio" name="" id=""> 없음
-                                    <input type="radio" name="" id=""> 있음
+                                    <input type="radio" id=""> 없음
+                                    <input type="radio" id=""> 있음
                                 </div>
                                 <div>
                                     <label for="">관리비</label>
-                                    <input type="text" name="" value="">
+                                    <input type="text" name="maintenanceCost">
                                 </div>
                             </td>
                         </tr>
@@ -149,11 +150,11 @@
                             <td>
                                 <th:block th:each="detailOption : ${option.detailOptionList}">
                                     <th:block th:if="${state.index==0}">
-                                        <input type="radio" th:value="${detailOption.detailOptionCode}">
+                                        <input type="radio" name="detailOptions" th:value="${detailOption.detailOptionCode}">
 
                                     </th:block>
                                     <th:block th:if="${state.index!=0}">
-                                        <input type="checkbox" th:value="${detailOption.detailOptionCode}">
+                                        <input type="checkbox" name="detailOptions" th:value="${detailOption.detailOptionCode}">
                                     </th:block>
                                     [[${detailOption.detailOptionName}]]
                                 </th:block>
@@ -168,7 +169,8 @@
                         <tr>
                             <th>일반사진 <span>*</span></th>
                             <td>
-                                <input type="file" name="">
+                                <input type="file" name="mainImg">
+                                <input type="file" name="subImg" multiple>
                             </td>
                         </tr>
                     </table>
@@ -198,10 +200,10 @@
                         </tr>
                     </table>
                 </div>
+                <input type="submit" value="매물등록">
             </form>
         </div>
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-        <!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=22ce9cdc2a0d0a47b1149d42f3bab1c0"></script> -->
         <script type="text/javascript"
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=22ce9cdc2a0d0a47b1149d42f3bab1c0&libraries=services,clusterer,drawing"></script>
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
