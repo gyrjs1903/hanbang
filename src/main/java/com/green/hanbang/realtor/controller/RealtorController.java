@@ -9,10 +9,10 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -36,6 +36,20 @@ public class RealtorController {
     @GetMapping("/certificationForm")
     public String certificationForm(){
         return "realtor/certification";
+    }
+
+    @ResponseBody
+    @PostMapping("/identificationNum")
+    public boolean selectIdentificationNum(@RequestBody Map<String, Integer> identificationNum){
+        System.out.println(identificationNum);
+        Integer num = realtorService.selectIdentificationNum(identificationNum.get("identificationNum"));
+        boolean result;
+        if(num == null){
+            result = true;
+        } else {
+            result = false;
+        }
+        return result;
     }
 
     @PostMapping("/certification")

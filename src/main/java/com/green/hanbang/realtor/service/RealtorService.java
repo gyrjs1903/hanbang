@@ -3,6 +3,8 @@ package com.green.hanbang.realtor.service;
 import com.green.hanbang.member.vo.MemberVO;
 import com.green.hanbang.realtor.vo.RealtorDetailVO;
 
+import java.util.List;
+
 public interface RealtorService {
 
     //공인중개사 마이페이지
@@ -16,4 +18,7 @@ public interface RealtorService {
 
     //공인중개사 인증완료 여부
     public String selectAuthorityStatue(String userNo);
+
+    //사업자등록증 중복 여부
+    public Integer selectIdentificationNum(int identificationNum);
 }
