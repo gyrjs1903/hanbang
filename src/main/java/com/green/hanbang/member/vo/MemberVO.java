@@ -14,4 +14,9 @@ public class MemberVO {
     private String profileImage;
     private String joinDate;
     private RealtorDetailVO realtorDetailVO;
+
+    /* 프로필 사진 */
+    private String profileImgNO;
+    private String profileImgName;
+    private String attachedProfileImgName;
 }

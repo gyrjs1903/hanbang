@@ -1,15 +1,26 @@
 /* join.js */
 
+/* input태그 text 타입 실시간 값 변경 감지 */
+$("#text").on("propertychange change keyup paste input", function() {
+    var currentVal = $(this).val();
+    if(currentVal == oldVal) {
+        return;
+    }
+ 
+    oldVal = currentVal;
+    alert("changed!");
+});
+
 /* 회원가입 */
 function joinCheck(){
     /* 이메일(아이디) 데이터 유효성 검사 정규식 */ 
     var userNameCheck = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
 
     /* 이메일(아이디) 입력 값 */
-    const userName = document.querySelector('#userName');
+    const userName = document.querySelector('#userName').value;
 
     /* 이메일(아이디) 체크 비동기 통신 */
-    fetch('/member/userNameChekFetch', {
+    fetch('/member/userNameCheckFetch', {
         cache: 'no-cache',
         headers: {
             'Content-Type': 'application/json; charset=UTF-8'
@@ -43,7 +54,7 @@ function joinCheck(){
     let reg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/
 
     /* 비밀번호 입력 값 */
-    const passWord = document.querySelector('#passWord');
+    const passWord = document.querySelector('#passWord').value;
 
     /* 비밀번호 체크 비동기 통신 */
     fetch('/member/passWordCheckFetch', {
@@ -77,7 +88,7 @@ function joinCheck(){
     });
 
     /* 비밀번호 확인 입력 값 */
-    const passWordCheck = document.querySelector("#passWordCheck")
+    const passWordCheck = document.querySelector("#passWordCheck").value
 
     /* 비밀번호 확인 체크 비동기 통신 */
     fetch('/member/passWordCheckCheckFetch', {

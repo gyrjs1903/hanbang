@@ -1,6 +1,13 @@
 @charset "UTF-8";
 
-.joinForm > p:not(.userNameFormGuide){
+p:not(.userNameFormGuide){
     color: #e61919;
     display: none;
+}
+
+.join_frame{
+    width: 476px;
+    margin: 0px auto;
+    border: 1px solid rgb(245, 245, 245);
+    padding: 68px;
 }
