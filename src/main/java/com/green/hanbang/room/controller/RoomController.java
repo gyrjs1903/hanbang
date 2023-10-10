@@ -5,12 +5,14 @@ import com.green.hanbang.member.vo.MemberVO;
 import com.green.hanbang.room.service.RoomService;
 import com.green.hanbang.room.vo.OptionsVO;
 import com.green.hanbang.room.vo.PropertyTypeVO;
+import com.green.hanbang.room.vo.RoomVO;
 import com.green.hanbang.room.vo.TradeTypeVO;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -34,7 +36,13 @@ public class RoomController {
         model.addAttribute("optionsList", optionsList);
         model.addAttribute("propertyList", propertyList);
         model.addAttribute("tradeTypeList", tradeTypeList);
+
         return "room/reg_room";
     }
+//    @PostMapping("/insertRoom")
+//    public String insertRoom( RoomVO roomVO){
+//        roomService.insertRoom(roomVO);
+//        return "redirect:/reg/room";
+//    }
 
 }

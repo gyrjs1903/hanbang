@@ -19,7 +19,7 @@
         </div>
         <div>
             <form action="/insertRoom" method="post">
-                <h3>[[${session.loginInfo.userNo}]]</h3>
+                <input name="userNo" type="hidden" value="${session.loginInfo.userNo}">
                 <div>
                     <h2>매물정보</h2>
                     <table>
@@ -170,7 +170,9 @@
                             <th>일반사진 <span>*</span></th>
                             <td>
                                 <input type="file" name="mainImg">
+                                <span>메인사진</span>
                                 <input type="file" name="subImg" multiple>
+                                <span>메인사진</span>
                             </td>
                         </tr>
                     </table>
