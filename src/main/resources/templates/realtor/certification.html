@@ -8,17 +8,19 @@ layout:decorate="~{realtor/realtor_layout}">
 </head>
 <body>
     <th:block layout:fragment="content">
-        중개사무소 정보
-        <form action="/realtor/certification" method="post" enctype="multipart/form-data">
-            <div>중개사무소명</div>
-            <div><input type="text" name="officeName"></div>
-            <div>사업자등록번호</div>
-            <div><input type="text" name="identificationNum"></div>
-            <div>사업자등록증</div>
-            <div><input type="file" class="form-control" name="licenseImg"></div>
-            <input type="submit" value="공인중개사 인증하기">
+        <link rel="stylesheet" href="/css/realtor/certification.css">
+        <span class="title">중개사무소 정보</span>
+        <form action="/realtor/certification" method="post" enctype="multipart/form-data" id="certificationForm">
+            <div class="txt">중개사무소명</div>
+            <div class="tag"><input type="text" name="officeName" id="officeName"></div>
+            <div class="txt">사업자등록번호</div>
+            <div class="tag"><input type="text" id="identificationNum" name="identificationNum"></div>
+            <div class="error-div" id="id-error-div"></div>
+            <div class="txt">사업자등록증</div>
+            <div class="tag img"><input type="file" class="form-control" name="licenseImg" id="licenseImg"></div>
+            <input type="button" onclick="duplication();" value="공인중개사 인증하기" class="btn btn-outline-primary">
         </form>
-
+        <script src="/js/realtor/certification.js"></script>
     </th:block>
 </body>
 </html>

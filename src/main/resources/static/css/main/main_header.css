@@ -1,1 +1,15 @@
 @charset "UTF-8";
+
+.menu_all{
+    display: flex;
+    margin-bottom: 100px;
+    background-color: rgb(74, 204, 74);
+}
+
+.menu_bar > ul{
+    display: flex;
+}
+
+.menu_bar > ul > li > a{
+    margin-right: 50px;
+}

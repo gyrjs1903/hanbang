@@ -4,13 +4,12 @@
                 layout:decorate="~{fragment/main_layout}">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="/static/css/member/join.css">
-
 <title>회원가입 페이지</title>
 </head>
 <body>
 <th:block layout:fragment="content">
-    <div>
+    <link rel="stylesheet" href="/css/member/join.css">
+    <div class="join_frame">
         <form id="joinForm" action="/member/join" method="post">
             <div>
                 <input type="text" id="userName" class="" name="userName" placeholder="이메일 주소 입력">
@@ -41,7 +40,7 @@
             </div>
         </form>
     </div>
-<script async src="/static/js/member/join.js"></script>
+<script async src="/js/member/join.js"></script>
 </th:block>
 </body>
 </html>

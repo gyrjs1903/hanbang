@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/member")
@@ -27,6 +28,9 @@ public class MemberController {
         memberService.join(memberVO);
         return "content/member/login";
     }
+
+    // 회원 가입 시 닉네임 자동 생성
+
 
     // 로그인 페이지 이동
     @GetMapping("loginForm")
@@ -61,4 +65,7 @@ public class MemberController {
     public String memberInfo(){
         return "content/member/member_info";
     }
+
+    // 이메일 입력 확인 비동기 통신
+
 }

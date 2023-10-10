@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class RealtorServiceImpl implements RealtorService{
@@ -30,5 +32,10 @@ public class RealtorServiceImpl implements RealtorService{
     @Override
     public String selectAuthorityStatue(String userNo) {
         return sqlSession.selectOne("realtorMapper.selectAuthorityStatue",userNo);
+    }
+
+    @Override
+    public Integer selectIdentificationNum(int identificationNum) {
+        return sqlSession.selectOne("realtorMapper.selectIdentificationNum", identificationNum);
     }
 }

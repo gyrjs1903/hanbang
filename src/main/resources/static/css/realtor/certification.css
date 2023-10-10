@@ -1,0 +1,34 @@
+@charset "UTF-8";
+/* certification.css */
+
+.title{
+    display: block;
+    font-size: 24px;
+    text-align: center;
+}
+form{
+    position: relative;
+    margin: 15px auto;
+    width: 40%;
+}
+.txt{
+    font-size: 18px;
+    color: #4c4c4c;
+    margin-bottom: 4px;
+}
+.tag input{
+    width: 100%;
+    border: 1px solid #4c4c4c;
+    border-radius: 5px;
+    line-height: 30px;
+    margin-bottom: 15px;
+}
+.img input{
+    line-height: 24px;
+}
+.btn{
+    position: absolute;
+    bottom: -60px;
+    right: 50%;
+    transform: translateX(50%);
+}
