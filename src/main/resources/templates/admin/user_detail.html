@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<head>
+<meta charset="UTF-8">
+<title>일반 회원 상세 조회</title>
+</head>
+<body>
+    <table>
+        <colgroup>
+            <col width="5%">
+            <col width="10%">
+            <col width="10%">
+            <col width="10%">
+            <col width="10%">
+            <col width="10%">
+            <col width="10%">
+        </colgroup>
+        <thead>
+            <tr>
+                <td>No</td>
+                <td>사용자명</td>
+                <td>비밀번호</td>
+                <td>사용자 유형</td>
+                <td>닉네임</td>
+                <td>휴대폰 번호</td>
+                <td>가입 날짜</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="udetail : ${userDetail}">
+                <td>[[${udetail.userNo}]]</td>
+                <td>[[${udetail.userName}]]</td>
+                <td>[[${udetail.password}]]</td>
+                <td>[[${udetail.loginType}]]</td>
+                <td>[[${udetail.nickName}]]</td>
+                <td>[[${udetail.phone}]]</td>
+                <td>[[${udetail.joinDate}]]</td>
+                <input type="submit" value="삭제" th:onclick = "|location.href='@{/admin/deleteUser(userNo=${udetail.userNo})}'|">
+            </tr>
+        </tbody>
+    </table>
+    
+</body>
+</html>

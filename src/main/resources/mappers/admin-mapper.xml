@@ -26,6 +26,17 @@
 
 <!--    일반 회원 조회 -->
     <select id="userManage" resultMap="manager">
+        SELECT USER_NO
+        , USER_NAME
+        FROM MEMBER_USER
+        WHERE LOGIN_TYPE = 'USER'
+        <if test='userSearch != null and !userSearch.equals("")'>
+            AND UPPER(USER_NAME) LIKE '%'||UPPER(#{userSearch})||'%'
+        </if>
+    </select>
+
+<!--    일반 회원 상세 조회-->
+    <select id="userDetail" resultMap="manager">
         SELECT MEM.USER_NO 
             , USER_NAME
             , PASSWORD
@@ -33,22 +44,42 @@
             , NICK_NAME
             , PHONE
             , TO_CHAR(JOIN_DATE, 'YYYY-MM-DD') JOIN_DATE
-        FROM MEMBER_USER MEM, REALTOR_DETAIL REAL
-        WHERE LOGIN_TYPE = 'USER'
+        FROM MEMBER_USER MEM
+        WHERE USER_NO = #{userNo}
     </select>
+
+<!--  일반 회원 삭제 -->
+    <delete id="deleteUser">
+        DELETE MEMBER_USER
+        WHERE USER_NO = #{userNo}
+    </delete>
 
 <!--    공인 중개사 조회 -->
     <select id="realManage" resultMap="manager">
         SELECT REALTOR_CODE
             , OFFICE_NAME
             , IDENTIFICATION_NUM
-            , LICENSE_FILE_NAME
             , AUTHORITY
-            , LOGIN_TYPE
             , REAL.USER_NO
-            , TO_CHAR(REQUEST_DATE,'YYYY-MM-DD') REQUEST_DATE
         FROM MEMBER_USER MEM, REALTOR_DETAIL REAL
         WHERE LOGIN_TYPE = 'REALTOR'
+        AND REAL.USER_NO = MEM.USER_NO
+        <if test='realSearch != null and !realSearch.equals("")'>
+            AND UPPER(IDENTIFICATION_NUM) LIKE '%'||UPPER(#{realSearch})||'%'
+        </if>
+    </select>
+
+<!-- 공인 중개사 상세 조회-->
+    <select id="realDetail" resultMap="manager">
+        SELECT REALTOR_CODE
+            , OFFICE_NAME
+            , IDENTIFICATION_NUM
+            , LICENSE_FILE_NAME
+            , AUTHORITY
+            , USER_NO
+            , TO_CHAR(REQUEST_DATE,'YYYY-MM-DD') REQUEST_DATE
+        FROM REALTOR_DETAIL
+        WHERE IDENTIFICATION_NUM = #{identificationNum}
     </select>
 
 <!-- 공인 중개사 승인 -->
@@ -62,6 +93,12 @@
                       )
 
     </update>
+
+<!-- 공인중개사 삭제   -->
+    <delete id="deleteReal">
+        DELETE REALTOR_DETAIL
+        WHERE IDENTIFICATION_NUM = #{identificationNum}
+    </delete>
 
 <!--   공지사항 조회하기-->
     <select id="selectBoard" resultMap="board">
@@ -103,6 +140,11 @@
         WHERE BOARD_NUM= #{boardNum}
     </update>
 
+
+    <delete id="deleteBoard">
+        DELETE INFO_BOARD
+        WHERE BOARD_NUM = #{boardNum}
+    </delete>
 </mapper>
 
 
