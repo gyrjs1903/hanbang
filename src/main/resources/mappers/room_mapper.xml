@@ -3,33 +3,72 @@
 
 <!-- 복사해서 사용 -->
 <mapper namespace="roomMapper">
+    <!--옵션 resultMap-->
     <resultMap id="options" type="com.green.hanbang.room.vo.OptionsVO">
         <id column="OPTION_CODE" property="optionCode"/>
         <result column="OPTION_NAME" property="optionName"/>
         <collection property="detailOptionList" resultMap="detailOptions"/>
     </resultMap>
+
+    <!--상세옵션 resultMap-->
     <resultMap id="detailOptions" type="com.green.hanbang.room.vo.DetailOptionsVO">
         <id column="DETAIL_OPTION_CODE" property="detailOptionCode"/>
         <result column="DETAIL_OPTION_NAME" property="detailOptionName"/>
         <result column="OPTION_CODE" property="optionCode"/>
     </resultMap>
 
+    <!--매물유형 대분류 resultMap-->
     <resultMap id="propertyType" type="com.green.hanbang.room.vo.PropertyTypeVO">
         <id column="PROPERTY_TYPE_CODE" property="propertyTypeCode"/>
         <result column="PROPERTY_TYPE_NAME" property="propertyTypeName"/>
         <collection property="subPropertyTypeList" resultMap="subPropertyType"/>
     </resultMap>
 
+    <!--매물유형 소분류 resultMap-->
     <resultMap id="subPropertyType" type="com.green.hanbang.room.vo.SubPropertyTypeVO">
         <id column="SUB_PROPERTY_TYPE_CODE" property="subPropertyTypeCode"/>
         <result column="SUB_PROPERTY_TYPE_NAME" property="subPropertyTypeName"/>
         <result column="PROPERTY_TYPE_CODE" property="propertyTypeCode"/>
     </resultMap>
 
+    <!--전월세 resultMap-->
     <resultMap id="tradeType" type="com.green.hanbang.room.vo.TradeTypeVO">
         <result column="TRADE_TYPE_CODE" property="tradeTypeCode"/>
         <result column="TRADE_TYPE_NAME" property="tradeTypeName"/>
     </resultMap>
+
+    <!--room resultMap-->
+    <resultMap id="room" type="com.green.hanbang.room.vo.RoomVO">
+        <id column="ROOM_CODE" property="roomCode"/>
+        <result column="PROPERTY_TYPE_CODE" property="propertyTypeCode"/>
+        <result column="SUB_PROPERTY_TYPE_CODE" property="subPropertyTypeCode"/>
+        <result column="ADDR" property="addr"/>
+        <result column="DETAIL_ADDR" property="detailAddr"/>
+        <result column="ROOM_SIZE_P" property="roomSizeP"/>
+        <result column="ROOM_SIZE_M" property="roomSizeM"/>
+        <result column="FLOOR" property="floor"/>
+        <result column="TRADE_TYPE_CODE" property="tradeTypeCode"/>
+        <result column="MONTHLY_LEASE" property="monthlyLease"/>
+        <result column="DEPOSIT" property="deposit"/>
+        <result column="JEONSE_COST" property="jeonseCost"/>
+        <result column="MAINTENANCE_COST" property="maintenanceCost"/>
+        <result column="DETAIL_OPTIONS" property="detailOptions"/>
+        <result column="TITLE" property="title"/>
+        <result column="CONTENT" property="content"/>
+        <result column="CREATE_DATE" property="createDate"/>
+        <result column="USER_NO" property="userNo"/>
+        <collection property="imgList" resultMap="roomImg"/>
+    </resultMap>
+
+    <!--room이미지 resultMap-->
+    <resultMap id="roomImg" type="com.green.hanbang.room.vo.RoomIMGVO">
+        <id column="IMG_CODE" property="imgCode"/>
+        <result column="ORIGIN_FILE_NAME" property="originFileName"/>
+        <result column="ATTACHED_FILE_NAME" property="attachedFileName"/>
+        <result column="ROOM_CODE" property="roomCode"/>
+        <result column="IS_MAIN" property="isMain"/>
+    </resultMap>
+
     <!--option select-->
     <select id="selectOptions" resultMap="options">
         SELECT OP.OPTION_CODE

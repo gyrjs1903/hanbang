@@ -12,7 +12,6 @@ public interface RoomService {
     public List<OptionsVO> selectOptions();
     //select property
     public List<PropertyTypeVO> selectProperty();
-
     //전월세 유형 셀렉트
     public  List<TradeTypeVO> selectTradeType();
 }
