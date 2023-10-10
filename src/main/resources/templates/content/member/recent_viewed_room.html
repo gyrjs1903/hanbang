@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{fragment/main_layout}">
+<head>
+<meta charset="UTF-8">
+<title>최근 본 방</title>
+</head>
+<body>
+    <th:block th:fragment="content">
+        <header class="">
+            <div>
+                <h1 class="">관심목록</h1>
+                <div class="">
+                    <a href="/recent_viewed_room" aria-current="page" class="active">최근 본 방</a>
+                    <a href="/dibs_on_room">찜한 방</a>
+                    <a href="/recent_viewed_apartment">최근 본 단지</a>
+                    <a href="/dibs_on_apartment">찜한 단지</a>
+                    <a href="/wish_list_favorites">즐겨찾기</a>
+                </div>
+            </div>
+        </header>
+        <div class="">
+            <p>최근 본 방이 없습니다.</p>
+            <p>관심있는 방을 둘러보세요.</p>
+        </div>
+    </th:block>
+</body>
+</html>

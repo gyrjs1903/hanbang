@@ -13,6 +13,12 @@
         <result column="JOIN_DATE"  property="joinDate"/>
         <association property="realtorDetailVO" resultMap="realtorMapper.realtorDetail"/>
     </resultMap>
+    <resultMap id="memberImg" type="com.green.hanbang.member.vo.MemberVO">
+        <id column="PROFILE_IMG_NO"                 property="profileImgNo"/>
+        <result column="USER_NO"                    property="userNo"/>
+        <result column="PROFILE_IMG_NAME"           property="profileImgName"/>
+        <result column="ATTACHED_PROFILE_IMG_NAME"  property="attachedProfileImgName"/>
+    </resultMap>
 
     <!-- 회원 가입 -->
     <insert id="join">
@@ -42,4 +48,13 @@
         AND PASSWORD = #{passWord}
     </select>
 
+    <!-- 프로필 이미지 불러오기 -->
+    <select id="profileImgload" resultMap="memberImg">
+        SELECT MI.USER_NO
+        , PROFILE_IMG_NO
+        , PROFILE_IMG_NAME
+        , ATTACHED_PROFILE_IMG_NAME
+        FROM MEMBER_USER MU, MEMBER_IMG MI
+        WHERE USER_NO = #{userNo}
+    </select>
 </mapper>
