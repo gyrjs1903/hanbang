@@ -31,7 +31,13 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public int insertRoom(RoomVO roomVO) {
-        return sqlSession.insert("roomMapper.insertRoom",roomVO);
+    public String selectNextRoomCode() {
+        return sqlSession.selectOne("roomMapper.selectNextRoomCode");
+    }
+
+    @Override
+    public void insertRoom(RoomVO roomVO) {
+        sqlSession.insert("roomMapper.insertRoom",roomVO);
+        sqlSession.insert("roomMapper.insertRoomImg", roomVO);
     }
 }

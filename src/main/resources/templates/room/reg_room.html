@@ -18,7 +18,7 @@
             </ul>
         </div>
         <div>
-            <form action="/room/insertRoom" method="post">
+            <form action="/room/insertRoom" method="post" enctype="multipart/form-data">
                 <input name="userNo" type="hidden" th:value="${session.loginInfo.userNo}">
                 <div>
                     <h2>매물정보</h2>
@@ -159,7 +159,6 @@
                                 </th:block>
                             </td>
                         </tr>
-
                     </table>
                 </div>
                 <div>

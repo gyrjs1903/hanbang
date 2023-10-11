@@ -15,5 +15,8 @@ public interface RoomService {
     public List<PropertyTypeVO> selectProperty();
     //전월세 유형 셀렉트
     public  List<TradeTypeVO> selectTradeType();
-    public int insertRoom(RoomVO roomVO);
+    //방코드 셀렉트
+    public String selectNextRoomCode();
+    //매물 인설트
+    public void insertRoom(RoomVO roomVO);
 }
