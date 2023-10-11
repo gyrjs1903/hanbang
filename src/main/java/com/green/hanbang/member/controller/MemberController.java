@@ -5,10 +5,7 @@ import com.green.hanbang.member.vo.MemberVO;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/member")
@@ -18,13 +15,13 @@ public class MemberController {
 
     // 회원 가입 페이지 이동
     @GetMapping("/joinForm")
-    public String joinForm(){
+    public String joinForm() {
         return "content/member/join";
     }
 
     // 회원 가입
     @PostMapping("/join")
-    public String join(MemberVO memberVO){
+    public String join(MemberVO memberVO) {
         memberService.join(memberVO);
         return "content/member/login";
     }
@@ -34,18 +31,18 @@ public class MemberController {
 
     // 로그인 페이지 이동
     @GetMapping("loginForm")
-    public String loginForm(MemberVO memberVO){
+    public String loginForm(MemberVO memberVO) {
         return "content/member/login";
     }
 
     // 로그인
     @PostMapping("/login")
-    public String login(MemberVO memberVO, HttpSession session){
+    public String login(MemberVO memberVO, HttpSession session) {
         MemberVO loginInfo = memberService.login(memberVO);
 
-        if(loginInfo != null){
+        if (loginInfo != null) {
             session.setAttribute("loginInfo", loginInfo);
-            if(loginInfo.getLoginType().equals("REALTOR")){
+            if (loginInfo.getLoginType().equals("REALTOR")) {
                 return "redirect:/realtor/main";
             }
         }
@@ -55,17 +52,47 @@ public class MemberController {
 
     // 로그아웃
     @GetMapping("/logout")
-    public String logout(HttpSession session){
+    public String logout(HttpSession session) {
         session.removeAttribute("loginInfo");
         return "redirect:/";
     }
 
-    // 내 정보 관리 페이지
+    // 비밀번호 재설정 창 팝업
+
+    // 내 정보 페이지로 이동
     @GetMapping("/memberInfo")
-    public String memberInfo(){
-        return "content/member/member_info";
+    public String memberInfo() {
+        return "content/member/user_info";
     }
 
-    // 이메일 입력 확인 비동기 통신
+    // 문자문의 페이지로 이동
+    @GetMapping("/memberSMS")
+    public String memberSMS() {
+        return "content/member/user_sms";
+    }
 
+    // 전화문의 페이지로 이동
+    @GetMapping("/memberCall")
+    public String memberCall() {
+        return "content/member/user_call";
+    }
+
+    // 1:1문의 페이지로 이동
+    @GetMapping("/memberInquiry")
+    public String memberInquiry() {
+        return "content/member/user_inquiry";
+    }
+
+    // 허위매물 신고내역 페이지로 이동
+    @GetMapping("/memberReport")
+    public String memberReport() {
+        return "content/member/user_report";
+    }
+
+    // 이메일(아이디) 중복 확인 및 유효성 검사
+    @ResponseBody
+    @PostMapping("/userNameCheckFetch")
+    public boolean userNameCheckFetch(String userName){
+        return memberService.userNameCheck(userName);
+    }
 }
