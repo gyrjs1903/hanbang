@@ -24,6 +24,15 @@
         <result column="INFO_REGDATE" property="infoRegDate"/>
     </resultMap>
 
+    <resultMap id="membership" type="com.green.hanbang.admin.vo.MembershipVO">
+        <result column="MCATE_CODE" property="mCateCode"/>
+        <result column="MCATE_NAME" property="mCateName"/>
+        <result column="MEMBERSHIP_CODE" property="membershipCode"/>
+        <result column="MEMBERSHIP_NAME" property="membershipName"/>
+        <result column="MEMBERSHIP_CONTENT" property="membershipContent"/>
+        <result column="MEMBERSHIP_PRICE" property="membershipPrice"/>
+    </resultMap>
+
 <!--    일반 회원 조회 -->
     <select id="userManage" resultMap="manager">
         SELECT USER_NO
@@ -145,6 +154,28 @@
         DELETE INFO_BOARD
         WHERE BOARD_NUM = #{boardNum}
     </delete>
+
+<!--    맴버쉽 카테고리 출력-->
+    <select id="selectCategory" resultMap="membership">
+        SELECT MCATE_CODE
+            , MCATE_NAME
+        FROM MEMBERSHIP_CATEGORY
+    </select>
+<!-- 맴버쉽 카테고리 별 데이터 조회-->
+    <select id="selectMembershipList" resultMap="membership">
+        SELECT MEMBERSHIP_NAME
+            , MEMBERSHIP_CONTENT
+            , MEMBERSHIP_PRICE
+            , MEMBERSHIP_CODE
+            , SHIP.MCATE_CODE
+            , CATE.MCATE_NAME
+        FROM MEMBERSHIP_TABLE SHIP, MEMBERSHIP_CATEGORY CATE
+        WHERE SHIP.MCATE_CODE = CATE.MCATE_CODE
+        AND SHIP.MCATE_CODE = #{mCateCode}
+    </select>
+    <insert id="insertMembership">
+
+    </insert>
 </mapper>
 
 

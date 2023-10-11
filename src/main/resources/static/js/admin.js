@@ -6,5 +6,4 @@ function updateAuthority(realTorCode){
     }
 }
 
-// 일반 회원 삭제 
 
