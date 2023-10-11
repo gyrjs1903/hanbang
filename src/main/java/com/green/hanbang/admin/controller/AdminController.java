@@ -27,26 +27,54 @@ public class AdminController {
     }
 
     // 회원 목록 페이지
-    @GetMapping("/userList")
-    public String userList(Model model){
-        List<MemberManageVO> userList = memberManageService.userList();
+    @RequestMapping(value = "/userList")
+    public String userList(Model model, MemberManageVO memberManageVO){
+        List<MemberManageVO> userList = memberManageService.userList(memberManageVO);
         model.addAttribute("userList", userList );
         return "admin/user_list";
     }
 
+    // 회원 상세 조회
+    @GetMapping("/userDetail")
+    public String userDetail(String userNo, Model model){
+        MemberManageVO userDetail = memberManageService.userDetail(userNo);
+        model.addAttribute("userDetail", userDetail);
+        return "admin/user_detail";
+    }
+
+    // 회원 삭제하기
+    @GetMapping("/deleteUser")
+    public String deleteUser(String userNo){
+        memberManageService.deleteUser(userNo);
+        return "redirect:/admin/userList";
+    }
     // 공인중개사 목록 페이지
-    @GetMapping("/realList")
-    public String realList(Model model){
-        List<MemberManageVO> realList = memberManageService.realList();
+    @RequestMapping(value = "/realList")
+    public String realList(Model model, MemberManageVO memberManageVO){
+        List<MemberManageVO> realList = memberManageService.realList(memberManageVO);
         model.addAttribute("realList", realList );
         return "admin/real_list";
     }
 
+    // 공인중개사 상세 조회
+    @GetMapping("/realDetail")
+    public String realDetail(int identificationNum, Model model){
+        MemberManageVO realDetail = memberManageService.realDetail(identificationNum);
+        model.addAttribute("realDetail", realDetail);
+        return "admin/real_detail";
+    }
+
+    // 공인중개사 삭제
+    @GetMapping("/deleteReal")
+    public String deleteReal(int identificationNum){
+        memberManageService.deleteReal(identificationNum);
+        return "redirect:/admin/realList";
+    }
     // 공인 중개사 승인
     @GetMapping("/updateAuthority")
     public String updateAuthority(MemberManageVO memberManageVO){
         memberManageService.updateAuthority(memberManageVO);
-        return "redirect:/admin/realList";
+        return "redirect:/admin/realDetail";
     }
 
     // 공지사항 목록 조회
@@ -80,15 +108,24 @@ public class AdminController {
 
     // 공지사항 수정 페이지로 이동
     @GetMapping("/updateBoardForm")
-    public String updateBoardForm(){
+    public String updateBoardForm(int boardNum, Model model){
+        BoardVO boardInfo = boardService.detailBoard(boardNum);
+        model.addAttribute("board", boardInfo);
         return "admin/update_board";
     }
 
-    // 공지사항 수정하기 --> 코드 수정하기
+    // 공지사항 수정하기
     @PostMapping("/updateBoard")
     public String updateBoard(BoardVO boardVO){
         boardService.updateBoard(boardVO);
         return "redirect:/admin/boardDetail?boardNum=" + boardVO.getBoardNum();
+    }
+
+    // 공지사항 삭제하기
+    @GetMapping("/deleteBoard")
+    public String deleteBoard(int boardNum){
+        boardService.deleteBoard(boardNum);
+        return "redirect:/admin/infoBoard";
     }
 
 

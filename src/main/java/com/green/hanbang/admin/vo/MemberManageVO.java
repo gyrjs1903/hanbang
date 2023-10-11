@@ -17,6 +17,8 @@ public class MemberManageVO {
     private  String authority;
     private  String userNo;
     private  String requestDate;
+    private String userSearch;
+    private String realSearch;
 
 
 

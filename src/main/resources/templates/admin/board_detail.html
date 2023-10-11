@@ -21,6 +21,6 @@
         <div>[[${boardVO.infoRegDate}]]</div>
     </div>
     <input type="button" value="수정" th:onclick="|location.href='@{/admin/updateBoardForm(boardNum=${boardVO.boardNum})}'|">
-    <input type="button" value="삭제" th:onclick="location.href='@{/admin/deleteBoard(boardNum=${boardVO.boardNum})}';">
+    <input type="button" value="삭제" th:onclick="|location.href='@{/admin/deleteBoard(boardNum=${boardVO.boardNum})}'|">
 </body>
 </html>

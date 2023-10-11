@@ -6,37 +6,39 @@
 <title>회원 목록</title>
 </head>
 <body>
+    <!-- 검색 -->
+    <div>
+        <form action="/admin/userList" method="post">
+            <input type="text" name="userSearch">
+            <input type="submit" value="검색">
+        </form>
+    </div>
+
+    <!-- 게시글 목록  -->
     <table>
         <colgroup>
             <col width="5%">
-            <col width="10%">
-            <col width="10%">
-            <col width="5%">
-            <col width="10%">
-            <col width="10%">
             <col width="10%">
         </colgroup>
         <thead>
             <tr>
                 <td>No</td>
                 <td>사용자명</td>
-                <td>비밀번호</td>
-                <td>유형</td>
-                <td>닉네임</td>
-                <td>폰번호</td>
-                <td>가입일시</td>
             </tr>
         </thead>
         <tbody>
-            <tr th:each="user : ${userList}">
-                <td>[[${user.userNo}]]</td>
-                <td>[[${user.userName}]]</td>
-                <td>[[${user.password}]]</td>
-                <td>[[${user.loginType}]]</td>
-                <td>[[${user.nickName}]]</td>
-                <td>[[${user.phone}]]</td>
-                <td>[[${user.joinDate}]]</td>
-            </tr>
+            <th:block th:if="${#lists.size(userList)==0}">
+                <tr>
+                    <td colspan="5">조회된 게시글이 없습니다.</td>
+                </tr>
+            </th:block>
+
+            <th:block th:if="${#lists.size(userList)!=0}">
+                <tr th:each="user : ${userList}">
+                    <td>[[${user.userNo}]]</td>
+                    <td><a th:href="@{/admin/userDetail(userNo=${user.userNo})}">[[${user.userName}]]</a></td>
+                </tr>
+            </th:block>
         </tbody>
     </table>
 </body>

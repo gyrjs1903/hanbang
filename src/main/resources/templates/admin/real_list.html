@@ -6,15 +6,21 @@
 <title>공인중개사 목록</title>
 </head>
 <body>
+     <!-- 검색 -->
+     <div>
+        <form action="/admin/realList" method="post">
+            <input type="text" name="realSearch">
+            <input type="submit" value="검색">
+        </form>
+    </div>
+
     <table>
         <colgroup>
             <col width="5%">
+            <col width="10%"> 
             <col width="10%">
             <col width="10%">
             <col width="5%">
-            <col width="10%">
-            <col width="10%">
-            <col width="10%">
         </colgroup>
         <thead>
             <tr>
@@ -22,30 +28,29 @@
                 <td>코드</td>
                 <td>공인중개사명</td>
                 <td>사업자번호</td>
-                <td>자격증 파일</td>
-                <td>권한 여부</td>
-                <td>유형</td>
-                <td>승인 신청 날짜</td>
+                <td>권한여부</td>
             </tr>
         </thead>
         <tbody>
-            <tr th:each="real : ${realList}">
-                <td>[[${real.userNo}]]</td>
-                <td>[[${real.realTorCode}]]</td>
-                <td>[[${real.officeName}]]</td>
-                <td>[[${real.identificationNum}]]</td>
-                <td>[[${real.licenseFileName}]]</td>
-                <td>
-                    [[${real.authority}]]
-                    <div th:style="${real.authority == 'N' ? 'display : block':'display : none'}">
-                        <input type="button" value="승인" th:onclick = "updateAuthority([[${real.realTorCode}]]);">    
-                    </div>
-                </td>
-                <td>[[${real.loginType}]]</td>
-                <td>[[${real.requestDate}]]</td>
-            </tr>
+            <th:block th:if="${#lists.size(realList)==0}">
+                <tr>
+                    <td colspan="5">조회된 게시글이 없습니다.</td>
+                </tr>
+            </th:block>
+
+            <th:block th:if="${#lists.size(realList)!=0}">
+                <tr th:each="real : ${realList}">
+                    <td>[[${real.userNo}]]</td>
+                    <td>[[${real.realTorCode}]]</td>
+                    <td>[[${real.officeName}]]</td>
+                    <td><a th:href="@{/admin/realDetail(identificationNum=${real.identificationNum})}">[[${real.identificationNum}]]</a></td>
+                    <td>[[${real.licenseFileName}]]</td>
+                    <td>
+                        [[${real.authority}]]
+                    </td>
+                </tr>
+            </th:block>
         </tbody>
     </table>
-    <script src="/js/admin.js"></script>
 </body>
 </html>

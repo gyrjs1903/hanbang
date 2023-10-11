@@ -7,7 +7,7 @@
 </head>
 <body>
     <form action="/admin/updateBoard" method="post">
-        <!-- <input type="hidden" name="boardNum" th:value="${board.boardNum}">
+        <input type="hidden" name="boardNum" th:value="${board.boardNum}">
         <div>
             <div> 글 제목 </div>
             <div><input type="text" name="infoTitle" required th:value="${board.infoTitle}"></div>
@@ -15,11 +15,11 @@
         <div>
             <div> 내용 </div>
             <div>
-                <textarea cols="50" rows="10" name="infoContent">[[${board.infoContent}]]</textarea>
+                <textarea cols="50" rows="10" name="infoContent" th:value="${board.infoContent}">[[${board.infoContent}]]</textarea>
             </div>
         </div>
         
-        <input type="submit" value="등록"> -->
+        <input type="submit" value="수정">
     </form>
 </body>
 </html>

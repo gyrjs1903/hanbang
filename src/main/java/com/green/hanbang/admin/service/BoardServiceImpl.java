@@ -31,4 +31,9 @@ public class BoardServiceImpl implements BoardService {
     public int updateBoard(BoardVO boardVO) {
         return sqlSession.update("adminMapper.updateBoard", boardVO);
     }
+
+    @Override
+    public int deleteBoard(int boardNum) {
+        return sqlSession.delete("adminMapper.deleteBoard", boardNum);
+    }
 }
