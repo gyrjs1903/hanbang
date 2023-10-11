@@ -18,8 +18,8 @@
             </ul>
         </div>
         <div>
-            <form action="/insertRoom" method="post">
-                <h3>[[${session.loginInfo.userNo}]]</h3>
+            <form action="/room/insertRoom" method="post" enctype="multipart/form-data">
+                <input name="userNo" type="hidden" th:value="${session.loginInfo.userNo}">
                 <div>
                     <h2>매물정보</h2>
                     <table>
@@ -29,15 +29,14 @@
                                 <td>
                                     <header>대분류</header>
                                     <div th:each="property : ${propertyList}">
-                                        <input type="radio"
-                                            th:value="${property.propertyTypeCode}">[[${property.propertyTypeName}]]</input>
+                                        <input type="radio" name="propertyTypeCode" th:value="${property.propertyTypeCode}">[[${property.propertyTypeName}]]</input>
                                     </div>
                                 </td>
                                 <td>
                                     <header>소분류</header>
                                     <th:block th:each="property : ${propertyList}">
                                         <th:block th:each="subProperty : ${property.subPropertyTypeList}">
-                                            <input type="radio" th:value="${subProperty.subPropertyTypeCode}">
+                                            <input type="radio" name="subPropertyTypeCode" th:value="${subProperty.subPropertyTypeCode}">
                                             <label>[[${subProperty.subPropertyTypeName}]]</label>
                                         </th:block>
                                     </th:block>
@@ -52,7 +51,7 @@
                                             <input type="text" id="addr" name="addr" readonly>
                                             <input type="button" value="검색" id="select" onclick="openPost();">
                                             <label>상세주소</label>
-                                            <input type="text" name="">
+                                            <input type="text" name="detailAddr">
                                         </div>
                                         <div id="map" style="width:500px;height:400px;">
 
@@ -66,9 +65,9 @@
                                     <div>
                                         <div>
                                             <label>전용면적</label>
-                                            <input type="text" name="" placeholder="평수 입력">
+                                            <input type="text" name="roomSizeP" placeholder="평수 입력">
                                             <span> = </span>
-                                            <input type="text" name="" placeholder="m&#178; 입력">
+                                            <input type="text" name="roomSizeM" placeholder="m&#178; 입력">
                                         </div>
                                     </div>
                                 </td>
@@ -94,7 +93,7 @@
                             <th>거래 종류 <span>*</span></th>
                             <td>
                                 <th:block th:each="tradeType : ${tradeTypeList}">
-                                    <input type="radio" th:value="${tradeType.tradeTypeCode}">
+                                    <input type="radio" name="tradeTypeCode" th:value="${tradeType.tradeTypeCode}">
                                     <span>[[${tradeType.tradeTypeName}]]</span>
                                 </th:block>
                                 
@@ -105,15 +104,15 @@
                             <td>
                                 <div>
                                     <label for="">전세가</label>
-                                    <input type="text" name="jeonseCost">
+                                    <input type="number" name="jeonseCost">
                                     <p>만원</p>
                                 </div>
                                 <div>
                                     <label for="">보증금</label>
-                                    <input type="text" name="deposit">
+                                    <input type="number" name="deposit">
                                     <p>만원</p>
                                     <label for="">월세</label>
-                                    <input type="text" name="monthlyLease">
+                                    <input type="number" name="monthlyLease">
                                     <p>만원</p>
                                 </div>
                             </td>
@@ -128,7 +127,7 @@
                                 </div>
                                 <div>
                                     <label for="">관리비</label>
-                                    <input type="text" name="maintenanceCost">
+                                    <input type="number" name="maintenanceCost">
                                 </div>
                             </td>
                         </tr>
@@ -160,7 +159,6 @@
                                 </th:block>
                             </td>
                         </tr>
-
                     </table>
                 </div>
                 <div>
@@ -170,7 +168,9 @@
                             <th>일반사진 <span>*</span></th>
                             <td>
                                 <input type="file" name="mainImg">
+                                <span>메인사진</span>
                                 <input type="file" name="subImg" multiple>
+                                <span>메인사진</span>
                             </td>
                         </tr>
                     </table>

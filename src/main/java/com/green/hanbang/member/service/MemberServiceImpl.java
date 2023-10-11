@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class MemberServiceImpl implements MemberService{
+public class MemberServiceImpl implements MemberService {
     private final SqlSessionTemplate sqlSession;
 
     @Override
@@ -18,6 +18,11 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public MemberVO login(MemberVO memberVO) {
         return sqlSession.selectOne("memberMapper.login", memberVO);
+    }
+
+    @Override
+    public boolean userNameCheck(String userName) {
+        return sqlSession.selectOne("memberMapper.userNameCheck", userName);
     }
 
 }

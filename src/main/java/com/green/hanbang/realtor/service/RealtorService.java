@@ -20,5 +20,5 @@ public interface RealtorService {
     public String selectAuthorityStatue(String userNo);
 
     //사업자등록증 중복 여부
-    public Integer selectIdentificationNum(int identificationNum);
+    public String selectIdentificationNum(String identificationNum);
 }

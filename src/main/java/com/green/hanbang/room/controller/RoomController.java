@@ -3,15 +3,16 @@ package com.green.hanbang.room.controller;
 import com.green.hanbang.member.service.MemberService;
 import com.green.hanbang.member.vo.MemberVO;
 import com.green.hanbang.room.service.RoomService;
-import com.green.hanbang.room.vo.OptionsVO;
-import com.green.hanbang.room.vo.PropertyTypeVO;
-import com.green.hanbang.room.vo.TradeTypeVO;
+import com.green.hanbang.room.vo.*;
+import com.green.hanbang.util.RoomUtil;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -34,7 +35,31 @@ public class RoomController {
         model.addAttribute("optionsList", optionsList);
         model.addAttribute("propertyList", propertyList);
         model.addAttribute("tradeTypeList", tradeTypeList);
+
         return "room/reg_room";
+    }
+    @PostMapping("/insertRoom")
+    public String insertRoom(RoomVO roomVO, MultipartFile mainImg, MultipartFile[] subImg){
+        //상품이미지등록
+        //RoomCode를 조회
+        String roomCode = roomService.selectNextRoomCode();
+
+        //이미지정보 하나가 들어갈 수 있는 통
+        //첨부파일 단일
+        RoomIMGVO roomIMGVO = RoomUtil.uploadFile(mainImg);
+
+        //첨부파일 다중
+        List<RoomIMGVO> imgList =RoomUtil.multiFileUpload(subImg);
+        imgList.add(roomIMGVO);
+
+        //RoomIMGVO에 RoomCode 저장
+        for (RoomIMGVO roomIMGVO1 : imgList){
+            roomIMGVO1.setRoomCode(roomCode);
+        }
+        roomVO.setImgList(imgList);
+        System.out.println(roomVO);
+        roomService.insertRoom(roomVO);
+        return "redirect:/";
     }
 
 }

@@ -43,6 +43,5 @@ input{
     margin-top: 15px;
 }
 .btn.btn-light{
-    --bs-btn-bg:#cecfd1;
     margin-top: 0;
 }

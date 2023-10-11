@@ -30,7 +30,7 @@ public class RoomUtil {
 
             //파일 첨부
             try {
-                File file = new File(ConstantVariable.UPLOAD_PATH + attachedFileName);
+                File file = new File(ConstantVariable.ROOM_UPLOAD_PATH + attachedFileName);
                 img.transferTo(file);
 
                 roomIMGVO.setOriginFileName(originFileName);

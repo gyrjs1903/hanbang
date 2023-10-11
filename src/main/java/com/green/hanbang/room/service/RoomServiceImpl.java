@@ -2,6 +2,7 @@ package com.green.hanbang.room.service;
 
 import com.green.hanbang.room.vo.OptionsVO;
 import com.green.hanbang.room.vo.PropertyTypeVO;
+import com.green.hanbang.room.vo.RoomVO;
 import com.green.hanbang.room.vo.TradeTypeVO;
 import lombok.RequiredArgsConstructor;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -27,5 +28,16 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public List<TradeTypeVO> selectTradeType() {
         return sqlSession.selectList("roomMapper.selectTradeType");
+    }
+
+    @Override
+    public String selectNextRoomCode() {
+        return sqlSession.selectOne("roomMapper.selectNextRoomCode");
+    }
+
+    @Override
+    public void insertRoom(RoomVO roomVO) {
+        sqlSession.insert("roomMapper.insertRoom",roomVO);
+        sqlSession.insert("roomMapper.insertRoomImg", roomVO);
     }
 }

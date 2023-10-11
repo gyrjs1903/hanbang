@@ -32,3 +32,7 @@ form{
     right: 50%;
     transform: translateX(50%);
 }
+.error-div{
+    margin: -10px 0px 15px 0px;
+    color: red;
+}
