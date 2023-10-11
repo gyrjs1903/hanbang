@@ -43,13 +43,5 @@ input{
     margin-top: 15px;
 }
 .btn.btn-light{
-    --bs-btn-bg:#cecfd1;
     margin-top: 0;
-}
-.done.btn:hover{
-    background-color: #0d6efd;
-    border-color: #0d6efd;
-}
-.done.btn{
-    cursor: default;
 }

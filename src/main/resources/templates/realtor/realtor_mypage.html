@@ -33,7 +33,8 @@
                         </div>
                         <div th:if="${authority == 'Y' and authority != null}">
                             <div class="certification acceptance">인증된 공인중개사입니다.</div>
-                            <span class="btn btn-primary done">인증완료</span>
+                            <span class="btn btn-primary done" >인증정보 수정하기</span>
+                            <!-- th:onclick="|location.href='@{/realtor/certificationForm(userNo=${realtorInfo.userNo})}'|" -->
                         </div>
                     </div>
                     <br>

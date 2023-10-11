@@ -2,6 +2,7 @@ function duplication(){
     let num = document.querySelector('#identificationNum').value;
     let officeName = document.querySelector('#officeName').value;
     let licenseImg = document.querySelector('#licenseImg').value;
+    console.log(num);
     if(num != '' && num != null){
         fetch('/realtor/identificationNum', { //요청경로
             method: 'POST',
@@ -31,7 +32,6 @@ function duplication(){
                 }
             } else{
                 inputInvalidate('#id-error-div','사업자등록번호를 확인해주세요.');
-                return;
             }
         })
         //fetch 통신 실패 시 실행 영역
