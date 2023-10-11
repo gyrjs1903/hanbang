@@ -114,7 +114,9 @@
         , CONTENT
         , USER_NO
         )VALUES(
-        #{roomCode}
+        (SELECT
+        'ROOM_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ROOM_CODE,7))),0)+1, 4, '0')
+        FROM ROOM)
         , #{propertyTypeCode}
         , #{subPropertyTypeCode}
         , #{addr}

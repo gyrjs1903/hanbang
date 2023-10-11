@@ -39,10 +39,10 @@ public class RoomController {
 
         return "room/reg_room";
     }
-//    @PostMapping("/insertRoom")
-//    public String insertRoom( RoomVO roomVO){
-//        roomService.insertRoom(roomVO);
-//        return "redirect:/reg/room";
-//    }
+    @PostMapping("/insertRoom")
+    public String insertRoom( RoomVO roomVO){
+        roomService.insertRoom(roomVO);
+        return "redirect:/";
+    }
 
 }
