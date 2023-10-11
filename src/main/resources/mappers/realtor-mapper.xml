@@ -77,11 +77,12 @@
     </select>
 
     <!-- 사업자등록번호 중복 여부 -->
-    <select id="selectIdentificationNum" resultType="Integer">
+    <select id="selectIdentificationNum" resultType="String">
         SELECT IDENTIFICATION_NUM
         FROM REALTOR_DETAIL
         WHERE IDENTIFICATION_NUM = #{identificationNum}
     </select>
+
 </mapper>
 
 

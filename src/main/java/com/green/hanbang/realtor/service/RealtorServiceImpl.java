@@ -25,8 +25,8 @@ public class RealtorServiceImpl implements RealtorService{
 
     @Override
     public void insertRealtorDetail(RealtorDetailVO realtorDetailVO) {
-        sqlSession.insert("realtorMapper.insertLicenseImg",realtorDetailVO);
         sqlSession.insert("realtorMapper.insertRealtorDetail",realtorDetailVO);
+        sqlSession.insert("realtorMapper.insertLicenseImg",realtorDetailVO);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class RealtorServiceImpl implements RealtorService{
     }
 
     @Override
-    public Integer selectIdentificationNum(int identificationNum) {
+    public String selectIdentificationNum(String identificationNum) {
         return sqlSession.selectOne("realtorMapper.selectIdentificationNum", identificationNum);
     }
 }

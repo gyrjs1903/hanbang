@@ -40,9 +40,9 @@ public class RealtorController {
 
     @ResponseBody
     @PostMapping("/identificationNum")
-    public boolean selectIdentificationNum(@RequestBody Map<String, Integer> identificationNum){
+    public boolean selectIdentificationNum(@RequestBody Map<String, String> identificationNum){
         System.out.println(identificationNum);
-        Integer num = realtorService.selectIdentificationNum(identificationNum.get("identificationNum"));
+        String num = realtorService.selectIdentificationNum(identificationNum.get("identificationNum"));
         boolean result;
         if(num == null){
             result = true;

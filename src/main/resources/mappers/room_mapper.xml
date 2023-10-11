@@ -93,6 +93,13 @@
         , TRADE_TYPE_NAME
         FROM TRADE_TYPE
     </select>
+
+    <select id="selectNextRoomCode" resultType="String">
+        SELECT
+        'ROOM_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ROOM_CODE,7))),0)+1, 4, '0')
+        FROM ROOM
+    </select>
+
     <!--매물 insert-->
     <insert id="insertRoom">
         INSERT INTO ROOM(
@@ -114,7 +121,9 @@
         , CONTENT
         , USER_NO
         )VALUES(
-        #{roomCode}
+        (SELECT
+        'ROOM_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ROOM_CODE,7))),0)+1, 4, '0')
+        FROM ROOM)
         , #{propertyTypeCode}
         , #{subPropertyTypeCode}
         , #{addr}
@@ -132,6 +141,26 @@
         , #{content}
         , #{userNo}
         )
+    </insert>
+    <!--이미지 insert-->
+    <insert id="insertRoomImg">
+        INSERT INTO ROOM_IMG(
+        IMG_CODE
+        , ORIGIN_FILE_NAME
+        , ATTACHED_FILE_NAME
+        , ROOM_CODE
+        , IS_MAIN
+        )
+        <foreach collection="imgList" item="img" separator="UNION ALL" index="idx">
+            SELECT (SELECT 'IMG_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(IMG_CODE, 5))), 0) + 1 + #{idx}, 3, '0')
+            FROM ROOM_IMG)
+            , #{img.originFileName}
+            , #{img.attachedFileName}
+            , #{img.roomCode}
+            , #{img.isMain}
+            FROM DUAL
+        </foreach>
+
     </insert>
 
 </mapper>
