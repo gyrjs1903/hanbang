@@ -39,7 +39,7 @@ public class RoomController {
         return "room/reg_room";
     }
     @PostMapping("/insertRoom")
-    public String insertRoom(RoomVO roomVO, MultipartFile mainImg, MultipartFile[] subImg){
+    public String insertRoom(RoomVO roomVO, MultipartFile mainImg, MultipartFile[] subImg, RoomAddrVO roomAddrVO){
         //상품이미지등록
         //RoomCode를 조회
         String roomCode = roomService.selectNextRoomCode();
@@ -56,10 +56,17 @@ public class RoomController {
         for (RoomIMGVO roomIMGVO1 : imgList){
             roomIMGVO1.setRoomCode(roomCode);
         }
+        roomAddrVO.setRoomCode(roomCode);
+
+        roomVO.setAddrVO(roomAddrVO);
         roomVO.setImgList(imgList);
-        System.out.println(roomVO);
-        roomService.insertRoom(roomVO);
-        return "redirect:/";
+        roomService.insertRoom(roomVO, roomAddrVO);
+        return "redirect:/room/roomMain";
+    }
+    @GetMapping("/roomMain")
+    public String roomMain(){
+
+        return "room/room_main";
     }
 
 }

@@ -58,11 +58,10 @@
         WHERE USER_NO = #{userNo}
     </select>
 
-    <!-- 아이디 중복 확인 및 유효성 검사 -->
+    <!-- 아이디 중복 확인 -->
     <select id="userNameCheck" resultType="String">
-        SELECT USER_NO
-            ,USER_NAME
-        FORM MEMBER_USER
+        SELECT USER_NAME
+        FROM MEMBER_USER
         WHERE USER_NAME = #{userName}
     </select>
 

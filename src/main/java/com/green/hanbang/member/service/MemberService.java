@@ -10,6 +10,6 @@ public interface MemberService {
     public MemberVO login(MemberVO memberVO);
 
     // 이메일(아이디) 중복 확인
-    public boolean userNameCheck(String userName);
+    public String userNameCheck(String userName);
 
 }

@@ -91,8 +91,8 @@ public class MemberController {
 
     // 이메일(아이디) 중복 확인 및 유효성 검사
     @ResponseBody
-    @PostMapping("/userNameCheckFetch")
-    public boolean userNameCheckFetch(String userName){
+    @PostMapping("/userNameDuplicationCheckFetch")
+    public String userNameDuplicationCheckFetch(@RequestParam String userName){
         return memberService.userNameCheck(userName);
     }
 }

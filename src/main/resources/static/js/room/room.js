@@ -11,7 +11,6 @@ function openPost() {
         oncomplete: function (data) {
             document.getElementById('addr').value = data.roadAddress;
 
-
             // 주소로 좌표를 검색합니다
             geocoder.addressSearch(data.roadAddress, function(result, status) {
 
@@ -28,7 +27,17 @@ function openPost() {
                 });
 
                 map.setCenter(coords);
-            } 
+
+                let coordinateY = document.getElementById("coordinate_y")
+                let coordinateX = document.getElementById("coordinate_x")
+                let Y = result[0].y
+                let X = result[0].x
+
+                coordinateY.value = Y;
+                coordinateX.value = X;
+                
+            }
+            
         });    
 
     }
@@ -40,10 +49,12 @@ function init(){
     let container = document.getElementById('map');
     let options = {
         center: new kakao.maps.LatLng(35.5419831733752, 129.338238429286), //지도의 중심좌표.
+        draggable: false, //// 지도를 생성할때 지도 이동 및 확대/축소를 막으려면 draggable: false 옵션을 추가하세요
         level: 3 //지도의 레벨(확대, 축소 정도)
     }
     // 지도를 생성합니다
     map = new kakao.maps.Map(container, options);
+
 
     // // 마커가 표시될 위치입니다 
     // var markerPosition  = new kakao.maps.LatLng(33.450701, 126.570667); 
@@ -55,6 +66,7 @@ function init(){
 
     // marker.setMap(map);
 }
+
 
 // //검색 검색 시 map 정보 변경
 // function changeMap(pos){
