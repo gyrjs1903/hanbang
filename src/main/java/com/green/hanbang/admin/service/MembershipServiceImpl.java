@@ -21,4 +21,9 @@ public class MembershipServiceImpl implements MembershipService {
     public List<MembershipVO> selectMembershipList(String mCateCode) {
         return sqlSession.selectList("adminMapper.selectMembershipList", mCateCode);
     }
+
+    @Override
+    public List<MembershipVO> selectMembershipItemList(String membershipCode) {
+        return sqlSession.selectList("adminMapper.selectMembershipItemList", membershipCode);
+    }
 }

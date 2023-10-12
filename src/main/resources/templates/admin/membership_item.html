@@ -3,7 +3,7 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
 <head>
 <meta charset="UTF-8">
-<title>일반 상품</title>
+<title></title>
 </head>
 <body>
     <table>
@@ -15,14 +15,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="membershipList : ${membershipList}">
-                <div>[[${membershipList.mCateName}]]</div>
-                <td><a th:href="@{/admin/membershipItem(membershipCode=${membershipList.membershipCode})}">[[${membershipList.membershipName}]]</a></td>
-                <td>[[${membershipList.membershipContent}]]</td>
-                <td>[[${membershipList.membershipPrice}]]</td>
+            <tr th:each="membershipItem : ${membershipItemList}">
+                <td>[[${membershipItem.itemName}]]</td>
+                <td>[[${membershipItem.itemContent}]]</td>
+                <td>[[${membershipItem.itemPrice}]]</td>
             </tr>
         </tbody>
-        <input type="button" value="상품 추가" onclick>
         <input type="button" value="상품 수정" onclick>
         <input type="button" value="상품 삭제" onclick>
     </table>
