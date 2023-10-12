@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{fragment/main_layout}" >
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+<th:block layout:fragment="content">
+ <h3>메인 페이지 지도</h3>
+ <div class="row">
+    <div class="col-4">
+        <div class="select_room">
+            <ul>
+                <div>사진</div>
+                <div class="text">
+                    <h4>전월세 가격</h4>
+                    <p>주소</p>
+                    <p>유형, 평, 층</p>
+                    <p>내용</p>
+                </div>
+            </ul>
+        </div>
+    </div>
+    <div class="col-8" id="map" style="height: 400px; width: 65%;"></div>
+ </div>
+ <script type="text/javascript"
+ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=22ce9cdc2a0d0a47b1149d42f3bab1c0&libraries=services,clusterer,drawing"></script>
+ <script src="/js/room/rooo_main.js"></script>
+</th:block>
+</body>
+</html>

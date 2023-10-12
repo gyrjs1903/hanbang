@@ -59,7 +59,12 @@ public class RoomController {
         roomVO.setImgList(imgList);
         System.out.println(roomVO);
         roomService.insertRoom(roomVO);
-        return "redirect:/";
+        return "redirect:/room/roomMain";
+    }
+    @GetMapping("/roomMain")
+    public String roomMain(){
+
+        return "room/room_main";
     }
 
 }
