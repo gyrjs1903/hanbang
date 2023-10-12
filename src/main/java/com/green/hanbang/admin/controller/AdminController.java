@@ -2,8 +2,10 @@ package com.green.hanbang.admin.controller;
 
 import com.green.hanbang.admin.service.BoardService;
 import com.green.hanbang.admin.service.MemberManageService;
+import com.green.hanbang.admin.service.MembershipService;
 import com.green.hanbang.admin.vo.BoardVO;
 import com.green.hanbang.admin.vo.MemberManageVO;
+import com.green.hanbang.admin.vo.MembershipVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,10 +21,13 @@ import java.util.List;
 public class AdminController {
     private final MemberManageService memberManageService;
     private final BoardService boardService;
+    private final MembershipService membershipService;
 
     // 관리자 페이지
     @GetMapping("/manage")
-    public String adminManage(){
+    public String adminManage(Model model, MembershipVO membershipVO){
+        List<MembershipVO> membershipCate = membershipService.selectCategory();
+        model.addAttribute("membershipCate", membershipCate );
         return "admin/admin_manage";
     }
 
@@ -128,6 +133,21 @@ public class AdminController {
         return "redirect:/admin/infoBoard";
     }
 
+    // 맴버쉽 카테고리 별 상품 조회
+    @GetMapping("/membershipList")
+    public String membershipList(Model model, String mCateCode, MembershipVO membershipVO){
+        List<MembershipVO> membershipList = membershipService.selectMembershipList(mCateCode);
+        model.addAttribute("membershipList", membershipList);
+        return "admin/membershipList";
+    }
+
+    // 맴버쉽 카테고리 별 세부 상품 조회
+    @GetMapping("/membershipItem")
+    public String membershipItem(Model model, String membershipCode, MembershipVO membershipVO ){
+        List<MembershipVO>membershipItemList = membershipService.selectMembershipItemList(membershipCode);
+        model.addAttribute("membershipItemList",membershipItemList);
+        return "admin/membership_item";
+    }
 
 
 }

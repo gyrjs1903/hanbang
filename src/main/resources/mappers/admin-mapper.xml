@@ -24,6 +24,19 @@
         <result column="INFO_REGDATE" property="infoRegDate"/>
     </resultMap>
 
+    <resultMap id="membership" type="com.green.hanbang.admin.vo.MembershipVO">
+        <result column="MCATE_CODE" property="mCateCode"/>
+        <result column="MCATE_NAME" property="mCateName"/>
+        <result column="MEMBERSHIP_CODE" property="membershipCode"/>
+        <result column="MEMBERSHIP_NAME" property="membershipName"/>
+        <result column="MEMBERSHIP_CONTENT" property="membershipContent"/>
+        <result column="MEMBERSHIP_PRICE" property="membershipPrice"/>
+        <result column="ITEM_CODE" property="itemCode"/>
+        <result column="ITEM_NAME" property="itemName"/>
+        <result column="ITEM_PRICE" property="itemPrice"/>
+        <result column="ITEM_CONTENT" property="itemContent"/>
+    </resultMap>
+
 <!--    일반 회원 조회 -->
     <select id="userManage" resultMap="manager">
         SELECT USER_NO
@@ -145,6 +158,38 @@
         DELETE INFO_BOARD
         WHERE BOARD_NUM = #{boardNum}
     </delete>
+
+<!--    맴버쉽 카테고리 출력-->
+    <select id="selectCategory" resultMap="membership">
+        SELECT MCATE_CODE
+            , MCATE_NAME
+        FROM MEMBERSHIP_CATEGORY
+    </select>
+
+<!-- 맴버쉽 카테고리 별 맴버쉽 상품 조회-->
+    <select id="selectMembershipList" resultMap="membership">
+        SELECT MEMBERSHIP_NAME
+            , MEMBERSHIP_CONTENT
+            , MEMBERSHIP_PRICE
+            , MEMBERSHIP_CODE
+            , SHIP.MCATE_CODE
+            , CATE.MCATE_NAME
+        FROM MEMBERSHIP_TABLE SHIP, MEMBERSHIP_CATEGORY CATE
+        WHERE SHIP.MCATE_CODE = CATE.MCATE_CODE
+        AND SHIP.MCATE_CODE = #{mCateCode}
+    </select>
+
+<!-- 맴버쉽 상품의 세부 상품 조회 -->
+    <select id="selectMembershipItemList" resultMap="membership">
+        SELECT ITEM_NAME
+            , ITEM_PRICE
+            , ITEM_CONTENT
+            , ITEM_CODE
+            , ITEM.MEMBERSHIP_CODE
+        FROM MEMITEM_TABLE ITEM, MEMBERSHIP_TABLE MEM
+        WHERE ITEM.MEMBERSHIP_CODE = MEM.MEMBERSHIP_CODE
+        AND ITEM.MEMBERSHIP_CODE = #{membershipCode}
+    </select>
 </mapper>
 
 

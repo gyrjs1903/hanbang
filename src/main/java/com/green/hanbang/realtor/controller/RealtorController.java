@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -43,13 +44,7 @@ public class RealtorController {
     public boolean selectIdentificationNum(@RequestBody Map<String, String> identificationNum){
         System.out.println(identificationNum);
         String num = realtorService.selectIdentificationNum(identificationNum.get("identificationNum"));
-        boolean result;
-        if(num == null){
-            result = true;
-        } else {
-            result = false;
-        }
-        return result;
+        return num == null;
     }
 
     @PostMapping("/certification")
