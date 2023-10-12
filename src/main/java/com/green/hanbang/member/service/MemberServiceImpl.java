@@ -21,7 +21,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public boolean userNameCheck(String userName) {
+    public String userNameCheck(String userName) {
         return sqlSession.selectOne("memberMapper.userNameCheck", userName);
     }
 

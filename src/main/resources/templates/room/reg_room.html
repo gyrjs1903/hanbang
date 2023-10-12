@@ -20,6 +20,8 @@
         <div>
             <form action="/room/insertRoom" method="post" enctype="multipart/form-data">
                 <input name="userNo" type="hidden" th:value="${session.loginInfo.userNo}">
+                <input name="coordinateY" id="coordinate_y" type="hidden" value=" ">
+                <input name="coordinateX" id="coordinate_x" type="hidden" value=" ">
                 <div>
                     <h2>매물정보</h2>
                     <table>
