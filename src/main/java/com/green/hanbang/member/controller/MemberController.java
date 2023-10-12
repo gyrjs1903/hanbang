@@ -28,9 +28,14 @@ public class MemberController {
 
     // 회원 가입 시 닉네임 자동 생성
 
-
+    // 회원 탈퇴
+    @GetMapping("/memberDelete")
+    public String memberDelete(MemberVO memberVO){
+        memberService.memberDelete(memberVO);
+        return "redirect:/";
+    }
     // 로그인 페이지 이동
-    @GetMapping("loginForm")
+    @GetMapping("/loginForm")
     public String loginForm(MemberVO memberVO) {
         return "content/member/login";
     }
@@ -61,7 +66,8 @@ public class MemberController {
 
     // 내 정보 페이지로 이동
     @GetMapping("/memberInfo")
-    public String memberInfo() {
+    public String memberInfo(MemberVO memberVO, HttpSession session) {
+        MemberVO loginInfo = memberService.login(memberVO);
         return "content/member/user_info";
     }
 

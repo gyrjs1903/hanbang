@@ -23,6 +23,9 @@ const word = ['고양이', '강아지', '거북이', '토끼', '뱀', '사자', 
 // 글자수 최소 4자 최대 8자 정규 표현식 작성
 const regexp = /^`(${adjective} + ${word})`*{4,8}$/;
 
+// 회원가입 버튼 클릭 시 닉네임 자동 생성
+const joinBtn = document.getElementById("join-btn")
+
 // 닉네임 자동 생성
 var createNickName= adjective[Math.floor(Math.random()*adjective.length)] + word[Math.floor(Math.random()*word.length)];
 
@@ -36,8 +39,7 @@ document.addEventListener()
 
 
 
-// 조인 버튼 클릭 시 닉네임 자동 생성 및 기본 프로필 사진 등록
-const joinBtn = document.getElementById("join-btn")
+
 
 
 
