@@ -4,8 +4,6 @@
 $(document).ready(function() {
 
     var oldVal = ""; // 이전 입력 값을 저장할 변수
-    // 가입 버튼
-    var joinButton = $("#join-btn");
 
     /* 이메일(아이디) */ /* input 태그 text 타입 실시간 값 변경 감지 */
     $("#userName").on("propertychange change keyup paste input", async function() {
@@ -36,29 +34,39 @@ $(document).ready(function() {
             userNameInputCheck.hide();
             userNameDuplication.hide();
         } else {
-            // 이메일(아이디) 중복 체크
-            try {
+            userNameDuplicationCheckFetch();
+        }
+        async function userNameDuplicationCheckFetch() {
+            // 회원가입 시 아이디 중복 체크
+            const response = await fetch('/member/userNameDuplicationCheckFetch', {
+                method: 'POST',
+                cache: 'no-cache',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                },
+                body: new URLSearchParams({
+                    'userName': document.querySelector('#userName').value
+                })
+            });
+    
+            if (!response.ok) {
+                alert('fetch error!\n컨트롤러로 통신 중에 오류가 발생했습니다.');
+                return;
+            }
+    
+            const data = await response.text();
+            if (data) {
                 userNameFormCheck.hide();
                 userNameInputCheck.hide();
-                const response = await fetch('/member/userNameCheckFetch', {
-                    method: 'POST',
-                    cache: 'no-cache',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' // application/json
-                    },
-                    body: JSON.stringify({ userName: userName })
-                });
-                const data = await response.json(userName);
-                if (data.isDuplicate) {
-                    userNameDuplication.show();
-                }
-            } catch(err) {
-                alert('fetch error!\nthen 구문에서 오류가 발생했습니다.\n콘솔창을 확인하세요!');
-                console.log(err);
+                userNameDuplication.show();
+            } else {
+                userNameFormCheck.hide();
+                userNameInputCheck.hide();
+                userNameDuplication.hide();
             }
         }
     });
-
+    
     /* 비밀번호 */
     $("#passWord").on("propertychange change keyup paste input", async function() {
         var currentVal = $(this).val();
@@ -95,7 +103,7 @@ $(document).ready(function() {
                     headers: {
                         'Content-Type': 'application/json; charset=UTF-8'
                     },
-                    body: JSON.stringify({ passWord: passWord })
+                    body: JSON.stringify({passWord: passWord })
                 });
                 const data = await response.json();
             } catch (err) {
@@ -133,7 +141,7 @@ $(document).ready(function() {
                     headers: {
                         'Content-Type': 'application/json; charset=UTF-8'
                     },
-                    body: JSON.stringify({ passWordCheckCheck: passWordCheck })
+                    body: JSON.stringify({passWordCheckCheck: passWordCheck })
                 });
                 const data = await response.json();
             } catch (err) {
@@ -149,8 +157,6 @@ $(document).ready(function() {
     
         // 비밀번호 필드
         var passWordField = $("#passWord");
-        var passWordFormCheck = $("#passWordFormCheck");
-        var passWordInputCheck = $("#passWordInputCheck");
     
         // 비밀번호 확인 필드
         var passWordCheckField = $("#passWordCheck");
@@ -176,64 +182,88 @@ $(document).ready(function() {
             } else if (passWord !== passWordCheck) {
                 passWordCheckCheck.show();
                 passWordCheckInputCheck.hide();
-            } else {
+            } else{
                 passWordCheckCheck.hide();
                 passWordCheckInputCheck.hide();
             }
         });
     });
 
-    function validateInputFields() {
-        var isUserNameValid = false;
-        var isPassWordValid = false;
-        var isPassWordCheckValid = false;
+    $(document).ready(function() {
+        
+        var oldVal = "";
     
-        // ... (유효성 검사 로직)
+        // 비밀번호 확인 필드
+        var passWordCheckField = $("#passWordCheck");
+        var passWordCheckCheck = $("#passWordCheckCheck");
     
-        // 이메일(아이디) 유효성 검사 후 변수 업데이트
-        if (userName == '') {
-            isUserNameValid = false;
-        } else if (!userName.match(userNameCheck)) {
-            isUserNameValid = false;
-        } else {
-            // 이메일(아이디) 중복 체크 로직
-            if (data.isDuplicate) {
-                isUserNameValid = false;
+        // 비밀번호 필드
+        var passWordField = $("#passWord");
+
+        // 이벤트 핸들러
+        passWordField.on("propertychange change keyup paste input", async function() {
+            var currentVal = $(this).val();
+            if (currentVal == oldVal) {
+                return;
+            }
+
+            oldVal = currentVal;
+    
+            // 비밀번호 입력 값
+            var passWordCheck = passWordCheckField.val();
+            var passWord= currentVal;
+    
+            // 비밀번호 체크
+            if (passWord === '') {
+                passWordCheckCheck.hide();
+                passWordCheckInputCheck.hide();
+            } else if (passWordCheck !== passWord) {
+                passWordCheckCheck.show();
+                passWordCheckInputCheck.hide();
+            } else{
+                passWordCheckCheck.hide();
+                passWordCheckInputCheck.hide();
+            }
+        });
+    });
+
+    /* 회원가입 버튼 활성화/비활성화 */
+    $(document).ready(function() {
+        var joinBtn = $("#join-btn"); // 회원가입 버튼
+
+        function checkInputs() {
+            var userName = $("#userName").val();
+            var passWord = $("#passWord").val();
+            var passWordCheck = $("#passWordCheck").val();
+
+            var isUserNameValid = validateUserName(userName);
+            var isPasswordValid = validatePassword(passWord);
+            var isPasswordMatch = passWord === passWordCheck;
+
+            var isUserNameDuplicationValid = !$("#userNameDuplication").is(':visible');
+
+            var isAllInputsFilled = userName !== '' && passWord !== '' && passWordCheck !== '';
+            if (isUserNameValid && isPasswordValid && isPasswordMatch && isUserNameDuplicationValid && isAllInputsFilled) {
+                joinBtn.prop('disabled', false);
             } else {
-                isUserNameValid = true;
+                joinBtn.prop('disabled', true);
             }
         }
-    
-        // 비밀번호 유효성 검사 후 변수 업데이트
-        if (passWord == '') {
-            isPassWordValid = false;
-        } else if (!passWord.match(passWordCheck)) {
-            isPassWordValid = false;
-        } else {
-            isPassWordValid = true;
+
+        function validateUserName(userName) {
+            var userNameCheck = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+            return userName !== '' && userName.match(userNameCheck);
         }
-    
-        // 비밀번호 확인 체크 후 변수 업데이트
-        if (passWordCheck === '') {
-            isPassWordCheckValid = false;
-        } else if (passWord !== passWordCheck) {
-            isPassWordCheckValid = false;
-        } else {
-            isPassWordCheckValid = true;
+
+        function validatePassword(password) {
+            var passWordCheck = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/;
+            return password === '' || password.match(passWordCheck);
         }
-    
-        // 모든 필드가 유효한지 확인
-        if (isUserNameValid && isPassWordValid && isPassWordCheckValid) {
-            joinButton.prop("disabled", false); // 버튼 활성화
-        } else {
-            joinButton.prop("disabled", true); // 버튼 비활성화
-        }
-    }
-        // 입력 필드 값이 변경될 때 유효성 검사 함수 호출
-        userNameField.on("propertychange change keyup paste input", validateInputFields);
-        passWordField.on("propertychange change keyup paste input", validateInputFields);
-        passWordCheckField.on("propertychange change keyup paste input", validateInputFields);
-        
-        // 초기 상태에서는 버튼 비활성화
-        joinButton.prop("disabled", true);
+
+        $("#userName, #passWord, #passWordCheck, #userNameDuplication").on("propertychange change keyup paste input", function() {
+            checkInputs();
+        });
+
+        joinBtn.prop('disabled', true); // 페이지 접근 초기 버튼 비활성화 고정
+    });
 });
