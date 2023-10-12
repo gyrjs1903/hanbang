@@ -10,4 +10,9 @@ public class MembershipVO {
     private String membershipName;
     private String membershipContent;
     private String membershipPrice;
+    private String itemCode;
+    private String itemName;
+    private String itemPrice;
+    private String itemContent;
+
 }

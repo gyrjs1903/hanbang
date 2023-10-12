@@ -133,12 +133,20 @@ public class AdminController {
         return "redirect:/admin/infoBoard";
     }
 
-    // 맴버쉽 카테고리 별 조회
+    // 맴버쉽 카테고리 별 상품 조회
     @GetMapping("/membershipList")
     public String membershipList(Model model, String mCateCode, MembershipVO membershipVO){
         List<MembershipVO> membershipList = membershipService.selectMembershipList(mCateCode);
         model.addAttribute("membershipList", membershipList);
         return "admin/membershipList";
+    }
+
+    // 맴버쉽 카테고리 별 세부 상품 조회
+    @GetMapping("/membershipItem")
+    public String membershipItem(Model model, String membershipCode, MembershipVO membershipVO ){
+        List<MembershipVO>membershipItemList = membershipService.selectMembershipItemList(membershipCode);
+        model.addAttribute("membershipItemList",membershipItemList);
+        return "admin/membership_item";
     }
 
 
