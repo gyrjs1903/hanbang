@@ -13,9 +13,10 @@
         <form id="joinForm" action="/member/join" method="post">
             <div>
                 <input type="text" id="userName" class="" name="userName" placeholder="이메일 주소 입력">
-                <p class="userNameFormGuide">이메일 주소 형식 - 예&#41; hanbang1@hanbang.com</p>
+                <p class="userNameFormGuide">이메일 주소 형식<br>예&#41; hanbang1@hanbang.com</p>
                 <p id="userNameInputCheck">이메일을 입력해주세요.</p>
                 <p id="userNameFormCheck">이메일 형식을 확인해주세요.</p>
+                <p id="userNameDuplication">중복된 이메일 입니다.</p>
             </div>
             <div>
                 <input id="passWord" type="password" class="" name="passWord" placeholder="8자리 이상 영문,숫자,특수문자 포함">
@@ -40,6 +41,7 @@
             </div>
         </form>
     </div>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script async src="/js/member/join.js"></script>
 </th:block>
 </body>

@@ -40,3 +40,11 @@ h1, p{
 .login_form{
     margin-top: 48px;
 }
+
+.profile_img{
+    background-image: url("/static/img/member/default_profile_image.png");
+}
+
+.password_icon{
+    background-image: url("/static/img/member/password_hide.png");
+}

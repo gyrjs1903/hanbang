@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+    <form action="/admin/regMembershipForm" method="post">
+        <div>
+            <div> 상품명 </div>
+            <div><input type="text" name="membershipName" required></div>
+        </div>
+        <div>
+            <div> 상품 설명 </div>
+            <div>
+                <textarea cols="50" rows="10" name="membershipContent"></textarea>
+            </div>
+        </div>
+        <div>
+            <div> 가격 </div>
+            <div><input type="text" name="membershipPrice" required></div>
+        </div>
+        <input type="submit" value="등록">
+    </form>
+</body>
+</html>
