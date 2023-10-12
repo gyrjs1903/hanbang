@@ -20,7 +20,7 @@
         <h3>맴버쉽 상품</h3>
         <th:block>
             <ul th:each="mCategory : ${membershipCate}" id="membershipList">
-                <li><a th:href="@{/admin/membershipList(mCateCode=${mCategory.mCateCode})}">[[${mCategory.mCateName}]]</a></li>
+                <li><a th:href="@{/admin/membershipList(memCateCode=${mCategory.memCateCode})}">[[${mCategory.memCateName}]]</a></li>
             </ul>
         </th:block>
     </div>
