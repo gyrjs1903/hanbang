@@ -32,7 +32,7 @@ public class MemberController {
     @GetMapping("/memberDelete")
     public String memberDelete(MemberVO memberVO){
         memberService.memberDelete(memberVO);
-        return "redirect:/";
+        return "redirect:/main/home";
     }
     // 로그인 페이지 이동
     @GetMapping("/loginForm")
@@ -59,7 +59,7 @@ public class MemberController {
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.removeAttribute("loginInfo");
-        return "redirect:/";
+        return "redirect:/main/home";
     }
 
     // 비밀번호 재설정 창 팝업

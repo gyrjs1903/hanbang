@@ -20,19 +20,21 @@ const word = ['고양이', '강아지', '거북이', '토끼', '뱀', '사자', 
 , '딱따구리', '기러기', '비둘기', '스컹크', '돌고래', '까마귀', '매', '낙타', '여우', '사슴', '늑대', '재규어', '알파카', '양', '다람쥐', '담비', '사막여우'
 , '젖소', '개미', '꿀벌', '물고기', '담요', '책', '책더미', '날개', '번개', '해', '햇볕', '숲', '나무', '바다', '절벽', '파도', '눈사람', '똥']
 
-// 글자수 최소 4자 최대 8자 정규 표현식 작성
-const regexp = /^`(${adjective} + ${word})`*{4,8}$/;
+    const randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+    const randomWord = words[Math.floor(Math.random() * words.length)];
 
-// 회원가입 버튼 클릭 시 닉네임 자동 생성
-const joinBtn = document.getElementById("join-btn")
-
-// 닉네임 자동 생성
-var createNickName= adjective[Math.floor(Math.random()*adjective.length)] + word[Math.floor(Math.random()*word.length)];
-
-return regexp(createNickName);
+    return randomAdjective + randomWord;
 }
 
-document.addEventListener()
+document.addEventListener('DOMContentLoaded', function () {
+    const joinBtn = document.getElementById('join-btn');
+    const nicknameInput = document.getElementById('nickname');
+
+    joinBtn.addEventListener('click', function () {
+    const generatedNickname = createNickname();
+    nicknameInput.value = generatedNickname;
+    });
+});
 
 
 
