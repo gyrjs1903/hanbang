@@ -3,7 +3,30 @@
 
 <!-- 복사해서 사용 -->
 <mapper namespace="room2Mapper">
+    <!-- room 기본정보 조회 -->
+    <select id="selectRoomInfo" resultMap="roomMapper.room">
+        SELECT R.ROOM_CODE
+            , PROPERTY_TYPE_CODE
+            , SUB_PROPERTY_TYPE_CODE
+            , ROOM_SIZE_P
+            , ROOM_SIZE_M
+            , FLOOR
+            , TRADE_TYPE_CODE
+            , MONTHLY_LEASE
+            , DEPOSIT
+            , JEONSE_COST
+            , MAINTENANCE_COST
+            , DETAIL_OPTIONS
+            , CONTENT
+            , CREATE_DATE
+            , USER_NO
+            , ATTACHED_FILE_NAME
+        FROM ROOM R, ROOM_IMG I
+        WHERE R.ROOM_CODE = #{roomCode}
+        AND R.ROOM_CODE = I.ROOM_CODE
+    </select>
 
+    <!-- DetailOption 값 조회 -->
 </mapper>
 
 

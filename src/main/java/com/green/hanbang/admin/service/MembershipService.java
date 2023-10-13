@@ -1,5 +1,7 @@
 package com.green.hanbang.admin.service;
 
+import com.green.hanbang.admin.vo.MemCateVO;
+import com.green.hanbang.admin.vo.MemItemVO;
 import com.green.hanbang.admin.vo.MembershipVO;
 
 import java.util.List;
@@ -7,12 +9,12 @@ import java.util.List;
 public interface MembershipService {
 
     // 맴버쉽 카테고리 조회
-    public List<MembershipVO> selectCategory();
-
-    // 맴버쉽 카테고리 별 상품 조회
-    public List<MembershipVO> selectMembershipList(String mCateCode);
+    public List<MemCateVO> selectCategory();
 
     // 맴버쉽 상품 별 세부 상품 조회
-    public List<MembershipVO> selectMembershipItemList(String membershipCode);
+    public List<MembershipVO> selectMembershipItemList(String memCateCode);
+
+    // 상품 세부 정보 조회
+    public MemCateVO membershipItemDetail(MemCateVO memCateVO);
 
 }

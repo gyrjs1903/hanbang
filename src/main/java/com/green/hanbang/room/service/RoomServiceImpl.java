@@ -1,9 +1,6 @@
 package com.green.hanbang.room.service;
 
-import com.green.hanbang.room.vo.OptionsVO;
-import com.green.hanbang.room.vo.PropertyTypeVO;
-import com.green.hanbang.room.vo.RoomVO;
-import com.green.hanbang.room.vo.TradeTypeVO;
+import com.green.hanbang.room.vo.*;
 import lombok.RequiredArgsConstructor;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
@@ -39,5 +36,6 @@ public class RoomServiceImpl implements RoomService {
     public void insertRoom(RoomVO roomVO) {
         sqlSession.insert("roomMapper.insertRoom",roomVO);
         sqlSession.insert("roomMapper.insertRoomImg", roomVO);
+        sqlSession.insert("roomMapper.addrInsert", roomVO);
     }
 }

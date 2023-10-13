@@ -42,8 +42,6 @@
         <id column="ROOM_CODE" property="roomCode"/>
         <result column="PROPERTY_TYPE_CODE" property="propertyTypeCode"/>
         <result column="SUB_PROPERTY_TYPE_CODE" property="subPropertyTypeCode"/>
-        <result column="ADDR" property="addr"/>
-        <result column="DETAIL_ADDR" property="detailAddr"/>
         <result column="ROOM_SIZE_P" property="roomSizeP"/>
         <result column="ROOM_SIZE_M" property="roomSizeM"/>
         <result column="FLOOR" property="floor"/>
@@ -57,6 +55,7 @@
         <result column="CONTENT" property="content"/>
         <result column="CREATE_DATE" property="createDate"/>
         <result column="USER_NO" property="userNo"/>
+        <association property="roomAddrVO" resultMap="roomAddr"/>
         <collection property="imgList" resultMap="roomImg"/>
     </resultMap>
 
@@ -67,6 +66,15 @@
         <result column="ATTACHED_FILE_NAME" property="attachedFileName"/>
         <result column="ROOM_CODE" property="roomCode"/>
         <result column="IS_MAIN" property="isMain"/>
+    </resultMap>
+
+    <resultMap id="roomAddr" type="com.green.hanbang.room.vo.RoomAddrVO">
+        <id column="ADDR_CODE" property="addrCode"/>
+        <result column="ADDR" property="addr"/>
+        <result column="DETAIL_ADDR" property="detailAddr"/>
+        <result column="COORDINATE_X" property="coordinateX"/>
+        <result column="COORDINATE_Y" property="coordinateY"/>
+        <result column="ROOM_CODE" property="roomCode"/>
     </resultMap>
 
     <!--option select-->
@@ -106,8 +114,6 @@
         ROOM_CODE
         , PROPERTY_TYPE_CODE
         , SUB_PROPERTY_TYPE_CODE
-        , ADDR
-        , DETAIL_ADDR
         , ROOM_SIZE_P
         , ROOM_SIZE_M
         , FLOOR
@@ -121,13 +127,9 @@
         , CONTENT
         , USER_NO
         )VALUES(
-        (SELECT
-        'ROOM_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ROOM_CODE,7))),0)+1, 4, '0')
-        FROM ROOM)
+        (SELECT 'ROOM_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ROOM_CODE,7))),0)+1, 4, '0') FROM ROOM)
         , #{propertyTypeCode}
         , #{subPropertyTypeCode}
-        , #{addr}
-        , #{detailAddr}
         , #{roomSizeP}
         , #{roomSizeM}
         , #{floor}
@@ -160,7 +162,26 @@
             , #{img.isMain}
             FROM DUAL
         </foreach>
+    </insert>
 
+    <insert id="addrInsert" parameterType="com.green.hanbang.room.vo.RoomAddrVO" >
+        INSERT INTO ROOM_ADDR(
+        ADDR_CODE
+        , ADDR
+        , DETAIL_ADDR
+        , COORDINATE_X
+        , COORDINATE_y
+        , ROOM_CODE
+        )VALUES(
+          (SELECT
+            'ADDR_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ADDR_CODE,6))),0)+1, 3, '0')
+            FROM ROOM_ADDR)
+            , #{roomAddrVO.addr}
+            , #{roomAddrVO.detailAddr}
+            , #{roomAddrVO.coordinateX}
+            , #{roomAddrVO.coordinateY}
+            , #{roomAddrVO.roomCode}
+        )
     </insert>
 
 </mapper>
