@@ -8,6 +8,6 @@ public class IndexController {
     // 시작페이지
     @GetMapping("/")
     public String main(){
-        return "index";
+        return "main/home";
     }
 }

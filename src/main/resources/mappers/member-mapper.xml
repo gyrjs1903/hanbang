@@ -65,4 +65,16 @@
         WHERE USER_NAME = #{userName}
     </select>
 
+    <!-- 회원 탈퇴 기능 -->
+    <delete id="memberDelete">
+        DELETE FROM MEMBER_USER
+        WHERE USER_NAME = #{userName}
+    </delete>
+
+    <!-- 비밀번호 변경 (회원 정보 수정의 경우) -->
+    <update id="updatePassword">
+        UPDATE FROM MEMBER_UEER
+        WHERE USER_PASSWORD = #{passWord}
+    </update>
+
 </mapper>

@@ -9,4 +9,7 @@ public class MemCateVO {
     private String memCateCode;
     private String memCateName;
     private List<MembershipVO> membershipList;
+
+    private String membershipCode;
+    private String itemCode;
 }

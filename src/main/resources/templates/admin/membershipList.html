@@ -6,33 +6,27 @@
 <title></title>
 </head>
 <body>
-    <table>
-        <thead>
-            <tr>
-                <td>상품명</td>
-                <td>상품 설명</td>
-                <td>가격</td>
-                <td></td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="membershipList : ${membershipList}">
-                <th:block th:if="${membershipList.memCateCode == 'CATE_001'}">
-                    <td>
-                        <a th:href="@{/admin/membershipItem(membershipCode=${membershipList.membershipCode})}">[[${membershipList.membershipName}]]</a>
-                    </td>
-                </th:block>
-                <th:block th:if="${membershipList.memCateCode != 'CATE_001'}">
-                    <td><a th:href="@{/admin/membershipDetail(membershipCode=${membershipList.membershipCode}, memCateCode=${membershipList.memCateCode})}">[[${membershipList.membershipName}]]</a></td>
-                </th:block>
-                <td>[[${membershipList.membershipContent}]]</td>
-                <td>[[${membershipList.membershipPrice}]]</td>
-                <td th:style="${membershipList.memCateCode == 'CATE_001' ? 'display:none;':''}">
-                    <input type="submit" value="구매">
-                </td>
-            </tr>
-        </tbody>
     
-    </table>
+    <div style="height: 30px;;"></div>
+    
+    <th:block th:each="membership : ${membershipList}">
+        <div class="membership-div" style="margin-bottom: 10px;">
+            <span><a th:if="${membership.memCateCode != 'CATE_001'}" th:href="@{/admin/membershipDetail(membershipCode = ${membership.membershipCode})}">[[${membership.membershipName}]]</a></span>
+            <span>[[${membership.membershipContent}]]</span>
+            <span>[[${membership.membershipPrice}]]</span>
+            <div th:if="${membership.memCateCode == 'CATE_001'}" th:each="item : ${membership.memItemList}">
+                <span><a>[[${item.itemName}]]</a></span>
+                <span>[[${item.itemPrice}]]</span>
+                <span>[[${item.itemIntro}]]</span>
+                <span>[[${item.itemContent}]]</span>
+            </div>
+        </div>
+
+    </th:block>
+
+
+
+
+
 </body>
 </html>

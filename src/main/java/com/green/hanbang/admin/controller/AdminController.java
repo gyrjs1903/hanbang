@@ -22,7 +22,7 @@ public class AdminController {
     private final BoardService boardService;
     private final MembershipService membershipService;
 
-    // 관리자 페이지
+    // 관리자 페이지 ( + 맴버쉽 상품의 대분류 조회)
     @GetMapping("/manage")
     public String adminManage(Model model, MemCateVO memCateVO){
         List<MemCateVO> membershipCate = membershipService.selectCategory();
@@ -132,29 +132,21 @@ public class AdminController {
         return "redirect:/admin/infoBoard";
     }
 
-    // 맴버쉽 카테고리 별 상품 조회
+    // 맴버쉽 카테고리 별 상품 조회 (중분류 및 소분류 조회)
     @GetMapping("/membershipList")
-    public String membershipList(Model model, String memCateCode, MembershipVO membershipVO){
-        List<MembershipVO> membershipList = membershipService.selectMembershipList(memCateCode);
+    public String membershipList(Model model, String memCateCode){
+        List<MembershipVO> membershipList = membershipService.selectMembershipItemList(memCateCode);
         model.addAttribute("membershipList", membershipList);
+        System.out.println(membershipList);
         return "admin/membershipList";
     }
 
-    // 맴버쉽 카테고리 별 세부 상품 조회
-    @GetMapping("/membershipItem")
-    public String membershipItem(Model model, String membershipCode, MemItemVO memItemVO ){
-        List<MemItemVO>membershipItemList = membershipService.selectMembershipItemList(membershipCode);
-        model.addAttribute("membershipItemList",membershipItemList);
-        return "admin/membership_item";
-    }
-
-
-    //
+    // 소분류의 세부 정보 조회
     @GetMapping("/membershipDetail")
     public String membershipDetail(Model model, MemCateVO memCateVO){
-        MemCateVO memDetailList = membershipService.membershipItemDetail(memCateVO);
-        model.addAttribute("memDetailList",memDetailList);
-        System.out.println(memDetailList);
+        MemCateVO memDetailItem = membershipService.membershipItemDetail(memCateVO);
+        model.addAttribute("v",memDetailItem);
+        System.out.println(memDetailItem);
         return "admin/membership_detail";
     }
 

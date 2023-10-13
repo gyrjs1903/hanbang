@@ -14,23 +14,24 @@ import java.util.List;
 public class MembershipServiceImpl implements MembershipService {
     private final SqlSessionTemplate sqlSession;
 
+    // 카테고리 조회 (대분류)
     @Override
     public List<MemCateVO> selectCategory() {
         return sqlSession.selectList("adminMapper.selectCategory");
     }
 
+    // 중분류 및 소분류 조회
     @Override
-    public List<MembershipVO> selectMembershipList(String memCateCode) {
-        return sqlSession.selectList("adminMapper.selectMembershipList", memCateCode);
+    public List<MembershipVO> selectMembershipItemList(String memCateCode) {
+        return sqlSession.selectList("adminMapper.selectMembershipItemList", memCateCode);
     }
 
-    @Override
-    public List<MemItemVO> selectMembershipItemList(String membershipCode) {
-        return sqlSession.selectList("adminMapper.selectMembershipItemList", membershipCode);
-    }
-
+    // 중분류 및 소분류의 세부 조회
     @Override
     public MemCateVO membershipItemDetail(MemCateVO memCateVO) {
         return sqlSession.selectOne("adminMapper.membershipDetail", memCateVO);
     }
+
+
+
 }

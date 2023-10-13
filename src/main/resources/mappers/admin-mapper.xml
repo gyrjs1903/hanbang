@@ -186,40 +186,34 @@
         WHERE BOARD_NUM = #{boardNum}
     </delete>
 
-<!--    맴버쉽 카테고리 출력-->
+<!--    맴버쉽 카테고리 출력 (대분류)-->
     <select id="selectCategory" resultMap="memCate">
         SELECT MEM_CATE_CODE
             , MEM_CATE_NAME
         FROM MEMBERSHIP_CATEGORY
     </select>
 
-<!-- 맴버쉽 카테고리 별 맴버쉽 상품 조회-->
-    <select id="selectMembershipList" resultMap="membership">
+<!-- 맴버쉽 상품의 세부 상품 조회 (중분류 && 소분류) -->
+    <select id="selectMembershipItemList" resultMap="membership">
         SELECT MEMBERSHIP_NAME
             , MEMBERSHIP_CONTENT
             , MEMBERSHIP_PRICE
-            , MEMBERSHIP_CODE
-            , SHIP.MEM_CATE_CODE
-            , CATE.MEM_CATE_NAME
-        FROM MEMBERSHIP_TABLE SHIP, MEMBERSHIP_CATEGORY CATE
-        WHERE SHIP.MEM_CATE_CODE = CATE.MEM_CATE_CODE
-        AND SHIP.MEM_CATE_CODE = #{memCateCode}
-    </select>
-
-<!-- 맴버쉽 상품의 세부 상품 조회 -->
-    <select id="selectMembershipItemList" resultMap="memItem">
-        SELECT ITEM_NAME
+            , SHIP.MEMBERSHIP_CODE
+            , CATE.MEM_CATE_CODE
+            , ITEM_NAME
             , ITEM_PRICE
             , ITEM_INTRO
             , ITEM_CONTENT
             , ITEM_CODE
-            , ITEM.MEMBERSHIP_CODE
-            , SHIP.MEM_CATE_CODE
-        FROM MEMITEM_TABLE ITEM, MEMBERSHIP_TABLE SHIP
-        WHERE ITEM.MEMBERSHIP_CODE = SHIP.MEMBERSHIP_CODE
-        AND ITEM.MEMBERSHIP_CODE = #{membershipCode}
+            , MEM_CATE_NAME
+        FROM MEMBERSHIP_CATEGORY CATE, MEMBERSHIP_TABLE SHIP, MEMITEM_TABLE ITEM
+        WHERE SHIP.MEM_CATE_CODE = CATE.MEM_CATE_CODE
+        AND SHIP.MEMBERSHIP_CODE = ITEM.MEMBERSHIP_CODE(+)
+        AND SHIP.MEM_CATE_CODE = #{memCateCode}
+
     </select>
 
+<!-- 맴버쉽 아이템 상세 조회   -->
     <select id="membershipDetail" resultMap="memCate">
         SELECT MEMBERSHIP_NAME
             , MEMBERSHIP_CONTENT
@@ -231,12 +225,12 @@
             , ITEM_INTRO
             , ITEM_CONTENT
             , ITEM_CODE
-            , ITEM.MEMBERSHIP_CODE
+            , MEM_CATE_NAME
         FROM MEMBERSHIP_CATEGORY CATE, MEMBERSHIP_TABLE SHIP, MEMITEM_TABLE ITEM
         WHERE SHIP.MEM_CATE_CODE = CATE.MEM_CATE_CODE
         AND SHIP.MEMBERSHIP_CODE = ITEM.MEMBERSHIP_CODE(+)
         AND SHIP.MEM_CATE_CODE = #{memCateCode}
-        AND SHIP.MEMBERSHIP_CODE = #{membershipList.membershipCode}
+        AND SHIP.MEMBERSHIP_CODE = #{membershipCode}
         <if test="itemCode != null">
             AND ITEM.ITEM_CODE = #{membershipList.memItemList.itemCode}
         </if>

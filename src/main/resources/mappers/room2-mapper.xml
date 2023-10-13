@@ -8,8 +8,6 @@
         SELECT R.ROOM_CODE
             , PROPERTY_TYPE_CODE
             , SUB_PROPERTY_TYPE_CODE
-            , ADDR
-            , DETAIL_ADDR
             , ROOM_SIZE_P
             , ROOM_SIZE_M
             , FLOOR

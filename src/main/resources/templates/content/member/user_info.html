@@ -8,14 +8,12 @@
 </head>
 <body>
     <th:block th:fragment="content">
-        <div class="">
-            <div class="">
-                <div class="">
+        <div class="user_my_page">
+            <div class="profile_img_wrap">
+                <div class="profile_img">
                     <div size="96" class="">
                         <label class="form-label"></label>
                         <input type="file" class="form-control profile_img" name="profileImg" value="사진">
-                    </div>
-                    <div class="">
                     </div>
                 </div>
             </div>
@@ -32,7 +30,7 @@
                         <h1>닉네임</h1>
                     </div>
                     <div class="" style="cursor: pointer;">
-                        <p>[접속 유저 닉네임] > [닉네임변경칭]</p>
+                        <p> > [닉네임변경칭]</p>
                     </div>
                 </li>
                 <li>
@@ -61,7 +59,7 @@
                         <p>서비스 이용이 가능합니다.</p>
                         <button type="button" class="">
                         <div>
-                            <span class="">상세보기</span>
+                            <span class="" onclick="window.open('/member/userinfo_consent.html')">상세보기</span>
                         </div>
                         </button>
                     </div>
@@ -73,7 +71,7 @@
             <div class="">
                 <button type="button" font-weight="regular" class="">
                     <div>
-                        <span class=""><a href="">회원탈퇴</a></span>
+                        <span class=""><a onclick="location.href='/member/memberDelete';">회원탈퇴</a></span>
                     </div>
                 </button>
             </div>
