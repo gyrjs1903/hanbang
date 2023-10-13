@@ -10,19 +10,21 @@
         <thead>
             <tr>
                 <td>상품명</td>
+                <td>상품 안내</td>
                 <td>상품 설명</td>
                 <td>가격</td>
+                <td></td>
             </tr>
         </thead>
         <tbody>
             <tr th:each="membershipItem : ${membershipItemList}">
-                <td>[[${membershipItem.itemName}]]</td>
+                <td><a th:href="@{/admin/membershipDetail(membershipCode=${membershipItem.membershipCode}, memCateCode=${membershipItem.memCateCode}, itemCode=${membershipItem.itemCode})}">[[${membershipItem.itemName}]]</a></td>
+                <td>[[${membershipItem.itemIntro}]]</td>
                 <td>[[${membershipItem.itemContent}]]</td>
                 <td>[[${membershipItem.itemPrice}]]</td>
+                <td><input type="submit" value="구매"></td>
             </tr>
         </tbody>
-        <input type="button" value="상품 수정" onclick>
-        <input type="button" value="상품 삭제" onclick>
     </table>
 </body>
 </html>

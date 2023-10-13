@@ -3,7 +3,7 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
 <head>
 <meta charset="UTF-8">
-<title>일반 상품</title>
+<title></title>
 </head>
 <body>
     <table>
@@ -12,19 +12,27 @@
                 <td>상품명</td>
                 <td>상품 설명</td>
                 <td>가격</td>
+                <td></td>
             </tr>
         </thead>
         <tbody>
             <tr th:each="membershipList : ${membershipList}">
-                <div>[[${membershipList.mCateName}]]</div>
-                <td><a th:href="@{/admin/membershipItem(membershipCode=${membershipList.membershipCode})}">[[${membershipList.membershipName}]]</a></td>
+                <th:block th:if="${membershipList.memCateCode == 'CATE_001'}">
+                    <td>
+                        <a th:href="@{/admin/membershipItem(membershipCode=${membershipList.membershipCode})}">[[${membershipList.membershipName}]]</a>
+                    </td>
+                </th:block>
+                <th:block th:if="${membershipList.memCateCode != 'CATE_001'}">
+                    <td><a th:href="@{/admin/membershipDetail(membershipCode=${membershipList.membershipCode}, memCateCode=${membershipList.memCateCode})}">[[${membershipList.membershipName}]]</a></td>
+                </th:block>
                 <td>[[${membershipList.membershipContent}]]</td>
                 <td>[[${membershipList.membershipPrice}]]</td>
+                <td th:style="${membershipList.memCateCode == 'CATE_001' ? 'display:none;':''}">
+                    <input type="submit" value="구매">
+                </td>
             </tr>
         </tbody>
-        <input type="button" value="상품 추가" onclick>
-        <input type="button" value="상품 수정" onclick>
-        <input type="button" value="상품 삭제" onclick>
+    
     </table>
 </body>
 </html>

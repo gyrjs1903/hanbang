@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko" xlmns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{fragment/main_layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+    <th:block layout:fragment="content">
+        <div class="row">
+            <div class="col"></div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="box">
+                    <h3 class="title_a">가격정보</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td th:if="${roomDetail.tradeTypeCode == 'TTC_001'}">월세</td>
+                                <td th:if="${roomDetail.tradeTypeCode == 'TTC_002'}">전세</td>
+                                <td>관리비</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td th:if="${roomDetail.tradeTypeCode == 'TTC_001'}">
+                                    [[${roomDetail.deposit}]]/[[${roomDetail.monthlyLease}]]</td>
+                                <td th:if="${roomDetail.tradeTypeCode == 'TTC_002'}">
+                                    [[${roomDetail.deposit}]]/[[${roomDetail.jeonseCost}]]</td>
+                                <td>[[${roomDetail.maintenanceCost}]]</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="box">
+                    <h3 class="title_a">상세정보</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>방종류</td>
+                                <td>해당층/건물층</td>
+                                <td>전용/공급면적</td>
+                                <td>방 수/ 욕실 수</td>
+                                <td>난방종류</td>
+                                <td>엘리베이터</td>
+                                <td>베란다/발코니</td>
+                                <td>입주가능일</td>
+                                <td>건축물용도</td>
+                                <td>최초등록일</td>
+                            </tr>
+                        </thead>
+                        <!-- <tbody>
+                            <tr>
+                                <td th:if="${roomDetail.subPropertyTypeCode == 'STYPE_001'}">원룸</td>
+                                <td th:if="${roomDetail.subPropertyTypeCode == 'STYPE_002'}">투룸</td>
+                                <td th:if="${roomDetail.subPropertyTypeCode == 'STYPE_003'}">쓰리룸 이상</td>
+                                <td th:if="${roomDetail.subPropertyTypeCode == 'STYPE_004'}">오피스텔(도시형)</td>
+                                <td th:if="${roomDetail.subPropertyTypeCode == 'STYPE_005'}">아파트</td>
+                                <td>[[${roomDetail.floor}]]층/건물층</td>
+                                <td>평 : [[${roomDetail.roomSizeP}]]/ M : [[${roomDetail.roomSizeM}]]</td>
+                                <td>방수/욕실수</td>
+                                <th:block th:each="option : ${optionList}">
+                                    <th:block th:each="all : ${allOptionList}">
+                                        <td th:if="${option == all.detailOptionList.DetailOptionVO.detailOptionCode}">중앙난방</td>
+                                        <td th:if="${option == 'DO_003'}">[[${all.name}]]</td>
+                                        <td th:if="${#strings.contains(option,'DO_034')} "></td>
+                                        <td>@@@@@@@@@</td>
+                                        <th:block th:if="${option == 'DO_035'}">
+                                            <td>없음</td>
+                                        </th:block>
+                                    </th:block>
+                                </th:block>
+                                <td>엘리베이터 유무</td>
+                            </tr>
+                        </tbody> -->
+                    </table>
+                </div>
+                <div class="box">
+                    <h3 class="title_a">옵션</h3>
+                    <ul th:each="option : ${optionList}">
+                        <li th:if="${option == 'DO_004' or option == 'DO_005' or option == 'DO_006'}">에어컨</li>
+                        <li th:if="${option == 'DO_00'}"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="wing"></div>
+    </th:block>
+</body>
+
+</html>
