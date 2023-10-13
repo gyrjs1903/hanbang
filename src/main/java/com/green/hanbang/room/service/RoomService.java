@@ -15,6 +15,6 @@ public interface RoomService {
     //방코드 셀렉트
     public String selectNextRoomCode();
     //매물 인설트
-    public void insertRoom(RoomVO roomVO,RoomAddrVO roomAddrVO);
+    public void insertRoom(RoomVO roomVO);
 
 }

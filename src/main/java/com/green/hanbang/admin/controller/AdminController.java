@@ -134,27 +134,19 @@ public class AdminController {
 
     // 맴버쉽 카테고리 별 상품 조회
     @GetMapping("/membershipList")
-    public String membershipList(Model model, String memCateCode, MembershipVO membershipVO){
-        List<MembershipVO> membershipList = membershipService.selectMembershipList(memCateCode);
+    public String membershipList(Model model, String memCateCode){
+        List<MembershipVO> membershipList = membershipService.selectMembershipItemList(memCateCode);
         model.addAttribute("membershipList", membershipList);
+        System.out.println(membershipList);
         return "admin/membershipList";
     }
-
-    // 맴버쉽 카테고리 별 세부 상품 조회
-    @GetMapping("/membershipItem")
-    public String membershipItem(Model model, String membershipCode, MemItemVO memItemVO ){
-        List<MemItemVO>membershipItemList = membershipService.selectMembershipItemList(membershipCode);
-        model.addAttribute("membershipItemList",membershipItemList);
-        return "admin/membership_item";
-    }
-
 
     //
     @GetMapping("/membershipDetail")
     public String membershipDetail(Model model, MemCateVO memCateVO){
-        MemCateVO memDetailList = membershipService.membershipItemDetail(memCateVO);
-        model.addAttribute("memDetailList",memDetailList);
-        System.out.println(memDetailList);
+        MemCateVO memDetailItem = membershipService.membershipItemDetail(memCateVO);
+        model.addAttribute("memDetailItem",memDetailItem);
+        System.out.println(memDetailItem);
         return "admin/membership_detail";
     }
 
