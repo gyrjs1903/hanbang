@@ -56,11 +56,12 @@ public class RoomController {
         for (RoomIMGVO roomIMGVO1 : imgList){
             roomIMGVO1.setRoomCode(roomCode);
         }
+
         roomAddrVO.setRoomCode(roomCode);
 
-        roomVO.setAddrVO(roomAddrVO);
+        roomVO.setRoomAddrVO(roomAddrVO);
         roomVO.setImgList(imgList);
-        roomService.insertRoom(roomVO, roomAddrVO);
+        roomService.insertRoom(roomVO);
         return "redirect:/room/roomMain";
     }
     @GetMapping("/roomMain")

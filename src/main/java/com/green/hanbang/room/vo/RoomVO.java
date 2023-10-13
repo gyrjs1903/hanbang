@@ -9,7 +9,7 @@ public class RoomVO {
     private String roomCode;
     private String propertyTypeCode;
     private String subPropertyTypeCode;
-    private RoomAddrVO addrVO;
+    private RoomAddrVO roomAddrVO;
     private int roomSizeP;
     private double roomSizeM;
     private int floor;
