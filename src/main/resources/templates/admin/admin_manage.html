@@ -11,7 +11,6 @@
         <div><a th:href="@{/admin/userList}">개인 회원</a></div>
         <div><a th:href="@{/admin/realList}">공인 중개사</a></div>
     </div>
-
     <div>
         <h3>공지사항</h3>
         <div><a th:href="@{/admin/infoBoard}">공지사항 관리</a></div>
@@ -23,6 +22,10 @@
                 <li><a th:href="@{/admin/membershipList(memCateCode=${mCategory.memCateCode})}">[[${mCategory.memCateName}]]</a></li>
             </ul>
         </th:block>
+    </div>
+    <div>
+        <h3>이벤트</h3>
+        <div><a></a></div>
     </div>
     <script src="/js/admin.js"></script>
 </body>

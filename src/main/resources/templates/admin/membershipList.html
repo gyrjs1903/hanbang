@@ -11,11 +11,11 @@
     
     <th:block th:each="membership : ${membershipList}">
         <div class="membership-div" style="margin-bottom: 10px;">
-            <span>[[${membership.membershipName}]]</span>
+            <span><a th:if="${membership.memCateCode != 'CATE_001'}" th:href="@{/admin/membershipDetail(membershipCode = ${membership.membershipCode})}">[[${membership.membershipName}]]</a></span>
             <span>[[${membership.membershipContent}]]</span>
             <span>[[${membership.membershipPrice}]]</span>
             <div th:if="${membership.memCateCode == 'CATE_001'}" th:each="item : ${membership.memItemList}">
-                <span>[[${item.itemName}]]</span>
+                <span><a>[[${item.itemName}]]</a></span>
                 <span>[[${item.itemPrice}]]</span>
                 <span>[[${item.itemIntro}]]</span>
                 <span>[[${item.itemContent}]]</span>
