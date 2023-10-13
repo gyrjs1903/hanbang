@@ -13,3 +13,132 @@
 .menu_bar > ul > li > a{
     margin-right: 50px;
 }
+
+.member_nav{
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    height: 100%;
+    margin-left: 40px;
+}
+
+.member_intro{
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    height: 100%;
+    margin-left: 40px;
+}
+
+.member_profile{
+    flex: 0 0 auto;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    user-select: none;
+    position: relative;
+}
+
+.member_nickname{
+    margin-left: 8px;
+    min-width: 80px;
+    border: 0px;
+    position: relative;
+    user-select: none;
+    cursor: pointer;
+}
+
+.member_nickname > p{
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    line-height: 24px;
+}
+
+.member_menu_btn{
+    position: absolute;
+    top: calc(100% + 13px);
+    left: calc(50% - 10px);
+    transform: translateX(-50%);
+    z-index: 101;
+}
+
+.my_menu_wrap{
+    width: 240px;
+    position: absolute;
+    top: calc(100% + 20px);
+    right: 10px;
+    z-index: 100;
+}
+
+.my_menu_nav{
+    display: none;
+    border: 1px solid rgb(205, 205, 205);
+    border-radius: 2px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 15px 18px -10px;
+}
+
+.my_menu{
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 0px 16px;
+    color: rgb(76, 76, 76);
+    font-size: 14px;
+    line-height: 20px;
+    height: 56px;
+    border-bottom: 1px solid rgb(237, 237, 237);
+}
+
+.member_login_join{
+    display: none;
+    flex: 0 0 auto;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    margin-left: 40px;
+}
+
+.member_login_join_btn{
+    flex: 0 0 auto;
+    display: none;
+    /* display: flex; */
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    height: 36px;
+    padding: 0px 16px;
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: 700;
+    color: rgb(255, 255, 255);
+    border: 1px solid rgb(223, 223, 223);
+    border-radius: 2px;
+    background-color: transparent;
+}
+
+.member_login_join_btn > span{
+    /* display: block; */
+    margin: 0px 8px;
+    width: 1px;
+    height: 12px;
+    background-color: rgb(223, 223, 223);
+    position: relative;
+}
+
+.realtor_ad_inquiry{
+    display: none;
+}

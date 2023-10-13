@@ -16,9 +16,6 @@
                 <form action="" method="post">
                     <div class="cate">이메일</div>
                     <div><input type="text" th:value="${realtorInfo.userName}" readonly></div>
-                    <div class="cate">비밀번호</div>
-                    <div><input type="text" value="비밀번호" readonly></div>
-                    <div><input type="text" value="비밀번호 확인" readonly></div>
                     <div class="cate">닉네임</div>
                     <div><input type="text" th:value="${realtorInfo.nickName}" readonly></div>
                     <div class="cate">전화번호</div>
@@ -29,19 +26,41 @@
                         <input type="text" value="공인중개사" readonly>
                         <div th:if="${authority == null or authority == 'N'}">
                             <div class="uncertification acceptance">인증되지 않은 공인중개사입니다.</div>
-                            <span onclick="location.href='/realtor/certificationForm';" class="cursor btn btn-primary" >인증하기</span>
+                            <span onclick="location.href='/realtor/certificationForm';"
+                                class="cursor btn btn-primary">인증하기</span>
                         </div>
                         <div th:if="${authority == 'Y' and authority != null}">
                             <div class="certification acceptance">인증된 공인중개사입니다.</div>
-                            <span class="btn btn-primary done" >인증정보 수정하기</span>
+                            <span class="btn btn-primary done">인증정보 수정하기</span>
                             <!-- th:onclick="|location.href='@{/realtor/certificationForm(userNo=${realtorInfo.userNo})}'|" -->
                         </div>
                     </div>
                     <br>
-                    <input type="submit" class="btn btn-light" value="수정하기"></input>
+                    <!-- <input type="button" class="btn btn-light" value="수정하기" th:onclick="realtorCorrection([[${realtorInfo.userNo}]]);"></input> -->
                 </form>
+                <span data-bs-toggle="modal" data-bs-target="#correct-modal" class="cursor btn btn-light">수정하기</span>
+                
             </div>
         </div>
+        <div class="modal fade" id="correct-modal" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form action="">
+                        <div class="col-3 d-grid">
+                            <button type="button" class="btn btn-primary" disabled id="join-btn">비밀번호확인</button>
+                        </div>
+                        <div class="col-3 d-grid">
+                            <button type="button" class="btn btn-secondary"
+                                data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     </th:block>
 </body>
 

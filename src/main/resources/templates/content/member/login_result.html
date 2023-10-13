@@ -21,9 +21,9 @@
         alert('로그인 완료');
         const loginType = document.querySelector('#loginType').value;
 
-        location.href = loginType == 'USER' ? '/member/member_main' : 
-        location.href = loginType == 'REALTOR' ? '/realtor/realtor_main'
-        : '/admin/admin_main';
+        location.href = loginType == 'USER' ? 'redirect:/main/home' : 
+        location.href = loginType == 'REALTOR' ? '/realtor/main'
+        : '/admin/manage';
     </script>
 </th:block>
 </body>

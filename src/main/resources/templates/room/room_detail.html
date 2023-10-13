@@ -9,85 +9,113 @@
 
 <body>
     <th:block layout:fragment="content">
+        <div th:onload="detailInfo([[${optionList}]]);"></div>
         <div class="row">
             <div class="col"></div>
         </div>
         <div class="row">
             <div class="col">
-                <div class="box">
+                <div class="box price">
                     <h3 class="title_a">가격정보</h3>
-                    <table>
+                    <ul>
+                        <li>
+                            <div th:if="${roomDetail.tradeTypeCode == 'TTC_001'}">월세</div>
+                            <div th:if="${roomDetail.tradeTypeCode == 'TTC_002'}">전세</div>
+                            <div th:if="${roomDetail.tradeTypeCode == 'TTC_001'}">[[${roomDetail.deposit}]]/[[${roomDetail.monthlyLease}]]</div>
+                            <div th:if="${roomDetail.tradeTypeCode == 'TTC_002'}">[[${roomDetail.deposit}]]/[[${roomDetail.jeonseCost}]]</div>
+                        </li>
+                        <li>
+                            <div>관리비</div>
+                            <div>[[${roomDetail.maintenanceCost}]]</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="box">
+                    <h3 class="title_a">상세정보</h3>
+                    <ul>
+                        <li>
+                            <div>방종류</div>
+                            <div th:if="${roomDetail.subPropertyTypeCode == 'STYPE_001'}">원룸</div>
+                            <div th:if="${roomDetail.subPropertyTypeCode == 'STYPE_002'}">투룸</div>
+                            <div th:if="${roomDetail.subPropertyTypeCode == 'STYPE_003'}">쓰리룸 이상</div>
+                            <div th:if="${roomDetail.subPropertyTypeCode == 'STYPE_004'}">오피스텔(도시형)</div>
+                            <div th:if="${roomDetail.subPropertyTypeCode == 'STYPE_005'}">아파트</div>
+                        </li>
+                        <li>
+                            <div>해당층/건물층</div>
+                            <div>[[${roomDetail.floor}]]층/건물층</div>
+                        </li>
+                        <li>
+                            <div>전용/공급면적</div>
+                            <div>평 : [[${roomDetail.roomSizeP}]]/ M : [[${roomDetail.roomSizeM}]]</div>
+                        </li>
+                        <li>
+                            <div>방 수/ 욕실 수</div>
+                            <div>방수/욕실수</div>
+                        </li>
+                        <li>
+                            <div>난방종류</div>
+                            <div></div>
+                        </li>
+                        <li>
+                            <div>엘리베이터</div>
+                            <div></div>
+                        </li>
+                        <li>
+                            <div>베란다/발코니</div>
+                            <div></div>
+                        </li>
+                        <li>
+                            <div>입주가능일</div>
+                            <div></div>
+                        </li>
+                        <li>
+                            <div>건축물용도</div>
+                            <div></div>
+                        </li>
+                        <li>
+                            <div>최초등록일</div>
+                            <div></div>
+                        </li>
+                    </ul>
+                    <!-- <table>
                         <thead>
                             <tr>
-                                <td th:if="${roomDetail.tradeTypeCode == 'TTC_001'}">월세</td>
-                                <td th:if="${roomDetail.tradeTypeCode == 'TTC_002'}">전세</td>
-                                <td>관리비</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td th:if="${roomDetail.tradeTypeCode == 'TTC_001'}">
-                                    [[${roomDetail.deposit}]]/[[${roomDetail.monthlyLease}]]</td>
-                                <td th:if="${roomDetail.tradeTypeCode == 'TTC_002'}">
-                                    [[${roomDetail.deposit}]]/[[${roomDetail.jeonseCost}]]</td>
-                                <td>[[${roomDetail.maintenanceCost}]]</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="box">
-                    <h3 class="title_a">상세정보</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <td>방종류</td>
-                                <td>해당층/건물층</td>
-                                <td>전용/공급면적</td>
-                                <td>방 수/ 욕실 수</td>
-                                <td>난방종류</td>
-                                <td>엘리베이터</td>
-                                <td>베란다/발코니</td>
-                                <td>입주가능일</td>
-                                <td>건축물용도</td>
-                                <td>최초등록일</td>
-                            </tr>
-                        </thead>
-                        <!-- <tbody>
-                            <tr>
-                                <td th:if="${roomDetail.subPropertyTypeCode == 'STYPE_001'}">원룸</td>
-                                <td th:if="${roomDetail.subPropertyTypeCode == 'STYPE_002'}">투룸</td>
-                                <td th:if="${roomDetail.subPropertyTypeCode == 'STYPE_003'}">쓰리룸 이상</td>
-                                <td th:if="${roomDetail.subPropertyTypeCode == 'STYPE_004'}">오피스텔(도시형)</td>
-                                <td th:if="${roomDetail.subPropertyTypeCode == 'STYPE_005'}">아파트</td>
-                                <td>[[${roomDetail.floor}]]층/건물층</td>
-                                <td>평 : [[${roomDetail.roomSizeP}]]/ M : [[${roomDetail.roomSizeM}]]</td>
-                                <td>방수/욕실수</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 <th:block th:each="option : ${optionList}">
-                                    <th:block th:each="all : ${allOptionList}">
-                                        <td th:if="${option == all.detailOptionList.DetailOptionVO.detailOptionCode}">중앙난방</td>
-                                        <td th:if="${option == 'DO_003'}">[[${all.name}]]</td>
-                                        <td th:if="${#strings.contains(option,'DO_034')} "></td>
-                                        <td>@@@@@@@@@</td>
-                                        <th:block th:if="${option == 'DO_035'}">
-                                            <td>없음</td>
-                                        </th:block>
-                                    </th:block>
                                 </th:block>
                                 <td>엘리베이터 유무</td>
                             </tr>
-                        </tbody> -->
-                    </table>
+                        </tbody>
+                    </table> -->
                 </div>
                 <div class="box">
                     <h3 class="title_a">옵션</h3>
                     <ul th:each="option : ${optionList}">
                         <li th:if="${option == 'DO_004' or option == 'DO_005' or option == 'DO_006'}">에어컨</li>
-                        <li th:if="${option == 'DO_00'}"></li>
+                        <!-- <li th:if="${option == 'DO_00'}"></li> -->
                     </ul>
                 </div>
             </div>
         </div>
         <div class="wing"></div>
+        <script src="/js/room/room2_detail.js"></script>
     </th:block>
 </body>
 

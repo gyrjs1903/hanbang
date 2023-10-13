@@ -1,0 +1,35 @@
+@charset "UTF-8";
+
+section{
+    max-width: 1200px;
+    margin: 0px auto;
+    padding: 16px;
+}
+
+table{
+    width: 100%;
+    margin: 16px 0px;
+    border: 1px solid rgb(245, 245, 245);
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+th, td{
+    font-weight: 700;
+    background-color: rgb(252, 252, 252);
+    padding: 8px 16px;
+    font-size: 1rem;
+    text-align: center;
+    border: 1px solid rgb(245, 245, 245);
+    vertical-align: middle;
+}
+
+h1{
+    font-weight: 700;
+}
+
+.important{
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1.875rem;
+    text-decoration: underline;
+}
