@@ -12,10 +12,17 @@
  <div class="row">
     <div class="col-4">
         <div class="select_room">
-            <ul>
-                <div>사진</div>
-                <div class="text">
-                    <h4>전월세 가격</h4>
+            <ul th:each="room : ${roomList}">
+                <div>
+                    <img src="" alt="">
+                </div>
+                <div class="text" >
+                    <th:block th:if="${room.jeonseCost != null}">
+                        <h4>전세 [[${room.jeonseCost}]]</h4>
+                    </th:block>
+                    <th:block th:if="${room.monthlyLease != null}">
+                        <h4>월세 [[${room.deposit}]]/[[${room.monthlyLease}]]</h4>
+                    </th:block>
                     <p>주소</p>
                     <p>유형, 평, 층</p>
                     <p>내용</p>
