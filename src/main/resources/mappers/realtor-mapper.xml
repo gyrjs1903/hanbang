@@ -83,6 +83,13 @@
         WHERE IDENTIFICATION_NUM = #{identificationNum}
     </select>
 
+    <!-- 공인중개사 정보 수정 시 비밀번호 확인 -->
+    <select id="selectRealtorPw" resultType="String">
+        SELECT PASSWORD
+        FROM MEMBER_USER
+        WHERE USER_NO = #{userNo}
+    </select>
+
 </mapper>
 
 

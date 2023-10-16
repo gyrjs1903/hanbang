@@ -21,8 +21,10 @@
                         <li>
                             <div th:if="${roomDetail.tradeTypeCode == 'TTC_001'}">월세</div>
                             <div th:if="${roomDetail.tradeTypeCode == 'TTC_002'}">전세</div>
-                            <div th:if="${roomDetail.tradeTypeCode == 'TTC_001'}">[[${roomDetail.deposit}]]/[[${roomDetail.monthlyLease}]]</div>
-                            <div th:if="${roomDetail.tradeTypeCode == 'TTC_002'}">[[${roomDetail.deposit}]]/[[${roomDetail.jeonseCost}]]</div>
+                            <div th:if="${roomDetail.tradeTypeCode == 'TTC_001'}">
+                                [[${roomDetail.deposit}]]/[[${roomDetail.monthlyLease}]]</div>
+                            <div th:if="${roomDetail.tradeTypeCode == 'TTC_002'}">
+                                [[${roomDetail.deposit}]]/[[${roomDetail.jeonseCost}]]</div>
                         </li>
                         <li>
                             <div>관리비</div>
@@ -55,7 +57,14 @@
                         </li>
                         <li>
                             <div>난방종류</div>
-                            <div></div>
+                            <th:block th:each="option : ${optionList}">
+                                <th:block th:each="alloption : ${allOptionList}">
+                                    <th:block th:each="detailOption : ${alloption.detailOptionList}"
+                                        th:if="${detailOption.detailOptionCode.contains(option)}">
+                                        <div th:if="${option}">[[${detailOption.detailOptionName}]]</div>
+                                    </th:block>
+                                </th:block>
+                            </th:block>
                         </li>
                         <li>
                             <div>엘리베이터</div>
@@ -78,32 +87,6 @@
                             <div></div>
                         </li>
                     </ul>
-                    <!-- <table>
-                        <thead>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <th:block th:each="option : ${optionList}">
-                                </th:block>
-                                <td>엘리베이터 유무</td>
-                            </tr>
-                        </tbody>
-                    </table> -->
                 </div>
                 <div class="box">
                     <h3 class="title_a">옵션</h3>

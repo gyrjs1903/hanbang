@@ -17,9 +17,9 @@
                     <div class="cate">이메일</div>
                     <div><input type="text" th:value="${realtorInfo.userName}" readonly></div>
                     <div class="cate">닉네임</div>
-                    <div><input type="text" th:value="${realtorInfo.nickName}" readonly></div>
+                    <div><input type="text" th:value="${realtorInfo.nickName}"></div>
                     <div class="cate">전화번호</div>
-                    <div><input type="text" th:value="${realtorInfo.phone}" readonly></div>
+                    <div><input type="text" th:value="${realtorInfo.phone}"></div>
                     <br>
                     <div class="cate">구분</div>
                     <div class="acceptanceBox">
@@ -38,28 +38,10 @@
                     <br>
                     <!-- <input type="button" class="btn btn-light" value="수정하기" th:onclick="realtorCorrection([[${realtorInfo.userNo}]]);"></input> -->
                 </form>
-                <span data-bs-toggle="modal" data-bs-target="#correct-modal" class="cursor btn btn-light">수정하기</span>
-                
+                <span class="cursor btn btn-light">수정하기</span>
+                <span class="cursor btn btn-light" onclick="location.href='/realtor/pwCorrectPage';">내정보 변경하기</span>
             </div>
         </div>
-        <div class="modal fade" id="correct-modal" data-bs-backdrop="static" data-bs-keyboard="false"
-        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <form action="">
-                        <div class="col-3 d-grid">
-                            <button type="button" class="btn btn-primary" disabled id="join-btn">비밀번호확인</button>
-                        </div>
-                        <div class="col-3 d-grid">
-                            <button type="button" class="btn btn-secondary"
-                                data-bs-dismiss="modal">Close</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     </th:block>
 </body>

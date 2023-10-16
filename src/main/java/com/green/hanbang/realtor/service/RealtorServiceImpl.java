@@ -38,4 +38,9 @@ public class RealtorServiceImpl implements RealtorService{
     public String selectIdentificationNum(String identificationNum) {
         return sqlSession.selectOne("realtorMapper.selectIdentificationNum", identificationNum);
     }
+
+    @Override
+    public String selectRealtorPw(String userNo) {
+        return sqlSession.selectOne("realtorMapper.selectRealtorPw",userNo);
+    }
 }
