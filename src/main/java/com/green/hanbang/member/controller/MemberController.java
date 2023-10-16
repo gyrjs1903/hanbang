@@ -2,10 +2,15 @@ package com.green.hanbang.member.controller;
 
 import com.green.hanbang.member.service.MemberService;
 import com.green.hanbang.member.vo.MemberVO;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 
 @Controller
 @RequestMapping("/member")
@@ -23,10 +28,9 @@ public class MemberController {
     @PostMapping("/join")
     public String join(MemberVO memberVO) {
         memberService.join(memberVO);
+
         return "content/member/login";
     }
-
-    // 회원 가입 시 닉네임 자동 생성
 
     // 회원 탈퇴
     @GetMapping("/memberDelete")
@@ -42,17 +46,27 @@ public class MemberController {
 
     // 로그인
     @PostMapping("/login")
-    public String login(MemberVO memberVO, HttpSession session) {
+    public String login(MemberVO memberVO, HttpSession session, HttpServletRequest request, Model model) {
+
         MemberVO loginInfo = memberService.login(memberVO);
+
+        List<MemberVO> memberList = memberService.memberList(memberVO);
+
+        model.addAttribute("memberList", memberList);
 
         if (loginInfo != null) {
             session.setAttribute("loginInfo", loginInfo);
-            if (loginInfo.getLoginType().equals("REALTOR")) {
+            if (loginInfo.getLoginType().equals("USER")) {
+                return "redirect:/";
+            } else if(loginInfo.getLoginType().equals("REALTOR")) {
                 return "redirect:/realtor/main";
+            } else if(loginInfo.getLoginType().equals("ADMIN")) {
+                return "redirect:/admin/manage";
             }
         }
 
-        return "content/member/login_result";
+        String userName = request.getParameter("userName");
+        return "redirect:/member/loginForm?userName=" + userName;
     }
 
     // 로그아웃
@@ -69,12 +83,6 @@ public class MemberController {
     public String memberInfo(MemberVO memberVO, HttpSession session) {
         MemberVO loginInfo = memberService.login(memberVO);
         return "content/member/user_info";
-    }
-
-    // 문자문의 페이지로 이동
-    @GetMapping("/memberSMS")
-    public String memberSMS() {
-        return "content/member/user_sms";
     }
 
     // 전화문의 페이지로 이동

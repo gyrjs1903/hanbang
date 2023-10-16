@@ -9,7 +9,6 @@
         <result column="LOGIN_TYPE"      property="loginType"/>
         <result column="PHONE"      property="phone"/>
         <result column="NICK_NAME"      property="nickName"/>
-        <result column="PROFILE_IMAGE"  property="profile_image"/>
         <result column="JOIN_DATE"  property="joinDate"/>
         <association property="realtorDetailVO" resultMap="realtorMapper.realtorDetail"/>
     </resultMap>
@@ -27,22 +26,39 @@
             , USER_NAME
             , PASSWORD
             , LOGIN_TYPE
+            , NICK_NAME
         ) VALUES (
             (SELECT NVL(MAX(USER_NO)+1, 0)
             FROM MEMBER_USER)
             , #{userName}
             , #{passWord}
             , #{loginType}
+            , #{nickName}
         )
     </insert>
+
+    <select id="memberList" resultType="member">
+        SELECT MU.USER_NO
+        , MU.USER_NAME
+        , MU.LOGIN_TYPE
+        , MU.NICK_NAME
+        , MU.PHONE
+        , MU.JOIN_DATE
+        , MI.PROFILE_IMG_NO
+        , MI.PROFILE_IMG_NAME
+        , MI.ATTACHED_PROFILE_IMG_NAME
+        FROM MEMBER_USER MU
+        LEFT JOIN MEMBER_IMG MI
+        ON MU.USER_NO = MI.USER_NO
+        WHERE MU.USER_NO = #{userNo}
+    </select>
 
     <!-- 로그인 -->
     <select id="login" resultMap="member">
         SELECT USER_NO
-            , USER_NAME
-            , LOGIN_TYPE
-            , NICK_NAME
-            , PROFILE_IMAGE
+        , USER_NAME
+        , LOGIN_TYPE
+        , NICK_NAME
         FROM MEMBER_USER
         WHERE USER_NAME = #{userName}
         AND PASSWORD = #{passWord}
@@ -54,9 +70,30 @@
         , PROFILE_IMG_NO
         , PROFILE_IMG_NAME
         , ATTACHED_PROFILE_IMG_NAME
-        FROM MEMBER_USER MU, MEMBER_IMG MI
-        WHERE USER_NO = #{userNo}
+        FROM MEMBER_USER MU
+        LEFT JOIN MEMBER_IMG MI
+        ON MU.USER_NO = MI.USER_NO
+        WHERE MU.USER_NO = #{userNo}
     </select>
+
+    <!-- 프로필 이미지 등록 -->
+    <insert id="insertImgs">
+        INSERT INTO MEMBER_IMG (
+        PROFILE_IMG_NO
+        , ORIGIN_FILE_NAME
+        , ATTACHED_FILE_NAME
+        , USER_NO
+        )
+        VALUES (
+        <foreach collection="profileImgList" item="img" separator=",">
+            SELECT (SELECT 'IMG_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(IMG_CODE, 5))), 0) + 1 + #{idx}, 3, '0')
+            FROM MEMBER_IMG)
+            , #{img.originFileName}
+            , #{img.attachedFileName}
+            , (SELECT USER_NO FROM MEMBER_USER WHERE USER_NO = #{img.userNo})
+            )
+        </foreach>
+    </insert>
 
     <!-- 아이디 중복 확인 -->
     <select id="userNameCheck" resultType="String">
@@ -73,8 +110,9 @@
 
     <!-- 비밀번호 변경 (회원 정보 수정의 경우) -->
     <update id="updatePassword">
-        UPDATE FROM MEMBER_UEER
-        WHERE USER_PASSWORD = #{passWord}
+        UPDATE FROM MEMBER_USER
+        SET PASSWORD = #{passWord}
+        WHERE USER_NAME = #{userName}
     </update>
 
 </mapper>
