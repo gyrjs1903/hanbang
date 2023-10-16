@@ -3,25 +3,67 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
 <head>
 <meta charset="UTF-8">
-<title></title>
+<title>맴버쉽 신규 등록 </title>
 </head>
 <body>
-    <form action="/admin/regMembershipForm" method="post">
-        <div>
-            <div> 상품명 </div>
-            <div><input type="text" name="membershipName" required></div>
+    <form method="post" action="/admin/regMembership">
+
+        <div>   
+            <label>대분류</label>
+            <select class="category1" name="memCateCode" id="select_category">
+                <option value="" selected>전체</option>
+                <option th:each="category : ${cateList}" th:value="${category.memCateCode}">[[${category.memCateName}]]</option>
+            </select> 
         </div>
-        <div>
-            <div> 상품 설명 </div>
-            <div>
-                <textarea cols="50" rows="10" name="membershipContent"></textarea>
+
+        <div id="optionForm1">    
+            <label>중분류</label>
+            <select class="category2" name="membershipCode">
+            <option value="">전체</option>
+            </select>
+        </div>
+
+        <!-- 소분류가 있을 때 -->
+        <div id="optionForm1">
+            <div class="inputArea">
+                <label for="itemName">상품명</label>
+                <input type="text" id="itemName" name="itemName"/>
+            </div>
+            <div class="inputArea">
+                <label for="itemIntro">상품소개</label>
+                <textarea rows="5" cols="50" id="itemIntro" name="itemIntro"></textarea>
+            </div>
+            <div class="inputArea">
+                <label for="itemContent">상품설명</label>
+                <textarea rows="5" cols="50" id="itemContent" name="itemContent"></textarea>
+            </div>
+            <div class="inputArea">
+                <label for="itemPrice">상품가격</label>
+                <input type="text" id="itemPrice" name="itemPrice"/>
             </div>
         </div>
-        <div>
-            <div> 가격 </div>
-            <div><input type="text" name="membershipPrice" required></div>
+
+        <!-- 소분류가 없을 때 -->
+        <div id="optionForm2">
+            <div class="inputArea">
+                <label for="membershipName">상품명</label>
+                <input type="text" id="membershipName" name="membershipName"/>
+            </div>
+            <div class="inputArea">
+                <label for="membershipContent">상품설명</label>
+                <textarea rows="5" cols="50" id="membershipContent" name="membershipContent"></textarea>
+            </div>
+            <div class="inputArea">
+                <label for="membershipPrice">상품가격</label>
+                <input type="text" id="membershipPrice" name="membershipPrice"/>
+            </div>
         </div>
-        <input type="submit" value="등록">
+        
+        <input type="submit" value="등록하기">
+        <input type="submit" value="뒤로가기">
     </form>
+
+
+    <script src="/js/admin/admin.js"></script>
 </body>
 </html>

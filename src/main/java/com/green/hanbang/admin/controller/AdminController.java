@@ -145,9 +145,17 @@ public class AdminController {
     @GetMapping("/membershipDetail")
     public String membershipDetail(Model model, MemCateVO memCateVO){
         MemCateVO memDetailItem = membershipService.membershipItemDetail(memCateVO);
-        model.addAttribute("v",memDetailItem);
+        model.addAttribute("memDetailItem",memDetailItem);
         System.out.println(memDetailItem);
         return "admin/membership_detail";
+    }
+
+    // 맴버쉽 등록 페이지 이동
+    @GetMapping("/regMembershipForm")
+    public String regMembership(Model model){
+        // 대분류 조회
+        model.addAttribute("cateList", membershipService.selectCategory());
+        return "admin/reg_membership";
     }
 
 }
