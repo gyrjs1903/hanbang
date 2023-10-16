@@ -52,27 +52,33 @@
                             <div>평 : [[${roomDetail.roomSizeP}]]/ M : [[${roomDetail.roomSizeM}]]</div>
                         </li>
                         <li>
-                            <div>방 수/ 욕실 수</div>
-                            <div>방수/욕실수</div>
-                        </li>
-                        <li>
                             <div>난방종류</div>
                             <th:block th:each="option : ${optionList}">
                                 <th:block th:each="alloption : ${allOptionList}">
                                     <th:block th:each="detailOption : ${alloption.detailOptionList}"
-                                        th:if="${detailOption.detailOptionCode.contains(option)}">
-                                        <div th:if="${option}">[[${detailOption.detailOptionName}]]</div>
+                                        th:if="${detailOption.optionCode == 'OPTION_001' and detailOption.detailOptionCode.contains(option)}">
+                                        <div>[[${detailOption.detailOptionName}]]</div>
                                     </th:block>
                                 </th:block>
                             </th:block>
                         </li>
                         <li>
-                            <div>엘리베이터</div>
-                            <div></div>
-                        </li>
-                        <li>
                             <div>베란다/발코니</div>
-                            <div></div>
+                            <th:block th:each="option : ${optionList}">
+                                <th:block th:each="alloption : ${allOptionList}">
+                                    <th:block th:each="detailOption : ${alloption.detailOptionList}">
+                                        <th:block
+                                            th:if="${detailOption.optionCode == 'OPTION_005' and option.contains('DO_035')}">
+                                            <div>있음</div>
+                                        </th:block>
+                                        <th:block
+                                            th:unless="${detailOption.optionCode == 'OPTION_005' and option.contains('DO_035')}">
+                                            <div>없음</div>
+                                        </th:block>
+                                        
+                                    </th:block>
+                                </th:block>
+                            </th:block>
                         </li>
                         <li>
                             <div>입주가능일</div>
@@ -90,9 +96,32 @@
                 </div>
                 <div class="box">
                     <h3 class="title_a">옵션</h3>
-                    <ul th:each="option : ${optionList}">
-                        <li th:if="${option == 'DO_004' or option == 'DO_005' or option == 'DO_006'}">에어컨</li>
-                        <!-- <li th:if="${option == 'DO_00'}"></li> -->
+                    <ul>
+                        <th:block th:each="option : ${optionList}">
+                            <th:block th:each="alloption : ${allOptionList}">
+                                <th:block th:each="detailOption : ${alloption.detailOptionList}"
+                                    th:if="${detailOption.optionCode == 'OPTION_002' or detailOption.optionCode == 'OPTION_003'}">
+                                    <th:block th:if="${option.contains(detailOption.detailOptionCode)}">
+                                        <li>[[${detailOption.detailOptionName}]]</li>
+                                    </th:block>
+                                </th:block>
+                            </th:block>
+                        </th:block>
+                    </ul>
+                </div>
+                <div class="box">
+                    <h3 class="title_a">보안/안전시설</h3>
+                    <ul>
+                        <th:block th:each="option : ${optionList}">
+                            <th:block th:each="alloption : ${allOptionList}">
+                                <th:block th:each="detailOption : ${alloption.detailOptionList}"
+                                    th:if="${detailOption.optionCode == 'OPTION_005'}">
+                                    <th:block th:if="${option.contains(detailOption.detailOptionCode)}">
+                                        <li>[[${detailOption.detailOptionName}]]</li>
+                                    </th:block>
+                                </th:block>
+                            </th:block>
+                        </th:block>
                     </ul>
                 </div>
             </div>
