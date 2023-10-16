@@ -12,4 +12,6 @@ public interface MemberService {
     // 이메일(아이디) 중복 확인
     public String userNameCheck(String userName);
 
+    // 회원 탈퇴
+    public int memberDelete(MemberVO memberVO);
 }

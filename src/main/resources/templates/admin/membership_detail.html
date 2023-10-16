@@ -6,30 +6,33 @@
 <title></title>
 </head>
 <body>
-    <div>
-        <h4>분류</h4>
-        <div></div>
-    </div>
-    <div>
-        <h4>상품명</h4>
-        <div></div>
-    </div>
-    <div>
-        <h4>상품 소개</h4>
-        <div></div>
-    </div>
-    <div>
-        <h4>상품 설명</h4>
-        <div></div>
-    </div>
-    <div>
-        <h4>가격</h4>
-        <div></div>
-    </div>
-    <div>
-        <h4>회원 목록</h4>
-        <div></div>
-    </div>
+    <th:block th:each="memDetailItem : ${memDetailItem}">
+        <div>
+            <h4>분류</h4>
+            <div>[[${memDetailItem.membershipItemList[0].memCateCode}]]</div>
+        </div>
+        <div>
+            <h4>상품명</h4>
+            <div></div>
+        </div>
+        <div>
+            <h4>상품 소개</h4>
+            <div></div>
+        </div>
+        <div>
+            <h4>상품 설명</h4>
+            <div></div>
+        </div>
+        <div>
+            <h4>가격</h4>
+            <div></div>
+        </div>
+        <div>
+            <h4>회원 목록</h4>
+            <div></div>
+        </div>
+    </th:block>
+    
     <input type="submit" value="수정">
     <input type="submit" value="삭제">
 </body>
