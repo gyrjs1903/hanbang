@@ -28,6 +28,7 @@ function openPost() {
 
                 map.setCenter(coords);
 
+                //좌표값 html로 넘기기
                 let coordinateY = document.getElementById("coordinate_y")
                 let coordinateX = document.getElementById("coordinate_x")
                 let Y = result[0].y
