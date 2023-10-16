@@ -68,6 +68,10 @@ public class RoomController {
     @GetMapping("/roomMain")
     public String roomMain(Model model){
         model.addAttribute("roomList", roomService.selectRoom());
+        model.addAttribute("propertyTypeList", roomService.selectProperty());
+        model.addAttribute("Options", roomService.selectOptions());
+        List<RoomVO> room= roomService.selectRoom();
+        System.out.println(room);
         return "room/room_main";
     }
 

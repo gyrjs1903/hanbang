@@ -56,7 +56,6 @@
         <result column="CREATE_DATE" property="createDate"/>
         <result column="USER_NO" property="userNo"/>
         <association property="roomAddrVO" resultMap="roomAddr"/>
-        <association property="roomAddr" resultMap="roomAddrVO"/>
         <collection property="imgList" resultMap="roomImg"/>
 
     </resultMap>

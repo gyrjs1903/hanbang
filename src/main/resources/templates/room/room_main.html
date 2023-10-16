@@ -14,8 +14,8 @@
         <div class="select_room">
             <ul th:each="room : ${roomList}">
                 <div>
-                    <img src="" alt="">
-                </div>
+                    <img style="width: 200px;" th:src="${'/img/' + 'room/' + room.imgList[0].attachedFileName}" alt="">
+                </div>            
                 <div class="text" >
                     <th:block th:if="${room.jeonseCost != null}">
                         <h4>전세 [[${room.jeonseCost}]]</h4>
@@ -23,9 +23,20 @@
                     <th:block th:if="${room.monthlyLease != null}">
                         <h4>월세 [[${room.deposit}]]/[[${room.monthlyLease}]]</h4>
                     </th:block>
-                    <p>주소</p>
-                    <p>유형, 평, 층</p>
-                    <p>내용</p>
+                    <p>[[${room.roomAddrVO.addr}]]</p>
+                    <input type="hidden" th:value="${room.roomAddrVO.coordinateX}" class="coordinate-X">
+                    <input type="hidden" th:value="${room.roomAddrVO.coordinateY}" class="coordinate-Y">
+                    <p class="ellipsis"><th:block th:each="propertyType : ${propertyTypeList}" th:if="${room.propertyTypeCode == propertyType.propertyTypeCode}">[[${propertyType.propertyTypeName}]]</th:block>, [[${room.roomSizeP}]]평, [[${room.floor}]]층</p>
+                    <p class="ellipsis">
+                        <th:block th:each="Option : ${Options}">
+                            <th:block th:each="detailOption : ${Option.detailOptionList}" >
+                                 <th:block th:if="${room.detailOptions.contains(detailOption.detailOptionCode)}">
+                                     [[${detailOption.detailOptionName}]]
+                                 </th:block> 
+                             </th:block>
+                         </th:block>
+                    </p>
+                    <p class="ellipsis">[[${room.content}]]</p>
                 </div>
             </ul>
         </div>
@@ -35,6 +46,7 @@
  <script type="text/javascript"
  src="//dapi.kakao.com/v2/maps/sdk.js?appkey=22ce9cdc2a0d0a47b1149d42f3bab1c0&libraries=services,clusterer,drawing"></script>
  <script src="/js/room/rooo_main.js"></script>
+ <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </th:block>
 </body>
 </html>
