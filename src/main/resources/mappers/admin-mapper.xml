@@ -172,6 +172,7 @@
         WHERE BOARD_NUM = #{boardNum}
     </select>
 
+<!--   공지사항 수정-->
     <update id="updateBoard">
         UPDATE INFO_BOARD
         SET
@@ -180,7 +181,7 @@
         WHERE BOARD_NUM= #{boardNum}
     </update>
 
-
+<!--공지사항 삭제-->
     <delete id="deleteBoard">
         DELETE INFO_BOARD
         WHERE BOARD_NUM = #{boardNum}
