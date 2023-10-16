@@ -405,3 +405,243 @@
     border-radius: 2px;
     background-color: rgb(255, 255, 255);
 }
+
+
+
+.slide_wrap{
+    display: flex;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+}
+
+.slide_bg{
+    width: 100%;
+    background: url() center center / cover no-repeat;
+    outline: none;
+    border: none;
+}
+
+.slide_img{
+    width: 1200px;
+    margin: 0px auto;
+    background: url() center center / contain no-repeat;
+    cursor: pointer;
+}
+
+.percelout_wrap{
+    width: 100%;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    padding: 60px 0px 80px;
+    background-color: rgb(67, 77, 104);
+    overflow: hidden;
+}
+
+.percelout_wrap > div > div.header{
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+
+.percelout_wrap > div > div.header > p{
+    line-height: 40px;
+    font-size: 28px;
+    color: rgb(255, 255, 255);
+}
+
+.percelout_wrap > div > div.header > a{
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    font-size: 15px;
+    color: rgb(255, 255, 255);
+    opacity: 0.6;
+}
+
+.pco_conent{
+    position: relative;
+    right: 0px;
+    display: flex;
+    width: 580px;
+    margin-top: 30px;
+    overflow: hidden;
+    transition: right 0.5s ease-out 0s;
+}
+
+.pco_info1{
+    width: 580px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 8px 15px 0px;
+    background-color: rgb(255, 255, 255);
+    position: relative;
+    cursor: pointer;
+}
+
+.pco_tit{
+    position: relative;
+}
+
+.pco_badge{
+    display: flex;
+    position: absolute;
+    top: 0px;
+    left: 25px;
+    z-index: 2;
+}
+
+.pco_badge > p.state{
+    padding: 7px 15px;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    background-color: rgb(35, 50, 110);
+}
+
+.pco_badge > p.title{
+    padding: 7px 12px;
+    font-size: 13px;
+    line-height: 20px;
+    color: rgb(255, 255, 255);
+    background-color: rgba(51, 51, 51, 0.3);
+}
+
+.pco_img{
+    position: absolute;
+    bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0px 20px;
+    z-index: 2;
+}
+
+.addr{
+    opacity: 0.8;
+    font-size: 14px;
+    line-height: 20px;
+    color: rgb(255, 255, 255);
+}
+
+.poco_bottom{
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.addr_detail{
+    width: 390px;
+    font-size: 26px;
+    line-height: 38px;
+    color: rgb(255, 255, 255);
+}
+
+.pco_price_info{
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 38px
+}
+
+.pco_price_info p.text{
+    margin-right: 4px;
+    font-size: 14px;
+    color: rgb(255, 255, 255);
+}
+
+.pco_price_info p.price{
+    font-size: 20px;
+    color: rgb(255, 255, 255);
+}
+
+.img_be_af{
+    position: relative;
+    width: 100%;
+    height: 300px;
+    background-color: rgb(255, 255, 255);
+    background-size: cover;
+}
+
+.pco_info2{
+    display: flex;
+    width: 100%;
+    padding: 22px 0px;
+}
+
+.pco_info2 > li{
+    width: 25%;
+    padding: 0px 20px;
+}
+
+.pco_info2 > li > p.title{
+    margin-bottom: 4px;
+    font-size: 14px;
+    line-height: 20px;
+    color: rgb(134, 134, 134);
+}
+
+.pco_info2 > li > p.value{
+    font-size: 14px;
+    line-height: 18px;
+    color: rgb(34, 34, 34);
+}
+
+.pagenum_wrap{
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.pagenum{
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 28px;
+    color: rgb(255, 255, 255);
+    border-bottom: 2px solid;
+    cursor: pointer;
+    user-select: none;
+}
+
+.board_list{
+    width: 100%;
+    padding: 60px 0px;
+}
+
+.board_list > div{
+    width: 1200px;
+    height: 100%;
+    margin: 0px auto;
+    padding: 0px 10px;
+}
+
+.list_wrap{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.list_wrap > li{
+    display: flex;
+    flex-direction: column;
+}
+
+.list_wrap > li > p.title{
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 22px;
+    color: rgb(34, 34, 34);
+    margin-bottom: 18px;
+}
+
+.list_wrap > li > a{
+    font-size: 15px;
+    line-height: 30px;
+    color: rgb(136, 136, 136);
+}

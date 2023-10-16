@@ -184,6 +184,37 @@
         )
     </insert>
 
+    <!--방조회-->
+    <select id="selectRoom" resultMap="room">
+        SELECT
+        R.ROOM_CODE,
+        R.PROPERTY_TYPE_CODE,
+        R.SUB_PROPERTY_TYPE_CODE,
+        R.ROOM_SIZE_P,
+        R.ROOM_SIZE_M,
+        R.FLOOR,
+        R.TRADE_TYPE_CODE,
+        R.MONTHLY_LEASE,
+        R.DEPOSIT,
+        R.JEONSE_COST,
+        R.MAINTENANCE_COST,
+        R.DETAIL_OPTIONS,
+        R.TITLE,
+        R.CONTENT,
+        R.CREATE_DATE,
+        R.USER_NO,
+        RA.ADDR_CODE,
+        RA.ADDR,
+        RA.DETAIL_ADDR,
+        RA.COORDINATE_X,
+        RA.COORDINATE_Y,
+        RI.IMG_CODE,
+        RI.ORIGIN_FILE_NAME,
+        RI.ATTACHED_FILE_NAME
+        FROM ROOM R
+        LEFT JOIN ROOM_ADDR RA ON R.ROOM_CODE = RA.ROOM_CODE
+        LEFT JOIN ROOM_IMG RI ON R.ROOM_CODE = RI.ROOM_CODE
+    </select>
 </mapper>
 
 

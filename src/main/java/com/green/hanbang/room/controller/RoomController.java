@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -70,4 +71,11 @@ public class RoomController {
         return "room/room_main";
     }
 
+    @ResponseBody
+    @PostMapping("/setMap")
+    public String setMap(){
+        //비동기통신으로
+        //    여기서 위도경도 셀렉트
+        return "";
+    }
 }

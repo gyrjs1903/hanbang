@@ -12,16 +12,16 @@
         <img src="" title="한방">
         <nav class="menu_bar">
             <ul>
-                <li><a href="">지도</a></li>
-                <li><a href="">분양정보</a></li>
-                <li><a href="">찜목록</a></li>
-                <li><a href="">알림</a></li>
+                <li><a href="/">지도</a></li>
+                <li><a href="/">분양정보</a></li>
+                <li><a href="/">찜목록</a></li>
+                <li><a href="/">알림</a></li>
                 <!-- 미로그인 시 나올 메뉴  -->
-                <div class="member_login_join">
+                <div th:if="${session.loginInfo != null}" class="member_login_join">
                     <button type="button" class="member_login_join_btn">로그인<span></span>회원가입</button>
                 </div>
                 <!-- 로그인 완료 시 나올 메뉴 -->
-                <div class="member_nav">
+                <div th:if="${session.loginInfo == 'USER'}" class="member_nav">
                     <div class="member_intro">
                         <div size="32" class="member_profile">
                             <img src="" alt="" draggable="false">[프사]
@@ -44,7 +44,26 @@
                     </div>
                 </div>
                 <!-- 공인중개사 로그인 시 나올 메뉴 일단 만들어만 놨어요! -->
-                <button class="realtor_ad_inquiry" type="button" style="margin-left: 8px;">중개사 광고문의</button>
+                <div th:if="${session.loginInfo == 'REALTOR'}" class="member_nav">
+                    <div class="member_intro">
+                        <div size="32" class="member_profile">
+                            <img src="" alt="" draggable="false">[프사]
+                        </div>
+                        <div class="member_nickname">
+                            <button type="button" class="member_menu_btn" onclick="my_menu_open()">
+                                <p>[닉네임]"공인중개사님"</p>
+                            </button>
+                            <div class="my_menu_wrap">
+                                <nav id="my_menu_nav" class="my_menu_nav" style="border: none;">
+                                    <a class="my_menu" onclick="location.href='/realtor/';">광고문의</a>
+                                    <a class="my_menu" onclick="location.href='/realtor/';">매물문의</a>
+                                    <a class="my_menu" onclick="location.href='/realtor/myPage';">내 정보</a>
+                                    <a class="my_menu" onclick="location.href='/member/logout';">로그아웃[이미지]</a>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </ul>
         </nav>
     </header>

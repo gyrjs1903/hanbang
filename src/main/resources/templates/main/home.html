@@ -4,6 +4,8 @@
                 layout:decorate="~{fragment/main_layout}">
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
 <title></title>
 </head>
 <body>
@@ -271,35 +273,41 @@
                 </div>
             </div>
         </section>
-        <div>
-            <div>slick 사용한 배너</div>
+        <div class="slide_wrap">
+            <div>
+                <div class="slide_bg">
+                    <div class="slide_img"></div>
+                </div>
+            </div>
         </div>
-        <div>
+        <div class="percelout_wrap">
             <div>
                 <div class="header">
                     <p>분양정보</p>
                     <a href="">더 많은 분양 정보 보기</a>
                 </div>
-                <div>
-                    <div>
+                <div class="pco_conent">
+                    <div class="pco_info1">
                         <a href="">
-                            <div>
-                                <div>
+                            <div class="pco_tit">
+                                <div class="pco_badge">
                                     <p class="state">분양예정</p>
                                     <p class="title">23.10월 모집공고</p>
                                 </div>
-                                <div>
-                                    <p>울산광역시 남구 삼산동</p>
-                                    <div>e편한세상 그린 컴퓨터아파트</div>
-                                    <div>
-                                        <p class="text">분양가</p>
-                                        <p class="price">준비중</p>
+                                <div class="pco_img">
+                                    <p class="addr">울산광역시 남구 삼산동</p>
+                                    <div class="pco_bottom">
+                                        <div class="addr_detail">e편한세상 그린 컴퓨터아파트</div>
+                                        <div class="pco_price_info">
+                                            <p class="text">분양가</p>
+                                            <p class="price">준비중</p>
+                                        </div>
                                     </div>
                                 </div>
-                                <div></div>
+                                <div class="img_be_af">[상품 이미지]</div>
                             </div>
                         </a>
-                        <ul>
+                        <ul class="pco_info2">
                             <li>
                                 <p class="title">건물 유형</p>
                                 <p class="value">아파트</p>
@@ -321,11 +329,45 @@
                     </div>
                 </div>
                 <!-- 페이지 -->
-                <ul>
-                    <li>01</li>
+                <ul class="pagenum_wrap">
+                    <li class="pagenum">01</li>
                 </ul>
             </div>
         </div>
+        <div class="board_list">
+            <div>
+                <ul class="list_wrap">
+                    <li>
+                        <p class="title">형태별 검색</p>
+                        <a href="">원룸</a>
+                        <a href="">투·쓰리룸</a>
+                        <a href="">오피스텔</a>
+                        <a href="">아파트</a>
+                    </li>
+                    <li>
+                        <p class="title">상품소개</p>
+                        <a href="">패키지 상품</a>
+                        <a href="">일반 상품</a>
+                        <a href="">단지 상품</a>
+                        <a href="">프리미엄 상품</a>
+                        <a href="">플러스 상품</a>
+                        <a href="">이 지역 부동산 상품</a>
+                    </li>
+                    <li>
+                        <p class="title">한방 뉴스/고객지원</p>
+                        <a href="">공지사항</a>
+                        <a href="">이벤트</a>
+                        <a href="">자주묻는 질문</a>
+                    </li>
+                    <li>
+                        <p class="title">한방정보</p>
+                        <a href="">회사소개</a>
+                        <a href="">오시는 길</a>
+                        <a href="">제휴문의</a>
+                    </li>
+                </ul></div></div>
+        <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script> 
     </th:block>
 </body>
 </html>
