@@ -66,8 +66,8 @@ public class RoomController {
         return "redirect:/room/roomMain";
     }
     @GetMapping("/roomMain")
-    public String roomMain(){
-
+    public String roomMain(Model model){
+        model.addAttribute("roomList", roomService.selectRoom());
         return "room/room_main";
     }
 
@@ -76,6 +76,7 @@ public class RoomController {
     public String setMap(){
         //비동기통신으로
         //    여기서 위도경도 셀렉트
+
         return "";
     }
 }
