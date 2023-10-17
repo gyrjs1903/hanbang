@@ -11,37 +11,33 @@ function createNickName(){
 , '열띤', '예쁜', '올바른', '옳은', '외로운', '우스운', '의심스런', '이른', '익은', '있는', '작은', '잘난', '잘빠진', '잘생긴', '재미있는', '적은', '젊은', '늙은'
 , '점잖은', '조그만', '좁은', '좋은', '주제넘은', '줄기찬', '즐거운', '지나친', '지혜로운', '질긴', '짓궂은', '짙은', '짠', '짧은', '케케묵은', '큰', '영광의'
 , '탐스러운', '턱없는', '푸른', '한결같은', '흐린', '희망찬', '흰', '힘겨운', '사랑하는', '증오하는', '끔찍한', '하얀', '파란', '빨간', '찬란한', '약한'];
-
-const word = ['고양이', '강아지', '거북이', '토끼', '뱀', '사자', '호랑이', '표범', '치타', '하이에나', '기린', '코끼리', '코뿔소', '하마', '악어', '펭귄', '부엉이'
+    const word = ['고양이', '강아지', '거북이', '토끼', '뱀', '사자', '호랑이', '표범', '치타', '하이에나', '기린', '코끼리', '코뿔소', '하마', '악어', '펭귄', '부엉이'
 , '올빼미', '곰', '돼지', '소', '닭', '독수리', '타조', '고릴라', '오랑우탄', '침팬지', '원숭이', '코알라', '캥거루', '고래', '상어', '칠면조', '직박구리'
 , '쥐', '청설모', '메추라기', '앵무새', '삵', '스라소니', '판다', '오소리', '오리', '거위', '백조', '두루미', '고슴도치', '두더지', '우파루파', '맹꽁이'
 , '너구리', '개구리', '두꺼비', '카멜레온', '이구아나', '노루', '제비', '까치', '고라니', '수달', '당나귀', '순록', '염소', '공작', '바다표범', '들소'
 , '박쥐', '참새', '물개', '바다사자', '살모사', '구렁이', '얼룩말', '산양', '멧돼지', '카피바라', '도롱뇽', '북극곰', '퓨마', '미어캣', '코요테', '라마'
 , '딱따구리', '기러기', '비둘기', '스컹크', '돌고래', '까마귀', '매', '낙타', '여우', '사슴', '늑대', '재규어', '알파카', '양', '다람쥐', '담비', '사막여우'
 , '젖소', '개미', '꿀벌', '물고기', '담요', '책', '책더미', '날개', '번개', '해', '햇볕', '숲', '나무', '바다', '절벽', '파도', '눈사람', '똥']
-
-    const randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
-    const randomWord = words[Math.floor(Math.random() * words.length)];
+    const randomAdjective = adjective[Math.floor(Math.random() * adjective.length)];
+    const randomWord = word[Math.floor(Math.random() * word.length)];
 
     return randomAdjective + randomWord;
 }
 
 document.addEventListener('DOMContentLoaded', function () {
     const joinBtn = document.getElementById('join-btn');
-    const nicknameInput = document.getElementById('nickname');
+    const nicknameInput = document.getElementById('nickName');
+
 
     joinBtn.addEventListener('click', function () {
-    const generatedNickname = createNickname();
-    nicknameInput.value = generatedNickname;
+        const generatedNickName = createNickName();
+        nicknameInput.value = generatedNickName;
+
+        const formData = new FormData();
+        formData.append('nickname', generatedNickName);
+
+        const defaultProfileImageImage = '/img/member/default_profile_image.png';
+        formData.append('profileImage', defaultProfileImageImage);
+
     });
 });
-
-
-
-
-
-
-
-
-
-

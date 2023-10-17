@@ -22,6 +22,12 @@ function map(){
         averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
         minLevel: 3 // 클러스터 할 최소 지도 레벨 
     });
+    // 마커 여러를 지도위에 표시합니다
+    for(let i = 0; i<coordinateXList.length; i++){[{
+        latlng: new kakao.maps.LatLng(coordinateXList, coordinateYList)
+    }]};
+    
+
     // 데이터를 가져오기 위해 jQuery를 사용합니다
     // 데이터를 가져와 마커를 생성하고 클러스터러 객체에 넘겨줍니다
     $.get("/download/web/data/chicken.json", function(data) {
