@@ -6,10 +6,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 
 @Controller
@@ -38,6 +36,7 @@ public class MemberController {
         memberService.memberDelete(memberVO);
         return "redirect:/main/home";
     }
+
     // 로그인 페이지 이동
     @GetMapping("/loginForm")
     public String loginForm(MemberVO memberVO) {
@@ -46,16 +45,13 @@ public class MemberController {
 
     // 로그인
     @PostMapping("/login")
-    public String login(MemberVO memberVO, HttpSession session, HttpServletRequest request, Model model) {
+    public String login(MemberVO memberVO, HttpSession session, HttpServletRequest request) {
 
         MemberVO loginInfo = memberService.login(memberVO);
 
-        List<MemberVO> memberList = memberService.memberList(memberVO);
-
-        model.addAttribute("memberList", memberList);
-
         if (loginInfo != null) {
             session.setAttribute("loginInfo", loginInfo);
+            System.out.println(loginInfo);
             if (loginInfo.getLoginType().equals("USER")) {
                 return "redirect:/";
             } else if(loginInfo.getLoginType().equals("REALTOR")) {
@@ -73,7 +69,7 @@ public class MemberController {
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.removeAttribute("loginInfo");
-        return "redirect:/main/home";
+        return "redirect:/";
     }
 
     // 비밀번호 재설정 창 팝업
@@ -83,6 +79,13 @@ public class MemberController {
     public String memberInfo(MemberVO memberVO, HttpSession session) {
         MemberVO loginInfo = memberService.login(memberVO);
         return "content/member/user_info";
+    }
+
+    // 프로필 이미지 수정
+    @PostMapping("/updateProfileImg")
+    public String updateProImg(MemberVO memberVO) {
+        memberService.updateProImg(memberVO);
+        return "content/member/user_info"; // 수정 후 이동할 페이지
     }
 
     // 전화문의 페이지로 이동

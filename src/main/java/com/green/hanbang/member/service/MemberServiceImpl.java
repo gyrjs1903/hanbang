@@ -19,13 +19,18 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public int updateProImg(MemberVO memberVO) {
+        return sqlSession.update("memberMapper.updateProImg");
+    }
+
+    @Override
     public MemberVO login(MemberVO memberVO) {
         return sqlSession.selectOne("memberMapper.login", memberVO);
     }
 
     @Override
-    public List<MemberVO> memberList(MemberVO memberVO) {
-        return sqlSession.selectList("memberMapper.selectMemberList");
+    public MemberVO profileImgLoad(String userNo) {
+        return sqlSession.selectOne("memberMapper.profileImgLoad", userNo);
     }
 
     @Override

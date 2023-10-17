@@ -3,20 +3,22 @@
 
 <mapper namespace="memberMapper">
     <resultMap id="member" type="com.green.hanbang.member.vo.MemberVO">
-        <id column="USER_NO"                 property="userNo"/>
-        <result column="USER_NAME"       property="userName"/>
-        <result column="PASSWORD"       property="passWord"/>
-        <result column="LOGIN_TYPE"      property="loginType"/>
-        <result column="PHONE"      property="phone"/>
-        <result column="NICK_NAME"      property="nickName"/>
-        <result column="JOIN_DATE"  property="joinDate"/>
-        <association property="realtorDetailVO" resultMap="realtorMapper.realtorDetail"/>
+        <id column="USER_NO"                            property="userNo"/>
+        <result column="USER_NAME"                      property="userName"/>
+        <result column="PASSWORD"                       property="passWord"/>
+        <result column="LOGIN_TYPE"                     property="loginType"/>
+        <result column="PHONE"                          property="phone"/>
+        <result column="NICK_NAME"                      property="nickName"/>
+        <result column="JOIN_DATE"                      property="joinDate"/>
+        <association property="realtorDetailVO"         resultMap="realtorMapper.realtorDetail"/>
+        <collection property="memberList"               resultMap="memberImg"/>
     </resultMap>
-    <resultMap id="memberImg" type="com.green.hanbang.member.vo.MemberVO">
-        <id column="PROFILE_IMG_NO"                 property="profileImgNo"/>
-        <result column="USER_NO"                    property="userNo"/>
-        <result column="PROFILE_IMG_NAME"           property="profileImgName"/>
-        <result column="ATTACHED_PROFILE_IMG_NAME"  property="attachedProfileImgName"/>
+
+    <resultMap id="memberImg" type="com.green.hanbang.member.vo.MemberImgVO">
+        <id column="PROFILE_IMG_NO" property="imgNo" />
+        <result column="USER_NO" property="userNo" />
+        <result column="PROFILE_IMG_NAME" property="imgName" />
+        <result column="ATTACHED_PROFILE_IMG_NAME" property="attachedImgName" />
     </resultMap>
 
     <!-- 회원 가입 -->
@@ -37,33 +39,6 @@
         )
     </insert>
 
-    <select id="memberList" resultType="member">
-        SELECT MU.USER_NO
-        , MU.USER_NAME
-        , MU.LOGIN_TYPE
-        , MU.NICK_NAME
-        , MU.PHONE
-        , MU.JOIN_DATE
-        , MI.PROFILE_IMG_NO
-        , MI.PROFILE_IMG_NAME
-        , MI.ATTACHED_PROFILE_IMG_NAME
-        FROM MEMBER_USER MU
-        LEFT JOIN MEMBER_IMG MI
-        ON MU.USER_NO = MI.USER_NO
-        WHERE MU.USER_NO = #{userNo}
-    </select>
-
-    <!-- 로그인 -->
-    <select id="login" resultMap="member">
-        SELECT USER_NO
-        , USER_NAME
-        , LOGIN_TYPE
-        , NICK_NAME
-        FROM MEMBER_USER
-        WHERE USER_NAME = #{userName}
-        AND PASSWORD = #{passWord}
-    </select>
-
     <!-- 프로필 이미지 불러오기 -->
     <select id="profileImgLoad" resultMap="memberImg">
         SELECT MI.USER_NO
@@ -76,24 +51,26 @@
         WHERE MU.USER_NO = #{userNo}
     </select>
 
-    <!-- 프로필 이미지 등록 -->
-    <insert id="insertImgs">
-        INSERT INTO MEMBER_IMG (
-        PROFILE_IMG_NO
-        , ORIGIN_FILE_NAME
-        , ATTACHED_FILE_NAME
-        , USER_NO
-        )
-        VALUES (
-        <foreach collection="profileImgList" item="img" separator=",">
-            SELECT (SELECT 'IMG_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(IMG_CODE, 5))), 0) + 1 + #{idx}, 3, '0')
-            FROM MEMBER_IMG)
-            , #{img.originFileName}
-            , #{img.attachedFileName}
-            , (SELECT USER_NO FROM MEMBER_USER WHERE USER_NO = #{img.userNo})
-            )
-        </foreach>
-    </insert>
+    <!-- 프로필 이미지 수정-->
+    <update id="updateProImg">
+        UPDATE FROM MEMBER_USER
+        INNER JOIN MEMBER_IMG MI
+        ON USER_NO = MI.USER_NO
+        SET PROFILE_IMG_NAME = #{profile_img_name}
+            , ATTACHED_PROFILE_IMG_NAME = #{attached_profile_img_name}
+        WHERE PROFILE_IMG_NO = #{profile_img_no}
+    </update>
+
+    <!-- 로그인 -->
+    <select id="login" resultMap="member">
+        SELECT USER_NO
+        , USER_NAME
+        , LOGIN_TYPE
+        , NICK_NAME
+        FROM MEMBER_USER
+        WHERE USER_NAME = #{userName}
+        AND PASSWORD = #{passWord}
+    </select>
 
     <!-- 아이디 중복 확인 -->
     <select id="userNameCheck" resultType="String">

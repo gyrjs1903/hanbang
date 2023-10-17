@@ -32,12 +32,11 @@ document.addEventListener('DOMContentLoaded', function () {
     joinBtn.addEventListener('click', function () {
         const generatedNickName = createNickName();
         nicknameInput.value = generatedNickName;
-        console.log(nicknameInput.value);
-
-        const defaultProfileImageImage = '/img/member/default_profile_image.png';
 
         const formData = new FormData();
-        formData.append('nickname', nicknameInput);
+        formData.append('nickname', generatedNickName);
+
+        const defaultProfileImageImage = '/img/member/default_profile_image.png';
         formData.append('profileImage', defaultProfileImageImage);
 
     });

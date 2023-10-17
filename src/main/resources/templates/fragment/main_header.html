@@ -9,26 +9,26 @@
 <th:block th:fragment="mainHeaderFragment">
     <link rel="stylesheet" href="/css/main/main_header.css">
     <header class="menu_all">
-        <img src="" title="한방">
-        <nav class="menu_bar"  th:each="member : ${memberList}">
+        <img class="logo" src="" title="한방">
+        <nav class="menu_bar">
             <ul>
                 <li><a href="/">지도</a></li>
                 <li><a href="/">분양정보</a></li>
                 <li><a href="/">찜목록</a></li>
                 <li><a href="/">알림</a></li>
                 <!-- 미로그인 시 나올 메뉴  -->
-                <div th:if="${session.loginInfo.loginType != null}" class="member_login_join">
-                    <button type="button" class="member_login_join_btn">로그인<span></span>회원가입</button>
+                <div th:if="${session.loginInfo == null}" class="member_login_join">
+                    <button type="button" class="member_login_join_btn" onclick="location.href='/member/loginForm'">로그인<span>|</span>회원가입</button>
                 </div>
                 <!-- 로그인 완료 시 나올 메뉴 -->
-                <div th:if="${session.loginInfo == 'USER'}" class="member_nav">
+                <div th:if="${session.loginInfo?.loginType == 'USER'}" class="member_nav">
                     <div class="member_intro">
                         <div size="32" class="member_profile">
-                            <img src="" alt="" draggable="false">[프사]
+                            <img src="" alt="" draggable="false">
                         </div>
                         <div class="member_nickname">
                             <button type="button" class="member_menu_btn" onclick="my_menu_open()">
-                                <p>[닉네임]"님"</p>
+                                <p>[[${session.loginInfo?.nickName}]]님</p>
                             </button>
                             <div class="my_menu_wrap">
                                 <nav id="my_menu_nav" class="my_menu_nav" style="border: none;">
@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <!-- 공인중개사 로그인 시 나올 메뉴 일단 만들어만 놨어요! -->
-                <div th:if="${session.loginInfo == 'REALTOR'}" class="member_nav">
+                <div th:if="${session.loginInfo?.loginType == 'REALTOR'}" class="member_nav">
                     <div class="member_intro">
                         <div size="32" class="member_profile">
                             <img src="" alt="" draggable="false">[프사]

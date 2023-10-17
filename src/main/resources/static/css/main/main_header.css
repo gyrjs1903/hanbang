@@ -1,144 +1,130 @@
 @charset "UTF-8";
 
-.menu_all{
-    display: flex;
-    margin-bottom: 100px;
-    background-color: rgb(74, 204, 74);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.menu_bar > ul{
-    display: flex;
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-.menu_bar > ul > li > a{
-    margin-right: 50px;
+.menu_all {
+  margin-bottom: 68px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #4ACC4A;
+  padding: 20px;
 }
 
-.member_nav{
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    height: 100%;
-    margin-left: 40px;
+.menu_bar {
+  list-style-type: none;
+  display: flex;
 }
 
-.member_intro{
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    height: 100%;
-    margin-left: 40px;
+.menu_bar  ul {
+  display: flex;
+  list-style: none;
 }
 
-.member_profile{
-    flex: 0 0 auto;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    user-select: none;
-    position: relative;
+.menu_bar  li {
+  margin-right: 30px;
 }
 
-.member_nickname{
-    margin-left: 8px;
-    min-width: 80px;
-    border: 0px;
-    position: relative;
-    user-select: none;
-    cursor: pointer;
+.menu_bar  li  a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  transition: color 0.3s;
 }
 
-.member_nickname > p{
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 14px;
-    line-height: 24px;
+.menu_bar  li  a:hover {
+  color: #cfe8cf;
 }
 
-.member_menu_btn{
-    position: absolute;
-    top: calc(100% + 13px);
-    left: calc(50% - 10px);
-    transform: translateX(-50%);
-    z-index: 101;
+.member_nav,
+.member_intro,
+.member_login_join {
+  display: flex;
+  align-items: center;
 }
 
-.my_menu_wrap{
-    width: 240px;
-    position: absolute;
-    top: calc(100% + 20px);
-    right: 10px;
-    z-index: 100;
+.member_intro {
+  margin-left: 40px;
 }
 
-.my_menu_nav{
-    display: none;
-    border: 1px solid rgb(205, 205, 205);
-    border-radius: 2px;
-    background-color: rgb(255, 255, 255);
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 15px 18px -10px;
+.member_profile {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
 }
 
-.my_menu{
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: start;
-    justify-content: flex-start;
-    width: 100%;
-    padding: 0px 16px;
-    color: rgb(76, 76, 76);
-    font-size: 14px;
-    line-height: 20px;
-    height: 56px;
-    border-bottom: 1px solid rgb(237, 237, 237);
+.member_profile  img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.member_login_join{
-    display: none;
-    flex: 0 0 auto;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    margin-left: 40px;
+.member_nickname  p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  margin: 0;
+  margin-left: 10px;
 }
 
-.member_login_join_btn{
-    flex: 0 0 auto;
-    display: none;
-    /* display: flex; */
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    height: 36px;
-    padding: 0px 16px;
-    font-size: 14px;
-    line-height: 24px;
-    font-weight: 700;
-    color: rgb(255, 255, 255);
-    border: 1px solid rgb(223, 223, 223);
-    border-radius: 2px;
-    background-color: transparent;
+.member_menu_btn {
+  position: relative;
 }
 
-.member_login_join_btn > span{
-    /* display: block; */
-    margin: 0px 8px;
-    width: 1px;
-    height: 12px;
-    background-color: rgb(223, 223, 223);
-    position: relative;
+.my_menu_wrap {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  display: none;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  z-index: 2;
 }
 
-.realtor_ad_inquiry{
-    display: none;
+.my_menu_nav {
+  list-style-type: none;
+  padding: 10px 0;
+}
+
+.my_menu_nav  a {
+  display: block;
+  text-decoration: none;
+  color: #333;
+  padding: 10px 20px;
+  transition: background-color 0.3s;
+}
+
+.my_menu_nav > a:hover {
+  background-color: #f5f5f5;
+}
+
+.member_login_join_btn {
+  display: flex;
+  align-items: center;
+  border: 2px solid #fff;
+  padding: 8px 16px;
+  border-radius: 5px;
+  margin-left: 40px;
+}
+
+.member_login_join_btn  span {
+  display: block;
+  width: 1px;
+  height: 12px;
+  background-color: #fff;
+  margin: 0 8px;
+}
+
+.realtor_ad_inquiry {
+  display: none;
 }
