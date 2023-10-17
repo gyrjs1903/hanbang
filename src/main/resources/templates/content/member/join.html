@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="/css/member/join.css">
     <div class="join_frame">
         <form id="joinForm" action="/member/join" method="post">
+            <input type="hidden" id="nickName" name="nickName">
+            <input type="file" style="display: none;" id="profileImage" name="profileImage">
             <div>
                 <input type="text" id="userName" class="" name="userName" placeholder="이메일 주소 입력">
                 <p class="userNameFormGuide">이메일 주소 형식<br>예&#41; hanbang1@hanbang.com</p>
@@ -43,6 +45,7 @@
     </div>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script async src="/js/member/join.js"></script>
+<script async src="/js/member/join_auto_info.js"></script>
 </th:block>
 </body>
 </html>
