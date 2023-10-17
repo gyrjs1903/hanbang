@@ -18,15 +18,47 @@
             , MAINTENANCE_COST
             , DETAIL_OPTIONS
             , CONTENT
-            , CREATE_DATE
+            , TO_CHAR(CREATE_DATE,'YYYY-MM-DD') CREATE_DATE
             , USER_NO
             , ATTACHED_FILE_NAME
-        FROM ROOM R, ROOM_IMG I
+            , ADDR
+            , DETAIL_ADDR
+        FROM ROOM R, ROOM_IMG I, ROOM_ADDR A
         WHERE R.ROOM_CODE = #{roomCode}
         AND R.ROOM_CODE = I.ROOM_CODE
+        AND R.ROOM_CODE = A.ROOM_CODE
     </select>
 
-    <!-- DetailOption 값 조회 -->
+    <!-- 등록한 사람 LOGIN_TYPE 조회 -->
+    <select id="selectLoginType" resultType="String">
+        SELECT LOGIN_TYPE
+        FROM MEMBER_USER
+        WHERE USER_NO = #{userNo}
+    </select>
+
+    <!-- 일반회원 닉네임 전화번호 조회 -->
+    <select id="selectRegUser" resultMap="memberMapper.member">
+        SELECT NICK_NAME
+            , PHONE
+            , USER_NO
+            , LOGIN_TYPE
+        FROM MEMBER_USER
+        WHERE USER_NO = #{userNo}
+    </select>
+
+    <!-- 공인중개사 사업자번호, 사업자명, 전화번호 조회 -->
+    <select id="selectRegRealtor" resultMap="memberMapper.member">
+        SELECT PHONE
+            , OFFICE_NAME
+            , IDENTIFICATION_NUM
+            , REALTOR_NAME
+            , M.USER_NO
+            , LOGIN_TYPE
+        FROM MEMBER_USER M, REALTOR_DETAIL R
+        WHERE M.USER_NO = #{userNo}
+        AND M.USER_NO = R.USER_NO
+    </select>
+
 </mapper>
 
 

@@ -217,7 +217,14 @@
         LEFT JOIN ROOM_ADDR RA ON R.ROOM_CODE = RA.ROOM_CODE
         LEFT JOIN ROOM_IMG RI ON R.ROOM_CODE = RI.ROOM_CODE
     </select>
-
+    <select id="selectRoomAddr" resultMap="roomAddr">
+        SELECT
+        ADDR_CODE,
+        ADDR,
+        COORDINATE_X,
+        COORDINATE_Y
+        FROM ROOM_ADDR
+    </select>
 
 </mapper>
 

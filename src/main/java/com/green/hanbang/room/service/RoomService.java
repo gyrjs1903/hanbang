@@ -19,5 +19,7 @@ public interface RoomService {
 
     //방 조회
     public List<RoomVO> selectRoom();
+    //주소 및 좌표 조회
+    public List<RoomAddrVO> selectRoomAddr();
 
 }

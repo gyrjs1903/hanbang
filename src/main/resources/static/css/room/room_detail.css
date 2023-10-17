@@ -1,0 +1,55 @@
+@charset "UTF-8";
+/* room_detail.css */
+
+#wrap{
+    position: relative;
+    max-width: 1440px;
+    margin: 0 auto;
+}
+.img-box{
+    display: flex;
+}
+.img-box > p{
+    width: 30%;
+    height: 90%;
+}
+img{
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    overflow: hidden;
+    object-position: center;
+}
+.box{
+    margin-bottom: 100px;
+}
+.title_a{
+    margin-bottom: 30px;
+}
+.box > ul > li{
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+.box > ul > li > div{
+    margin-right: 20px;
+}
+.box > ul > li > div:first-child{
+    font-size: 15px;
+    font-weight: 700;
+}
+.option-box::after{
+    display: block;
+    content: "";
+    clear: both;
+}
+.option-box > li{
+    display: block;
+    float: left;
+    margin-right: 20px;
+}
+.wing{
+    position: absolute;
+    top: 400px;
+    right: 150px;
+}

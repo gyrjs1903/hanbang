@@ -77,10 +77,9 @@ public class RoomController {
 
     @ResponseBody
     @PostMapping("/setMap")
-    public String setMap(){
-        //비동기통신으로
-        //    여기서 위도경도 셀렉트
-
-        return "";
+    public List<RoomAddrVO> setMap() {
+        // 비동기 통신으로 위도경도 셀렉트
+        List<RoomAddrVO> roomAddrs = roomService.selectRoomAddr();
+        return roomAddrs;
     }
 }
