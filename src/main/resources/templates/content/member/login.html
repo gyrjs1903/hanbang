@@ -4,6 +4,7 @@
                 layout:decorate="~{fragment/main_layout}">
 <head>
 <meta charset="UTF-8">
+<link rel="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 <title>로그인 페이지</title>
 </head>
 <body>
@@ -36,9 +37,9 @@
                     </header>
                     <div class="">
                         <div>
-                            <div class="">
+                            <div class="passWordArea">
                                 <input type="password" class="" name="passWord" placeholder="비밀번호 입력">
-                                <button type="button" class="password_icon"></button>
+                                <div class="passWordBtn"></div>
                             </div>
                         </div>
                     </div>
@@ -79,6 +80,7 @@
         </div>
     </div>    
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script async src="/js/member/login.js"></script>
 </th:block>
 </body>
 </html>

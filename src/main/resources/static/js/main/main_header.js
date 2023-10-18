@@ -1,8 +1,8 @@
 /* main_header.js */
 
 function my_menu_open(){
-    let click = document.getElementById("my_menu_nav");
-    if(click.style.display === "none"){
+    let click = document.getElementById("my_menu_wrap");
+    if(click.style.display === "none" || click.style.display === ""){
         click.style.display = "block";
 
     }else{

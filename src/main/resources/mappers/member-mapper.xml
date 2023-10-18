@@ -14,10 +14,10 @@
     </resultMap>
 
     <resultMap id="memberImg" type="com.green.hanbang.member.vo.MemberImgVO">
-        <id column="PROFILE_IMG_NO" property="imgNo" />
-        <result column="USER_NO" property="userNo" />
-        <result column="PROFILE_IMG_NAME" property="imgName" />
-        <result column="ATTACHED_PROFILE_IMG_NAME" property="attachedImgName" />
+        <id column="PROFILE_IMG_NO"                 property="imgNo" />
+        <result column="USER_NO"                    property="userNo" />
+        <result column="PROFILE_IMG_NAME"           property="imgName" />
+        <result column="ATTACHED_PROFILE_IMG_NAME"  property="attachedImgName" />
     </resultMap>
 
     <!-- 회원 가입 -->
