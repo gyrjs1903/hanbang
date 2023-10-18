@@ -11,33 +11,18 @@
             <label>대분류</label>
             <select class="category1" name="memCateCode" id="select_category">
                 <option value="" selected>전체</option>
-                <option value="addNew" class="new">
-                    신규등록
-                </option>
                 <option th:each="category : ${cateList}" th:value="${category.memCateCode}">[[${category.memCateName}]]</option>
             </select> 
-            <!-- 신규등록 입력 칸 -->
-            <div class="addNewCategory" style="display: none;">
-                <input type="text" name="memCateName">
-            </div>
         </div>
 
 
-        
         <!-- 소분류가 있을 때 -->
         <div class="optionForm0" style="display: none;">    
             <label>중분류</label>
-            <select class="category2" name="membershipCode" id="select-midCategory">
-                <option value="" selected>전체</option>
-                <option value="addMidNew" class="midNew">
-                    신규등록
-                </option>
+            <select class="category2" name="membershipCode">
+                <option value="">전체</option>
                 <option th:each="midCategory : ${midCateList}" th:value="${midCategory.membershipCode}">[[${midCategory.membershipName}]]</option>
             </select>
-            <!-- 신규 등록 시 입력 칸 -->
-            <div class="addNewMidCategory" style="display: none;">
-                <input type="text" name="membershipName">
-            </div>
         </div>
 
         
@@ -72,7 +57,7 @@
             </div>
             <div class="inputArea">
                 <label for="membershipPrice">상품가격</label>
-                <input type="text" id="membershipPrice" name="membershipPrice" disabled/>
+                <input type="text" id="membershipPrice" name="membershipPrice"/>
             </div>
         </div>
         
