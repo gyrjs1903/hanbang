@@ -9,12 +9,12 @@
 <th:block th:fragment="mainHeaderFragment">
     <link rel="stylesheet" href="/css/main/main_header.css">
     <header class="menu_all">
-        <img class="logo" src="" title="한방">
+        <img class="logo" src="/img/main/HanBangm.png" title="한방">
         <nav class="menu_bar">
             <ul>
                 <li><a onclick="location.href='/room/roomMain'">지도</a></li>
                 <li><a href="/">분양정보</a></li>
-                <li><a href="/">찜목록</a></li>
+                <li><a onclick="location.href='/member/dibsOn'">찜목록</a></li>
                 <li><a href="/">알림</a></li>
                 <!-- 미로그인 시 나올 메뉴  -->
                 <div th:if="${session.loginInfo == null}" class="member_login_join">
@@ -26,8 +26,8 @@
                         <div size="32" class="member_profile">
                             <img src="" alt="" draggable="false">
                         </div>
-                        <div class="member_nickname">
-                            <button type="button" class="member_menu_btn" onclick="my_menu_open()">
+                        <div class="member_nickname "onclick="my_menu_open()">
+                            <button type="button" class="member_menu_btn">
                                 <p>[[${session.loginInfo?.nickName}]]님</p>
                             </button>
                             <div class="my_menu_wrap">

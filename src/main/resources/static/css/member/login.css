@@ -46,6 +46,10 @@ h1, p{
     background-image: url("/static/img/member/default_profile_image.png");
 }
 
-.password_icon{
+.passWordBtn{
+    background-image: url("/static/img/member/password_show.png");
+}
+
+.passWordBtn::before{
     background-image: url("/static/img/member/password_hide.png");
 }

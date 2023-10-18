@@ -51,7 +51,6 @@ public class MemberController {
 
         if (loginInfo != null) {
             session.setAttribute("loginInfo", loginInfo);
-            System.out.println(loginInfo);
             if (loginInfo.getLoginType().equals("USER")) {
                 return "redirect:/";
             } else if(loginInfo.getLoginType().equals("REALTOR")) {
@@ -111,5 +110,11 @@ public class MemberController {
     @PostMapping("/userNameDuplicationCheckFetch")
     public String userNameDuplicationCheckFetch(@RequestParam String userName){
         return memberService.userNameCheck(userName);
+    }
+
+    // 헤더에 찜목록 누를 시 찜목록 페이지로 이동
+    @GetMapping("/dibsOn")
+    public String memberDibsOn() {
+        return "content/member/recent_viewed_room";
     }
 }
