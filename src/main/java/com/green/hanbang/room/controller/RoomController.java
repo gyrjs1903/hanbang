@@ -67,6 +67,8 @@ public class RoomController {
     }
     @GetMapping("/roomMain")
     public String roomMain(Model model){
+
+        model.addAttribute("tradeTypeList", roomService.selectTradeType());
         model.addAttribute("roomList", roomService.selectRoom());
         model.addAttribute("propertyTypeList", roomService.selectProperty());
         model.addAttribute("Options", roomService.selectOptions());
@@ -82,4 +84,5 @@ public class RoomController {
         List<RoomAddrVO> roomAddrs = roomService.selectRoomAddr();
         return roomAddrs;
     }
+
 }

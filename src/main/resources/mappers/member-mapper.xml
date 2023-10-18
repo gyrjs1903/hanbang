@@ -11,7 +11,6 @@
         <result column="NICK_NAME"                      property="nickName"/>
         <result column="JOIN_DATE"                      property="joinDate"/>
         <association property="realtorDetailVO"         resultMap="realtorMapper.realtorDetail"/>
-        <collection property="memberList"               resultMap="memberImg"/>
     </resultMap>
 
     <resultMap id="memberImg" type="com.green.hanbang.member.vo.MemberImgVO">
