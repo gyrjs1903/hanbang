@@ -66,16 +66,20 @@ public class RoomController {
         return "redirect:/room/roomMain";
     }
     @GetMapping("/roomMain")
-    public String roomMain(){
-
+    public String roomMain(Model model){
+        model.addAttribute("roomList", roomService.selectRoom());
+        model.addAttribute("propertyTypeList", roomService.selectProperty());
+        model.addAttribute("Options", roomService.selectOptions());
+        List<RoomVO> room= roomService.selectRoom();
+        System.out.println(room);
         return "room/room_main";
     }
 
     @ResponseBody
     @PostMapping("/setMap")
-    public String setMap(){
-        //비동기통신으로
-        //    여기서 위도경도 셀렉트
-        return "";
+    public List<RoomAddrVO> setMap() {
+        // 비동기 통신으로 위도경도 셀렉트
+        List<RoomAddrVO> roomAddrs = roomService.selectRoomAddr();
+        return roomAddrs;
     }
 }

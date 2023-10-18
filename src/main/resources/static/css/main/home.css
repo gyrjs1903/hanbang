@@ -1,4 +1,8 @@
 @charset "UTF-8";
+.content {
+    margin-top: 300px;
+    padding: 20px;
+  }
 
 .search_room{
     width: 100%;

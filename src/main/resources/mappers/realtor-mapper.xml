@@ -11,6 +11,7 @@
         <result column="LICENSE_FILE_NAME" property="licenseFileName"/>
         <result column="AUTHORITY" property="authority"/>
         <result column="REQUEST_DATE" property="requestDate"/>
+        <result column="REALTOR_NAME" property="realtorName"/>
         <association property="licenseImgVO" resultMap="licenseImg"/>
     </resultMap>
 
@@ -44,12 +45,14 @@
             , OFFICE_NAME
             , IDENTIFICATION_NUM
             , LICENSE_FILE_NAME
+            , REALTOR_NAME
         ) VALUES (
             #{realtorCode}
             , #{userNo}
             , #{officeName}
             , #{identificationNum}
             , #{licenseFileName}
+            , #{realtorName}
         )
     </insert>
 
@@ -81,6 +84,13 @@
         SELECT IDENTIFICATION_NUM
         FROM REALTOR_DETAIL
         WHERE IDENTIFICATION_NUM = #{identificationNum}
+    </select>
+
+    <!-- 공인중개사 정보 수정 시 비밀번호 확인 -->
+    <select id="selectRealtorPw" resultType="String">
+        SELECT PASSWORD
+        FROM MEMBER_USER
+        WHERE USER_NO = #{userNo}
     </select>
 
 </mapper>

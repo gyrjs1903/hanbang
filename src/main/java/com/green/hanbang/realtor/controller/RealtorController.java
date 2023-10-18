@@ -69,4 +69,21 @@ public class RealtorController {
 
         return "redirect:/realtor/main";
     }
+
+    @GetMapping("/pwCorrectPage")
+    public String pwCorrectPage(){
+        return "realtor/realtor_pwCorrect";
+    }
+
+    @ResponseBody
+    @PostMapping("/PWCorrect")
+    public String PWCorrect(HttpSession session){
+        MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
+         return realtorService.selectRealtorPw(loginInfo.getUserNo());
+    }
+
+    @PostMapping("/PWIdentify")
+    public String PWIdentify(){
+        return "redirect:/realtor/myPage";
+    }
 }

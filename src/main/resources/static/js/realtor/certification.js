@@ -1,5 +1,6 @@
 function duplication(){
     let num = document.querySelector('#identificationNum').value;
+    let realtorName = document.querySelector('#realtorName').value;
     let officeName = document.querySelector('#officeName').value;
     let licenseImg = document.querySelector('#licenseImg').value;
     console.log(num);
@@ -21,7 +22,9 @@ function duplication(){
         //fetch 통신 후 실행 영역
         .then((data) => {//data -> controller에서 리턴되는 데이터!
             if(data){
-                if(officeName == null || officeName == ''){
+                if(realtorName == null || realtorName == ''){
+                    inputInvalidate('#realtor-name-error-div','대표자명은 필수입력사항입니다.');
+                } if(officeName == null || officeName == ''){
                     inputInvalidate('#name-error-div','중개사무소명은 필수입력사항입니다.');
                 }
                 if(licenseImg == null || licenseImg == ''){

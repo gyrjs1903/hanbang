@@ -21,4 +21,7 @@ public interface RealtorService {
 
     //사업자등록증 중복 여부
     public String selectIdentificationNum(String identificationNum);
+
+    //정보 수정시 비밀번호 확인
+    public String selectRealtorPw(String userNo);
 }

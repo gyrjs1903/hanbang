@@ -2,10 +2,13 @@ package com.green.hanbang.member.controller;
 
 import com.green.hanbang.member.service.MemberService;
 import com.green.hanbang.member.vo.MemberVO;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+
 
 @Controller
 @RequestMapping("/member")
@@ -23,10 +26,9 @@ public class MemberController {
     @PostMapping("/join")
     public String join(MemberVO memberVO) {
         memberService.join(memberVO);
+
         return "content/member/login";
     }
-
-    // 회원 가입 시 닉네임 자동 생성
 
     // 회원 탈퇴
     @GetMapping("/memberDelete")
@@ -34,6 +36,7 @@ public class MemberController {
         memberService.memberDelete(memberVO);
         return "redirect:/main/home";
     }
+
     // 로그인 페이지 이동
     @GetMapping("/loginForm")
     public String loginForm(MemberVO memberVO) {
@@ -42,24 +45,31 @@ public class MemberController {
 
     // 로그인
     @PostMapping("/login")
-    public String login(MemberVO memberVO, HttpSession session) {
+    public String login(MemberVO memberVO, HttpSession session, HttpServletRequest request) {
+
         MemberVO loginInfo = memberService.login(memberVO);
 
         if (loginInfo != null) {
             session.setAttribute("loginInfo", loginInfo);
-            if (loginInfo.getLoginType().equals("REALTOR")) {
+            System.out.println(loginInfo);
+            if (loginInfo.getLoginType().equals("USER")) {
+                return "redirect:/";
+            } else if(loginInfo.getLoginType().equals("REALTOR")) {
                 return "redirect:/realtor/main";
+            } else if(loginInfo.getLoginType().equals("ADMIN")) {
+                return "redirect:/admin/manage";
             }
         }
 
-        return "content/member/login_result";
+        String userName = request.getParameter("userName");
+        return "redirect:/member/loginForm?userName=" + userName;
     }
 
     // 로그아웃
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.removeAttribute("loginInfo");
-        return "redirect:/main/home";
+        return "redirect:/";
     }
 
     // 비밀번호 재설정 창 팝업
@@ -71,10 +81,11 @@ public class MemberController {
         return "content/member/user_info";
     }
 
-    // 문자문의 페이지로 이동
-    @GetMapping("/memberSMS")
-    public String memberSMS() {
-        return "content/member/user_sms";
+    // 프로필 이미지 수정
+    @PostMapping("/updateProfileImg")
+    public String updateProImg(MemberVO memberVO) {
+        memberService.updateProImg(memberVO);
+        return "content/member/user_info"; // 수정 후 이동할 페이지
     }
 
     // 전화문의 페이지로 이동

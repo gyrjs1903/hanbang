@@ -30,7 +30,7 @@
                         <h1>닉네임</h1>
                     </div>
                     <div class="" style="cursor: pointer;">
-                        <p> > [닉네임변경칭]</p>
+                        <p><a href="">[${session.loginInfo.userName}]<img src="" alt="닉네임 변경 창"></a></p>
                     </div>
                 </li>
                 <li>
@@ -75,7 +75,27 @@
                     </div>
                 </button>
             </div>
+            <!-- 닉네임 변경 창 -->
+            <div class="modal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">닉네임 재설정</h5>
+                        </div>
+                        <div class="modal-body">
+                            <h4>닉네임</h4>
+                            <input autocomplete="off" type="text" placeholder="닉네임을 입력해주세요." id="inputNickName" th:value="${nickName}" oninput="countCharacters();" maxlength="10">
+                            <p id="characterCount">0/10</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary data" data-bs-dismiss="modal">닫기</button>
+                            <button type="submit" class="btn btn-primary">확인</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        <script async src="/js/member/user_info.js"></script>
     </th:block>
 </body>
 </html>

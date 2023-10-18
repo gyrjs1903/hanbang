@@ -5,6 +5,7 @@ import com.green.hanbang.realtor.vo.RealtorDetailVO;
 import lombok.RequiredArgsConstructor;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class RealtorServiceImpl implements RealtorService{
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void insertRealtorDetail(RealtorDetailVO realtorDetailVO) {
         sqlSession.insert("realtorMapper.insertRealtorDetail",realtorDetailVO);
         sqlSession.insert("realtorMapper.insertLicenseImg",realtorDetailVO);
@@ -37,5 +39,10 @@ public class RealtorServiceImpl implements RealtorService{
     @Override
     public String selectIdentificationNum(String identificationNum) {
         return sqlSession.selectOne("realtorMapper.selectIdentificationNum", identificationNum);
+    }
+
+    @Override
+    public String selectRealtorPw(String userNo) {
+        return sqlSession.selectOne("realtorMapper.selectRealtorPw",userNo);
     }
 }

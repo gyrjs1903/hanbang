@@ -3,21 +3,21 @@
 
 <mapper namespace="memberMapper">
     <resultMap id="member" type="com.green.hanbang.member.vo.MemberVO">
-        <id column="USER_NO"                 property="userNo"/>
-        <result column="USER_NAME"       property="userName"/>
-        <result column="PASSWORD"       property="passWord"/>
-        <result column="LOGIN_TYPE"      property="loginType"/>
-        <result column="PHONE"      property="phone"/>
-        <result column="NICK_NAME"      property="nickName"/>
-        <result column="PROFILE_IMAGE"  property="profile_image"/>
-        <result column="JOIN_DATE"  property="joinDate"/>
-        <association property="realtorDetailVO" resultMap="realtorMapper.realtorDetail"/>
+        <id column="USER_NO"                            property="userNo"/>
+        <result column="USER_NAME"                      property="userName"/>
+        <result column="PASSWORD"                       property="passWord"/>
+        <result column="LOGIN_TYPE"                     property="loginType"/>
+        <result column="PHONE"                          property="phone"/>
+        <result column="NICK_NAME"                      property="nickName"/>
+        <result column="JOIN_DATE"                      property="joinDate"/>
+        <association property="realtorDetailVO"         resultMap="realtorMapper.realtorDetail"/>
     </resultMap>
-    <resultMap id="memberImg" type="com.green.hanbang.member.vo.MemberVO">
-        <id column="PROFILE_IMG_NO"                 property="profileImgNo"/>
-        <result column="USER_NO"                    property="userNo"/>
-        <result column="PROFILE_IMG_NAME"           property="profileImgName"/>
-        <result column="ATTACHED_PROFILE_IMG_NAME"  property="attachedProfileImgName"/>
+
+    <resultMap id="memberImg" type="com.green.hanbang.member.vo.MemberImgVO">
+        <id column="PROFILE_IMG_NO" property="imgNo" />
+        <result column="USER_NO" property="userNo" />
+        <result column="PROFILE_IMG_NAME" property="imgName" />
+        <result column="ATTACHED_PROFILE_IMG_NAME" property="attachedImgName" />
     </resultMap>
 
     <!-- 회원 가입 -->
@@ -27,26 +27,16 @@
             , USER_NAME
             , PASSWORD
             , LOGIN_TYPE
+            , NICK_NAME
         ) VALUES (
             (SELECT NVL(MAX(USER_NO)+1, 0)
             FROM MEMBER_USER)
             , #{userName}
             , #{passWord}
             , #{loginType}
+            , #{nickName}
         )
     </insert>
-
-    <!-- 로그인 -->
-    <select id="login" resultMap="member">
-        SELECT USER_NO
-            , USER_NAME
-            , LOGIN_TYPE
-            , NICK_NAME
-            , PROFILE_IMAGE
-        FROM MEMBER_USER
-        WHERE USER_NAME = #{userName}
-        AND PASSWORD = #{passWord}
-    </select>
 
     <!-- 프로필 이미지 불러오기 -->
     <select id="profileImgLoad" resultMap="memberImg">
@@ -54,8 +44,31 @@
         , PROFILE_IMG_NO
         , PROFILE_IMG_NAME
         , ATTACHED_PROFILE_IMG_NAME
-        FROM MEMBER_USER MU, MEMBER_IMG MI
-        WHERE USER_NO = #{userNo}
+        FROM MEMBER_USER MU
+        LEFT JOIN MEMBER_IMG MI
+        ON MU.USER_NO = MI.USER_NO
+        WHERE MU.USER_NO = #{userNo}
+    </select>
+
+    <!-- 프로필 이미지 수정-->
+    <update id="updateProImg">
+        UPDATE FROM MEMBER_USER
+        INNER JOIN MEMBER_IMG MI
+        ON USER_NO = MI.USER_NO
+        SET PROFILE_IMG_NAME = #{profile_img_name}
+            , ATTACHED_PROFILE_IMG_NAME = #{attached_profile_img_name}
+        WHERE PROFILE_IMG_NO = #{profile_img_no}
+    </update>
+
+    <!-- 로그인 -->
+    <select id="login" resultMap="member">
+        SELECT USER_NO
+        , USER_NAME
+        , LOGIN_TYPE
+        , NICK_NAME
+        FROM MEMBER_USER
+        WHERE USER_NAME = #{userName}
+        AND PASSWORD = #{passWord}
     </select>
 
     <!-- 아이디 중복 확인 -->
@@ -73,8 +86,9 @@
 
     <!-- 비밀번호 변경 (회원 정보 수정의 경우) -->
     <update id="updatePassword">
-        UPDATE FROM MEMBER_UEER
-        WHERE USER_PASSWORD = #{passWord}
+        UPDATE FROM MEMBER_USER
+        SET PASSWORD = #{passWord}
+        WHERE USER_NAME = #{userName}
     </update>
 
 </mapper>
