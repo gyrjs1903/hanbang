@@ -10,7 +10,8 @@
     display: flex;
 }
 .img-box > p{
-    width: 30%;
+    box-sizing: border-box;
+    width: calc(100% / 3);
     height: 90%;
 }
 img{
@@ -19,6 +20,12 @@ img{
     object-fit: cover;
     overflow: hidden;
     object-position: center;
+}
+.container-box{
+    display: grid;
+    grid-template-columns: 510px 360px;
+    gap: 0 40px;
+    padding: 0 10px;
 }
 .box{
     margin-bottom: 100px;
@@ -38,6 +45,13 @@ img{
     font-size: 15px;
     font-weight: 700;
 }
+.wd25 > .col{
+    flex: none;
+}
+.wd25 > div{
+    box-sizing: border-box;
+    width: 50%;
+}
 .option-box::after{
     display: block;
     content: "";
@@ -48,8 +62,32 @@ img{
     float: left;
     margin-right: 20px;
 }
-.wing{
-    position: absolute;
-    top: 400px;
-    right: 150px;
+.wing .wing-box{
+    width: 360px;
+    padding: 30px;
+    border: 1px solid rgb(223, 223, 223);
+    border-radius: 2px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 20px;
+}
+.wing > .wing-box > .row{
+    margin-bottom: 15px; 
+}
+.info-box{
+    margin-bottom: 40px;
+}
+.realtorOffice{
+    margin-bottom: 20px;
+    padding: 15px;
+}
+.realtorOffice > div{
+    font-size: 16px;
+}
+.realtorOffice > div, .gnb{
+    font-weight: 700;
+}
+.flx{
+    display: flex;
+}
+.flx > div{
+    margin-right: 15px;
 }
