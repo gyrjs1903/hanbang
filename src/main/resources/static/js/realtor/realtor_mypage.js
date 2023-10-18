@@ -34,3 +34,12 @@ function inputInvalidate(tagId, message){
     document.querySelector(tagId).style.display = 'block';
     document.querySelector(tagId).textContent = message;
 }
+
+let inputTag = document.getElementById('password');
+
+inputTag.addEventListener("keypress", (e)=>{
+    if(e.key == 'Enter'){
+        e.preventDefault();
+        document.getElementById('change-btn').onclick();
+    }
+})

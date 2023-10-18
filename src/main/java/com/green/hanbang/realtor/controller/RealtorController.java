@@ -31,6 +31,7 @@ public class RealtorController {
         MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
         model.addAttribute("realtorInfo",realtorService.selectRealtorMyPage(loginInfo.getUserNo()));
         model.addAttribute("authority",realtorService.selectAuthorityStatue(loginInfo.getUserNo()));
+        model.addAttribute("realtorDetailInfo",realtorService.selectRealtorDetailInfo(loginInfo.getUserNo()));
         return "realtor/realtor_mypage";
     }
 
@@ -83,7 +84,15 @@ public class RealtorController {
     }
 
     @PostMapping("/PWIdentify")
-    public String PWIdentify(){
+    public String PWIdentify(HttpSession session, Model model){
+        MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
+        model.addAttribute("realtorInfo",realtorService.selectRealtorMyPage(loginInfo.getUserNo()));
+        return "realtor/realtor_update";
+    }
+
+    @PostMapping("/realtorInfoUpdate")
+    public String realtorInfoUpdate(MemberVO memberVO){
+        realtorService.updateRealtorInfo(memberVO);
         return "redirect:/realtor/myPage";
     }
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- 복사해서 사용 -->
 <mapper namespace="realtorMapper">
     <resultMap id="realtorDetail" type="com.green.hanbang.realtor.vo.RealtorDetailVO">
         <id column="REALTOR_CODE" property="realtorCode"/>
@@ -93,6 +92,20 @@
         WHERE USER_NO = #{userNo}
     </select>
 
+    <!-- 공인중개사 detail정보 입력 여부 -->
+    <select id="selectRealtorDetailInfo" resultType="String">
+        SELECT REALTOR_CODE
+        FROM REALTOR_DETAIL
+        WHERE USER_NO = #{userNo}
+    </select>
+
+    <!-- 공인중개사 정보 수정 -->
+    <update id="updateRealtorInfo">
+        UPDATE MEMBER_USER
+        SET NICK_NAME = #{nickName}
+            , PHONE = #{phone}
+        WHERE USER_NO = #{userNo}
+    </update>
 </mapper>
 
 
