@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko" xlmns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{realtor/realtor_layout}">
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+    <th:block layout:fragment="content">
+        <link rel="stylesheet" href="/css/realtor/realtor_mypage.css">
+        <div id="wrap">
+            <h4>공인중개사 마이페이지</h4>
+            <div class="info">
+                <form action="/realtor/realtorInfoUpdate" method="post">
+                    <div class="cate">이메일</div>
+                    <div><input type="text" th:value="${realtorInfo.userName}" readonly></div>
+                    <div class="cate">닉네임</div>
+                    <div><input type="text" th:value="${realtorInfo.nickName}" name="nickName"></div>
+                    <div class="cate">전화번호</div>
+                    <div><input type="text" th:value="${realtorInfo.phone}" name="phone"></div>
+                    <input type="hidden" th:value="${realtorInfo.userNo}" name="userNo">
+                    <input type="submit" class="cursor btn btn-light" value="수정하기"></input>
+                </form>
+            </div>
+        </div>
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    </th:block>
+</body>
+</html>

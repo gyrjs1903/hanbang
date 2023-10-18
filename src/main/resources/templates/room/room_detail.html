@@ -19,158 +19,163 @@
                     </th:block>
                 </div>
             </div>
-            <div class="row">
-                <div class="col">
-                    <div class="box price">
-                        <h3 class="title_a">가격정보</h3>
-                        <ul>
-                            <li>
-                                <div th:if="${roomDetail.tradeTypeCode == 'TTC_001'}">월세</div>
-                                <div th:if="${roomDetail.tradeTypeCode == 'TTC_002'}">전세</div>
-                                <div th:if="${roomDetail.tradeTypeCode == 'TTC_001'}">
-                                    [[${roomDetail.deposit}]]/[[${roomDetail.monthlyLease}]]</div>
-                                <div th:if="${roomDetail.tradeTypeCode == 'TTC_002'}">
-                                    [[${roomDetail.jeonseCost}]]</div>
-                            </li>
-                            <li>
-                                <div>관리비</div>
-                                <div>[[${roomDetail.maintenanceCost}]]</div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="box">
-                        <h3 class="title_a">상세정보</h3>
-                        <ul>
-                            <li>
-                                <div>방종류</div>
-                                <div th:if="${roomDetail.subPropertyTypeCode == 'STYPE_001'}">원룸</div>
-                                <div th:if="${roomDetail.subPropertyTypeCode == 'STYPE_002'}">투룸</div>
-                                <div th:if="${roomDetail.subPropertyTypeCode == 'STYPE_003'}">쓰리룸 이상</div>
-                                <div th:if="${roomDetail.subPropertyTypeCode == 'STYPE_004'}">오피스텔(도시형)</div>
-                                <div th:if="${roomDetail.subPropertyTypeCode == 'STYPE_005'}">아파트</div>
-                            </li>
-                            <li>
-                                <div>해당층/건물층</div>
-                                <div>[[${roomDetail.floor}]]층/건물층</div>
-                            </li>
-                            <li>
-                                <div>전용/공급면적</div>
-                                <div>평 : [[${roomDetail.roomSizeP}]]/ M : [[${roomDetail.roomSizeM}]]</div>
-                            </li>
-                            <li>
-                                <div>난방종류</div>
+            <div class="container-box">
+                <div class="row">
+                    <div class="col">
+                        <div class="box price">
+                            <h3 class="title_a">가격정보</h3>
+                            <ul>
+                                <li>
+                                    <div th:if="${roomDetail.tradeTypeCode == 'TTC_001'}">월세</div>
+                                    <div th:if="${roomDetail.tradeTypeCode == 'TTC_002'}">전세</div>
+                                    <div th:if="${roomDetail.tradeTypeCode == 'TTC_001'}">
+                                        [[${roomDetail.deposit}]]/[[${roomDetail.monthlyLease}]]</div>
+                                    <div th:if="${roomDetail.tradeTypeCode == 'TTC_002'}">
+                                        [[${roomDetail.jeonseCost}]]</div>
+                                </li>
+                                <li>
+                                    <div>관리비</div>
+                                    <div>[[${roomDetail.maintenanceCost}]]</div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="box">
+                            <h3 class="title_a">상세정보</h3>
+                            <ul>
+                                <li>
+                                    <div>방종류</div>
+                                    <div th:if="${roomDetail.subPropertyTypeCode == 'STYPE_001'}">원룸</div>
+                                    <div th:if="${roomDetail.subPropertyTypeCode == 'STYPE_002'}">투룸</div>
+                                    <div th:if="${roomDetail.subPropertyTypeCode == 'STYPE_003'}">쓰리룸 이상</div>
+                                    <div th:if="${roomDetail.subPropertyTypeCode == 'STYPE_004'}">오피스텔(도시형)</div>
+                                    <div th:if="${roomDetail.subPropertyTypeCode == 'STYPE_005'}">아파트</div>
+                                </li>
+                                <li>
+                                    <div>해당층/건물층</div>
+                                    <div>[[${roomDetail.floor}]]층/건물층</div>
+                                </li>
+                                <li>
+                                    <div>전용/공급면적</div>
+                                    <div>평 : [[${roomDetail.roomSizeP}]]/ M : [[${roomDetail.roomSizeM}]]</div>
+                                </li>
+                                <li>
+                                    <div>난방종류</div>
+                                    <th:block th:each="option : ${optionList}">
+                                        <th:block th:each="alloption : ${allOptionList}">
+                                            <th:block th:each="detailOption : ${alloption.detailOptionList}"
+                                                th:if="${detailOption.optionCode == 'OPTION_001' and detailOption.detailOptionCode.contains(option)}">
+                                                <div>[[${detailOption.detailOptionName}]]</div>
+                                            </th:block>
+                                        </th:block>
+                                    </th:block>
+                                </li>
+                                <li>
+                                    <div>베란다/발코니</div>
+                                    <div id="balcony-check">없음</div>
+                                </li>
+                                <li>
+                                    <div>입주가능일</div>
+                                    <div></div>
+                                </li>
+                                <li>
+                                    <div>건축물용도</div>
+                                    <th:block th:if="${roomDetail.propertyTypeCode == 'MTYPE_001'}">
+                                        <div>주택/빌라</div>
+                                    </th:block>
+                                    <th:block th:if="${roomDetail.propertyTypeCode == 'MTYPE_002'}">
+                                        <div>오피스텔(도시형)</div>
+                                    </th:block>
+                                    <th:block th:if="${roomDetail.propertyTypeCode == 'MTYPE_003'}">
+                                        <div>아파트</div>
+                                    </th:block>
+                                </li>
+                                <li>
+                                    <div>최초등록일</div>
+                                    <div>[[${roomDetail.createDate}]]</div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="box">
+                            <h3 class="title_a">옵션</h3>
+                            <ul class="option-box">
                                 <th:block th:each="option : ${optionList}">
                                     <th:block th:each="alloption : ${allOptionList}">
                                         <th:block th:each="detailOption : ${alloption.detailOptionList}"
-                                            th:if="${detailOption.optionCode == 'OPTION_001' and detailOption.detailOptionCode.contains(option)}">
-                                            <div>[[${detailOption.detailOptionName}]]</div>
+                                            th:if="${detailOption.optionCode == 'OPTION_002' or detailOption.optionCode == 'OPTION_003'}">
+                                            <th:block th:if="${option.contains(detailOption.detailOptionCode)}">
+                                                <li>[[${detailOption.detailOptionName}]]</li>
+                                            </th:block>
                                         </th:block>
                                     </th:block>
                                 </th:block>
-                            </li>
-                            <li>
-                                <div>베란다/발코니</div>
-                                <div id="balcony-check">없음</div>
-                            </li>
-                            <li>
-                                <div>입주가능일</div>
-                                <div></div>
-                            </li>
-                            <li>
-                                <div>건축물용도</div>
-                                <th:block th:if="${roomDetail.propertyTypeCode == 'MTYPE_001'}">
-                                    <div>주택/빌라</div>
+                            </ul>
+                        </div>
+                        <div class="box">
+                            <h3 class="title_a">보안/안전시설</h3>
+                            <ul class="option-box">
+                                <th:block th:each="option : ${optionList}">
+                                    <th:block th:each="alloption : ${allOptionList}">
+                                        <th:block th:each="detailOption : ${alloption.detailOptionList}"
+                                            th:if="${detailOption.optionCode == 'OPTION_005'}">
+                                            <th:block th:if="${option.contains(detailOption.detailOptionCode)}">
+                                                <li>[[${detailOption.detailOptionName}]]</li>
+                                            </th:block>
+                                        </th:block>
+                                    </th:block>
                                 </th:block>
-                                <th:block th:if="${roomDetail.propertyTypeCode == 'MTYPE_002'}">
-                                    <div>오피스텔(도시형)</div>
-                                </th:block>
-                                <th:block th:if="${roomDetail.propertyTypeCode == 'MTYPE_003'}">
-                                    <div>아파트</div>
-                                </th:block>
-                            </li>
-                            <li>
-                                <div>최초등록일</div>
-                                <div>[[${roomDetail.createDate}]]</div>
-                            </li>
-                        </ul>
+                            </ul>
+                        </div>
+                        <div class="box">
+                            <h3 class="title_a">상세설명</h3>
+                            <div>[[${roomDetail.content}]]</div>
+                        </div>
                     </div>
-                    <div class="box">
-                        <h3 class="title_a">옵션</h3>
-                        <ul class="option-box">
-                            <th:block th:each="option : ${optionList}">
-                                <th:block th:each="alloption : ${allOptionList}">
-                                    <th:block th:each="detailOption : ${alloption.detailOptionList}"
-                                        th:if="${detailOption.optionCode == 'OPTION_002' or detailOption.optionCode == 'OPTION_003'}">
-                                        <th:block th:if="${option.contains(detailOption.detailOptionCode)}">
-                                            <li>[[${detailOption.detailOptionName}]]</li>
-                                        </th:block>
-                                    </th:block>
-                                </th:block>
+                </div>
+                <div class="wing">
+                    <div class="wing-box">
+                        <div class="row">
+                            <div class="col">매물번호 [[${number}]]</div>
+                        </div>
+                        <div class="row">
+                            <div th:if="${roomDetail.tradeTypeCode == 'TTC_001'}">
+                                월세[[${roomDetail.deposit}]]/[[${roomDetail.monthlyLease}]]</div>
+                            <div th:if="${roomDetail.tradeTypeCode == 'TTC_002'}">
+                                전세[[${roomDetail.deposit}]]/[[${roomDetail.jeonseCost}]]</div>
+                        </div>
+                        <div class="row">
+                            <div class="col">[[${roomDetail.roomAddrVO.addr}]] [[${roomDetail.roomAddrVO.detailAddr}]]
+                            </div>
+                        </div>
+                        <div class="row wd25">
+                            <th:block th:if="${roomDetail.propertyTypeCode == 'MTYPE_001'}">
+                                <div class="col">주택/빌라</div>
                             </th:block>
-                        </ul>
-                    </div>
-                    <div class="box">
-                        <h3 class="title_a">보안/안전시설</h3>
-                        <ul class="option-box">
-                            <th:block th:each="option : ${optionList}">
-                                <th:block th:each="alloption : ${allOptionList}">
-                                    <th:block th:each="detailOption : ${alloption.detailOptionList}"
-                                        th:if="${detailOption.optionCode == 'OPTION_005'}">
-                                        <th:block th:if="${option.contains(detailOption.detailOptionCode)}">
-                                            <li>[[${detailOption.detailOptionName}]]</li>
-                                        </th:block>
-                                    </th:block>
-                                </th:block>
+                            <th:block th:if="${roomDetail.propertyTypeCode == 'MTYPE_002'}">
+                                <div class="col">오피스텔(도시형)</div>
                             </th:block>
-                        </ul>
-                    </div>
-                    <div class="box">
-                        <h3 class="title_a">상세설명</h3>
-                        <div>[[${roomDetail.content}]]</div>
-                    </div>
-                </div>
-            </div>
-            <div class="wing">
-                <div class="row">
-                    <div class="col">매물번호 [[${number}]]</div>
-                </div>
-                <div class="row">
-                    <div th:if="${roomDetail.tradeTypeCode == 'TTC_001'}">
-                        월세[[${roomDetail.deposit}]]/[[${roomDetail.monthlyLease}]]</div>
-                    <div th:if="${roomDetail.tradeTypeCode == 'TTC_002'}">
-                        전세[[${roomDetail.deposit}]]/[[${roomDetail.jeonseCost}]]</div>
-                </div>
-                <div class="row">
-                    <div class="col">[[${roomDetail.roomAddrVO.addr}]] [[${roomDetail.roomAddrVO.detailAddr}]]</div>
-                </div>
-                <div class="row">
-                    <th:block th:if="${roomDetail.propertyTypeCode == 'MTYPE_001'}">
-                        <div class="col">주택/빌라</div>
-                    </th:block>
-                    <th:block th:if="${roomDetail.propertyTypeCode == 'MTYPE_002'}">
-                        <div class="col">오피스텔(도시형)</div>
-                    </th:block>
-                    <th:block th:if="${roomDetail.propertyTypeCode == 'MTYPE_003'}">
-                        <div class="col">아파트</div>
-                    </th:block>
-                    <div class="col">[[${roomDetail.roomSizeM}]]㎡</div>
-                    <div class="col">[[${roomDetail.floor}]]층</div>
-                    <div class="col">매월 [[${roomDetail.maintenanceCost}]]만원</div>
-                </div>
-                <div class="row">
-                    <th:block th:if="${personInfo.loginType == 'USER'}">
-                        [[${personInfo.nickName}]](직거래)
-                    </th:block>
-                    <th:block th:if="${personInfo.loginType == 'REALTOR'}">
-                        [[${personInfo.realtorDetailVO.officeName}]]
-                    </th:block>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#tel-modal">
-                            연락처보기
-                        </button>
+                            <th:block th:if="${roomDetail.propertyTypeCode == 'MTYPE_003'}">
+                                <div class="col">아파트</div>
+                            </th:block>
+                            <div class="col">[[${roomDetail.roomSizeM}]]㎡</div>
+                            <div class="col">[[${roomDetail.floor}]]층</div>
+                            <div class="col">매월 [[${roomDetail.maintenanceCost}]]만원</div>
+                        </div>
+                        <div class="row">
+                            <th:block th:if="${personInfo.loginType == 'USER'}">
+                                <div class="col">[[${personInfo.nickName}]](직거래)</div>
+                            </th:block>
+                            <th:block th:if="${personInfo.loginType == 'REALTOR'}">
+                                <div class="col">[[${personInfo.realtorDetailVO.officeName}]]</div>
+                            </th:block>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#tel-modal">
+                                    연락처보기
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -183,21 +188,23 @@
                         <h5 class="modal-title">연락처 보기</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body text-center">
                         <th:block th:if="${personInfo.loginType == 'REALTOR'}">
-                            <div class="row">
-                                <div class="col">[[${personInfo.realtorDetailVO.officeName}]]</div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="gnb">대표명</div>
-                                    <div class="text">[[${personInfo.realtorDetailVO.realtorName}]]</div>
+                            <div class="info-box">
+                                <div class="row realtorOffice">
+                                    <div class="col">[[${personInfo.realtorDetailVO.officeName}]]</div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="gnb">사업자등록번호</div>
-                                    <div class="text">[[${personInfo.realtorDetailVO.identificationNum}]]</div>
+                                <div class="row">
+                                    <div class="col realtorName flx">
+                                        <div class="gnb">대표명</div>
+                                        <div class="text">[[${personInfo.realtorDetailVO.realtorName}]]</div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col realtorNum flx">
+                                        <div class="gnb">사업자등록번호</div>
+                                        <div class="text">[[${personInfo.realtorDetailVO.identificationNum}]]</div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">

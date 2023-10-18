@@ -24,20 +24,6 @@
         <result column="INFO_REGDATE" property="infoRegDate"/>
     </resultMap>
 
-<!--    <resultMap id="membership" type="com.green.hanbang.admin.vo.MembershipVO">-->
-<!--        <result column="MEM_CATE_CODE" property="memCateCode"/>-->
-<!--        <result column="MEM_CATE_NAME" property="memCateName"/>-->
-<!--        <result column="MEMBERSHIP_CODE" property="membershipCode"/>-->
-<!--        <result column="MEMBERSHIP_NAME" property="membershipName"/>-->
-<!--        <result column="MEMBERSHIP_CONTENT" property="membershipContent"/>-->
-<!--        <result column="MEMBERSHIP_PRICE" property="membershipPrice"/>-->
-<!--        <result column="ITEM_CODE" property="itemCode"/>-->
-<!--        <result column="ITEM_NAME" property="itemName"/>-->
-<!--        <result column="ITEM_PRICE" property="itemPrice"/>-->
-<!--        <result column="ITEM_CONTENT" property="itemContent"/>-->
-<!--        <result column="ITEM_INTRO" property="itemIntro"/>-->
-<!--    </resultMap>-->
-
     <resultMap id="memCate" type="com.green.hanbang.admin.vo.MemCateVO">
         <result column="MEM_CATE_CODE" property="memCateCode"/>
         <result column="MEM_CATE_NAME" property="memCateName"/>
@@ -233,9 +219,14 @@
         AND SHIP.MEM_CATE_CODE = #{memCateCode}
         AND SHIP.MEMBERSHIP_CODE = #{membershipCode}
         <if test="itemCode != null">
-            AND ITEM.ITEM_CODE = #{membershipList.memItemList.itemCode}
+            AND ITEM.ITEM_CODE = #{itemCode}
         </if>
     </select>
+
+<!--    맴버쉽 아이템 수정하기-->
+    <update id="updateMembership">
+
+    </update>
 </mapper>
 
 
