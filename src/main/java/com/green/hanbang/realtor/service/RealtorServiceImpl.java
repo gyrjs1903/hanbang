@@ -45,4 +45,14 @@ public class RealtorServiceImpl implements RealtorService{
     public String selectRealtorPw(String userNo) {
         return sqlSession.selectOne("realtorMapper.selectRealtorPw",userNo);
     }
+
+    @Override
+    public String selectRealtorDetailInfo(String userNo) {
+        return sqlSession.selectOne("realtorMapper.selectRealtorDetailInfo",userNo);
+    }
+
+    @Override
+    public void updateRealtorInfo(MemberVO memberVO) {
+        sqlSession.update("realtorMapper.updateRealtorInfo",memberVO);
+    }
 }

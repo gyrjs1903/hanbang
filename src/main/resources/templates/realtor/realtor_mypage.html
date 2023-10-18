@@ -26,19 +26,22 @@
                         <input type="text" value="공인중개사" readonly>
                         <div th:if="${authority == null or authority == 'N'}">
                             <div class="uncertification acceptance">인증되지 않은 공인중개사입니다.</div>
-                            <span onclick="location.href='/realtor/certificationForm';"
-                                class="cursor btn btn-primary">인증하기</span>
+                            <th:block th:unless="${realtorDetailInfo == null}">
+                                <button
+                                class="cursor btn btn-primary" disabled>인증요청중</button>
+                            </th:block>
+                            <th:block th:if="${realtorDetailInfo == null}">
+                                <button onclick="location.href='/realtor/certificationForm';"
+                                class="cursor btn btn-primary">인증하기</button>
+                            </th:block>
                         </div>
                         <div th:if="${authority == 'Y' and authority != null}">
-                            <div class="certification acceptance">인증된 공인중개사입니다.</div>
-                            <span class="btn btn-primary done">인증정보 수정하기</span>
-                            <!-- th:onclick="|location.href='@{/realtor/certificationForm(userNo=${realtorInfo.userNo})}'|" -->
+                            <div class="certification acceptance">인증된 공인중개사입니다.</div>                   
                         </div>
                     </div>
                     <br>
-                    <!-- <input type="button" class="btn btn-light" value="수정하기" th:onclick="realtorCorrection([[${realtorInfo.userNo}]]);"></input> -->
+                
                 </form>
-                <span class="cursor btn btn-light">수정하기</span>
                 <span class="cursor btn btn-light" onclick="location.href='/realtor/pwCorrectPage';">내정보 변경하기</span>
             </div>
         </div>

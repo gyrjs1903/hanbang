@@ -24,4 +24,10 @@ public interface RealtorService {
 
     //정보 수정시 비밀번호 확인
     public String selectRealtorPw(String userNo);
+
+    //공인중개사 detail정보 입력 시 인증하기 버튼 disabled
+    public String selectRealtorDetailInfo(String userNo);
+
+    //공인중개사 정보 수정
+    public void updateRealtorInfo(MemberVO memberVO);
 }
