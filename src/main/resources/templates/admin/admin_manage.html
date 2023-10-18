@@ -22,11 +22,12 @@
                 <li><a th:href="@{/admin/membershipList(memCateCode=${mCategory.memCateCode})}">[[${mCategory.memCateName}]]</a></li>
             </ul>
         </th:block>
+        <input type="button" value="등록하기" onclick="location.href='/admin/regMembershipForm';">
     </div>
     <div>
         <h3>이벤트</h3>
-        <div><a></a></div>
+        <div><a th:href="@{/admin/event}">이벤트 관리</a></div>
     </div>
-    <script src="/js/admin.js"></script>
+    <script src="/js/admin/admin.js"></script>
 </body>
 </html>

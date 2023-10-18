@@ -6,6 +6,7 @@
 <title></title>
 </head>
 <body>
+<<<<<<< HEAD
     <th:block th:each="memDetailItem : ${memDetailItem}">
         <div>
             <h4>분류</h4>
@@ -19,19 +20,57 @@
             <h4>상품 소개</h4>
             <div></div>
         </div>
+=======
+    
+    <div>
+        <h4>대분류</h4>
+        <div>[[${memDetailItem.memCateName}]]<div>
+    </div>
+    <div th:if="${memDetailItem.memCateCode != 'CATE_001'}">
+        <h4>상품명</h4>
+        <div>[[${memDetailItem.membershipList[0].membershipName}]]</div>
+>>>>>>> jyllds22
         <div>
             <h4>상품 설명</h4>
-            <div></div>
+            <div>[[${memDetailItem.membershipList[0].membershipContent}]]</div>
         </div>
         <div>
             <h4>가격</h4>
-            <div></div>
+            <div>[[${memDetailItem.membershipList[0].membershipPrice}]]</div>
         </div>
         <div>
             <h4>회원 목록</h4>
             <div></div>
         </div>
-    </th:block>
+    </div>
+    <div th:if="${memDetailItem.memCateCode == 'CATE_001'}">
+        <div>
+            <h4>중분류</h4>
+            <div>[[${memDetailItem.membershipList[0].membershipName}]]</div>
+        </div>
+        <div>
+            <h5>상품명</h5>
+            <div>[[${memDetailItem.membershipList[0].memItemList[0].itemName}]]</div>
+        </div>
+        <div>
+            <h4>상품 소개</h4>
+            <div>[[${memDetailItem.membershipList[0].memItemList[0].itemIntro}]]</div>
+        </div>
+        <div>
+            <h4>상품 설명</h4>
+            <div>[[${memDetailItem.membershipList[0].memItemList[0].itemContent}]]</div>
+        </div>
+        <div>
+            <h4>가격</h4>
+            <div>[[${memDetailItem.membershipList[0].memItemList[0].itemPrice}]]</div>
+        </div>
+        <div>
+            <h4>회원 목록</h4>
+            <div></div>
+        </div>
+    </div>
+
+  
     
     <input type="submit" value="수정">
     <input type="submit" value="삭제">
