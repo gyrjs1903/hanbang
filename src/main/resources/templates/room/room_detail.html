@@ -130,6 +130,10 @@
                             <div>[[${roomDetail.content}]]</div>
                         </div>
                     </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#report-modal">허위매물 신고하기</button>
+                    </div>
                 </div>
                 <div class="wing">
                     <div class="wing-box">
@@ -223,6 +227,93 @@
                                 <div>개인과의 직거래 시 언제나 안전에 유의하세요.</div>
                             </div>
                         </th:block>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" id="report-modal"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog  modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">개인정보 수집 및 이용에 대한 안내</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="law">
+                            <div class="txt">
+                                · 개인정보 수집 및 이용 목적(개인정보보호법 제15조)
+                                ▫ 부동산매물클린관리센터는 관계 법령에 따라 소관 업무를 수행하기 위하여 개인정보를 수집 및 이용 합니다. 수집된 개인정보는 정해진 목적 이외의 용도로는
+                                이용되지
+                                않으며
+                                수집 목적이 변경될 경우 사전에 알 리고 동의를 받을 예정입니다.
+                            </div>
+                            <div class="txt">
+                                · 수집하는 개인정보의 항목
+                                ▫ 부동산매물클린관리센터는 아래와 같은 최소한의 개인정보를 수집하고 있습니다.
+                                - 필수항목 : 신고자의 성명, 성별, 휴대폰 번호, 생년월일 / 증빙자료 내 신고인의 기타 정보
+                                ▫ 서비스 이용과정에서 아래와 같은 정보들이 자동으로 생성되어 수집될 수 있습니다.
+                                - IP Address, 방문 일시, 서비스 이용기록
+                            </div>
+                            <div class="txt">
+                                · 개인정보 파일 보유 및 기간
+                                ▫ 부동산매물클린관리센터는 원칙적으로 개인정보 보존기관이 경과하거나 처리목적이 달성된 경우 개인정보를 파기합니다.
+                                - 보존 기간 : 수집일로부터 1년
+                                - 증빙자료 보존기간 : 수집일로부터 60일
+                            </div>
+                            <div class="txt">
+                                · 동의 거부 권리 및 거부에 따른 불이익
+                                ▫ 신고 처리를 위하여 수집하는 최소한의 정보 이외에 개인정보 수집에 동의를 거부할 권리가 있으나 최소한의 개인정보 수집동의 거부 시에는 부동산매물클린관리센터
+                                서비스를 제공
+                                받을 수 없습니다.
+                            </div>
+                        </div>
+                        <div class="ment">
+                            집주인 미인증, 층수 미표시, 주차대수 정보 오류, 중복매물 등록 등은 클린관리센터 허위매물 검증 기준이 아닙니다.
+                            위 사안으로 신고할 경우 ‘처리불가’ 되오니 주의 부탁드립니다.
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#elDAS-modal">본인인증하러가기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" id="elDAS-modal"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog  modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">inner-modal</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/room2/elDAS" method="post">
+                            <div>아이디</div>
+                            <div><input type="text" name="userName" id="elDAS-userName"></div>
+                            <div>비밀번호</div>
+                            <div><input type="password" name="password" id="elDAS-password"></div>
+                            <div class="modal-footer">
+                                <input type="button" class="btn btn-primary" onclick="elDAS();" value="본인확인"></input>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" id="report-inner-modal"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog  modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">inner-modal</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

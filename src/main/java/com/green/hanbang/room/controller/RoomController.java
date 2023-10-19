@@ -1,5 +1,6 @@
 package com.green.hanbang.room.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.hanbang.member.service.MemberService;
 import com.green.hanbang.member.vo.MemberVO;
 import com.green.hanbang.room.service.RoomService;
@@ -9,13 +10,12 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/room")
@@ -66,11 +66,13 @@ public class RoomController {
         return "redirect:/room/roomMain";
     }
     @GetMapping("/roomMain")
-    public String roomMain(Model model){
-        model.addAttribute("roomList", roomService.selectRoom());
+    public String roomMain(Model model, RoomSearchVO roomSearchVO){
+
+        model.addAttribute("tradeTypeList", roomService.selectTradeType());
+        model.addAttribute("roomList", roomService.selectRoom(roomSearchVO));
         model.addAttribute("propertyTypeList", roomService.selectProperty());
         model.addAttribute("Options", roomService.selectOptions());
-        List<RoomVO> room= roomService.selectRoom();
+        List<RoomVO> room= roomService.selectRoom(roomSearchVO);
         System.out.println(room);
         return "room/room_main";
     }
@@ -81,5 +83,17 @@ public class RoomController {
         // 비동기 통신으로 위도경도 셀렉트
         List<RoomAddrVO> roomAddrs = roomService.selectRoomAddr();
         return roomAddrs;
+    }
+    @ResponseBody
+    @PostMapping("/roomSearch")
+    public List<RoomVO> roomSearch(@RequestBody Map<String, Object> searchData, Model model){
+        System.out.println(searchData);
+
+        ObjectMapper mapper = new ObjectMapper();
+        RoomSearchVO roomSearchVO= mapper.convertValue(searchData, RoomSearchVO.class);
+        System.out.println(roomSearchVO);
+        List<RoomVO> roomList = roomService.selectRoom(roomSearchVO);
+    return roomList;
+
     }
 }

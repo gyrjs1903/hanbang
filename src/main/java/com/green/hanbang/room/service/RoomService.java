@@ -18,7 +18,7 @@ public interface RoomService {
     public void insertRoom(RoomVO roomVO);
 
     //방 조회
-    public List<RoomVO> selectRoom();
+    public List<RoomVO> selectRoom(RoomSearchVO roomSearchVO);
     //주소 및 좌표 조회
     public List<RoomAddrVO> selectRoomAddr();
 

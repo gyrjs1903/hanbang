@@ -15,9 +15,9 @@ layout:decorate="~{realtor/realtor_layout}">
                     <div class="cate">이메일</div>
                     <div><input type="text" th:value="${realtorInfo.userName}" readonly></div>
                     <div class="cate">닉네임</div>
-                    <div><input type="text" th:value="${realtorInfo.nickName}" name="nickName"></div>
+                    <div><input type="text"name="nickName" th:placeholder="${realtorInfo.nickName}"></div>
                     <div class="cate">전화번호</div>
-                    <div><input type="text" th:value="${realtorInfo.phone}" name="phone"></div>
+                    <div><input type="text" th:value="${realtorInfo.phone}" name="phone" th:placeholder="${realtorInfo.phone}"></div>
                     <input type="hidden" th:value="${realtorInfo.userNo}" name="userNo">
                     <input type="submit" class="cursor btn btn-light" value="수정하기"></input>
                 </form>

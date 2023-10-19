@@ -23,4 +23,7 @@ public interface RoomService2 {
 
     //방 등록한 공인중개사 정보 조회
     public MemberVO selectRegRealtor(String userNo);
+
+    //허위매물 신고 시 본인인증
+    public String selectElDAS(MemberVO memberVO);
 }
