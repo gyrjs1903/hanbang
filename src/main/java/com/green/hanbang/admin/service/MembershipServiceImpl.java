@@ -20,6 +20,12 @@ public class MembershipServiceImpl implements MembershipService {
         return sqlSession.selectList("adminMapper.selectCategory");
     }
 
+    // 카테고리 조회 (중분류)
+    @Override
+    public List<MembershipVO> selectMidCategory() {
+        return sqlSession.selectList("adminMapper.selectMidCategory");
+    }
+
     // 중분류 및 소분류 조회
     @Override
     public List<MembershipVO> selectMembershipItemList(String memCateCode) {
@@ -32,6 +38,21 @@ public class MembershipServiceImpl implements MembershipService {
         return sqlSession.selectOne("adminMapper.membershipDetail", memCateVO);
     }
 
+    // 맴버쉽 등록하기
+    @Override
+    public int insertCategory(MemCateVO memCateVO) {
+        return sqlSession.insert("adminMapper.insertCategory", memCateVO);
+    }
+
+    @Override
+    public int insertMidCategory(MembershipVO membershipVO) {
+        return sqlSession.insert("adminMapper.insertMidCategory", membershipVO);
+    }
+
+    @Override
+    public int insertItem(MemItemVO memItemVO) {
+        return sqlSession.insert("adminMapper.insertItem", memItemVO);
+    }
 
 
 }
