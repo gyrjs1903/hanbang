@@ -14,10 +14,10 @@
     </resultMap>
 
     <resultMap id="memberImg" type="com.green.hanbang.member.vo.MemberImgVO">
-        <id column="PROFILE_IMG_NO" property="imgNo" />
-        <result column="USER_NO" property="userNo" />
-        <result column="PROFILE_IMG_NAME" property="imgName" />
-        <result column="ATTACHED_PROFILE_IMG_NAME" property="attachedImgName" />
+        <id column="PROFILE_IMG_NO"                 property="imgNo" />
+        <result column="USER_NO"                    property="userNo" />
+        <result column="PROFILE_IMG_NAME"           property="imgName" />
+        <result column="ATTACHED_PROFILE_IMG_NAME"  property="attachedImgName" />
     </resultMap>
 
     <!-- 회원 가입 -->
@@ -29,7 +29,7 @@
             , LOGIN_TYPE
             , NICK_NAME
         ) VALUES (
-            (SELECT NVL(MAX(USER_NO)+1, 0)
+            (SELECT 'USER_' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(USER_NO, 6))), 0) + 1, 3, '0')
             FROM MEMBER_USER)
             , #{userName}
             , #{passWord}
@@ -38,27 +38,23 @@
         )
     </insert>
 
-    <!-- 프로필 이미지 불러오기 -->
-    <select id="profileImgLoad" resultMap="memberImg">
-        SELECT MI.USER_NO
-        , PROFILE_IMG_NO
-        , PROFILE_IMG_NAME
-        , ATTACHED_PROFILE_IMG_NAME
-        FROM MEMBER_USER MU
-        LEFT JOIN MEMBER_IMG MI
-        ON MU.USER_NO = MI.USER_NO
-        WHERE MU.USER_NO = #{userNo}
-    </select>
-
-    <!-- 프로필 이미지 수정-->
-    <update id="updateProImg">
-        UPDATE FROM MEMBER_USER
-        INNER JOIN MEMBER_IMG MI
-        ON USER_NO = MI.USER_NO
-        SET PROFILE_IMG_NAME = #{profile_img_name}
-            , ATTACHED_PROFILE_IMG_NAME = #{attached_profile_img_name}
-        WHERE PROFILE_IMG_NO = #{profile_img_no}
-    </update>
+    <!-- 프로필 이미지 등록 -->
+<!--    <insert id="insertProImg">-->
+<!--        INSERT INTO MEMBER_IMG (-->
+<!--            PROFILE_IMG_NO-->
+<!--            , PROFILE_IMG_NAME-->
+<!--            , ATTACHED_PROFILE_IMG_NAME-->
+<!--            , USER_NO-->
+<!--        )-->
+<!--        <foreach collection="proImgList" item="proImg" separator="UNION ALL" index="idx">-->
+<!--            (SELECT 'PRO_IMG_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(PRO_IMG_NO, 9))), 0) + 1 + #{idx}, 3, '0')-->
+<!--            FROM MEMBER_IMG)-->
+<!--            , #{proImg.profile_img_name}-->
+<!--            , #{proImg.attached_profile_img_name}-->
+<!--            , #{proImg.user_no}-->
+<!--            FROM DUAL-->
+<!--        </foreach>-->
+<!--    </insert>-->
 
     <!-- 로그인 -->
     <select id="login" resultMap="member">
@@ -90,5 +86,6 @@
         SET PASSWORD = #{passWord}
         WHERE USER_NAME = #{userName}
     </update>
+
 
 </mapper>

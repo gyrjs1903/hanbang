@@ -1,13 +1,15 @@
 package com.green.hanbang.member.controller;
 
 import com.green.hanbang.member.service.MemberService;
+import com.green.hanbang.member.vo.MemberImgVO;
 import com.green.hanbang.member.vo.MemberVO;
+import com.green.hanbang.util.MemberUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.multipart.MultipartFile;
 
 
 @Controller
@@ -51,7 +53,6 @@ public class MemberController {
 
         if (loginInfo != null) {
             session.setAttribute("loginInfo", loginInfo);
-            System.out.println(loginInfo);
             if (loginInfo.getLoginType().equals("USER")) {
                 return "redirect:/";
             } else if(loginInfo.getLoginType().equals("REALTOR")) {
@@ -81,13 +82,6 @@ public class MemberController {
         return "content/member/user_info";
     }
 
-    // 프로필 이미지 수정
-    @PostMapping("/updateProfileImg")
-    public String updateProImg(MemberVO memberVO) {
-        memberService.updateProImg(memberVO);
-        return "content/member/user_info"; // 수정 후 이동할 페이지
-    }
-
     // 전화문의 페이지로 이동
     @GetMapping("/memberCall")
     public String memberCall() {
@@ -112,4 +106,16 @@ public class MemberController {
     public String userNameDuplicationCheckFetch(@RequestParam String userName){
         return memberService.userNameCheck(userName);
     }
+
+    // 헤더에 찜목록 누를 시 찜목록 페이지로 이동
+    @GetMapping("/dibsOn")
+    public String memberDibsOn() {
+        return "content/member/recent_viewed_room";
+    }
+
+    @GetMapping("/test")
+    public String test(){
+        return "content/member/test";
+    }
+
 }

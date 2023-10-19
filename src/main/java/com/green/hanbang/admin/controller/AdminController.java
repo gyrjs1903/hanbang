@@ -152,10 +152,20 @@ public class AdminController {
 
     // 맴버쉽 등록 페이지 이동
     @GetMapping("/regMembershipForm")
-    public String regMembership(Model model){
+    public String regMembershipForm(Model model){
         // 대분류 조회
         model.addAttribute("cateList", membershipService.selectCategory());
+        // 중분류 조회
+        model.addAttribute("midCateList", membershipService.selectMidCategory());
         return "admin/reg_membership";
     }
 
+    // 맴버쉽 등록
+    @PostMapping("/regMembership")
+    public String regMembership(MemCateVO memCateVO, MembershipVO membershipVO, MemItemVO memItemVO){
+        membershipService.insertCategory(memCateVO);
+        membershipService.insertMidCategory(membershipVO);
+        membershipService.insertItem(memItemVO);
+        return "redirect:/admin/manege";
+    }
 }

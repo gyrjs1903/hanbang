@@ -180,6 +180,13 @@
         FROM MEMBERSHIP_CATEGORY
     </select>
 
+<!-- 맵버쉽 카테고리 출력 (중분류)-->
+    <select id="selectMidCategory" resultMap="membership">
+        SELECT MEMBERSHIP_NAME
+            , MEMBERSHIP_CODE
+        FROM MEMBERSHIP_TABLE
+    </select>
+
 <!-- 맴버쉽 상품의 세부 상품 조회 (중분류 && 소분류) -->
     <select id="selectMembershipItemList" resultMap="membership">
         SELECT MEMBERSHIP_NAME
@@ -223,10 +230,52 @@
         </if>
     </select>
 
-<!--    맴버쉽 아이템 수정하기-->
-    <update id="updateMembership">
+<!--    맴버쉽 아이템 등록하기 (1) : 대분류 등록-->
+    <insert id="insertCategory">
+        INSERT INTO MEMBERSHIP_CATEGORY(
+            MEM_CATE_CODE
+            , MEM_CATE_NAME
+        ) VALUES (
+            #{memCateCode}
+            , #{memCateName}
+        )
+    </insert>
 
-    </update>
+    <!--    맴버쉽 아이템 등록하기 (2) : 중분류 등록-->
+    <insert id="insertMidCategory">
+        INSERT INTO MEMBERSHIP_TABLE(
+            MEMBERSHIP_CODE
+            , MEMBERSHIP_NAME
+            , MEMBERSHIP_CONTENT
+            , MEMBERSHIP_PRICE
+            , MEM_CATE_CODE
+        ) VALUES (
+            #{membershipCode}
+            , #{membershipName}
+            , #{membershipContent}
+            , #{membershipPrice}
+            , #{memCateCode}
+        )
+    </insert>
+
+    <!--    맴버쉽 아이템 등록하기 (3) : 소분류 등록-->
+    <insert id="insertItem">
+        INSERT INTO ITEM_TABLE(
+            ITEM_CODE
+            , ITEM_NAME
+            , ITEM_CONTENT
+            , ITEM_INTRO
+            , ITEM_PRICE
+            , MEMBERSHIP_CODE
+        ) VALUES (
+            #{itemCode}
+            , #{itemName}
+            , #{itemContent}
+            , #{itemIntro}
+            , #{itemPrice}
+            , #{membershipCode}
+        )
+    </insert>
 </mapper>
 
 
