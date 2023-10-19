@@ -35,18 +35,15 @@
                         <h1 class="">비밀번호</h1>
                     </header>
                     <div class="">
-                        <div>
-                            <div class="">
-                                <input type="password" class="" name="passWord" placeholder="비밀번호 입력">
-                                <button type="button" class="password_icon"></button>
-                            </div>
-                        </div>
+                        <div class="pwInput">
+                            <input type="password" id="pwd" name="passWord" placeholder="비밀번호 입력">
+                            <img id="pwShow" src="/img/member/password_show.png" alt="pwShow/Hide">
                     </div>
                     <button type="submit" class=""><span class="">로그인</span></button>
                 </div>
             </form>
             <div class="">
-                <button type="button" onclick="location.href='/member/passwordSetForm';">비밀번호 재설정</button>
+                <button type="button" id="passwordFindButton">비밀번호 재설정</button>
                 <button type="button" onclick="location.href='/member/joinForm';">이메일로 가입하기</button>
             </div>
         </div>
@@ -55,23 +52,17 @@
     <div class="modal fade" id="join-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-body">
+                <div class="modal-header">
                     <form id="joinForm" class="row g-3" action="/member/join" method="post">
-                        <div>
-                            <h1>비밀번호 재설정</h1>
-                        </div>
-                        <div>
-                            <p>가입한 이메일 정보 입력 후 인증 메일 받기를 클릭하세요.</p>
-                        </div>
-                        <div class="col-8">
+                        <h1 class="modal-title">비밀번호 재설정</h1>
+                        <div class="modal-body">
+                            <div><p>가입한 이메일 정보 입력 후 인증 메일 받기를 클릭하세요.</p></div>
                             <label for="userName" class="form-label"></label>
                             <input type="text" class="form-control" id="userName" name="userName" onkeyup="setDisabled();" placeholder="이메일(가입 당시 아이디)">
                         </div>
-                        <div class="col-3 d-grid">
+                        <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                        </div>
-                        <div class="offset-6 col-3 d-grid">
-                        <button id="join-btn" type="button" class="btn btn-primary" onclick="VerificationEmailSend();" disabled>인증메일 받기</button>
+                            <button id="join-btn" type="button" class="btn btn-primary" onclick="VerificationEmailSend();" disabled>인증메일 받기</button>
                         </div>
                     </form>    
                 </div>
@@ -79,6 +70,8 @@
         </div>
     </div>    
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script async src="/js/member/login.js"></script>
 </th:block>
 </body>
 </html>

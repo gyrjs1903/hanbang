@@ -11,3 +11,19 @@ p:not(.userNameFormGuide){
     border: 1px solid rgb(245, 245, 245);
     padding: 68px;
 }
+
+#pwShow1{
+    position: relative;
+    right: 40px;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+}
+
+#pwShow2{
+    position: relative;
+    right: 40px;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+}

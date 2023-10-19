@@ -1,5 +1,7 @@
 package com.green.hanbang.room.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.green.hanbang.member.vo.MemberVO;
 import com.green.hanbang.room.service.RoomService2;
 import com.green.hanbang.room.vo.OptionsVO;
 import com.green.hanbang.room.vo.RoomVO;
@@ -7,13 +9,11 @@ import lombok.RequiredArgsConstructor;
 import org.codehaus.groovy.classgen.ReturnAdder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Controller
@@ -65,5 +65,14 @@ public class RoomController2 {
         String options = roomService2.selectRoomInfo("ROOM_0007").getDetailOptions();
         List<String> optionList = Arrays.asList(options.split(","));
         return optionList;
+    }
+
+    @ResponseBody
+    @PostMapping("/elDAS")
+    public boolean elDAS(@RequestBody MemberVO memberVO){
+
+        System.out.println(memberVO);
+        System.out.println(roomService2.selectElDAS(memberVO));
+        return roomService2.selectElDAS(memberVO) != null;
     }
 }

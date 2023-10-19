@@ -59,6 +59,13 @@
         AND M.USER_NO = R.USER_NO
     </select>
 
+    <!-- 허위매물 신고 시 본인인증 -->
+    <select id="selectElDAS" resultType="String">
+        SELECT USER_NO
+        FROM MEMBER_USER
+        WHERE USER_NAME = #{userName}
+        AND PASSWORD = #{passWord}
+    </select>
 </mapper>
 
 

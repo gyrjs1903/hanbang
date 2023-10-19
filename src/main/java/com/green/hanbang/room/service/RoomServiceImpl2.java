@@ -39,4 +39,9 @@ public class RoomServiceImpl2 implements RoomService2{
     public MemberVO selectRegRealtor(String userNo) {
         return sqlSession.selectOne("room2Mapper.selectRegRealtor",userNo);
     }
+
+    @Override
+    public String selectElDAS(MemberVO memberVO) {
+        return sqlSession.selectOne("room2Mapper.selectElDAS",memberVO);
+    }
 }
