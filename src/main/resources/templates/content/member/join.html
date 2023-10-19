@@ -12,7 +12,6 @@
     <div class="join_frame">
         <form id="joinForm" action="/member/join" method="post">
             <input type="hidden" id="nickName" name="nickName">
-            <input type="file" style="display: none;" id="profileImage" name="profileImage">
             <div>
                 <input type="text" id="userName" class="" name="userName" placeholder="이메일 주소 입력">
                 <p class="userNameFormGuide">이메일 주소 형식<br>예&#41; hanbang1@hanbang.com</p>
@@ -20,16 +19,16 @@
                 <p id="userNameFormCheck">이메일 형식을 확인해주세요.</p>
                 <p id="userNameDuplication">중복된 이메일 입니다.</p>
             </div>
-            <div class="passWordArea1">
-                <input id="passWord" type="password" class="" name="passWord" placeholder="8자리 이상 영문,숫자,특수문자 포함">
+            <div class="">
+                <input id="passWord" type="password" class="pwd1" name="passWord" placeholder="8자리 이상 영문,숫자,특수문자 포함">
                 <p id="passWordInputCheck">비밀번호를 입력해주세요.</p>
-                <div class="passWordBtn1"></div>
+                <img id="pwShow1" src="/img/member/password_show.png" alt="pwShow/Hide">
                 <p id="passWordFormCheck">비밀번호는 문자, 숫자, 특수문자를 포함하여 8-20자 이내로 입력하세요.</p>
             </div>
-            <div class="passWordArea2">
-                <input id="passWordCheck" type="password" class="" placeholder="비밀번호 확인">
+            <div class="">
+                <input id="passWordCheck" type="password" class="pwd2" placeholder="비밀번호 확인">
+                <img id="pwShow2" src="/img/member/password_show.png" alt="pwShow/Hide">
                 <p id="passWordCheckInputCheck">비밀번호 확인를 입력해주세요.</p>
-                <div class="passWordBtn2"></div>
                 <p id="passWordCheckCheck">입력한 비밀번호가 서로 일치하지 않습니다.</p>
             </div>
             <div>
@@ -43,9 +42,8 @@
             </div>
         </form>
     </div>
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<script async src="/js/member/join.js"></script>
-<script async src="/js/member/join_auto_info.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script async src="/js/member/join.js"></script>
 </th:block>
 </body>
 </html>
