@@ -1,14 +1,22 @@
 // login.js
 
-$(document).ready(function(){
-    $('.passWordArea passWordBtn').on('click',function(){
-        $('input').toggleClass('active');
-        if($('input').hasClass('active')){
-            $(this).attr('class',"fa fa-eye-slash fa-lg")
-            .prev('input').attr('type',"text");
-        }else{
-            $(this).attr('class',"fa fa-eye fa-lg")
-            .prev('input').attr('type','password');
+// 비밀번호 show, hide
+$(function(){
+    $("#pwShow").on("click",function(){
+        $("#pwd").toggleClass('active');
+        if($("#pwd").hasClass('active')){
+            $('#pwd').prop('type',"text");
+            $('#pwShow').attr('src', '/img/member/password_show.png');
+        } else {
+            $('#pwd').prop('type',"password");
+            $('#pwShow').attr('src', '/img/member/password_hide.png');
         }
+    });
+});
+
+// 비밀번호 찾기 버튼 클릭시 modal창 실행
+$(function() {
+    $("#passwordFindButton").on("click", function() {
+        $("#join-modal").modal("show");
     });
 });
