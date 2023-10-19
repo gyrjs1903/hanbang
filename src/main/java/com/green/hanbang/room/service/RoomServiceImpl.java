@@ -40,8 +40,8 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public List<RoomVO> selectRoom() {
-        return sqlSession.selectList("roomMapper.selectRoom");
+    public List<RoomVO> selectRoom(RoomSearchVO roomSearchVO) {
+        return sqlSession.selectList("roomMapper.selectRoom", roomSearchVO);
     }
 
     @Override

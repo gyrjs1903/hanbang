@@ -5,7 +5,6 @@ import lombok.Data;
 @Data
 public class RoomSearchVO {
     private String searchPropertyTypeCode;
-    private String searchSubPropertyTypeCode;
     private int searchRoomSizePMin;
     private int searchRoomSizePMax;
     private double searchRoomSizeMMin;
@@ -16,7 +15,7 @@ public class RoomSearchVO {
     private int searchDeposit;
     private int searchJeonseCost;
     private int searchMaintenanceCost;
-    private String searchDetailOptions;
+    private String[] searchDetailOptions;
     private String searchAddr;
 
 }

@@ -220,47 +220,44 @@
         <if test='searchPropertyTypeCode != null '>
         AND R.PROPERTY_TYPE_CODE = #{searchPropertyTypeCode}
         </if>
-        <if test='searchSubPropertyTypeCode != null'>
-        AND R.SUB_PROPERTY_TYPE_CODE = #{searchSubPropertyTypeCode}
-        </if>
-        <if test='searchRoomSizePMin != null and !searchRoomSizePMin.equals("")'>
+        <if test='searchRoomSizePMin != 0 and !searchRoomSizePMin.equals("")'>
         AND R.ROOM_SIZE_P &gt;= #{searchRoomSizePMin}
         </if>
-        <if test='searchRoomSizePMax != null and !searchRoomSizePMax.equals("")'>
+        <if test='searchRoomSizePMax != 0 and !searchRoomSizePMax.equals("")'>
         AND R.ROOM_SIZE_P &lt;= #{searchRoomSizePMax}
         </if>
-        <if test='searchRoomSizeMMin != null and !searchRoomSizeMMin.equals("")'>
+        <if test='searchRoomSizeMMin != 0 and !searchRoomSizeMMin.equals("")'>
         AND R.ROOM_SIZE_M &gt;= #{searchRoomSizeMMin}
         </if>
-        <if test='searchRoomSizeMMax != null and !searchRoomSizeMMax.equals("")'>
+        <if test='searchRoomSizeMMax != 0 and !searchRoomSizeMMax.equals("")'>
         AND R.ROOM_SIZE_M &lt;= #{searchRoomSizeMMax}
         </if>
-        <if test='searchFloor != null and !searchFloor.equals("")'>
+        <if test='searchFloor != 0 and !searchFloor.equals("")'>
         AND R.FLOOR = #{searchFloor}
         </if>
         <if test='searchTradeTypeCode != null and !searchTradeTypeCode.equals("")'>
         AND R.TRADE_TYPE_CODE = #{searchTradeTypeCode}
         </if>
-        <if test='searchMonthlyLeaseMax != null and !searchMonthlyLeaseMax.equals("")'>
+        <if test='searchMonthlyLeaseMax != 0 and !searchMonthlyLeaseMax.equals("")'>
         AND R.MONTHLY_LEASE &gt;= #{searchMonthlyLeaseMax}
         </if>
-        <if test='searchDeposit != null and !searchDeposit.equals("")'>
+        <if test='searchDeposit != 0 and !searchDeposit.equals("")'>
         AND R.DEPOSIT &gt;= #{searchDeposit}
         </if>
-        <if test='searchJeonseCost != null and !searchJeonseCost.equals("")'>
+        <if test='searchJeonseCost != 0 and !searchJeonseCost.equals("")'>
         AND R.JEONSE_COST &gt;= #{searchJeonseCost}
         </if>
-        <if test='searchMaintenanceCost != null and !searchMaintenanceCost.equals("")'>
+        <if test='searchMaintenanceCost != 0 and !searchMaintenanceCost.equals("")'>
         AND R.MAINTENANCE_COST &gt;= #{searchMaintenanceCost}
         </if>
         <if test='searchDetailOptions != null and !searchDetailOptions.equals("")'>
         AND R.DETAIL_OPTIONS IN
-            <foreach collection="" item="" separator="," open="" close="">
-                #{searchSubPropertyTypeCodes}
+            <foreach collection="searchDetailOptions" item="DetailOptions" separator="," open="(" close=")">
+                #{searchDetailOptions}
             </foreach>
         </if>
         <if test="searchAddr != null">
-        AND UPPER(RA.ADDR) LIKE '%' #{searchSubPropertyTypeCode}'%'
+        AND UPPER(RA.ADDR) LIKE '%' #{searchAddr}'%'
         </if>
 
 
