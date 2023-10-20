@@ -57,7 +57,6 @@
         <result column="USER_NO" property="userNo"/>
         <association property="roomAddrVO" resultMap="roomAddr"/>
         <collection property="imgList" resultMap="roomImg"/>
-
     </resultMap>
 
     <!--room이미지 resultMap-->
@@ -250,17 +249,16 @@
         <if test='searchMaintenanceCost != 0 and !searchMaintenanceCost.equals("")'>
         AND R.MAINTENANCE_COST &gt;= #{searchMaintenanceCost}
         </if>
-        <if test='searchDetailOptions != null and !searchDetailOptions.equals("")'>
-        AND R.DETAIL_OPTIONS IN
-            <foreach collection="searchDetailOptions" item="DetailOptions" separator="," open="(" close=")">
-                #{searchDetailOptions}
+        <if test="searchDetailOptions != null">
+            AND (
+            <foreach collection="searchDetailOptions" item="detailOption" separator=" AND ">
+                R.DETAIL_OPTIONS LIKE '%' || #{detailOption} || '%'
             </foreach>
+            )
         </if>
-        <if test="searchAddr != null">
-        AND UPPER(RA.ADDR) LIKE '%' #{searchAddr}'%'
+        <if test='searchAddr != null and !searchAddr.equals("")'>
+            AND UPPER(RA.ADDR) LIKE '%' || #{searchAddr} || '%'
         </if>
-
-
     </select>
 
 

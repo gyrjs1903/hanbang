@@ -25,7 +25,7 @@ public class RoomController2 {
     @GetMapping("/roomDetailInfo")
     public String roomDetailInfo(String roomCode, Model model){
         //방 모든 정보
-        RoomVO room = roomService2.selectRoomInfo("ROOM_0007");
+        RoomVO room = roomService2.selectRoomInfo(roomCode);
         System.out.println(room);
         model.addAttribute("roomDetail",room);
 
@@ -62,7 +62,7 @@ public class RoomController2 {
     @ResponseBody
     @PostMapping("/roomDetailFetch")
     public List<String> roomDetailFetch(){
-        String options = roomService2.selectRoomInfo("ROOM_0007").getDetailOptions();
+        String options = roomService2.selectRoomInfo("ROOM_0001").getDetailOptions();
         List<String> optionList = Arrays.asList(options.split(","));
         return optionList;
     }
