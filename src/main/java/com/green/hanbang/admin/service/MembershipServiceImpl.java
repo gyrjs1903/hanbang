@@ -22,8 +22,14 @@ public class MembershipServiceImpl implements MembershipService {
 
     // 카테고리 조회 (중분류)
     @Override
-    public List<MembershipVO> selectMidCategory() {
-        return sqlSession.selectList("adminMapper.selectMidCategory");
+    public List<MembershipVO> selectMidCategory(String memCateCode) {
+        return sqlSession.selectList("adminMapper.selectMidCategory", memCateCode);
+    }
+
+    // 카테고리 조회 (소분류)
+    @Override
+    public List<MemItemVO> selectItemCategory(String membershipCode) {
+        return sqlSession.selectList("adminMapper.selectItemCategory", membershipCode);
     }
 
     // 중분류 및 소분류 조회

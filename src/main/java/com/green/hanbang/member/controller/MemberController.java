@@ -73,8 +73,6 @@ public class MemberController {
         return "redirect:/";
     }
 
-    // 비밀번호 재설정 창 팝업
-
     // 내 정보 페이지로 이동
     @GetMapping("/memberInfo")
     public String memberInfo(MemberVO memberVO, HttpSession session) {

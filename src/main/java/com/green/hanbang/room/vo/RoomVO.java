@@ -14,10 +14,10 @@ public class RoomVO {
     private double roomSizeM;
     private int floor;
     private String tradeTypeCode;
-    private int monthlyLease;
-    private int deposit;
-    private int jeonseCost;
-    private int maintenanceCost;
+    private String monthlyLease;
+    private String deposit;
+    private String jeonseCost;
+    private String maintenanceCost;
     //private String[] detailOptions;
     private String detailOptions;
     private String title;

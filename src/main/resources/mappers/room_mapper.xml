@@ -232,7 +232,55 @@
         FROM ROOM R
         LEFT JOIN ROOM_ADDR RA ON R.ROOM_CODE = RA.ROOM_CODE
         LEFT JOIN ROOM_IMG RI ON R.ROOM_CODE = RI.ROOM_CODE
+        WHERE 1 = 1
+        <if test='searchPropertyTypeCode != null '>
+        AND R.PROPERTY_TYPE_CODE = #{searchPropertyTypeCode}
+        </if>
+        <if test='searchRoomSizePMin != 0 and !searchRoomSizePMin.equals("")'>
+        AND R.ROOM_SIZE_P &gt;= #{searchRoomSizePMin}
+        </if>
+        <if test='searchRoomSizePMax != 0 and !searchRoomSizePMax.equals("")'>
+        AND R.ROOM_SIZE_P &lt;= #{searchRoomSizePMax}
+        </if>
+        <if test='searchRoomSizeMMin != 0 and !searchRoomSizeMMin.equals("")'>
+        AND R.ROOM_SIZE_M &gt;= #{searchRoomSizeMMin}
+        </if>
+        <if test='searchRoomSizeMMax != 0 and !searchRoomSizeMMax.equals("")'>
+        AND R.ROOM_SIZE_M &lt;= #{searchRoomSizeMMax}
+        </if>
+        <if test='searchFloor != 0 and !searchFloor.equals("")'>
+        AND R.FLOOR = #{searchFloor}
+        </if>
+        <if test='searchTradeTypeCode != null and !searchTradeTypeCode.equals("")'>
+        AND R.TRADE_TYPE_CODE = #{searchTradeTypeCode}
+        </if>
+        <if test='searchMonthlyLeaseMax != 0 and !searchMonthlyLeaseMax.equals("")'>
+        AND R.MONTHLY_LEASE &gt;= #{searchMonthlyLeaseMax}
+        </if>
+        <if test='searchDeposit != 0 and !searchDeposit.equals("")'>
+        AND R.DEPOSIT &gt;= #{searchDeposit}
+        </if>
+        <if test='searchJeonseCost != 0 and !searchJeonseCost.equals("")'>
+        AND R.JEONSE_COST &gt;= #{searchJeonseCost}
+        </if>
+        <if test='searchMaintenanceCost != 0 and !searchMaintenanceCost.equals("")'>
+        AND R.MAINTENANCE_COST &gt;= #{searchMaintenanceCost}
+        </if>
+        <if test='searchDetailOptions != null and !searchDetailOptions.equals("")'>
+        AND R.DETAIL_OPTIONS IN
+            <foreach collection="searchDetailOptions" item="DetailOptions" separator="," open="(" close=")">
+                #{searchDetailOptions}
+            </foreach>
+        </if>
+        <if test="searchAddr != null">
+        AND UPPER(RA.ADDR) LIKE '%' #{searchAddr}'%'
+        </if>
+
+
     </select>
+
+
+
     <select id="selectRoomAddr" resultMap="roomAddr">
         SELECT
         ADDR_CODE,

@@ -8,11 +8,14 @@ import java.util.List;
 
 public interface MembershipService {
 
-    // 맴버쉽 카테고리 조회 (대분류)
+    // 카테고리 조회 (대분류)
     public List<MemCateVO> selectCategory();
 
-    // 카테고리 조회 ( 중분류 )
-    public List<MembershipVO> selectMidCategory();
+    // 카테고리 조회 (중분류)
+    public List<MembershipVO> selectMidCategory(String memCateCode);
+
+    // 카테고리 조회 (아이템)
+    public List<MemItemVO> selectItemCategory(String membershipCode);
 
     // 맴버쉽 상품 별 세부 상품 조회 (중분류 및 소분류)
     public List<MembershipVO> selectMembershipItemList(String memCateCode);

@@ -1,0 +1,32 @@
+@charset "UTF-8";
+
+.cate, .midCate, .itemCate{
+    border: 1px solid black;
+    padding-top: 1rem;
+    height: 250px;
+    overflow-y: auto;
+}
+
+/* 임의의 영역 생성 */
+.scrollBar { 
+width: 200px;
+height: 200px;
+overflow-y: scroll;
+}
+
+/* 아래의 모든 코드는 영역::코드로 사용 */
+.scrollBar::-webkit-scrollbar {
+    width: 10px;  /* 스크롤바의 너비 */
+}
+
+.scrollBar::-webkit-scrollbar-thumb {
+    height: 30%; /* 스크롤바의 길이 */
+    background: rgb(78, 78, 78); /* 스크롤바의 색상 */
+    
+    border-radius: 10px;
+}
+
+.scrollBar::-webkit-scrollbar-track {
+    background: #84848447;  /*스크롤바 뒷 배경 색상*/
+}
+

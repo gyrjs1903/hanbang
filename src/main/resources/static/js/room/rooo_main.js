@@ -35,15 +35,15 @@ function setMap() {
             // 지도를 생성합니다
             map = new kakao.maps.Map(container, options);
 
-            
-            let positions =  data.map(addrData  => {
-        
-                return{
+
+            let positions = data.map(addrData => {
+
+                return {
                     title: addrData.addr,
                     latlng: new kakao.maps.LatLng(parseFloat(addrData.coordinateY), parseFloat(addrData.coordinateX))
                 }
             });
-         
+
 
             let imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 
@@ -60,7 +60,7 @@ function setMap() {
                     averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
                     minLevel: 3 // 클러스터 할 최소 지도 레벨 
                 });
-                
+
                 var markers = $(positions).map(function (i, position) {
                     return new kakao.maps.Marker({
                         map: map, // 마커를 표시할 지도
@@ -71,10 +71,10 @@ function setMap() {
                     });
                 });
                 clusterer.addMarkers(markers);
-                
-            
+
+
             }
-            
+
         })
         //fetch 통신 실패 시 실행 영역
         .catch(err => {
@@ -84,10 +84,116 @@ function setMap() {
 
 }
 
-kakao.maps.event.addListener(map, 'dragend', function() {
-    const bounds = map.getBounds(); // 현재 지도 영역 좌표 가져오기
-    const north = bounds.getNorth();
-    const south = bounds.getSouth();
-    const east = bounds.getEast();
-    const west = bounds.getWest();
+
+document.getElementById("searchButton").addEventListener("click", function () {
+    // 입력 필드와 선택 상자의 값을 가져옵니다.
+    const searchTradeTypeCode = document.querySelector('select[name="searchTradeTypeCode"]').value;
+    const searchPropertyTypeCode = document.querySelector('input[name="searchPropertyTypeCode"]').value;
+    const searchAddr = document.querySelector('input[name="searchAddr"]').value;
+    const searchRoomSizePMin = document.querySelector('input[name="searchRoomSizePMin"]').value;
+    const searchRoomSizePMax = document.querySelector('input[name="searchRoomSizePMax"]').value;
+    const searchRoomSizeMMin = document.querySelector('input[name="searchRoomSizeMMin"]').value;
+    const searchRoomSizeMMax = document.querySelector('input[name="searchRoomSizeMMax"]').value;
+    const searchFloor = document.querySelector('input[name="searchFloor"]').value;
+    const searchMonthlyLeaseMax = document.querySelector('input[name="searchMonthlyLeaseMax"]').value;
+    const searchDeposit = document.querySelector('input[name="searchDeposit"]').value;
+    const searchJeonseCost = document.querySelector('input[name="searchJeonseCost"]').value;
+    const searchMaintenanceCost = document.querySelector('input[name="searchMaintenanceCost"]').value;
+    const searchDetailOptions = Array.from(document.querySelectorAll('.detailOptionCheckbox:checked'))
+        .map(checkbox => checkbox.value);
+
+    // 필요한 데이터를 가지고 fetch 요청을 생성합니다.
+
+    // 예를 들어, JSON 형식의 데이터를 전송하려면 다음과 같이 할 수 있습니다.
+    const searchData = {
+        searchTradeTypeCode,
+        searchPropertyTypeCode,
+        searchAddr,
+        searchRoomSizePMin,
+        searchRoomSizePMax,
+        searchRoomSizeMMin,
+        searchRoomSizeMMax,
+        searchFloor,
+        searchMonthlyLeaseMax,
+        searchDeposit,
+        searchJeonseCost,
+        searchMaintenanceCost,
+        searchDetailOptions
+    };
+
+    fetch('/room/roomSearch', { //요청경로
+        method: 'POST',
+        cache: 'no-cache',
+        headers: {
+            'Content-Type': 'application/json; charset=UTF-8'
+        },
+        //컨트롤러로 전달할 데이터
+        body: JSON.stringify(
+            // 데이터명 : 데이터값
+            searchData
+        )
+    })
+        .then((response) => {
+            return response.json(); //나머지 경우에 사용
+        })
+        //fetch 통신 후 실행 영역
+        .then((data) => {//data -> controller에서 리턴되는 데이터!
+            console.log(data)
+            // .select_room 요소
+            // const selectRoomElement = document.querySelector('.select_room');
+            // // 이전에 표시된 내용을 지웁니다.
+            // selectRoomElement.innerHTML = '';
+            // data.forEach((room) => {
+            //     const roomElement = document.createElement('div');
+            //     roomElement.className = 'room';
+
+            // });
+        })
+        //fetch 통신 실패 시 실행 영역
+        .catch(err => {
+            alert('fetch error!\nthen 구문에서 오류가 발생했습니다.\n콘솔창을 확인하세요!');
+            console.log(err);
+        });
 });
+
+
+// kakao.maps.event.addListener(map, 'dragend', function() {
+//     // 현재 지도 화면의 경계 좌표를 가져옵니다.
+//     var bounds = map.getBounds();
+//     var swLatLng = bounds.getSouthWest();
+//     var neLatLng = bounds.getNorthEast();
+
+//     // 서버에 경계 좌표를 전송하여 방 데이터를 가져옵니다.
+//     fetch('/room/getRoomsInBounds', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json; charset=UTF-8'
+//         },
+//         body: JSON.stringify({
+//             swLat: swLatLng.getLat(),
+//             swLng: swLatLng.getLng(),
+//             neLat: neLatLng.getLat(),
+//             neLng: neLatLng.getLng()
+//         })
+//     })
+//     .then((response) => response.json())
+//     .then((roomData) => {
+//         // 방 데이터를 HTML로 표시합니다.
+//         renderRoomData(roomData);
+//     })
+//     .catch(err => {
+//         console.error('방 데이터를 가져오는 데 실패했습니다:', err);
+//     });
+// });
+
+// function renderRoomData(roomData) {
+//     // HTML 페이지에서 기존 방 데이터를 지웁니다.
+//     document.getElementById('room-list').innerHTML = '';
+
+//     // 방 데이터를 반복하고 HTML 요소를 만듭니다.
+//     roomData.forEach(function(room) {
+//         var roomElement = document.createElement('div');
+//         roomElement.innerHTML = '방 이름: ' + room.name + ', 가격: ' + room.price;
+//         document.getElementById('room-list').appendChild(roomElement);
+//     });
+// }

@@ -8,9 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.codehaus.groovy.transform.SourceURIASTTransformation;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -152,13 +150,33 @@ public class AdminController {
 
     // 맴버쉽 등록 페이지 이동
     @GetMapping("/regMembershipForm")
-    public String regMembershipForm(Model model){
+    public String regMembershipForm(@RequestParam(name = "memCateCode", required = false, defaultValue = "CATE_001") String memCateCode, Model model){
         // 대분류 조회
         model.addAttribute("cateList", membershipService.selectCategory());
         // 중분류 조회
-        model.addAttribute("midCateList", membershipService.selectMidCategory());
+        model.addAttribute("midCateList", membershipService.selectMidCategory(memCateCode));
+        System.out.println( model.addAttribute("midCateList", membershipService.selectMidCategory(memCateCode)));
         return "admin/reg_membership";
     }
+
+    // 맴버쉽 등록 페이지 -> 대분류 클릭 시 중분류 목록 조회
+    @ResponseBody
+    @PostMapping("/getMidCateList")
+    public List<MembershipVO> getMidCateList(String memCateCode){
+        return membershipService.selectMidCategory(memCateCode);
+    }
+
+    // 맴버쉽 등록 페이지 -> 중분류 클릭 시 소분류(아이템) 목록 조회
+    @ResponseBody
+    @PostMapping("/getItemCateList")
+    public List<MemItemVO> getItemCateList(String membershipCode){
+
+        return membershipService.selectItemCategory(membershipCode);
+    }
+
+
+
+
 
     // 맴버쉽 등록
     @PostMapping("/regMembership")
