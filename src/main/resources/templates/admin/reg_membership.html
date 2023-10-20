@@ -12,32 +12,35 @@
 <body>
     <div class="container">
         <div class="row mt-4">
-            <div class="cate col align-middle scrollBar">
+            <div class="cate col align-middle scrollBar" id="cate">
                 <div th:each="category : ${cateList}" class="alert alert-secondary" role="alert" th:onclick="getMidCateList([[${category.memCateCode}]]);">
                     [[${category.memCateName}]]
                 </div>
-                <div class="alert alert-light" role="alert">
-                    추 가
+                <div class="addNewCate alert alert-light" role="alert" >
+                    <span th:onclick='addNewInput(this, "")'>추 가</span>
                 </div>
             </div>
 
-            <div class="midCate col align-middle scrollBar">
-                <div  th:each="midCategory : ${midCateList}" class="alert alert-secondary" role="alert" th:onclick="getItemCateList([[${midCategory.membershipCode}]]);">
+            <div class="midCate col align-middle scrollBar" id="midCate">
+                <div th:each="midCategory : ${midCateList}" class="alert alert-secondary" role="alert" th:onclick="getItemCateList([[${midCategory.membershipCode}]]);">
                     [[${midCategory.membershipName}]]
                 </div>
-            </div>
-            
-            <div class="itemCate col align-middle scrollBar">
-                <div th:each="item : ${itemList}"  class="alert alert-secondary" role="alert">
-                    [[${item.itemName}]]
+                <div class="addNewCate alert alert-light" role="alert">
+                    <span  th:onclick='addNewInput(this, [[${midCateList[0].memCateCode}]])'>추 가</span>
                 </div>
             </div>
+
+            <!-- <div class="addItemCate col align-middle scrollBar" id="itemCate"> -->
+                
+            </div>
         </div>
+
+
         
 
         <div class="row">
             <div class="col">
-
+                <div class=""></div>
             </div>
         </div>
     </div>

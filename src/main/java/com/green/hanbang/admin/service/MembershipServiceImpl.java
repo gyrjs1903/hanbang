@@ -38,11 +38,6 @@ public class MembershipServiceImpl implements MembershipService {
         return sqlSession.selectList("adminMapper.selectMembershipItemList", memCateCode);
     }
 
-    // 중분류 및 소분류의 세부 조회
-    @Override
-    public MemCateVO membershipItemDetail(MemCateVO memCateVO) {
-        return sqlSession.selectOne("adminMapper.membershipDetail", memCateVO);
-    }
 
     // 맴버쉽 등록하기
     @Override
@@ -51,13 +46,28 @@ public class MembershipServiceImpl implements MembershipService {
     }
 
     @Override
-    public int insertMidCategory(MembershipVO membershipVO) {
-        return sqlSession.insert("adminMapper.insertMidCategory", membershipVO);
+    public int insertMidCategory(MemCateVO memCateVO) {
+        return sqlSession.insert("adminMapper.insertMidCategory", memCateVO);
     }
 
     @Override
     public int insertItem(MemItemVO memItemVO) {
         return sqlSession.insert("adminMapper.insertItem", memItemVO);
+    }
+
+    @Override
+    public String selectNextCateCode() {
+        return sqlSession.selectOne("adminMapper.selectNextCateCode");
+    }
+
+    @Override
+    public String selectNextMembershipCode() {
+        return sqlSession.selectOne("adminMapper.selectNextMembershipCode");
+    }
+
+    @Override
+    public String selectNextItemCode() {
+        return sqlSession.selectOne("adminMapper.selectNextItemCode");
     }
 
 
