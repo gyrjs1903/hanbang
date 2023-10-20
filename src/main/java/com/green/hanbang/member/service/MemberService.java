@@ -7,7 +7,7 @@ public interface MemberService {
     // 회원 가입
     public int join(MemberVO memberVO);
 
-    // 이미지 등록
+    // 프로필 이미지 등록
     public int insertProImg(MemberImgVO memberImgVO);
 
     // 로그인
@@ -18,5 +18,8 @@ public interface MemberService {
 
     // 회원 탈퇴
     public int memberDelete(MemberVO memberVO);
+
+    // 회원 번호 조회
+    public String selectUserNo();
 
 }
