@@ -2,7 +2,9 @@ package com.green.hanbang.room.service;
 
 import com.green.hanbang.member.vo.MemberVO;
 import com.green.hanbang.realtor.vo.RealtorDetailVO;
+import com.green.hanbang.room.vo.FalseOfferingsVO;
 import com.green.hanbang.room.vo.OptionsVO;
+import com.green.hanbang.room.vo.ReasonVO;
 import com.green.hanbang.room.vo.RoomVO;
 
 import java.util.List;
@@ -26,4 +28,10 @@ public interface RoomService2 {
 
     //허위매물 신고 시 본인인증
     public String selectElDAS(MemberVO memberVO);
+
+    //허위매물 사유 조회
+    public List<ReasonVO> selectReasonList();
+
+    //허위매물 신고
+    public int insertFalseOfferings(FalseOfferingsVO falseOfferingsVO);
 }

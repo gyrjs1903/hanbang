@@ -10,4 +10,5 @@ public class FalseOfferingsVO {
     private String reasonCode;
     private String reportContent;
     private int reportCnt;
+    private String reportDate;
 }

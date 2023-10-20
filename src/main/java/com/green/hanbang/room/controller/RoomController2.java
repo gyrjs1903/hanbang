@@ -3,6 +3,7 @@ package com.green.hanbang.room.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.hanbang.member.vo.MemberVO;
 import com.green.hanbang.room.service.RoomService2;
+import com.green.hanbang.room.vo.FalseOfferingsVO;
 import com.green.hanbang.room.vo.OptionsVO;
 import com.green.hanbang.room.vo.RoomVO;
 import lombok.RequiredArgsConstructor;
@@ -56,9 +57,13 @@ public class RoomController2 {
             System.out.println(roomService2.selectRegRealtor(room.getUserNo()));
             model.addAttribute("personInfo",roomService2.selectRegRealtor(room.getUserNo()));
         }
+
+        //허위 매물 신고 사유
+        model.addAttribute("reasonList",roomService2.selectReasonList());
         return "room/room_detail";
     }
 
+    //옵션 값 있을 시 '있음' 표시
     @ResponseBody
     @PostMapping("/roomDetailFetch")
     public List<String> roomDetailFetch(){
@@ -67,12 +72,19 @@ public class RoomController2 {
         return optionList;
     }
 
+    //본인인증
     @ResponseBody
     @PostMapping("/elDAS")
-    public boolean elDAS(@RequestBody MemberVO memberVO){
-
+    public String elDAS(@RequestBody MemberVO memberVO){
         System.out.println(memberVO);
-        System.out.println(roomService2.selectElDAS(memberVO));
-        return roomService2.selectElDAS(memberVO) != null;
+        return roomService2.selectElDAS(memberVO);
+    }
+
+    //허위매물신고
+    @PostMapping("/falseOfferings")
+    public String insertFalseOfferings(FalseOfferingsVO falseOfferingsVO){
+        System.out.println(falseOfferingsVO);
+        roomService2.insertFalseOfferings(falseOfferingsVO);
+        return "redirect:/room2/roomDetailInfo";
     }
 }

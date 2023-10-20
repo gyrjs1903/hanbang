@@ -86,6 +86,7 @@
         <result column="REASON_CODE" property="reasonCode"/>
         <result column="REPORT_CONTENT" property="reportContent"/>
         <result column="REPORT_CNT" property="reportCnt"/>
+        <result column="REPORT_DATE" property="reportDate"/>
     </resultMap>
 
     <!-- 허위매물 사유 -->

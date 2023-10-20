@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="UTF-8">
+    <title>관리자 페이지</title>
+    <link rel="stylesheet" href="/css/admin/admin_manage2.css">
+</head>
+
+<body>
+    <div>
+        <h3>회원관리</h3>
+        <div><a th:href="@{/admin/userList}">개인 회원</a></div>
+        <div><a th:href="@{/admin/realList}">공인 중개사</a></div>
+    </div>
+    <div>
+        <h3>공지사항</h3>
+        <div><a th:href="@{/admin/infoBoard}">공지사항 관리</a></div>
+    </div>
+    <div>
+        <h3>맴버쉽 상품</h3>
+        <th:block>
+            <ul th:each="mCategory : ${membershipCate}" id="membershipList">
+                <li><a
+                        th:href="@{/admin/membershipList(memCateCode=${mCategory.memCateCode})}">[[${mCategory.memCateName}]]</a>
+                </li>
+            </ul>
+        </th:block>
+        <input type="button" value="등록하기" onclick="location.href='/admin/regMembershipForm';">
+    </div>
+    <div>
+        <h3>이벤트</h3>
+        <div><a th:href="@{/admin/event}">이벤트 관리</a></div>
+    </div>
+    <div>
+        <h3 onclick="alarm();">알림</h3>
+        <div class="alarm" id="alarm_tag">
+            <div class="alarm_header">
+                <div>알림</div>
+                <div>x</div>
+            </div>
+            <div class="alarm_content">
+                <div id="today_alarm">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/admin/admin_manage2.js"></script>
+</body>
+
+</html>

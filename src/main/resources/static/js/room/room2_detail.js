@@ -1,12 +1,13 @@
-let myModal = null;
-let myModal2 = null;
+let elDASModal = null;
+let reportModal = null;
+let reportPerson = null;
 
 // 옵션값 없을 시 '없음'표시
 window.addEventListener('load', () => {
     // 인증완료 후 띄울 모달 창
-    myModal = new bootstrap.Modal('#report-inner-modal');
-    myModal2 = new bootstrap.Modal('#elDAS-modal');
-
+    reportModal = new bootstrap.Modal('#report-inner-modal');
+    elDASModal = new bootstrap.Modal('#elDAS-modal');
+    reportPerson = document.querySelector('#report-person');
     fetch('/room2/roomDetailFetch', { //요청경로
         method: 'POST',
         cache: 'no-cache',
@@ -60,10 +61,11 @@ function elDAS(){
     //fetch 통신 후 실행 영역
     .then((data) => {//data -> controller에서 리턴되는 데이터!
         console.log(data);
-        if(data){
-            myModal2.hide();
-            myModal.show();
+        if(data != null){
+            elDASModal.hide();
+            reportModal.show();
         }
+        reportPerson.value = data;
     })
     //fetch 통신 실패 시 실행 영역
     .catch(err=>{
@@ -73,5 +75,10 @@ function elDAS(){
 }
 
 //허위매물 신고하기
-
+function report(){
+    if(confirm('신고하시겠습니까?')){
+        document.getElementById('false-offerings').submit();
+        reportModal.hide();
+    }
+}
 

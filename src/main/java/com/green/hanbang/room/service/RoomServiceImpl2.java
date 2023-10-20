@@ -2,7 +2,9 @@ package com.green.hanbang.room.service;
 
 import com.green.hanbang.member.vo.MemberVO;
 import com.green.hanbang.realtor.vo.RealtorDetailVO;
+import com.green.hanbang.room.vo.FalseOfferingsVO;
 import com.green.hanbang.room.vo.OptionsVO;
+import com.green.hanbang.room.vo.ReasonVO;
 import com.green.hanbang.room.vo.RoomVO;
 import lombok.RequiredArgsConstructor;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -43,5 +45,15 @@ public class RoomServiceImpl2 implements RoomService2{
     @Override
     public String selectElDAS(MemberVO memberVO) {
         return sqlSession.selectOne("room2Mapper.selectElDAS",memberVO);
+    }
+
+    @Override
+    public List<ReasonVO> selectReasonList() {
+        return sqlSession.selectList("room2Mapper.selectReasonList");
+    }
+
+    @Override
+    public int insertFalseOfferings(FalseOfferingsVO falseOfferingsVO) {
+        return sqlSession.insert("room2Mapper.insertFalseOfferings",falseOfferingsVO);
     }
 }
