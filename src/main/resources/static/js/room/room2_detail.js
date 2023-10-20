@@ -1,5 +1,12 @@
+let myModal = null;
+let myModal2 = null;
+
 // 옵션값 없을 시 '없음'표시
 window.addEventListener('load', () => {
+    // 인증완료 후 띄울 모달 창
+    myModal = new bootstrap.Modal('#report-inner-modal');
+    myModal2 = new bootstrap.Modal('#elDAS-modal');
+
     fetch('/room2/roomDetailFetch', { //요청경로
         method: 'POST',
         cache: 'no-cache',
@@ -54,7 +61,8 @@ function elDAS(){
     .then((data) => {//data -> controller에서 리턴되는 데이터!
         console.log(data);
         if(data){
-            document.querySelector('#report-inner-modal').classList.add('show');
+            myModal2.hide();
+            myModal.show();
         }
     })
     //fetch 통신 실패 시 실행 영역
