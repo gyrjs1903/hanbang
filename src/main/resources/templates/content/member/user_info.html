@@ -99,76 +99,7 @@
                 </button>
             </div>
         </div>
-        <!-- 닉네임 변경 창 -->
-        <div class="modal fade" id="join-modal updateNN" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <form id="joinForm" class="row g-3" action="/member/updateNickName" method="post">
-                            <h1 class="modal-title">닉네임 재설정</h1>
-                            <div class="modal-body">
-                                <h4>닉네임</h4>
-                                <label for="nickName" class="form-label"></label>
-                                <input autocomplete="off" type="text" placeholder="닉네임을 입력해주세요." id="inputNickName" name="nickName" oninput="countCharacters();" maxlength="10">
-                                <p id="characterCount">0/10</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary data" data-bs- dismiss="modal">닫기</button>
-                                <button type="submit" class="btn btn-primary">확인</button>
-                            </div>
-                        </form>    
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- 비밀번호 변경 창 -->
-        <div id="updatePW" class="modal" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form action="/member/passwordSetForm" method="post">
-                        <div class="modal-header">
-                            <h5 class="modal-title">비밀번호 재설정</h5>
-                        </div>
-                        <div class="modal-body">
 
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary data" data-bs- dismiss="modal">닫기</button>
-                            <button type="submit" class="btn btn-primary">확인</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" id="join-modal updatePW" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <form id="joinForm" class="row g-3" action="/member/passwordSetForm" method="post">
-                            <h1 class="modal-title">비밀번호 재설정</h1>
-                            <div class="modal-body">
-
-                                <h4>현재 비밀번호</h4>
-                                <label for="passWord" class="form-label"></label>
-                                <input autocomplete="off" type="text" name="passWord" placeholder="현재 비밀번호" id="" >
-                                
-                                <h4>새로운 비밀번호를 입력해주세요.</h4>
-                                <label for="userName" class="form-label"></label>
-                                <input autocomplete="off" type="text" placeholder="현재 비밀번호" id="" >
-    
-                                <label for="userName" class="form-label"></label>
-                                <input autocomplete="off" type="text" placeholder="현재 비밀번호" id="" >
-    
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                                <button id="join-btn" type="button" class="btn btn-primary" onclick="VerificationEmailSend();" disabled>인증메일 받기</button>
-                            </div>
-                        </form>    
-                    </div>
-                </div>
-            </div>
-        </div>
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         <script async src="/js/member/user_info.js"></script>
     </th:block>
