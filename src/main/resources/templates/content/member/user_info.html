@@ -7,52 +7,75 @@
 <title>원하는 방을 한방에 한방👊</title>
 </head>
 <body>
-    <th:block th:fragment="content">
+    <th:block layout:fragment="content">
+        <link rel="stylesheet" href="/css/member/user_info.css">
         <div class="user_my_page">
-            <div class="profile_img_wrap">
-                <div class="profile_img">
-                    <div size="96" class="">
-                        <label class="form-label"></label>
-                        <input type="file" class="form-control profile_img" name="profileImg" value="사진">
+            <div class="profile">
+                <form action="/member/updateProfileImg" method="post">
+                    <div size="96" class="profile_img hidden">
+                        <label for="file" class="form-label">프로필 사진</label>
+                        <div class="profile_default">
+                            <img src="/img/member/profileimg/default_profile_image.png" alt="프로필 기본 이미지">
+                        </div>
+                        <input type="file" class="form-control profile_img" name="profileImg" value="">
                     </div>
-                </div>
+                </form>
             </div>
-            <ul class="">
-                <li>
-                    <div class="">
+            <ul class="info_list">
+                <li class="social_li">
+                    <div class="social">
                         <p>소셜계정 목록 추가 필요 / 카카오톡, 페이스북</p>
                         <h1>연결된 소셜계정</h1>
                     </div>
-                    <div class=""></div>
+                    <div class="email-icon"></div>
+                    <div class="kakao-icon"></div>
+                    <div class="facebook-icon"></div>
                 </li>
-                <li>
-                    <div class="">
+                <li class="nickname_li">
+                    <div class="nickname">
                         <h1>닉네임</h1>
                     </div>
-                    <div class="" style="cursor: pointer;">
-                        <p><a href="">[${session.loginInfo.userName}]<img src="" alt="닉네임 변경 창"></a></p>
+                    <div class="cp">
+                        <p></p>
+                        <img src="/img/member/right_icon.png" alt="닉네임 변경 창" id="updateNN_Btn">
                     </div>
                 </li>
-                <li>
+                <li class="id_li">
+                    <div class="">
+                        <h1>아이디</h1>
+                    </div>
+                    <div class="">
+                        <p></p>
+                    </div>
+                </li>
+                <li class="pw_li">
+                    <div class="">
+                        <h1>비밀번호</h1>
+                    </div>
+                    <div class="cp">
+                        <img src="/img/member/right_icon.png" alt="비밀번호 변경 창" id="updatePW_Btn">
+                    </div>
+                </li>
+                <li class="name_li">
                     <div class="">
                         <h1>이름</h1>
                     </div>
-                    <div class="" style="cursor: pointer;">
+                    <div class="cp">
                         <p>이창규 > [본인인증창]</p>
                     </div>
                 </li>
-                <li>
+                <li class="phone_li">
                     <div class="">
                         <h1>휴대폰번호</h1>
                     </div>
-                    <div class="" style="cursor: pointer;">
+                    <div class="cp">
                         <div class="">
                             <p>010-4939-4018 > [본인인증창] [본인인증 완료 시 아래 본인인증 마크와 텍스트]</p>
                             <h1 class="">본인 인증</h1>
                         </div>
                     </div>
                 </li>
-                <li class="">
+                <li class="privacy_li hidden">
                     <div>
                         <h1>개인정보 수집 및 이용 동의 (선택)</h1>
                         <p>선택정보 제공에 대한 동의를 거부하시는 경우에도</p>
@@ -75,27 +98,78 @@
                     </div>
                 </button>
             </div>
-            <!-- // onclick="location.href='/member/passwordSetForm';" - 이거 나중에 유저정보창에 써라. -->
-            <!-- 닉네임 변경 창 -->
-            <div class="modal" tabindex="-1">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">닉네임 재설정</h5>
-                        </div>
-                        <div class="modal-body">
-                            <h4>닉네임</h4>
-                            <input autocomplete="off" type="text" placeholder="닉네임을 입력해주세요." id="inputNickName" th:value="${nickName}" oninput="countCharacters();" maxlength="10">
-                            <p id="characterCount">0/10</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary data" data-bs-dismiss="modal">닫기</button>
-                            <button type="submit" class="btn btn-primary">확인</button>
-                        </div>
+        </div>
+        <!-- 닉네임 변경 창 -->
+        <div class="modal fade" id="join-modal updateNN" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <form id="joinForm" class="row g-3" action="/member/updateNickName" method="post">
+                            <h1 class="modal-title">닉네임 재설정</h1>
+                            <div class="modal-body">
+                                <h4>닉네임</h4>
+                                <label for="nickName" class="form-label"></label>
+                                <input autocomplete="off" type="text" placeholder="닉네임을 입력해주세요." id="inputNickName" name="nickName" oninput="countCharacters();" maxlength="10">
+                                <p id="characterCount">0/10</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary data" data-bs- dismiss="modal">닫기</button>
+                                <button type="submit" class="btn btn-primary">확인</button>
+                            </div>
+                        </form>    
                     </div>
                 </div>
             </div>
         </div>
+        <!-- 비밀번호 변경 창 -->
+        <div id="updatePW" class="modal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="/member/passwordSetForm" method="post">
+                        <div class="modal-header">
+                            <h5 class="modal-title">비밀번호 재설정</h5>
+                        </div>
+                        <div class="modal-body">
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary data" data-bs- dismiss="modal">닫기</button>
+                            <button type="submit" class="btn btn-primary">확인</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="join-modal updatePW" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <form id="joinForm" class="row g-3" action="/member/passwordSetForm" method="post">
+                            <h1 class="modal-title">비밀번호 재설정</h1>
+                            <div class="modal-body">
+
+                                <h4>현재 비밀번호</h4>
+                                <label for="passWord" class="form-label"></label>
+                                <input autocomplete="off" type="text" name="passWord" placeholder="현재 비밀번호" id="" >
+                                
+                                <h4>새로운 비밀번호를 입력해주세요.</h4>
+                                <label for="userName" class="form-label"></label>
+                                <input autocomplete="off" type="text" placeholder="현재 비밀번호" id="" >
+    
+                                <label for="userName" class="form-label"></label>
+                                <input autocomplete="off" type="text" placeholder="현재 비밀번호" id="" >
+    
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                                <button id="join-btn" type="button" class="btn btn-primary" onclick="VerificationEmailSend();" disabled>인증메일 받기</button>
+                            </div>
+                        </form>    
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         <script async src="/js/member/user_info.js"></script>
     </th:block>
 </body>

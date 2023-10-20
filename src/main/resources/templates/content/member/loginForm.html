@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{fragment/main_layout}">
+<head>
+<meta charset="UTF-8">
+<title>원하는 방을 한방에 한방👊</title>
+</head>
+<body>
+<th:block layout:fragment="content">
+    <script th:inline="javascript">
+        var urlParams = new URLSearchParams(window.location.search);
+        var error = urlParams.get('error');
+        if (error === 'true') {
+            alert('아이디 혹은 비밀번호가 틀렸습니다.');
+        }
+    </script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+</th:block>
+</body>
+</html>
