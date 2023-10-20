@@ -3,13 +3,12 @@ package com.green.hanbang.member.controller;
 import com.green.hanbang.member.service.MemberService;
 import com.green.hanbang.member.vo.MemberImgVO;
 import com.green.hanbang.member.vo.MemberVO;
-import com.green.hanbang.util.MemberUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 
 @Controller
@@ -58,10 +57,11 @@ public class MemberController {
             } else if(loginInfo.getLoginType().equals("REALTOR")) {
                 return "redirect:/realtor/main";
             } else if(loginInfo.getLoginType().equals("ADMIN")) {
-                return "redirect:/admin/manage";
+                return "redirect:/admin/admin_manage";
             }
         }
 
+        // 아이디나 비밀번호가 틀린 경우
         String userName = request.getParameter("userName");
         return "redirect:/member/loginForm?userName=" + userName;
     }
@@ -73,15 +73,27 @@ public class MemberController {
         return "redirect:/";
     }
 
-    // 비밀번호 재설정 창 팝업
-
     // 내 정보 페이지로 이동
     @GetMapping("/memberInfo")
-    public String memberInfo(MemberVO memberVO, HttpSession session) {
-        MemberVO loginInfo = memberService.login(memberVO);
+    public String memberInfo(MemberVO memberVO, HttpSession session, Model model) {
+        // 현재 로그인한 유저 번호를 조회
+        MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
+
+        // 가져온 회원 정보를 모델에 담기
+        model.addAttribute("userName", loginInfo);
+
         return "content/member/user_info";
     }
+    
+    // 프로필 이미지 등록
+    @PostMapping("/updateProfileImg")
+    public String insertProImg(MemberImgVO memberImgVO){
 
+        memberService.insertProImg(memberImgVO);
+
+        return "redirect:/member/memberInfo";
+    }
+    
     // 전화문의 페이지로 이동
     @GetMapping("/memberCall")
     public String memberCall() {
@@ -112,10 +124,4 @@ public class MemberController {
     public String memberDibsOn() {
         return "content/member/recent_viewed_room";
     }
-
-    @GetMapping("/test")
-    public String test(){
-        return "content/member/test";
-    }
-
 }

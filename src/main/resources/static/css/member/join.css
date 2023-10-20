@@ -1,29 +1,139 @@
 @charset "UTF-8";
 
-p:not(.userNameFormGuide){
+p:not(.userNameFormGuideT, .userNameFormGuideC){
     color: #e61919;
     display: none;
 }
 
+h1{
+    color: rgb(34, 34, 34);
+    font-size: 30px;
+    line-height: 48px;
+    letter-spacing: -0.5px;
+    font-weight: 700;
+}
+
+
+
+
+  
+
+.btitle, .userNameFormGuideT{
+    color: rgb(34, 34, 34);
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+.userNameFormGuideT{
+    position: absolute;
+}
+.userNameFormGuideC{
+    position: relative;
+    color: rgb(34, 34, 34);
+    font-size: 12px;
+    line-height: 24px;
+    left: 120px;
+}
+
 .join_frame{
-    width: 476px;
+    width: 500px;
+    height: auto;
     margin: 0px auto;
     border: 1px solid rgb(245, 245, 245);
     padding: 68px;
 }
+.join_frame input{
+    width: 100%;
+    height: 30px;
+    color: rgb(34, 34, 34);
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: 400;
+    padding: 0px 16px;
+    border: 1px solid rgb(237, 237, 237);
+    border-radius: 2px;
+    background-color: rgb(255, 255, 255);
+    transition: all 150ms ease-out 0s;
+    user-select: none;
+    margin-bottom: 15px;
+}
+
+.logintype{
+    width: inherit;
+    height: inherit;
+    background: transparent;
+    border: 0 none;
+    outline: 0 none;
+    padding: 0 5px;
+    position: relative;
+    z-index: 3;
+    margin-left: 153px;
+    /* 화살표 이미지 없애는 스타일
+    -o-appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    */
+}
 
 #pwShow1{
     position: relative;
-    right: 40px;
-    width: 32px;
-    height: 32px;
+    bottom: 43px;
+    left: 335px;
+    width: 22px;
+    height: 22px;
     cursor: pointer;
 }
 
 #pwShow2{
     position: relative;
-    right: 40px;
-    width: 32px;
-    height: 32px;
+    bottom: 43px;
+    left: 335px;
+    width: 22px;
+    height: 22px;
     cursor: pointer;
 }
+
+.joinBtn{
+    flex: 0 0 auto;
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0px 16px;
+    color: rgb(255, 255, 255);
+    border: 0px;
+    border-radius: 2px;
+    transition: all 150ms ease-out 0s;
+    cursor: pointer;
+    height: 56px;
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: 700;
+    background-color: rgb(50, 108, 249);
+}
+
+.joinBtn:disabled{
+    flex: 0 0 auto;
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0px 16px;
+    color: rgb(255, 255, 255);
+    border: 0px;
+    border-radius: 2px;
+    transition: all 150ms ease-out 0s;
+    cursor: default;
+    height: 56px;
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: 700;
+    background-color: rgb(223, 223, 223);
+}
+

@@ -36,4 +36,9 @@ public class MemberServiceImpl implements MemberService {
         return sqlSession.delete("memberMapper.memberDelete", memberVO);
     }
 
+    @Override
+    public String selectUserNo() {
+        return sqlSession.selectOne("memberMapper.selectUserNo");
+    }
+
 }

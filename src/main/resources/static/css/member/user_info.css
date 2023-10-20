@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+.hidden{
+    display: none;
+}
+
+.cp{
+    cursor: pointer;
+}
+
+.kakao-icon .facebook-icon .email-icon{
+    display: none;
+}
+
+.email-icon{
+    background-image: url("/img/member/email_icon.svg");
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    border-radius: 70%;
+}
+
+.kakao-icon{
+    background-image: url("/img/member/KakaoTalk_icon.svg");
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    border-radius: 70%;
+}
+
+.facebook-icon{
+    background-image: url("/img/member/facebook-icon.svg");
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    border-radius: 70%;
+}
+

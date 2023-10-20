@@ -66,6 +66,33 @@
         WHERE USER_NAME = #{userName}
         AND PASSWORD = #{passWord}
     </select>
+
+    <!-- 허위매물 신고 사유 조회 -->
+    <select id="selectReasonList" resultMap="roomMapper.reason">
+        SELECT REASON_CODE
+            , REASON
+        FROM REASON
+    </select>
+
+    <!-- 허위 매물 insert -->
+    <insert id="insertFalseOfferings">
+        INSERT INTO FALSE_OFFERINGS (
+            FALSE_OFFERINGS_CODE
+            , ROOM_CODE
+            , USER_NO
+            , REASON_CODE
+            , REPORT_CONTENT
+            , REPORT_CNT
+        ) VALUES (
+            (SELECT 'FALSE_ROOM_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(FALSE_OFFERINGS_CODE,12))),0) + 1 ,4,'0') FALSE_OFFERINGS_CODE
+            FROM FALSE_OFFERINGS)
+            , #{roomCode}
+            , #{userNo}
+            , #{reasonCode}
+            , #{reportContent}
+            , (SELECT NVL(MAX(REPORT_CNT),0) FROM FALSE_OFFERINGS WHERE ROOM_CODE = #{roomCode}) + 1
+        )
+    </insert>
 </mapper>
 
 

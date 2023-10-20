@@ -314,8 +314,47 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        <div class="report-room-info">
+                            <ul>
+                                <li>
+                                    <div>매물구분</div>
+                                    <div>
+                                        <span th:if="${roomDetail.subPropertyTypeCode == 'STYPE_001'}">원룸 </span>
+                                        <span th:if="${roomDetail.subPropertyTypeCode == 'STYPE_002'}">투룸 </span>
+                                        <span th:if="${roomDetail.subPropertyTypeCode == 'STYPE_003'}">쓰리룸 이상 </span>
+                                        <span th:if="${roomDetail.subPropertyTypeCode == 'STYPE_004'}">오피스텔(도시형) </span>
+                                        <span th:if="${roomDetail.subPropertyTypeCode == 'STYPE_005'}">아파트 </span>
+                                        <span th:if="${roomDetail.tradeTypeCode == 'TTC_001'}">월세</span>
+                                        <span th:if="${roomDetail.tradeTypeCode == 'TTC_002'}">전세</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>매물소재지</div>
+                                    <div>[[${roomDetail.roomAddrVO.addr}]] [[${roomDetail.roomAddrVO.detailAddr}]]</div>
+                                </li>
+                                <li>
+                                    <div>매물상세내역</div>
+                                    <div>전용면적 : [[${roomDetail.roomSizeP}]]</div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="reason-box">
+                            <h3 class="titla_b">매물신고사유</h3>
+                            <div class="reason-inner-box">
+                                <form action="/room2/falseOfferings" method="post" id="false-offerings">
+                                    <input type="hidden" name="roomCode" th:value="${roomDetail.roomCode}">
+                                    <input type="hidden" name="userNo" id="report-person" value="none">
+                                    <th:block th:each="reason : ${reasonList}">
+                                        <div><input type="radio" name="reasonCode"
+                                                th:value="${reason.reasonCode}">[[${reason.reason}]]</div>
+                                    </th:block>
+                                    <textarea name="reportContent"cols="10" rows="3"></textarea>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="report();">신고하기</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
