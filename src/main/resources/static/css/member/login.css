@@ -44,8 +44,8 @@ h1, p{
 
 #pwShow{
     position: relative;
-    right: 40px;
-    width: 32px;
-    height: 32px;
+    right: 30px;
+    width: 24px;
+    height: 24px;
     cursor: pointer;
 }

@@ -20,3 +20,13 @@ $(function() {
         $("#join-modal").modal("show");
     });
 });
+
+// alert, url
+function redirect(){
+    var message = '${msg}'; 
+    var returnUrl = '${url}'; 
+
+    alert(mag); 
+    document.location.href = returnUrl; 
+
+}
