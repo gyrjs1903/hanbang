@@ -277,6 +277,7 @@ $(document).ready(function() {
             var userName = $("#userName").val();
             var passWord = $("#passWord").val();
             var passWordCheck = $("#passWordCheck").val();
+            var loginType = $("#loginType").val();
 
             var isUserNameValid = validateUserName(userName);
             var isPasswordValid = validatePassword(passWord);
@@ -285,7 +286,10 @@ $(document).ready(function() {
             var isUserNameDuplicationValid = !$("#userNameDuplication").is(':visible');
 
             var isAllInputsFilled = userName !== '' && passWord !== '' && passWordCheck !== '';
-            if (isUserNameValid && isPasswordValid && isPasswordMatch && isUserNameDuplicationValid && isAllInputsFilled) {
+    
+            var isLoginTypeSelected = loginType === 'NULL';
+
+            if (isUserNameValid && isPasswordValid && isPasswordMatch && isUserNameDuplicationValid && isAllInputsFilled && isLoginTypeSelected) {
                 joinBtn.prop('disabled', false);
                 joinBtn.removeClass("disabled-button");
                 joinBtn.addClass("enabled-button");
@@ -310,34 +314,9 @@ $(document).ready(function() {
             checkInputs();
         });
 
-        joinBtn.prop('disabled', true); // 페이지 접근 초기 버튼 비활성화 고정
+        // 초기 페이지 접근 버튼 비활성화 고정
+        joinBtn.prop('disabled', true);
         joinBtn.addClass("disabled-button");
-    });
-});
-
-$(document).ready(function(){
-    $('.passWordArea1 i').on('click',function(){
-        $('input').toggleClass('active');
-        if($('input').hasClass('active')){
-            $(this).attr('class',"fa fa-eye-slash fa-lg")
-            .prev('input').attr('type',"text");
-        }else{
-            $(this).attr('class',"fa fa-eye fa-lg")
-            .prev('input').attr('type','password');
-        }
-    });
-});
-
-$(document).ready(function(){
-    $('.passWordArea2 i').on('click',function(){
-        $('input').toggleClass('active');
-        if($('input').hasClass('active')){
-            $(this).attr('class',"fa fa-eye-slash fa-lg")
-            .prev('input').attr('type',"text");
-        }else{
-            $(this).attr('class',"fa fa-eye fa-lg")
-            .prev('input').attr('type','password');
-        }
     });
 });
 

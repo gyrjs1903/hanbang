@@ -86,7 +86,7 @@ public class RoomController {
     }
     @ResponseBody
     @PostMapping("/roomSearch")
-    public List<RoomVO> roomSearch(@RequestBody Map<String, Object> searchData, Model model){
+    public List<RoomVO> roomSearch(@RequestBody Map<String, Object> searchData){
         System.out.println(searchData);
 
         ObjectMapper mapper = new ObjectMapper();
