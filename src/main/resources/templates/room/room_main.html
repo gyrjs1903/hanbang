@@ -77,7 +77,7 @@
         <div class="row">
             <div class="col-4">
                 <div class="select_room">
-                    <div th:each="room : ${roomList}" class="room" th:sonclick="detailRoom([[${room.roomCode}]]);">
+                    <div th:each="room : ${roomList}" class="room" th:onclick="detailRoom([[${room.roomCode}]]);">
                         <div>
                             <img style="width: 200px;" th:src="${'/img/' + 'room/' + room.imgList[0].attachedFileName}"
                                 alt="">

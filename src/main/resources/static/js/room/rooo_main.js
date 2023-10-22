@@ -48,7 +48,7 @@ function setMap() {
             let imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 
             for (let i = 0; i < positions.length; i++) {
-                console.log(positions[i])
+            
                 // 마커 이미지의 이미지 크기 입니다
                 let imageSize = new kakao.maps.Size(24, 35);
 
@@ -161,7 +161,7 @@ document.getElementById("searchButton").addEventListener("click", function () {
                 roomImage.src = '/img/room/' + room.imgList[0].attachedFileName;
                 roomImage.alt = '';
                 imgElement.appendChild(roomImage);
-                
+
                 // 방정보 div
                 const roomInfo = document.createElement('div');
                 roomInfo.className = 'room-info';
@@ -182,7 +182,7 @@ document.getElementById("searchButton").addEventListener("click", function () {
                 const addrInfo = document.createElement('div')
                 addrInfo.textContent = room.roomAddrVO.addr;
                 roomInfo.appendChild(addrInfo);
-                
+
                 //매물유형, 평, 층
                 const propertyTypeInfo = document.createElement('p');
                 propertyTypeInfo.textContent = propertyTypeName + ', ' + room.roomSizeP + '평, ' + room.floor + '층';
@@ -190,19 +190,17 @@ document.getElementById("searchButton").addEventListener("click", function () {
 
                 //상세내용
                 const contentText = document.createElement('p');
-                contentText.textContent= room.content;
+                contentText.textContent = room.content;
                 roomInfo.appendChild(contentText);
 
                 roomElement.appendChild(roomInfo);
-                
+
                 roomContainer.appendChild(roomElement);
-                
+
                 selectRoomElement.appendChild(roomContainer);
-                console.log(roomContainer);
-                // selectRoomElement.insertAdjacentHTML("afterbegin",roomContainer);
-                
+
             });
-            
+
         })
         //fetch 통신 실패 시 실행 영역
         .catch(err => {
@@ -210,8 +208,8 @@ document.getElementById("searchButton").addEventListener("click", function () {
             console.log(err);
         });
 });
-function detailRoom(roomCode){
-    location.href=`/room2/roomDetailInfo?roomCode=${roomCode}`
+function detailRoom(roomCode) {
+    location.href = `/room2/roomDetailInfo?roomCode=${roomCode}`
 }
 
 
