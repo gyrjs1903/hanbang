@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.util.List;
 
+
 @Data
 public class MemberVO {
     private String userNo;
@@ -16,5 +17,5 @@ public class MemberVO {
     private String profileImage;
     private String joinDate;
     private RealtorDetailVO realtorDetailVO;
-    private List<MemberImgVO> memberImg;
+    private MemberImgVO memberImgVO;
 }

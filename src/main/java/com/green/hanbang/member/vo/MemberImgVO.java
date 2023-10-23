@@ -8,4 +8,5 @@ public class MemberImgVO {
     private String profileImgName;
     private String attachedProfileImgName;
     private String userNo;
+
 }

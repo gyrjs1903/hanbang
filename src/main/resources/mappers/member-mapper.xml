@@ -11,14 +11,14 @@
         <result column="NICK_NAME"                      property="nickName"/>
         <result column="JOIN_DATE"                      property="joinDate"/>
         <association property="realtorDetailVO"         resultMap="realtorMapper.realtorDetail"/>
-        <collection property="memberImg" resultMap="memberImg" />
+
     </resultMap>
 
     <resultMap id="memberImg" type="com.green.hanbang.member.vo.MemberImgVO">
-        <id column="PROFILE_IMG_NO"                 property="imgNo" />
+        <id column="PROFILE_IMG_NO"                 property="profileImgNo" />
         <result column="USER_NO"                    property="userNo" />
-        <result column="PROFILE_IMG_NAME"           property="imgName" />
-        <result column="ATTACHED_PROFILE_IMG_NAME"  property="attachedImgName" />
+        <result column="PROFILE_IMG_NAME"           property="profileImgName" />
+        <result column="ATTACHED_PROFILE_IMG_NAME"  property="attachedProfileImgName" />
     </resultMap>
 
     <resultMap id="alarm" type="com.green.hanbang.member.vo.AlarmVO">
@@ -52,19 +52,17 @@
             , PROFILE_IMG_NAME
             , ATTACHED_PROFILE_IMG_NAME
             , USER_NO
-        )
-        <foreach collection="proImgList" item="proImg" separator="UNION ALL" index="idx">
-            (SELECT 'PRO_IMG_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(PRO_IMG_NO, 9))), 0) + 1 + #{idx}, 3, '0')
+        ) VALUES (
+            (SELECT 'PRO_IMG_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(PROFILE_IMG_NO, 9))), 0) + 1, 3, '0')
             FROM MEMBER_IMG)
-            , #{proImg.profile_img_name}
-            , #{proImg.attached_profile_img_name}
-            , #{proImg.user_no}
-            FROM DUAL
-        </foreach>
+            , #{profileImgName}
+            , #{attachedProfileImgName}
+            , #{userNo}
+        )
     </insert>
 
     <!-- 로그인 -->
-    <select id="login" parameterType="com.green.hanbang.member.vo.MemberVO" resultMap="member">
+    <select id="login" resultMap="member">
         SELECT
             MU.USER_NO
             , MU.USER_NAME
@@ -81,11 +79,11 @@
         ON
             MU.USER_NO = MI.USER_NO
         WHERE USER_NAME = #{userName}
-            AND PASSWORD = #{passWord}
+              AND PASSWORD = #{passWord}
     </select>
 
     <!-- 회원 정보 조회 -->
-    <select id="selectUserInfo" parameterType="com.green.hanbang.member.vo.MemberVO" resultMap="member">
+    <select id="selectUserInfo" resultMap="member">
         SELECT
             MU.USER_NO
             , MU.USER_NAME
@@ -127,9 +125,21 @@
 
     <!-- 회원 번호 조회 -->
     <select id="selectUserNo" resultType="String">
-        SELECT USER_NO
+        SELECT
+        'USER_' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(USER_NO, 6))), 0) + 0, 3, '0') AS NEW_USER_NO
         FROM MEMBER_USER
-        WHERE USER_NO =#{userNo}
+    </select>
+
+    <!-- 프로필 이미지 불러오기 -->
+    <select id="profileImgLoad" resultMap="memberImg">
+        SELECT MI.USER_NO
+        , PROFILE_IMG_NO
+        , PROFILE_IMG_NAME
+        , ATTACHED_PROFILE_IMG_NAME
+        FROM MEMBER_USER MU
+        LEFT JOIN MEMBER_IMG MI
+        ON MU.USER_NO = MI.USER_NO
+        WHERE MU.USER_NO = #{userNo}
     </select>
 
 </mapper>

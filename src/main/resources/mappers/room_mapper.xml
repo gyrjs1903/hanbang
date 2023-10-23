@@ -250,7 +250,7 @@
         LEFT JOIN ROOM_ADDR RA ON R.ROOM_CODE = RA.ROOM_CODE
         LEFT JOIN ROOM_IMG RI ON R.ROOM_CODE = RI.ROOM_CODE
         WHERE 1 = 1
-        <if test='searchPropertyTypeCode != null '>
+        <if test='searchPropertyTypeCode != null and !searchPropertyTypeCode.equals("")'>
         AND R.PROPERTY_TYPE_CODE = #{searchPropertyTypeCode}
         </if>
         <if test='searchRoomSizePMin != 0 and !searchRoomSizePMin.equals("")'>
@@ -268,7 +268,7 @@
         <if test='searchFloor != 0 and !searchFloor.equals("")'>
         AND R.FLOOR = #{searchFloor}
         </if>
-        <if test='searchTradeTypeCode != null and !searchTradeTypeCode.equals("")'>
+        <if test='searchTradeTypeCode != null'>
         AND R.TRADE_TYPE_CODE = #{searchTradeTypeCode}
         </if>
         <if test='searchMonthlyLeaseMax != 0 and !searchMonthlyLeaseMax.equals("")'>
@@ -290,12 +290,10 @@
             </foreach>
             )
         </if>
-        <if test='searchAddr != null and !searchAddr.equals("")'>
+        <if test='searchAddr != null'>
             AND UPPER(RA.ADDR) LIKE '%' || #{searchAddr} || '%'
         </if>
     </select>
-
-
 
     <select id="selectRoomAddr" resultMap="roomAddr">
         SELECT
@@ -307,34 +305,3 @@
     </select>
 
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
