@@ -93,6 +93,13 @@
             , (SELECT NVL(MAX(REPORT_CNT),0) FROM FALSE_OFFERINGS WHERE ROOM_CODE = #{roomCode}) + 1
         )
     </insert>
+
+    <!-- 문의 제목 목록 -->
+    <select id="selectInquiryTitle" resultMap="roomMapper.inquiryTitle">
+        SELECT INQUIRY_TITLE_CODE
+            ,INQUIRY_TITLES
+        FROM INQUIRY_TITLE
+    </select>
 </mapper>
 
 

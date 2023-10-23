@@ -21,6 +21,12 @@
         <result column="ATTACHED_PROFILE_IMG_NAME"  property="attachedImgName" />
     </resultMap>
 
+    <resultMap id="alarm" type="com.green.hanbang.member.vo.AlarmVO">
+        <id column="ALARM_CODE" property="alarmCode"/>
+        <result column="USER_NO" property="userNo"/>
+        <result column="AUTHORITY_UPDATE" property="authorityUpdate"/>
+        <result column="INQUIRY_CODE" property="inquiryCode"/>
+    </resultMap>
     <!-- 회원 가입 -->
     <insert id="join">
         INSERT INTO MEMBER_USER (

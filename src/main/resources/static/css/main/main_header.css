@@ -129,3 +129,14 @@ body {
 .realtor_ad_inquiry {
   display: none;
 }
+
+/* 알림창 */
+.alarm_position{
+  position: relative;
+}
+#alarm_tag{
+  display: none;
+  position: absolute;
+  top: 30px;
+  right: 0;
+}

@@ -29,7 +29,7 @@ public class MemberManageServiceImpl implements MemberManageService {
     }
 
     @Override
-    public MemberManageVO realDetail(int identificationNum) {
+    public MemberManageVO realDetail(String identificationNum) {
         return sqlSession.selectOne("adminMapper.realDetail", identificationNum);
     }
 
