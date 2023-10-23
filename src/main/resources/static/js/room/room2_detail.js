@@ -1,13 +1,14 @@
 let elDASModal = null;
 let reportModal = null;
 let reportPerson = null;
-
+let roomCode = null;
 // 옵션값 없을 시 '없음'표시
 window.addEventListener('load', () => {
     // 인증완료 후 띄울 모달 창
     reportModal = new bootstrap.Modal('#report-inner-modal');
     elDASModal = new bootstrap.Modal('#elDAS-modal');
     reportPerson = document.querySelector('#report-person');
+    roomCode = document.querySelector('#roomCodeNumber').value;
     fetch('/room2/roomDetailFetch', { //요청경로
         method: 'POST',
         cache: 'no-cache',
@@ -17,6 +18,7 @@ window.addEventListener('load', () => {
         //컨트롤러로 전달할 데이터
         body: JSON.stringify({
            // 데이터명 : 데이터값
+           roomCode : roomCode
         })
     })
     .then((response) => {
@@ -24,6 +26,7 @@ window.addEventListener('load', () => {
     })
     //fetch 통신 후 실행 영역
     .then((data) => {//data -> controller에서 리턴되는 데이터!
+        console.log(data);
         for(option of data){
             if(option == 'DO_035' || option == 'DO_036'){
                 document.querySelector('#balcony-check').innerHTML = '있음';

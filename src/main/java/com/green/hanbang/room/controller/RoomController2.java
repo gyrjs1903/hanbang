@@ -66,9 +66,11 @@ public class RoomController2 {
     //옵션 값 있을 시 '있음' 표시
     @ResponseBody
     @PostMapping("/roomDetailFetch")
-    public List<String> roomDetailFetch(){
-        String options = roomService2.selectRoomInfo("ROOM_0001").getDetailOptions();
+    public List<String> roomDetailFetch(@RequestBody Map<String, String> data){
+        String options = roomService2.selectRoomInfo(data.get("roomCode")).getDetailOptions();
         List<String> optionList = Arrays.asList(options.split(","));
+        System.out.println("????????????????????????????????????????????");
+        System.out.println(optionList);
         return optionList;
     }
 
