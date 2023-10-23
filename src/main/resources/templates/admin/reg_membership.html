@@ -22,18 +22,79 @@
             </div>
 
             <div class="midCate col align-middle scrollBar" id="midCate">
-                <div th:each="midCategory : ${midCateList}" class="alert alert-secondary" role="alert" th:onclick="getItemCateList([[${midCategory.membershipCode}]]);">
+                <div th:each="midCategory : ${midCateList}" class="alert alert-secondary" role="alert" th:onclick="getItemCateList([[${midCategory.memCateCode}]],[[${midCategory.membershipCode}]]);">
                     [[${midCategory.membershipName}]]
                 </div>
                 <div class="addNewCate alert alert-light" role="alert">
                     <span  th:onclick='addNewInput(this, [[${midCateList[0].memCateCode}]])'>추 가</span>
                 </div>
             </div>
+        </div>    
+            
 
-            <!-- <div class="addItemCate col align-middle scrollBar" id="itemCate"> -->
-                
+        <!-- 상품 정보 출력 html -->
+        <div class="row mt-4">
+            <div class="col">
+                상품 정보
             </div>
         </div>
+        <div class="row itemList">
+            <div class="itemCate col align-middle scrollBar" id="itemCate">
+                <table class="itemListTable table table-hover table-striped">
+                    <colgroup>
+                        <col width="">
+                        <col width="">
+                        <col width="">
+                        <col width="">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <td>No</td>
+                            <td>상품명</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="2">
+                                데이터를 조회하려면 상단의 카테고리를 선택해주세요~
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="itemDetailList col align-middle">
+                
+            </div>
+        </div>        
+        <div class="row mt-4 membershipRegForm">
+            <div>
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                    <select class="form-select" id="autoSizingSelect">
+                      <option selected>Choose...</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                    <select class="form-select" id="autoSizingSelect">
+                      <option selected>Choose...</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <label class="visually-hidden" for="autoSizingInput">Name</label>
+                    <input type="text" class="form-control" id="autoSizingInput" placeholder="Jane Doe">
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
 
 
         
@@ -46,79 +107,7 @@
     </div>
 
 
-    <form method="post" action="/admin/regMembership">
-        <div>   
-            <label>대분류</label>
-            <select class="category1" name="memCateCode" id="select_category">
-                <option value="" selected>전체</option>
-                <option value="addNew" class="new">
-                    신규등록
-                </option>
-                <option th:each="category : ${cateList}" th:value="${category.memCateCode}">[[${category.memCateName}]]</option>
-            </select> 
-            <!-- 신규등록 입력 칸 -->
-            <div class="addNewCategory" style="display: none;">
-                <input type="text" name="memCateName">
-            </div>
-        </div>
-
-
-        
-        <!-- 소분류가 있을 때 -->
-        <div class="optionForm0" style="display: none;">    
-            <label>중분류</label>
-            <select class="category2" name="membershipCode" id="select-midCategory">
-                <option value="" selected>전체</option>
-                <option value="addMidNew" class="midNew">
-                    신규등록
-                </option>
-                <option th:each="midCategory : ${midCateList}" th:value="${midCategory.membershipCode}">[[${midCategory.membershipName}]]</option>
-            </select>
-            <!-- 신규 등록 시 입력 칸 -->
-            <div class="addNewMidCategory" style="display: none;">
-                <input type="text" name="membershipName">
-            </div>
-        </div>
-
-        
-        <div class="optionForm1" style="display: none;">
-            <div class="inputArea">
-                <label for="itemName">상품명</label>
-                <input type="text" id="itemName" name="itemName"/>
-            </div>
-            <div class="inputArea">
-                <label for="itemIntro">상품소개</label>
-                <textarea rows="5" cols="50" id="itemIntro" name="itemIntro"></textarea>
-            </div>
-            <div class="inputArea">
-                <label for="itemContent">상품설명</label>
-                <textarea rows="5" cols="50" id="itemContent" name="itemContent"></textarea>
-            </div>
-            <div class="inputArea">
-                <label for="itemPrice">상품가격</label>
-                <input type="text" id="itemPrice" name="itemPrice"/>
-            </div>
-        </div>
-
-        <!-- 소분류가 없을 때 -->
-        <div class="optionForm2" style="display: none;">
-            <div class="inputArea">
-                <label for="membershipName">상품명</label>
-                <input type="text" id="membershipName" name="membershipName"/>
-            </div>
-            <div class="inputArea">
-                <label for="membershipContent">상품설명</label>
-                <textarea rows="5" cols="50" id="membershipContent" name="membershipContent"></textarea>
-            </div>
-            <div class="inputArea">
-                <label for="membershipPrice">상품가격</label>
-                <input type="text" id="membershipPrice" name="membershipPrice" disabled/>
-            </div>
-        </div>
-        
-        <input type="submit" value="등록하기">
-        <input type="submit" value="뒤로가기">
-    </form>
+    
 
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
