@@ -35,8 +35,6 @@
         <result column="MEM_CATE_NAME" property="memCateName"/>
         <result column="MEMBERSHIP_CODE" property="membershipCode"/>
         <result column="MEMBERSHIP_NAME" property="membershipName"/>
-        <result column="MEMBERSHIP_CONTENT" property="membershipContent"/>
-        <result column="MEMBERSHIP_PRICE" property="membershipPrice"/>
         <collection property="memItemList" resultMap="memItem"/>
     </resultMap>
 
@@ -184,11 +182,12 @@
     <select id="selectMidCategory" resultMap="membership">
         SELECT MEMBERSHIP_NAME
             , MEMBERSHIP_CODE
+            , MEM_CATE_CODE
         FROM MEMBERSHIP_TABLE
         WHERE MEM_CATE_CODE = #{memCateCode}
     </select>
 
-<!-- 맴버쉽 카테고리 출력 (소분류)-->
+<!-- 맴버쉽 카테고리 출력 (아이템)-->
     <select id="selectItemCategory" resultMap="memItem">
         SELECT ITEM_NAME
             , ITEM_CODE
@@ -196,47 +195,21 @@
         WHERE MEMBERSHIP_CODE = #{membershipCode}
     </select>
 
-<!-- 맴버쉽 상품의 세부 상품 조회 (중분류 && 소분류) -->
+<!-- 맴버쉽 상품의 세부 상품 조회 (중분류 && 아이템) -->
     <select id="selectMembershipItemList" resultMap="membership">
-        SELECT MEMBERSHIP_NAME
-            , MEMBERSHIP_CONTENT
-            , MEMBERSHIP_PRICE
-            , SHIP.MEMBERSHIP_CODE
-            , CATE.MEM_CATE_CODE
-            , ITEM_NAME
-            , ITEM_PRICE
+        SELECT ITEM.ITEM_NAME
+            , ITEM.ITEM_PRICE
+            , ITEM.MEM_CATE_CODE
+            , CATE.MEM_CATE_NAME
+            , ITEM.MEMBERSHIP_CODE
+            , SHIP.MEMBERSHIP_NAME
             , ITEM_INTRO
             , ITEM_CONTENT
-            , ITEM_CODE
-            , MEM_CATE_NAME
-        FROM MEMBERSHIP_CATEGORY CATE, MEMBERSHIP_TABLE SHIP, MEMITEM_TABLE ITEM
-        WHERE SHIP.MEM_CATE_CODE = CATE.MEM_CATE_CODE
-        AND SHIP.MEMBERSHIP_CODE = ITEM.MEMBERSHIP_CODE(+)
-        AND SHIP.MEM_CATE_CODE = #{memCateCode}
+        FROM MEMITEM_TABLE ITEM, MEMBERSHIP_CATEGORY CATE, MEMBERSHIP_TABLE SHIP
+        WHERE ITEM.MEM_CATE_CODE = CATE.MEM_CATE_CODE
+        AND SHIP.MEMBERSHIP_CODE(+) = ITEM.MEMBERSHIP_CODE
+        AND ITEM.MEM_CATE_CODE = #{memCateCode}
 
-    </select>
-
-<!-- 맴버쉽 아이템 상세 조회   -->
-    <select id="membershipDetail" resultMap="memCate">
-        SELECT MEMBERSHIP_NAME
-            , MEMBERSHIP_CONTENT
-            , MEMBERSHIP_PRICE
-            , SHIP.MEMBERSHIP_CODE
-            , CATE.MEM_CATE_CODE
-            , ITEM_NAME
-            , ITEM_PRICE
-            , ITEM_INTRO
-            , ITEM_CONTENT
-            , ITEM_CODE
-            , MEM_CATE_NAME
-        FROM MEMBERSHIP_CATEGORY CATE, MEMBERSHIP_TABLE SHIP, MEMITEM_TABLE ITEM
-        WHERE SHIP.MEM_CATE_CODE = CATE.MEM_CATE_CODE
-        AND SHIP.MEMBERSHIP_CODE = ITEM.MEMBERSHIP_CODE(+)
-        AND SHIP.MEM_CATE_CODE = #{memCateCode}
-        AND SHIP.MEMBERSHIP_CODE = #{membershipCode}
-        <if test="itemCode != null">
-            AND ITEM.ITEM_CODE = #{itemCode}
-        </if>
     </select>
 
 <!--    맴버쉽 아이템 등록하기 (1) : 대분류 등록-->
@@ -255,14 +228,10 @@
         INSERT INTO MEMBERSHIP_TABLE(
             MEMBERSHIP_CODE
             , MEMBERSHIP_NAME
-            , MEMBERSHIP_CONTENT
-            , MEMBERSHIP_PRICE
             , MEM_CATE_CODE
         ) VALUES (
             #{membershipCode}
-            , #{membershipName}
-            , #{membershipContent}
-            , #{membershipPrice}
+            , #{memCateName}
             , #{memCateCode}
         )
     </insert>
@@ -292,7 +261,7 @@
         FROM MEMBERSHIP_CATEGORY
     </select>
     <select id="selectNextMembershipCode" resultType="String">
-        SELECT 'MEMBERSHIP_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(MEMBERSHIP_CODE, 6))), 0) + 1, 3, '0')
+        SELECT 'MEMBERSHIP_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(MEMBERSHIP_CODE, 12))), 0) + 1, 3, '0')
         FROM MEMBERSHIP_TABLE
     </select>
     <select id="selectNextItemCode" resultType="String">

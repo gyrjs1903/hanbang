@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="/css/room/room_detail.css">
         <div th:onload="detailInfo([[${optionList}]]);"></div>
         <div id="wrap">
+            <input type="hidden" th:value="${roomDetail.roomCode}" id="roomCodeNumber">
             <div class="row">
                 <div class="col img-box">
                     <th:block th:each="img : ${roomDetail.imgList}">
@@ -360,7 +361,7 @@
                 </div>
             </div>
         </div>
-        <script src="/js/room/room2_detail.js"></script>
+        <script src="/js/room/room2_detail.js" defer></script>
     </th:block>
 </body>
 

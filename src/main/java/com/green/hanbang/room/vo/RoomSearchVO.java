@@ -2,6 +2,8 @@ package com.green.hanbang.room.vo;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class RoomSearchVO {
     private String searchPropertyTypeCode;

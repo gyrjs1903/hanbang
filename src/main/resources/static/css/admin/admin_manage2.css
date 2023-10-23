@@ -3,8 +3,34 @@
 
 #alarm_tag{
     display: none;
+    position: absolute;
+    width: 320px;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     z-index: 2;
+}
+.alarm_header{
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+.alarm_content{
+    padding: 10px 20px;
+    background-color: #f1f1f1;
+}
+#today_alarm > div{
+    border-radius: 5px;
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 20px;
+}
+.cnt{
+    font-size: 19px;
+    font-weight: 700;
+}
+.cursor{
+    cursor: pointer;
 }

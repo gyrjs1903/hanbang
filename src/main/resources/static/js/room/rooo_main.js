@@ -48,7 +48,7 @@ function setMap() {
             let imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 
             for (let i = 0; i < positions.length; i++) {
-                console.log(positions[i])
+            
                 // 마커 이미지의 이미지 크기 입니다
                 let imageSize = new kakao.maps.Size(24, 35);
 
@@ -88,7 +88,7 @@ function setMap() {
 document.getElementById("searchButton").addEventListener("click", function () {
     // 입력 필드와 선택 상자의 값을 가져옵니다.
     const searchTradeTypeCode = document.querySelector('select[name="searchTradeTypeCode"]').value;
-    const searchPropertyTypeCode = document.querySelector('input[name="searchPropertyTypeCode"]').value;
+    const searchPropertyTypeCode = document.querySelector('input[name="searchPropertyTypeCode"]:checked').value;
     const searchAddr = document.querySelector('input[name="searchAddr"]').value;
     const searchRoomSizePMin = document.querySelector('input[name="searchRoomSizePMin"]').value;
     const searchRoomSizePMax = document.querySelector('input[name="searchRoomSizePMax"]').value;
@@ -101,6 +101,7 @@ document.getElementById("searchButton").addEventListener("click", function () {
     const searchMaintenanceCost = document.querySelector('input[name="searchMaintenanceCost"]').value;
     const searchDetailOptions = Array.from(document.querySelectorAll('.detailOptionCheckbox:checked'))
         .map(checkbox => checkbox.value);
+
 
     // 필요한 데이터를 가지고 fetch 요청을 생성합니다.
 
@@ -138,16 +139,68 @@ document.getElementById("searchButton").addEventListener("click", function () {
         })
         //fetch 통신 후 실행 영역
         .then((data) => {//data -> controller에서 리턴되는 데이터!
+            const radioElement = document.querySelector('input[name="searchPropertyTypeCode"]:checked');
+            const propertyTypeName = radioElement.getAttribute('data-propertytypename');
+            console.log(propertyTypeName);
             console.log(data)
-            // .select_room 요소
-            // const selectRoomElement = document.querySelector('.select_room');
-            // // 이전에 표시된 내용을 지웁니다.
-            // selectRoomElement.innerHTML = '';
-            // data.forEach((room) => {
-            //     const roomElement = document.createElement('div');
-            //     roomElement.className = 'room';
 
-            // });
+            // .select_room 요소
+            const selectRoomElement = document.querySelector('.select_room');
+            const roomContainer = document.createElement('div');
+
+            // 이전에 표시된 내용을 삭제
+            selectRoomElement.innerHTML = '';
+            data.forEach((room, idx) => {
+                const roomElement = document.createElement('div');
+                roomElement.className = 'room';
+                const imgElement = document.createElement('div');
+                roomElement.append(imgElement);
+
+                // 방 이미지 추가
+                const roomImage = document.createElement('img');
+                roomImage.src = '/img/room/' + room.imgList[0].attachedFileName;
+                roomImage.alt = '';
+                imgElement.appendChild(roomImage);
+
+                // 방정보 div
+                const roomInfo = document.createElement('div');
+                roomInfo.className = 'room-info';
+
+                //전월세 추가
+                if (room.tradeTypeCode !== 'TTC_001') {
+                    const jeonseInfo = document.createElement('h4');
+                    jeonseInfo.textContent = '전세 ' + room.jeonseCost;
+                    roomInfo.appendChild(jeonseInfo);
+                } else {
+                    const leaseInfo = document.createElement('h4');
+                    leaseInfo.textContent = '월세 ' + room.deposit + '/' + room.monthlyLease;
+                    roomInfo.appendChild(leaseInfo);
+                }
+
+
+                //주소
+                const addrInfo = document.createElement('div')
+                addrInfo.textContent = room.roomAddrVO.addr;
+                roomInfo.appendChild(addrInfo);
+
+                //매물유형, 평, 층
+                const propertyTypeInfo = document.createElement('p');
+                propertyTypeInfo.textContent = propertyTypeName + ', ' + room.roomSizeP + '평, ' + room.floor + '층';
+                roomInfo.appendChild(propertyTypeInfo);
+
+                //상세내용
+                const contentText = document.createElement('p');
+                contentText.textContent = room.content;
+                roomInfo.appendChild(contentText);
+
+                roomElement.appendChild(roomInfo);
+
+                roomContainer.appendChild(roomElement);
+
+                selectRoomElement.appendChild(roomContainer);
+
+            });
+
         })
         //fetch 통신 실패 시 실행 영역
         .catch(err => {
@@ -155,6 +208,9 @@ document.getElementById("searchButton").addEventListener("click", function () {
             console.log(err);
         });
 });
+function detailRoom(roomCode) {
+    location.href = `/room2/roomDetailInfo?roomCode=${roomCode}`
+}
 
 
 // kakao.maps.event.addListener(map, 'dragend', function() {

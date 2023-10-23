@@ -8,8 +8,8 @@ import java.util.List;
 public class MemCateVO {
     private String memCateCode;
     private String memCateName;
-    private List<MembershipVO> membershipList;
-
     private String membershipCode;
     private String itemCode;
+    private List<MembershipVO> membershipList;
+
 }

@@ -10,8 +10,6 @@ public class MembershipVO {
     private String memCateCode;
     private String membershipCode;
     private String membershipName;
-    private String membershipContent;
-    private int membershipPrice;
     private List<MemItemVO> memItemList;
 
 }
