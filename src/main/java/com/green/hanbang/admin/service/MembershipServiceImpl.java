@@ -28,8 +28,8 @@ public class MembershipServiceImpl implements MembershipService {
 
     // 카테고리 조회 (소분류)
     @Override
-    public List<MemItemVO> selectItemCategory(String membershipCode) {
-        return sqlSession.selectList("adminMapper.selectItemCategory", membershipCode);
+    public List<MemItemVO> selectItemCategory(String memCateCode) {
+        return sqlSession.selectList("adminMapper.selectMembershipItemList", memCateCode);
     }
 
     // 중분류 및 소분류 조회
@@ -39,12 +39,13 @@ public class MembershipServiceImpl implements MembershipService {
     }
 
 
-    // 맴버쉽 등록하기
+    // 맴버십 대분류 카테고리 등록하기
     @Override
     public int insertCategory(MemCateVO memCateVO) {
         return sqlSession.insert("adminMapper.insertCategory", memCateVO);
     }
 
+    // 맴버십 중분류 카테고리 등록하기
     @Override
     public int insertMidCategory(MemCateVO memCateVO) {
         return sqlSession.insert("adminMapper.insertMidCategory", memCateVO);
@@ -55,6 +56,7 @@ public class MembershipServiceImpl implements MembershipService {
         return sqlSession.insert("adminMapper.insertItem", memItemVO);
     }
 
+    // 각 카테고리의 code 자동 생성
     @Override
     public String selectNextCateCode() {
         return sqlSession.selectOne("adminMapper.selectNextCateCode");
@@ -68,6 +70,23 @@ public class MembershipServiceImpl implements MembershipService {
     @Override
     public String selectNextItemCode() {
         return sqlSession.selectOne("adminMapper.selectNextItemCode");
+    }
+
+    //맴버쉽 등록 화면에서 상단의 카테고리 클릭 시 해당 카테고리에 포함된 상품을 조회하는 쿼리
+    @Override
+    public List<MemItemVO> selectItemListByCate(String memCateCode) {
+        return sqlSession.selectList("adminMapper.selectItemListByCate", memCateCode);
+    }
+
+    //맴버쉽 등록 화면에서 대분류 또는 중분류 클릭 시 해당 카테고리에 포함된 상품을 조회
+    @Override
+    public List<MemItemVO> selectItemListByMidCate(MemItemVO memItemVO) {
+        return sqlSession.selectList("adminMapper.selectItemListByMidCate", memItemVO);
+    }
+
+    @Override
+    public List<MemItemVO> selectItemDetail(String itemCode) {
+        return sqlSession.selectList("adminMapper.selectItemDetail", itemCode);
     }
 
 
