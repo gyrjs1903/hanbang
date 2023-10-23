@@ -20,6 +20,12 @@ public interface MemberService {
     public int memberDelete(MemberVO memberVO);
 
     // 회원 번호 조회
-    public String selectUserNo();
+    public String selectUserNo(String userNo);
+
+    // 회원 정보 조회
+    public String selectUserInfo(MemberVO memberVO);
+
+    // 프로필 이미지 불러오기
+    public MemberVO profileImgLoad(String userNo);
 
 }
