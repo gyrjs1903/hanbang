@@ -228,24 +228,7 @@
         )
     </insert>
 
-    <!--    맴버쉽 아이템 등록하기 (3) : 소분류 등록-->
-    <insert id="insertItem">
-        INSERT INTO ITEM_TABLE(
-            ITEM_CODE
-            , ITEM_NAME
-            , ITEM_CONTENT
-            , ITEM_INTRO
-            , ITEM_PRICE
-            , MEMBERSHIP_CODE
-        ) VALUES (
-            #{itemCode}
-            , #{itemName}
-            , #{itemContent}
-            , #{itemIntro}
-            , #{itemPrice}
-            , #{membershipCode}
-        )
-    </insert>
+
 
 <!--    코드 생성하기 -->
     <select id="selectNextCateCode" resultType="String">
@@ -288,6 +271,38 @@
         FROM MEMITEM_TABLE
         WHERE ITEM_CODE = #{itemCode}
     </select>
+
+<!--   아이템 정보 수정하기 -->
+    <update id="updateItemInfo">
+        UPDATE MEMITEM_TABLE
+        SET ITEM_NAME = #{itemName}
+            , ITEM_PRICE = #{itemPrice}
+            , ITEM_INTRO = #{itemIntro}
+            , ITEM_CONTENT = #{itemContent}
+        WHERE ITEM_CODE = #{itemCode}
+    </update>
+
+    <!--    맴버쉽 아이템 등록하기 (3) : 소분류 등록-->
+    <insert id="insertItem">
+        INSERT INTO MEMITEM_TABLE(
+            ITEM_CODE
+            , ITEM_NAME
+            , ITEM_CONTENT
+            , ITEM_INTRO
+            , ITEM_PRICE
+            , MEM_CATE_CODE
+            , MEMBERSHIP_CODE
+        ) VALUES (
+            #{itemCode}
+            , #{itemName}
+            , #{itemContent}
+            , #{itemIntro}
+            , #{itemPrice}
+            , #{memCateCode}
+            , #{membershipCode}
+        )
+    </insert>
+
 
 </mapper>
 

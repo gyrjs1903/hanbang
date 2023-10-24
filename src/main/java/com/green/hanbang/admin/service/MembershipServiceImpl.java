@@ -51,11 +51,6 @@ public class MembershipServiceImpl implements MembershipService {
         return sqlSession.insert("adminMapper.insertMidCategory", memCateVO);
     }
 
-    @Override
-    public int insertItem(MemItemVO memItemVO) {
-        return sqlSession.insert("adminMapper.insertItem", memItemVO);
-    }
-
     // 각 카테고리의 code 자동 생성
     @Override
     public String selectNextCateCode() {
@@ -84,9 +79,22 @@ public class MembershipServiceImpl implements MembershipService {
         return sqlSession.selectList("adminMapper.selectItemListByMidCate", memItemVO);
     }
 
+    // 아이템 세부정보 확인하기
     @Override
     public List<MemItemVO> selectItemDetail(String itemCode) {
         return sqlSession.selectList("adminMapper.selectItemDetail", itemCode);
+    }
+
+    // 아이템 세부정보 수정하기
+    @Override
+    public int updateItemInfo(MemItemVO memItemVO) {
+        return sqlSession.update("adminMapper.updateItemInfo", memItemVO);
+    }
+
+    // 아이템 등록하기
+    @Override
+    public int insertItem(MemItemVO memItemVO) {
+        return sqlSession.insert("adminMapper.insertItem", memItemVO);
     }
 
 
