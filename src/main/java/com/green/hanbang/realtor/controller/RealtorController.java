@@ -120,7 +120,9 @@ public class RealtorController {
 
     //문의글 답변 작성
     @PostMapping("/inquiryAnswer")
-    public void inquiryAnswer(InquiryVO inquiryVO){
+    public String inquiryAnswer(InquiryVO inquiryVO){
+        System.out.println(inquiryVO);
         realtorService.updateInquiryAnswer(inquiryVO);
+        return "redirect:/realtor/inquiryBoardList";
     }
 }

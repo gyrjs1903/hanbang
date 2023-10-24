@@ -12,30 +12,31 @@ layout:decorate="~{realtor/realtor_layout}">
             <div class="row">
                 <div class="col">
                     <th:block th:if="${inquiryDetail.inquiryTitleCode == 'INQUIRY_TITLE_001'}">
-                        <div></div>
+                        <span></span>
                     </th:block>
                     <th:block th:unless="${inquiryDetail.inquiryTitleCode == 'INQUIRY_TITLE_001'}">
-                        <div>[[${inquiryDetail.inquiryTitleVO.inquiryTitles}]]</div>
+                        <span>[[${inquiryDetail.inquiryTitleVO.inquiryTitles}]]</span>
                     </th:block>
                 </div>
                 <div class="col">[[${inquiryDetail.fromUserNo}]]</div>
                 <div class="col">[[${inquiryDetail.inquiryDate}]]</div>
             </div>
             <div class="row">
-                <div class="col">[[${inquiryDetail.inquiryContent}]]</div>
+                <div class="col-3">문의내용 : </div>
+                <div class="col-9">[[${inquiryDetail.inquiryContent}]]</div>
             </div>
-            <th:block th:unless="${inquiryDetail.inquiryAnswer == null}">
+            <th:block th:if="${inquiryDetail.inquiryAnswer == null}">
                 <div class="row">
                     <div class="col">
-                        <form action="/realtor/inquiryAnswer" method="post">
-                            <input type="hidden" th:value="${inquiryDetail.inquiryCode}">
+                        <form action="/realtor/inquiryAnswer" method="post" id="inquiryAnswerForm">
+                            <input type="hidden" th:value="${inquiryDetail.inquiryCode}" name="inquiryCode">
                             <textarea name="inquiryAnswer" id="" cols="30" rows="10"></textarea>
-                            <input type="submit" value="답변하기">
                         </form>
+                            <input type="button" value="답변하기" onclick="sendInquiry();">
                     </div>
                 </div>
             </th:block>
-            <th:block th:if="${inquiryDetail.inquiryAnswer == null}">
+            <th:block th:unless="${inquiryDetail.inquiryAnswer == null}">
                 <div class="row">
                     <div class="col">
                         답변이 완료된 게시글입니다. <br>
@@ -43,6 +44,7 @@ layout:decorate="~{realtor/realtor_layout}">
                 </div>
             </th:block>
         </div>
+        <script src="/js/realtor/board.js"></script>
     </th:block>
 </body>
 </html>

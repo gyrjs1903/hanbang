@@ -4,12 +4,15 @@ import com.green.hanbang.member.service.MemberService;
 import com.green.hanbang.member.service.MemberService2;
 import com.green.hanbang.member.vo.MemberImgVO;
 import com.green.hanbang.member.vo.MemberVO;
+import com.green.hanbang.room.vo.InquiryVO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @Controller
@@ -47,11 +50,9 @@ public class MemberController2 {
         if (loginInfo != null) {
             session.setAttribute("loginInfo", loginInfo);
             if (loginInfo.getLoginType().equals("USER")) {
-                return "redirect:/";
+                return "redirect:/2";
             } else if(loginInfo.getLoginType().equals("REALTOR")) {
-                System.out.println(loginInfo);
-                model.addAttribute("authorityAlarm",memberService2.selectAuthorityAlarm(loginInfo.getUserNo()));
-                return "redirect:/";
+                return "redirect:/2";
             } else if(loginInfo.getLoginType().equals("ADMIN")) {
                 return "redirect:/admin2/admin_manage";
             }
