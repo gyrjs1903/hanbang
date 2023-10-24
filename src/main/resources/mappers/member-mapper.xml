@@ -11,14 +11,13 @@
         <result column="NICK_NAME"                      property="nickName"/>
         <result column="JOIN_DATE"                      property="joinDate"/>
         <association property="realtorDetailVO"         resultMap="realtorMapper.realtorDetail"/>
-
     </resultMap>
 
     <resultMap id="memberImg" type="com.green.hanbang.member.vo.MemberImgVO">
         <id column="PROFILE_IMG_NO"                 property="profileImgNo" />
-        <result column="USER_NO"                    property="userNo" />
         <result column="PROFILE_IMG_NAME"           property="profileImgName" />
         <result column="ATTACHED_PROFILE_IMG_NAME"  property="attachedProfileImgName" />
+        <result column="USER_NO"                    property="userNo" />
     </resultMap>
 
     <!-- 회원 가입 -->
@@ -119,17 +118,16 @@
 
     <!-- 회원 번호 조회 -->
     <select id="selectUserNo" resultType="String">
-        SELECT
-        'USER_' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(USER_NO, 6))), 0) + 0, 3, '0') AS NEW_USER_NO
+        SELECT 'USER_' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(USER_NO, 6))), 0) + 0, 3, '0') AS NEW_USER_NO
         FROM MEMBER_USER
     </select>
 
     <!-- 프로필 이미지 불러오기 -->
     <select id="profileImgLoad" resultMap="memberImg">
         SELECT MI.USER_NO
-        , PROFILE_IMG_NO
-        , PROFILE_IMG_NAME
-        , ATTACHED_PROFILE_IMG_NAME
+            , PROFILE_IMG_NO
+            , PROFILE_IMG_NAME
+            , ATTACHED_PROFILE_IMG_NAME
         FROM MEMBER_USER MU
         LEFT JOIN MEMBER_IMG MI
         ON MU.USER_NO = MI.USER_NO

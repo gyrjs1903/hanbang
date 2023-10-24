@@ -47,7 +47,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberVO profileImgLoad(String userNo) {
+    public MemberImgVO profileImgLoad(String userNo) {
         return sqlSession.selectOne("memberMapper.profileImgLoad", userNo);
     }
 

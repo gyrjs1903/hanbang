@@ -17,5 +17,4 @@ public class MemberVO {
     private String profileImage;
     private String joinDate;
     private RealtorDetailVO realtorDetailVO;
-    private MemberImgVO memberImgVO;
 }

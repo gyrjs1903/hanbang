@@ -13,28 +13,27 @@
             <div>
                 <h1 class="userHT">MY 한방</h1>
                 <div class="userHM">
-                    <a class="userHMC" href="/user_call">전화문의</a>
-                    <a class="userHMC" href="/user_inquiry">1:1 문의내역</a>
-                    <a class="userHMC" href="/user_report">허위매물 신고내역</a>
-                    <a class="userHMC active" href="/user_info" aria-current="page">내 정보</a>
+                    <a class="userHMC" onclick="location.href='/member/memberCall'">전화문의</a>
+                    <a class="userHMC" onclick="location.href='/member/memberInquiry'">1:1 문의내역</a>
+                    <a class="userHMC" onclick="location.href='/member/memberReport'">허위매물 신고내역</a>
+                    <a class="userHMC active" onclick="location.href='/member/memberInfo'" aria-current="page">내 정보</a>
                 </div>
             </div>
         </header>
         <div class="user_my_page">
             <div class="profile">
-                <form action="/member/updateProfileImg" method="post">
-                    <div size="96" class="profile_img">
-                        <label for="file" class="form-label"></label>
-                        <div class="profile_change">
-                            <input type="file submit" class="form-control profile_img" name="profileImg" value="">
-                            <img src="" alt="프로필 기본 이미지">
-                        </div>
+                    <div class="profile_change upload">
+                        <form action="/member/updateProfile" method="post" enctype="multipart/form-data">
+                            <input type="file" class="form-control real_upload" id="profileImg" name="profileImg" onchange="chooseImg(this)">
+                            <div id="imagePreview"></div>
+                            <div class="cameraico"><img src="/img/member/camera_icon.png" alt="프로필 사진 변경"></div>
+                            <button type="submit">사진 등록</button>
+                        </form>
                     </div>
-                </form>
             </div>
             <ul class="info_list">
                 <li class="social_li">
-                    <div class="social">
+                    <div class="social"> 
                         <p>소셜계정 목록 추가 필요 / 카카오톡, 페이스북</p>
                         <h1>연결된 소셜계정</h1>
                     </div>
@@ -115,6 +114,7 @@
 
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         <script async src="/js/member/user_info.js"></script>
+        </body>
     </th:block>
 </body>
 </html>

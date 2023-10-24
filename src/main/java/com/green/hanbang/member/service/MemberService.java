@@ -26,6 +26,6 @@ public interface MemberService {
     public String selectUserInfo(MemberVO memberVO);
 
     // 프로필 이미지 불러오기
-    public MemberVO profileImgLoad(String userNo);
+    public MemberImgVO profileImgLoad(String userNo);
 
 }
