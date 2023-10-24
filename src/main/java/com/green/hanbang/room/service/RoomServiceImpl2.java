@@ -2,10 +2,7 @@ package com.green.hanbang.room.service;
 
 import com.green.hanbang.member.vo.MemberVO;
 import com.green.hanbang.realtor.vo.RealtorDetailVO;
-import com.green.hanbang.room.vo.FalseOfferingsVO;
-import com.green.hanbang.room.vo.OptionsVO;
-import com.green.hanbang.room.vo.ReasonVO;
-import com.green.hanbang.room.vo.RoomVO;
+import com.green.hanbang.room.vo.*;
 import lombok.RequiredArgsConstructor;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
@@ -56,4 +53,15 @@ public class RoomServiceImpl2 implements RoomService2{
     public int insertFalseOfferings(FalseOfferingsVO falseOfferingsVO) {
         return sqlSession.insert("room2Mapper.insertFalseOfferings",falseOfferingsVO);
     }
+
+    @Override
+    public List<InquiryTitleVO> selectInquiryTitle() {
+        return sqlSession.selectList("room2Mapper.selectInquiryTitle");
+    }
+
+    @Override
+    public boolean insertInquiry(InquiryVO inquiryVO) {
+        return sqlSession.insert("room2Mapper.insertInquiry",inquiryVO) == 1;
+    }
+
 }

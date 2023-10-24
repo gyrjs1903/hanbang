@@ -53,11 +53,12 @@
         <result column="DETAIL_OPTIONS" property="detailOptions"/>
         <result column="TITLE" property="title"/>
         <result column="CONTENT" property="content"/>
+        <result column="IMMEDIATE_OCCUPANCY" property="immediateOccupancy"/>
+        <result column="AVAILABLE_MOVE_IN_DATE" property="availableMoveInDate"/>
         <result column="CREATE_DATE" property="createDate"/>
         <result column="USER_NO" property="userNo"/>
         <association property="roomAddrVO" resultMap="roomAddr"/>
         <collection property="imgList" resultMap="roomImg"/>
-
     </resultMap>
 
     <!--room이미지 resultMap-->
@@ -95,6 +96,26 @@
         <result column="REASON" property="reason"/>
     </resultMap>
 
+    <!-- 매물 문의 -->
+    <resultMap id="inquiry" type="com.green.hanbang.room.vo.InquiryVO">
+        <id column="INQUIRY_CODE" property="inquiryCode"/>
+        <result column="FROM_USER_NO" property="fromUserNo"/>
+        <result column="TO_USER_NO" property="toUserNo"/>
+        <result column="ROOM_CODE" property="roomCode"/>
+        <result column="INQUIRY_TITLE_CODE" property="inquiryTitleCode"/>
+        <result column="INQUIRY_CONTENT" property="inquiryContent"/>
+        <result column="INQUIRY_ANSWER" property="inquiryAnswer"/>
+        <result column="INQUIRY_READ_CNT" property="inquiryReadCnt"/>
+        <result column="INQUIRY_DATE" property="inquiryDate"/>
+        <association property="inquiryTitleVO" resultMap="inquiryTitle"/>
+    </resultMap>
+
+    <!-- 매물 문의 타이틀 -->
+    <resultMap id="inquiryTitle" type="com.green.hanbang.room.vo.InquiryTitleVO">
+        <id column="INQUIRY_TITLE_CODE" property="inquiryTitleCode"/>
+        <result column="INQUIRY_TITLES" property="inquiryTitles"/>
+    </resultMap>
+
     <!--option select-->
     <select id="selectOptions" resultMap="options">
         SELECT OP.OPTION_CODE
@@ -110,6 +131,7 @@
         , PROPERTY_TYPE_NAME
         , SUB_PROPERTY_TYPE_CODE
         , SUB_PROPERTY_TYPE_NAME
+        , SPT.PROPERTY_TYPE_CODE
         FROM PROPERTY_TYPE PT, SUB_PROPERTY_TYPE SPT
         WHERE PT.PROPERTY_TYPE_CODE = SPT.PROPERTY_TYPE_CODE
     </select>
@@ -143,6 +165,8 @@
         , DETAIL_OPTIONS
         , TITLE
         , CONTENT
+        , IMMEDIATE_OCCUPANCY
+        , AVAILABLE_MOVE_IN_DATE
         , USER_NO
         )VALUES(
         (SELECT 'ROOM_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ROOM_CODE,7))),0)+1, 4, '0') FROM ROOM)
@@ -159,6 +183,8 @@
         , #{detailOptions}
         , #{title}
         , #{content}
+        , #{immediateOccupancy}
+        , #{availableMoveInDate}
         , #{userNo}
         )
     </insert>
@@ -220,6 +246,8 @@
         R.TITLE,
         R.CONTENT,
         R.CREATE_DATE,
+        R.IMMEDIATE_OCCUPANCY,
+        R.AVAILABLE_MOVE_IN_DATE,
         R.USER_NO,
         RA.ADDR_CODE,
         RA.ADDR,
@@ -234,7 +262,7 @@
         LEFT JOIN ROOM_ADDR RA ON R.ROOM_CODE = RA.ROOM_CODE
         LEFT JOIN ROOM_IMG RI ON R.ROOM_CODE = RI.ROOM_CODE
         WHERE 1 = 1
-        <if test='searchPropertyTypeCode != null '>
+        <if test='searchPropertyTypeCode != null and !searchPropertyTypeCode.equals("")'>
         AND R.PROPERTY_TYPE_CODE = #{searchPropertyTypeCode}
         </if>
         <if test='searchRoomSizePMin != 0 and !searchRoomSizePMin.equals("")'>
@@ -252,7 +280,7 @@
         <if test='searchFloor != 0 and !searchFloor.equals("")'>
         AND R.FLOOR = #{searchFloor}
         </if>
-        <if test='searchTradeTypeCode != null and !searchTradeTypeCode.equals("")'>
+        <if test='searchTradeTypeCode != null and !searchTradeTypeCode.equals("")' >
         AND R.TRADE_TYPE_CODE = #{searchTradeTypeCode}
         </if>
         <if test='searchMonthlyLeaseMax != 0 and !searchMonthlyLeaseMax.equals("")'>
@@ -268,19 +296,16 @@
         AND R.MAINTENANCE_COST &gt;= #{searchMaintenanceCost}
         </if>
         <if test='searchDetailOptions != null and !searchDetailOptions.equals("")'>
-        AND R.DETAIL_OPTIONS IN
-            <foreach collection="searchDetailOptions" item="DetailOptions" separator="," open="(" close=")">
-                #{searchDetailOptions}
+
+            <foreach collection="searchDetailOptions" item="detailOption" separator=" AND " open="AND (" close=")">
+                R.DETAIL_OPTIONS LIKE '%' || #{detailOption} || '%'
             </foreach>
-        </if>
-        <if test="searchAddr != null">
-        AND UPPER(RA.ADDR) LIKE '%' #{searchAddr}'%'
-        </if>
 
-
+        </if>
+        <if test='searchAddr != null and !searchAddr.equals("")'>
+            AND UPPER(RA.ADDR) LIKE '%' || #{searchAddr} || '%'
+        </if>
     </select>
-
-
 
     <select id="selectRoomAddr" resultMap="roomAddr">
         SELECT
@@ -292,34 +317,3 @@
     </select>
 
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -10,7 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -60,7 +62,7 @@ public class AdminController {
 
     // 공인중개사 상세 조회
     @GetMapping("/realDetail")
-    public String realDetail(int identificationNum, Model model){
+    public String realDetail(String identificationNum, Model model){
         MemberManageVO realDetail = memberManageService.realDetail(identificationNum);
         model.addAttribute("realDetail", realDetail);
         return "admin/real_detail";
@@ -130,7 +132,7 @@ public class AdminController {
         return "redirect:/admin/infoBoard";
     }
 
-    // 맴버쉽 카테고리 별 상품 조회 (중분류 및 소분류 조회)
+    // 맴버쉽 카테고리 별 상품 조회 (중분류 및 소분류 조회) --> membershipList에서 조회
     @GetMapping("/membershipList")
     public String membershipList(Model model, String memCateCode){
         List<MembershipVO> membershipList = membershipService.selectMembershipItemList(memCateCode);
@@ -139,14 +141,7 @@ public class AdminController {
         return "admin/membershipList";
     }
 
-    // 소분류의 세부 정보 조회
-    @GetMapping("/membershipDetail")
-    public String membershipDetail(Model model, MemCateVO memCateVO){
-        MemCateVO memDetailItem = membershipService.membershipItemDetail(memCateVO);
-        model.addAttribute("memDetailItem",memDetailItem);
-        System.out.println(memDetailItem);
-        return "admin/membership_detail";
-    }
+    /////////////////////////////  맴버쉽 등록  ///////////////////////////////////////////////////////////////
 
     // 맴버쉽 등록 페이지 이동
     @GetMapping("/regMembershipForm")
@@ -162,28 +157,73 @@ public class AdminController {
     // 맴버쉽 등록 페이지 -> 대분류 클릭 시 중분류 목록 조회
     @ResponseBody
     @PostMapping("/getMidCateList")
-    public List<MembershipVO> getMidCateList(String memCateCode){
-        return membershipService.selectMidCategory(memCateCode);
+    public Map<String, Object> getMidCateList(String memCateCode){
+        //중분류조회
+        List<MembershipVO> membershipList =  membershipService.selectMidCategory(memCateCode);
+
+        //각 카테고리에 포함된 전상품 조회
+        List<MemItemVO> itemList = membershipService.selectItemListByCate(memCateCode);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("membershipList", membershipList);
+        map.put("itemList", itemList);
+
+        return map;
     }
 
-    // 맴버쉽 등록 페이지 -> 중분류 클릭 시 소분류(아이템) 목록 조회
+    // 맴버쉽 등록 페이지 -> 중분류 클릭 시 아이템 목록 조회
     @ResponseBody
     @PostMapping("/getItemCateList")
-    public List<MemItemVO> getItemCateList(String membershipCode){
+    public List<MemItemVO> selectItemListByMidCate(MemItemVO memItemVO){
 
-        return membershipService.selectItemCategory(membershipCode);
+        return membershipService.selectItemListByMidCate(memItemVO);
+    }
+
+    // 맴버쉽 등록/////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @PostMapping("/regMembership")
+    public String regMembership(MemCateVO memCateVO, MembershipVO membershipVO, MemItemVO memItemVO){
+       // membershipService.insertCategory(memCateVO);
+       // membershipService.insertMidCategory(membershipVO);
+       // membershipService.insertItem(memItemVO);
+        return "redirect:/admin/manege";
     }
 
 
+    //카테고리 비동기 등록
+    @ResponseBody
+    @PostMapping("/insertCateFecth")
+    public Map<String, Object> insertCateFecth(MemCateVO memCateVO, String type){
+        Map<String, Object> map = new HashMap<>();
+
+        if(type.equals("cate")){
+            String nextCode =  membershipService.selectNextCateCode();
+            memCateVO.setMemCateCode(nextCode);
+
+            membershipService.insertCategory(memCateVO);
+
+            //다시 카테고리 목록 조회
+            map.put("data", membershipService.selectCategory());
+            map.put("type", "cate");
+        }
+        else if(type.equals("midCate")){
+            String nextCode = membershipService.selectNextMembershipCode();
+            memCateVO.setMembershipCode(nextCode);
 
 
+            membershipService.insertMidCategory(memCateVO);
 
-    // 맴버쉽 등록
-    @PostMapping("/regMembership")
-    public String regMembership(MemCateVO memCateVO, MembershipVO membershipVO, MemItemVO memItemVO){
-        membershipService.insertCategory(memCateVO);
-        membershipService.insertMidCategory(membershipVO);
-        membershipService.insertItem(memItemVO);
-        return "redirect:/admin/manege";
+            //다시 카테고리 목록 조회
+            map.put("data", membershipService.selectMidCategory(memCateVO.getMemCateCode()));
+            map.put("type", "midCate");
+            map.put("memCateCode", memCateVO.getMemCateCode());
+        }
+
+        return map;
+    }
+
+    @ResponseBody
+    @PostMapping("/showItemDetail")
+    public List<MemItemVO> selectItemDetail(String itemCode){
+        return membershipService.selectItemDetail(itemCode);
     }
 }

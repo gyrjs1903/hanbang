@@ -106,6 +106,42 @@
             , PHONE = #{phone}
         WHERE USER_NO = #{userNo}
     </update>
+
+    <!-- 공인중개사 문의글 조회 -->
+    <select id="selectInquiryBoard" resultMap="roomMapper.inquiry">
+        SELECT INQUIRY_CODE
+        , FROM_USER_NO
+        , ROOM_CODE
+        , I.INQUIRY_TITLE_CODE
+        , INQUIRY_CONTENT
+        , INQUIRY_TITLES
+        , TO_CHAR(INQUIRY_DATE, 'YYYY-MM-DD') INQUIRY_DATE
+        FROM INQUIRY I, INQUIRY_TITLE T
+        WHERE TO_USER_NO = #{toUserNo}
+        AND I.INQUIRY_TITLE_CODE = T.INQUIRY_TITLE_CODE
+    </select>
+
+    <!-- 문의글 상세 조회 -->
+    <select id="selectInquiryDetail" resultMap="roomMapper.inquiry">
+        SELECT INQUIRY_CODE
+        , FROM_USER_NO
+        , ROOM_CODE
+        , I.INQUIRY_TITLE_CODE
+        , INQUIRY_CONTENT
+        , INQUIRY_ANSWER
+        , INQUIRY_TITLES
+        , TO_CHAR(INQUIRY_DATE, 'YYYY-MM-DD') INQUIRY_DATE
+        FROM INQUIRY I, INQUIRY_TITLE T
+        WHERE INQUIRY_CODE = #{inquiryCode}
+        AND I.INQUIRY_TITLE_CODE = T.INQUIRY_TITLE_CODE
+    </select>
+
+    <!-- 문의글 답변 작성 -->
+    <update id="updateInquiryAnswer">
+        UPDATE INQUIRY
+        SET INQUIRY_ANSWER = #{inquiryAnswer}
+        WHERE INQUIRY_CODE = #{inquiryCode}
+    </update>
 </mapper>
 
 

@@ -2,6 +2,7 @@ package com.green.hanbang.realtor.service;
 
 import com.green.hanbang.member.vo.MemberVO;
 import com.green.hanbang.realtor.vo.RealtorDetailVO;
+import com.green.hanbang.room.vo.InquiryVO;
 import lombok.RequiredArgsConstructor;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
@@ -54,5 +55,20 @@ public class RealtorServiceImpl implements RealtorService{
     @Override
     public void updateRealtorInfo(MemberVO memberVO) {
         sqlSession.update("realtorMapper.updateRealtorInfo",memberVO);
+    }
+
+    @Override
+    public List<InquiryVO> selectInquiryBoard(String userNo) {
+        return sqlSession.selectList("realtorMapper.selectInquiryBoard",userNo);
+    }
+
+    @Override
+    public InquiryVO selectInquiryDetail(String inquiryCode) {
+        return sqlSession.selectOne("realtorMapper.selectInquiryDetail",inquiryCode);
+    }
+
+    @Override
+    public boolean updateInquiryAnswer(InquiryVO inquiryVO) {
+        return sqlSession.update("realtorMapper.updateInquiryAnswer",inquiryVO) == 1;
     }
 }

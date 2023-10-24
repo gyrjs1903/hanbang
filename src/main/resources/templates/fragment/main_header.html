@@ -15,7 +15,10 @@
                 <li><a onclick="location.href='/room/roomMain'">지도</a></li>
                 <li><a href="/">분양정보</a></li>
                 <li><a onclick="location.href='/member/dibsOn'">찜목록</a></li>
-                <li><a href="/">알림</a></li>
+                <li class="alarm_position">
+                    <a th:onclick="alarm([[${session.loginInfo}]],[[${authorityAlarm}]]);">알림</a>
+                    <div id="alarm_tag"></div>
+                </li>
                 <!-- 미로그인 시 나올 메뉴  -->
                 <div th:if="${session.loginInfo == null}" class="member_login_join">
                     <button type="button" class="member_login_join_btn" onclick="location.href='/member/loginForm'">로그인<span>|</span>회원가입</button>

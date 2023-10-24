@@ -15,16 +15,31 @@ public interface MembershipService {
     public List<MembershipVO> selectMidCategory(String memCateCode);
 
     // 카테고리 조회 (아이템)
-    public List<MemItemVO> selectItemCategory(String membershipCode);
+    public List<MemItemVO> selectItemCategory(String memCateCode);
 
-    // 맴버쉽 상품 별 세부 상품 조회 (중분류 및 소분류)
+    // 맴버쉽 상품 별 세부 상품 조회 (중분류 및 소분류) --> membershipList에서 상품 모두 보기
     public List<MembershipVO> selectMembershipItemList(String memCateCode);
-
-    // 상품 세부 정보 조회 (중분류 및 소분류의 세부 정보)
-    public MemCateVO membershipItemDetail(MemCateVO memCateVO);
 
     // 맴버쉽 상품 등록하기
     public int insertCategory(MemCateVO memCateVO);
-    public int insertMidCategory(MembershipVO membershipVO);
+    public int insertMidCategory(MemCateVO memCateVO);
     public int insertItem(MemItemVO memItemVO);
+
+    //다음에 insert할 CateCode 조회
+    public String selectNextCateCode();
+
+    //다음에 insert할 CateCode 조회
+    public String selectNextMembershipCode();
+
+    //다음에 insert할 CateCode 조회
+    public String selectNextItemCode();
+
+    //맴버쉽 등록 화면에서 상단의 카테고리 클릭 시 해당 카테고리에 포함된 상품을 조회하는 쿼리
+    public List<MemItemVO> selectItemListByCate(String memCateCode);
+
+    //맴버쉽 등록 화면에서 대분류 또는 중분류 클릭 시 해당 카테고리에 포함된 상품을 조회
+    public List<MemItemVO> selectItemListByMidCate(MemItemVO memItemVO);
+
+    // 특정 아이템 클릭 시 그 아이템의 상세 정보 조회
+    public List<MemItemVO> selectItemDetail(String itemCode);
 }

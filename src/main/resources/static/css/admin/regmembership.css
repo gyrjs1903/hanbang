@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-.cate, .midCate, .itemCate{
+.cate, .midCate{
     border: 1px solid black;
     padding-top: 1rem;
     height: 250px;
@@ -30,3 +30,6 @@ overflow-y: scroll;
     background: #84848447;  /*스크롤바 뒷 배경 색상*/
 }
 
+.li > p {
+    display: inline-block;
+}

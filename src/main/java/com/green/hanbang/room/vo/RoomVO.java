@@ -23,6 +23,8 @@ public class RoomVO {
     private String title;
     private String content;
     private String createDate;
+    private String immediateOccupancy;
+    private String availableMoveInDate;
     private String userNo;
     private List<RoomIMGVO> imgList;
 
