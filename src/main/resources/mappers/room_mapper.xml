@@ -103,6 +103,9 @@
         <result column="INQUIRY_TITLE_CODE" property="inquiryTitleCode"/>
         <result column="INQUIRY_CONTENT" property="inquiryContent"/>
         <result column="INQUIRY_ANSWER" property="inquiryAnswer"/>
+        <result column="INQUIRY_READ_CNT" property="inquiryReadCnt"/>
+        <result column="INQUIRY_DATE" property="inquiryDate"/>
+        <association property="inquiryTitleVO" resultMap="inquiryTitle"/>
     </resultMap>
 
     <!-- 매물 문의 타이틀 -->

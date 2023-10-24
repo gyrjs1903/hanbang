@@ -220,7 +220,7 @@
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <button th:onclick="loginResult([[${session.loginInfo}]]);" class="btn btn-primary">문의하기</button>
+                                    <button th:if="${session.loginInfo.userNo != personInfo.userNo}" th:onclick="loginResult([[${session.loginInfo}]]);" class="btn btn-primary">문의하기</button>
                                 </div>
                             </div>
                         </th:block>
@@ -250,12 +250,13 @@
                     </div>
                     <div class="modal-body">
                         <form action="/room2/insertInquiry" method="post">
-                            <!-- <input type="hidden" th:value="${session.loginInfo.userNo}" name="fromUserNo"> -->
-                            <select name="inquiryTitleCode" id="">
+                            <input type="hidden" th:value="${personInfo.userNo}" name="toUserNo" id="toUserNo">
+                            <input type="hidden" th:value="${roomDetail.roomCode}" name="roomCode" id="inquiryRoomCode"> 
+                            <select name="inquiryTitleCode" id="inquiryTitleCode">
                                 <option th:value="${title.inquiryTitleCode}" th:each="title : ${inquiryTitleList}">[[${title.inquiryTitles}]]</option>
                             </select>
-                            <textarea name="inquiryContent" id="" cols="30" rows="10"></textarea>
-                            <input type="submit" value="문의하기">
+                            <textarea name="inquiryContent" id="inquiryContent" cols="30" rows="10"></textarea>
+                            <input type="button" value="문의하기" th:onclick="inquiry([[${roomDetail.roomCode}]]);">
                         </form>
                     </div>
                     <div class="modal-footer">

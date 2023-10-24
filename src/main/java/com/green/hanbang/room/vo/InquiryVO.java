@@ -11,4 +11,7 @@ public class InquiryVO {
     private String inquiryTitleCode;
     private String inquiryContent;
     private String inquiryAnswer;
+    private int inquiryReadCnt;
+    private String inquiryDate;
+    private InquiryTitleVO inquiryTitleVO;
 }

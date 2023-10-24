@@ -2,6 +2,7 @@ package com.green.hanbang.realtor.service;
 
 import com.green.hanbang.member.vo.MemberVO;
 import com.green.hanbang.realtor.vo.RealtorDetailVO;
+import com.green.hanbang.room.vo.InquiryVO;
 
 import java.util.List;
 
@@ -30,4 +31,13 @@ public interface RealtorService {
 
     //공인중개사 정보 수정
     public void updateRealtorInfo(MemberVO memberVO);
+
+    //공인중개사 문의글 확인
+    public List<InquiryVO> selectInquiryBoard(String userNo);
+
+    //문의글 상세 조회
+    public InquiryVO selectInquiryDetail(String inquiryCode);
+
+    //문의글 답변 작성
+    public boolean updateInquiryAnswer(InquiryVO inquiryVO);
 }
