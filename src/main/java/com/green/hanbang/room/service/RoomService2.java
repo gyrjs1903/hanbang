@@ -34,4 +34,8 @@ public interface RoomService2 {
 
     //문의 제목 목록 조회
     public List<InquiryTitleVO> selectInquiryTitle();
+
+    //문의 하기
+    public boolean insertInquiry(InquiryVO inquiryVO);
+
 }

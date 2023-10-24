@@ -58,4 +58,10 @@ public class RoomServiceImpl2 implements RoomService2{
     public List<InquiryTitleVO> selectInquiryTitle() {
         return sqlSession.selectList("room2Mapper.selectInquiryTitle");
     }
+
+    @Override
+    public boolean insertInquiry(InquiryVO inquiryVO) {
+        return sqlSession.insert("room2Mapper.insertInquiry",inquiryVO) == 1;
+    }
+
 }
