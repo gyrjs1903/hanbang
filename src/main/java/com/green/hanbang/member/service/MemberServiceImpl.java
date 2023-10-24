@@ -37,8 +37,18 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public String selectUserNo() {
-        return sqlSession.selectOne("memberMapper.selectUserNo");
+    public String selectUserNo(String userNo) {
+        return sqlSession.selectOne("memberMapper.selectUserNo", userNo);
+    }
+
+    @Override
+    public String selectUserInfo(MemberVO memberVO) {
+        return sqlSession.selectOne("memberMapper.selectUserInfo", memberVO);
+    }
+
+    @Override
+    public MemberVO profileImgLoad(String userNo) {
+        return sqlSession.selectOne("memberMapper.profileImgLoad", userNo);
     }
 
 }

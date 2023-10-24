@@ -94,6 +94,23 @@
         <result column="REASON" property="reason"/>
     </resultMap>
 
+    <!-- 매물 문의 -->
+    <resultMap id="inquiry" type="com.green.hanbang.room.vo.InquiryVO">
+        <id column="INQUIRY_CODE" property="inquiryCode"/>
+        <result column="FROM_USER_NO" property="fromUserNo"/>
+        <result column="TO_USER_NO" property="toUserNo"/>
+        <result column="ROOM_CODE" property="roomCode"/>
+        <result column="INQUIRY_TITLE_CODE" property="inquiryTitleCode"/>
+        <result column="INQUIRY_CONTENT" property="inquiryContent"/>
+        <result column="INQUIRY_ANSWER" property="inquiryAnswer"/>
+    </resultMap>
+
+    <!-- 매물 문의 타이틀 -->
+    <resultMap id="inquiryTitle" type="com.green.hanbang.room.vo.InquiryTitleVO">
+        <id column="INQUIRY_TITLE_CODE" property="inquiryTitleCode"/>
+        <result column="INQUIRY_TITLES" property="inquiryTitles"/>
+    </resultMap>
+
     <!--option select-->
     <select id="selectOptions" resultMap="options">
         SELECT OP.OPTION_CODE

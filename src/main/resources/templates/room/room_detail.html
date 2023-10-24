@@ -130,10 +130,10 @@
                             <h3 class="title_a">상세설명</h3>
                             <div>[[${roomDetail.content}]]</div>
                         </div>
-                    </div>
-                    <div class="col">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#report-modal">허위매물 신고하기</button>
+                        <div class="col">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#report-modal">허위매물 신고하기</button>
+                        </div>
                     </div>
                 </div>
                 <div class="wing">
@@ -218,6 +218,11 @@
                                     다방에서 보고 연락한다고 말씀하시면,<br>
                                     더욱 빠른 예약이 가능합니다.</div>
                             </div>
+                            <div class="row">
+                                <div class="col">
+                                    <button th:onclick="loginResult([[${session.loginInfo}]]);" class="btn btn-primary">문의하기</button>
+                                </div>
+                            </div>
                         </th:block>
                         <th:block th:if="${personInfo.loginType == 'USER'}">
                             <div class="row">
@@ -228,6 +233,30 @@
                                 <div>개인과의 직거래 시 언제나 안전에 유의하세요.</div>
                             </div>
                         </th:block>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" id="inquiry-modal"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog  modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">문의하기</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/room2/insertInquiry" method="post">
+                            <!-- <input type="hidden" th:value="${session.loginInfo.userNo}" name="fromUserNo"> -->
+                            <select name="inquiryTitleCode" id="">
+                                <option th:value="${title.inquiryTitleCode}" th:each="title : ${inquiryTitleList}">[[${title.inquiryTitles}]]</option>
+                            </select>
+                            <textarea name="inquiryContent" id="" cols="30" rows="10"></textarea>
+                            <input type="submit" value="문의하기">
+                        </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

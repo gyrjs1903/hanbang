@@ -9,15 +9,26 @@
 <body>
     <th:block layout:fragment="content">
         <link rel="stylesheet" href="/css/member/user_info.css">
+        <header class="user_header">
+            <div>
+                <h1 class="userHT">MY 한방</h1>
+                <div class="userHM">
+                    <a class="userHMC" href="/user_call">전화문의</a>
+                    <a class="userHMC" href="/user_inquiry">1:1 문의내역</a>
+                    <a class="userHMC" href="/user_report">허위매물 신고내역</a>
+                    <a class="userHMC active" href="/user_info" aria-current="page">내 정보</a>
+                </div>
+            </div>
+        </header>
         <div class="user_my_page">
             <div class="profile">
                 <form action="/member/updateProfileImg" method="post">
-                    <div size="96" class="profile_img hidden">
-                        <label for="file" class="form-label">프로필 사진</label>
-                        <div class="profile_default">
-                            <img src="/img/member/profileimg/default_profile_image.png" alt="프로필 기본 이미지">
+                    <div size="96" class="profile_img">
+                        <label for="file" class="form-label"></label>
+                        <div class="profile_change">
+                            <input type="file submit" class="form-control profile_img" name="profileImg" value="">
+                            <img src="" alt="프로필 기본 이미지">
                         </div>
-                        <input type="file" class="form-control profile_img" name="profileImg" value="">
                     </div>
                 </form>
             </div>
@@ -33,16 +44,16 @@
                 </li>
                 <li class="nickname_li">
                     <div class="nickname">
-                        <h1>닉네임</h1>
+                        <h1>[[${session.loginInfo?.nickName}]]</h1>
                     </div>
                     <div class="cp">
                         <p></p>
-                        <img src="/img/member/right_icon.png" alt="닉네임 변경 창" id="updateNN_Btn">
+                        <img src="/img/member/right_icon.png" alt="닉네임 변경 창" id="updateNN_Btn" class="rightBtn">
                     </div>
                 </li>
                 <li class="id_li">
                     <div class="">
-                        <h1>아이디</h1>
+                        <h1>[[${session.loginInfo?.userName}]]</h1>
                     </div>
                     <div class="">
                         <p></p>
@@ -50,10 +61,12 @@
                 </li>
                 <li class="pw_li">
                     <div class="">
-                        <h1>비밀번호</h1>
+                        <h1>비밀번호
+                            [[${session.loginInfo}]]
+                        </h1>
                     </div>
                     <div class="cp">
-                        <img src="/img/member/right_icon.png" alt="비밀번호 변경 창" id="updatePW_Btn">
+                        <img src="/img/member/right_icon.png" alt="비밀번호 변경 창" id="updatePW_Btn" class="rightBtn">
                     </div>
                 </li>
                 <li class="name_li">
@@ -66,7 +79,7 @@
                 </li>
                 <li class="phone_li">
                     <div class="">
-                        <h1>휴대폰번호</h1>
+                        <h1>[[${session.loginInfo?.phone}]]</h1>
                     </div>
                     <div class="cp">
                         <div class="">

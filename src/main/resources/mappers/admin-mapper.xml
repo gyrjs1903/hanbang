@@ -187,14 +187,6 @@
         WHERE MEM_CATE_CODE = #{memCateCode}
     </select>
 
-<!-- 맴버쉽 카테고리 출력 (아이템)-->
-    <select id="selectItemCategory" resultMap="memItem">
-        SELECT ITEM_NAME
-            , ITEM_CODE
-        FROM MEMITEM_TABLE
-        WHERE MEMBERSHIP_CODE = #{membershipCode}
-    </select>
-
 <!-- 맴버쉽 상품의 세부 상품 조회 (중분류 && 아이템) -->
     <select id="selectMembershipItemList" resultMap="membership">
         SELECT ITEM.ITEM_NAME
@@ -267,6 +259,34 @@
     <select id="selectNextItemCode" resultType="String">
         SELECT 'ITEM_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ITEM_CODE, 6))), 0) + 1, 3, '0')
         FROM ITEM_TABLE
+    </select>
+
+    <!--맴버쉽 등록 화면에서 상단의 카테고리 클릭 시 해당 카테고리에 포함된 상품을 조회하는 쿼리-->
+    <select id="selectItemListByCate" resultMap="memItem">
+        SELECT ITEM_CODE
+            , ITEM_NAME
+        FROM MEMITEM_TABLE
+        WHERE MEM_CATE_CODE = #{memCateCode}
+    </select>
+
+    <!--맴버쉽 등록 화면에서 대분류 또는 중분류 클릭 시 해당 카테고리에 포함된 상품을 조회 -->
+    <select id="selectItemListByMidCate" resultMap="memItem">
+        SELECT ITEM_NAME
+            , ITEM_CODE
+        FROM MEMITEM_TABLE
+        WHERE MEM_CATE_CODE = #{memCateCode}
+        AND MEMBERSHIP_CODE = #{membershipCode}
+    </select>
+
+    <!-- 맴버쉽 등록 화면에서 아이템 선택 시 아이템의 세부 정보 조회   -->
+    <select id="selectItemDetail" resultMap="memItem">
+        SELECT ITEM_NAME
+            , ITEM_PRICE
+            , ITEM_INTRO
+            , ITEM_CONTENT
+            , ITEM_CODE
+        FROM MEMITEM_TABLE
+        WHERE ITEM_CODE = #{itemCode}
     </select>
 
 </mapper>

@@ -14,7 +14,7 @@ public interface MemberManageService {
     public MemberManageVO userDetail(String userNo);
 
     // 공인 중개사 상세 조회
-    public MemberManageVO realDetail(int identificationNum);
+    public MemberManageVO realDetail(String identificationNum);
 
     // 공인 중개사 승인
     public int updateAuthority(MemberManageVO memberManageVO);

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-
 @Controller
 @RequestMapping("/member")
 @RequiredArgsConstructor
@@ -26,9 +25,29 @@ public class MemberController {
     // 회원 가입
     @PostMapping("/join")
     public String join(MemberVO memberVO) {
-        memberService.join(memberVO);
+        try {
+            int result = memberService.join(memberVO);
+            if (result > 0) {
+                String userNo = memberService.selectUserNo(memberVO.getUserNo()); // 회원 번호 조회
+                if (userNo != null) {
+                    MemberImgVO memberImgVO = new MemberImgVO();
+                    memberImgVO.setUserNo(userNo);
+                    memberImgVO.setProfileImgName("img/member/profileImg/default_profile_image.png");
+                    memberImgVO.setAttachedProfileImgName("img/member/profileImg/default_profile_image.png");
 
-        return "content/member/login";
+                    int imgResult = memberService.insertProImg(memberImgVO);
+
+                    if (imgResult > 0) {
+                        return "content/member/login";
+                    }
+                } else {
+                    // 해당 회원 번호가 존재하지 않을 때 수행할 작업
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/member/join";
     }
 
     // 회원 탈퇴
@@ -50,17 +69,17 @@ public class MemberController {
 
         MemberVO loginInfo = memberService.login(memberVO);
 
+        // 로그인 타입에 따라 리다이렉트
         if (loginInfo != null) {
             session.setAttribute("loginInfo", loginInfo);
             if (loginInfo.getLoginType().equals("USER")) {
                 return "redirect:/";
-            } else if(loginInfo.getLoginType().equals("REALTOR")) {
+            } else if (loginInfo.getLoginType().equals("REALTOR")) {
                 return "redirect:/realtor/main";
-            } else if(loginInfo.getLoginType().equals("ADMIN")) {
+            } else if (loginInfo.getLoginType().equals("ADMIN")) {
                 return "redirect:/admin/admin_manage";
             }
         }
-
         // 아이디나 비밀번호가 틀린 경우
         String userName = request.getParameter("userName");
         return "redirect:/member/loginForm?userName=" + userName;
@@ -75,19 +94,28 @@ public class MemberController {
 
     // 내 정보 페이지로 이동
     @GetMapping("/memberInfo")
-    public String memberInfo(MemberVO memberVO, HttpSession session, Model model) {
+    public String memberInfo(Model model, HttpSession session) {
         // 현재 로그인한 유저 번호를 조회
-        MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
+        MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
+        if (loginInfo != null) {
+            String userNo = loginInfo.getUserNo();
+            String memberInfo = memberService.selectUserNo(userNo); // 회원 정보를 가져오는 메소드 호출
 
-        // 가져온 회원 정보를 모델에 담기
-        model.addAttribute("userName", loginInfo);
+            model.addAttribute("memberInfo", memberInfo); // 가져온 회원 정보를 모델에 추가
 
-        return "content/member/user_info";
+            return "content/member/user_info"; // 유저 정보 페이지로 이동
+        } else {
+            // 로그인되지 않은 경우에 대한 처리
+            return "redirect:/member/login"; // 로그인 페이지로 이동하거나, 적절한 처리를 수행
+        }
     }
     
     // 프로필 이미지 등록
     @PostMapping("/updateProfileImg")
-    public String insertProImg(MemberImgVO memberImgVO){
+    public String insertProImg(MemberImgVO memberImgVO, HttpSession session) {
+        MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
+        String userNo = loginInfo.getUserNo();
+        memberImgVO.setUserNo(userNo);
 
         memberService.insertProImg(memberImgVO);
 

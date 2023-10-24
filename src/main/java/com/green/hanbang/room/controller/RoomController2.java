@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.hanbang.member.vo.MemberVO;
 import com.green.hanbang.room.service.RoomService2;
 import com.green.hanbang.room.vo.FalseOfferingsVO;
+import com.green.hanbang.room.vo.InquiryVO;
 import com.green.hanbang.room.vo.OptionsVO;
 import com.green.hanbang.room.vo.RoomVO;
 import lombok.RequiredArgsConstructor;
@@ -60,6 +61,10 @@ public class RoomController2 {
 
         //허위 매물 신고 사유
         model.addAttribute("reasonList",roomService2.selectReasonList());
+
+        //매물 문의 제목 조회
+        model.addAttribute("inquiryTitleList",roomService2.selectInquiryTitle());
+
         return "room/room_detail";
     }
 
@@ -88,5 +93,11 @@ public class RoomController2 {
         System.out.println(falseOfferingsVO);
         roomService2.insertFalseOfferings(falseOfferingsVO);
         return "redirect:/room2/roomDetailInfo";
+    }
+
+    //매물문의
+    @PostMapping("/insertInquiry")
+    public String insertInquiry(InquiryVO inquiryVO){
+        return "";
     }
 }

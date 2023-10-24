@@ -10,15 +10,15 @@ function countCharacters() {
 }
 
 // 닉네임 변경 버튼 클릭시 modal창 실행
-$(function() {
-    $("#updateNN").on("click", function() {
-        $("#updateNN_Btn").modal("show");
-    });
-});
+// $(function() {
+//     $("#updateNN").on("click", function() {
+//         $("#updateNN_Btn").modal("show");
+//     });
+// });
 
 // 비밀번호 변경 버튼 클릭시 modal창 실행
-$(function() {
-    $("#updatePW").on("click", function() {
-        $("updatePW_Btn").modal("show");
-    });
-});
+// $(function() {
+//     $("#updatePW").on("click", function() {
+//         $("updatePW_Btn").modal("show");
+//     });
+// });

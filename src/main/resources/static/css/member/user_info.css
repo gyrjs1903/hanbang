@@ -1,38 +1,130 @@
 @charset "UTF-8";
 
-.hidden{
+.hidden {
     display: none;
 }
 
-.cp{
+.user_header {
+    width: 100%;
+    flex: 0 0 auto;
+}
+
+.user_header > div {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 278px;
+    position: relative;
+}
+
+.userHT {
+    margin: 80px 0px 64px;
+    font-size: 46px;
+    line-height: 70px;
+    letter-spacing: -1px;
+    font-weight: 700;
+}
+
+.userHM {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.userHMC {
+    flex: 0 0 auto;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    width: calc(20% + 0.8px);
+    height: 64px;
+    color: rgb(34, 34, 34);
+    font-size: 16px;
+    line-height: 26px;
+    font-weight: 400;
+    border: 1px solid rgb(237, 237, 237);
+    justify-content: center;
+}
+
+.userHM .active{
+    color: rgb(255, 255, 255);
+    font-weight: 700;
+    border-color: rgb(34, 34, 34);
+    background-color: rgb(34, 34, 34);
+    position: relative;
+    z-index: 1;
+}
+
+.user_my_page {
+    width: 476px;
+    margin: 0px auto;
+    padding: 68px;
+    border: 1px solid rgb(245, 245, 245);
+}
+
+.profile {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    justify-content: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    padding-bottom: 68px;
+}
+
+.profile_change {
+    position: relative;
+    display: flex;
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    cursor: pointer;
+    align-items: center;
+    user-select: none;
+}
+
+.profile_img {
+    background-image: url("/img/member/camera_icon.png");
+}
+
+.profile_change img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    font-family: "object-fit: cover;";
+    opacity: 1;
+}
+
+.cp {
     cursor: pointer;
 }
 
-.kakao-icon .facebook-icon .email-icon{
+.kakao-icon, .facebook-icon, .email-icon {
     display: none;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    border-radius: 70%;
 }
 
-.email-icon{
+.email-icon {
     background-image: url("/img/member/email_icon.svg");
-    background-repeat: no-repeat;
-    width: 24px;
-    height: 24px;
-    border-radius: 70%;
 }
 
-.kakao-icon{
+.kakao-icon {
     background-image: url("/img/member/KakaoTalk_icon.svg");
-    background-repeat: no-repeat;
-    width: 24px;
-    height: 24px;
-    border-radius: 70%;
 }
 
-.facebook-icon{
+.facebook-icon {
     background-image: url("/img/member/facebook-icon.svg");
-    background-repeat: no-repeat;
-    width: 24px;
-    height: 24px;
-    border-radius: 70%;
 }
 
+.rightBtn {
+    width: 24px;
+    height: 24px;
+}

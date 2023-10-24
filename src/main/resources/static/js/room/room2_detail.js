@@ -2,6 +2,8 @@ let elDASModal = null;
 let reportModal = null;
 let reportPerson = null;
 let roomCode = null;
+let inquiryModal = null;
+let telModal = null;
 // 옵션값 없을 시 '없음'표시
 window.addEventListener('load', () => {
     // 인증완료 후 띄울 모달 창
@@ -9,6 +11,8 @@ window.addEventListener('load', () => {
     elDASModal = new bootstrap.Modal('#elDAS-modal');
     reportPerson = document.querySelector('#report-person');
     roomCode = document.querySelector('#roomCodeNumber').value;
+    inquiryModal = new bootstrap.Modal('#inquiry-modal');
+    telModal = new bootstrap.Modal('#tel-modal');
     fetch('/room2/roomDetailFetch', { //요청경로
         method: 'POST',
         cache: 'no-cache',
@@ -82,6 +86,17 @@ function report(){
     if(confirm('신고하시겠습니까?')){
         document.getElementById('false-offerings').submit();
         reportModal.hide();
+    }
+}
+
+//문의 시 로그인 여부
+function loginResult(loginInfo){
+    console.log(loginInfo);
+    if(loginInfo != null){
+        telModal.hide();
+        inquiryModal.show();
+    } else {
+        location.href='/member/loginForm';
     }
 }
 

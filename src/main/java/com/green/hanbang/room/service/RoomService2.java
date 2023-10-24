@@ -2,10 +2,7 @@ package com.green.hanbang.room.service;
 
 import com.green.hanbang.member.vo.MemberVO;
 import com.green.hanbang.realtor.vo.RealtorDetailVO;
-import com.green.hanbang.room.vo.FalseOfferingsVO;
-import com.green.hanbang.room.vo.OptionsVO;
-import com.green.hanbang.room.vo.ReasonVO;
-import com.green.hanbang.room.vo.RoomVO;
+import com.green.hanbang.room.vo.*;
 
 import java.util.List;
 
@@ -34,4 +31,7 @@ public interface RoomService2 {
 
     //허위매물 신고
     public int insertFalseOfferings(FalseOfferingsVO falseOfferingsVO);
+
+    //문의 제목 목록 조회
+    public List<InquiryTitleVO> selectInquiryTitle();
 }

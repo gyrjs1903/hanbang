@@ -1,4 +1,4 @@
-let alarmTag = document.getElementById('alarm_tag');
+let alarmTag = document.getElementById('admin_alarm_tag');
 
 function alarm(){
     if(alarmTag.style.display === "none" || alarmTag.style.display === ""){

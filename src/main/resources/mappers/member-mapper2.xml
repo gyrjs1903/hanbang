@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 복사해서 사용 -->
+<mapper namespace="member2Mapper">
+    <!-- 공인중개사 승인 알림 -->
+    <insert id="insertAlarm">
+        INSERT INTO ALARM(
+            ALARM_CODE
+            , USER_NO
+            , AUTHORITY_UPDATE
+        ) VALUES (
+            (SELECT 'ALARM_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ALARM_CODE, 7))), 0) + 1, 3, '0') ALARM_CODE
+            FROM ALARM)
+            , #{userNo}
+            , #{authorityUpdate}
+        )
+    </insert>
+
+    <select id="selectAuthorityAlarm" resultType="int">
+        SELECT AUTHORITY_UPDATE
+        FROM ALARM
+        WHERE USER_NO = #{userNo}
+    </select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
