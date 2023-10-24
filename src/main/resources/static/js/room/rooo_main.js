@@ -4,8 +4,10 @@
 
 //html실행과 동시에 실행되는 함수
 let map;
+let customOverlay;
 let positonData;
 let polygons = [];
+let areas = [];
 setMap();
 
 let container = document.getElementById('map');
@@ -30,149 +32,120 @@ function setMap() {
             // 데이터명 : 데이터값
         })
     })
-    .then((response) => {
-        return response.json(); //나머지 경우에 사용
-    })
-    //fetch 통신 후 실행 영역
-    .then((data) => {//data -> controller에서 리턴되는 데이터!
-        const gData = getPolygonData("/json/sido.json");
-      
-
-
-            
-
-        gData.then(res => {
-            //console.log(res.features[0].geometry.coordinates);
-            //console.log(res.features[0].geometry.coordinates[0]);
-            //console.log(res.features[0].geometry.coordinates[0][0][0]);
-            //console.log(res.features[0].geometry.coordinates[0][0][1]);
-
-            // res.features[0].geometry.coordinates[0].forEach((element, idx) => {
-            //     //console.log(`x = ${element[1]} / y = ${element[0]}`);
-            //     //console.log(`x = ${element[idx][1]} / y = ${element[idx][0]}`);
-            //     polygonPath.push(new kakao.maps.LatLng(element[1],element[0]));
-            // });
-
-            //맵을 생성합니다.
-            map = new kakao.maps.Map(container, options);
-            let areas = [];
-            //폴리곤을 만들 좌표 json
-            // res.features[0].geometry.coordinates[0].forEach((element, idx) => {
-            //     console.log(element[1], element[0]);
-            //     polygonPath.push(new kakao.maps.LatLng(element[1], element[0]));
-            // });
-            res.features.forEach((element, idx) => {
-                let coordinates = []; //좌표 저장할 배열
-                let name = ''; // 지역 이름
-                let cd_location = '';
-                coordinates = element.geometry.coordinates;// 1개 지역의 영역을 구성하는 다각형의 모든 좌표 배열
-                name = element.properties.SIG_KOR_NM; // 1개 지역의 이름
-                cd_location = element.properties.SIG_CD;
-
-
-                let ob = new Object;
-                ob.name = name;
-                ob.path = [];
-                ob.location = cd_location;
-
-                coordinates[0].forEach((coordinate, i) => {
-                    console.log(coordinate[1], coordinate[0]);
-                    ob.path.push(new kakao.maps.LatLng(coordinate[1], coordinate[0]));
-                })
-
-                areas[idx] = ob;
-            });
-
-            for (var i = 0, len = areas.length; i < len; i++) {
-                displayArea(areas[i]);
-            }
-
-            // let detailMode= false;
-            //////////////////////////////////
-           
-
-
-            kakao.maps.event.addListener(map, 'zoom_changed', function () {
-                //console.log(polygons);
-                console.log(map.getLevel());
-                level = map.getLevel();
-                if (level <= 10&&level >5) { // level 에 따라 다른 json 파일을 사용한다.
-                    //console.log(polygons);
-                    detailMode = true;
-                    removePolygon();
-                    const aa= getPolygonData("/json/sig.json")
-                    drawPolygon(aa)
-                } else if (level > 10) { // level 에 따라 다른 json 파일을 사용한다.
-                    detailMode = false;
-                    removePolygon();
-                    const aa=getPolygonData("/json/sido.json")
-                    drawPolygon(aa)
-                }else if(level <=5){
-                    removePolygon();
-                }
-            });
-
-
-
-            let positions = data.map(addrData => {
-
-                return {
-                    title: addrData.addr,
-                    latlng: new kakao.maps.LatLng(parseFloat(addrData.coordinateY), parseFloat(addrData.coordinateX))
-                }
-            });
-
-            // 지도에 다각형을 표시합니다
-            
-
-            let imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-
-            for (let i = 0; i < positions.length; i++) {
-
-                // 마커 이미지의 이미지 크기 입니다
-                let imageSize = new kakao.maps.Size(24, 35);
-
-                // 마커 이미지를 생성합니다    
-                let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-
-                var clusterer = new kakao.maps.MarkerClusterer({
-                    map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
-                    averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
-                    minLevel: 3 // 클러스터 할 최소 지도 레벨 
-                });
-
-                var markers = $(positions).map(function (i, position) {
-                    return new kakao.maps.Marker({
-                        map: map, // 마커를 표시할 지도
-                        position: new kakao.maps.LatLng(positions[i].latlng.Ma, positions[i].latlng.La), // 마커를 표시할 위치
-                        title: positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-                        image: markerImage // 마커 이미지 
-                        //position: new kakao.maps.LatLng(position.lat, position.lng)
-                    });
-                });
-                clusterer.addMarkers(markers);
-
-            }
-
-
+        .then((response) => {
+            return response.json(); //나머지 경우에 사용
         })
+        //fetch 통신 후 실행 영역
+        .then((data) => {//data -> controller에서 리턴되는 데이터!
+            const gData = getPolygonData("/json/sido.json");
 
-    })
-    //fetch 통신 실패 시 실행 영역
-    .catch(err => {
-        alert('fetch error!\nthen 구문에서 오류가 발생했습니다.\n콘솔창을 확인하세요!');
-        console.log(err);
-    });
+
+
+
+
+            gData.then(res => {
+
+
+                //맵을 생성합니다.
+                map = new kakao.maps.Map(container, options);
+                customOverlay = new kakao.maps.CustomOverlay({})
+
+
+                res.features.forEach((element, idx) => {
+                    let coordinates = []; //좌표 저장할 배열
+                    let name = ''; // 지역 이름
+                    let cd_location = '';
+                    coordinates = element.geometry.coordinates;// 1개 지역의 영역을 구성하는 다각형의 모든 좌표 배열
+                    name = element.properties.SIG_KOR_NM; // 1개 지역의 이름
+                    cd_location = element.properties.SIG_CD;
+
+
+                    let ob = new Object;
+                    ob.name = name;
+                    ob.path = [];
+                    ob.location = cd_location;
+                    //폴리곤을 만들 좌표 json
+                    coordinates[0].forEach((coordinate, i) => {
+                        console.log(coordinate[1], coordinate[0]);
+                        ob.path.push(new kakao.maps.LatLng(coordinate[1], coordinate[0]));
+                    })
+
+                    areas[idx] = ob;
+                });
+
+                for (var i = 0, len = areas.length; i < len; i++) {
+                    displayArea(areas[i]);
+                }
+
+                kakao.maps.event.addListener(map, 'zoom_changed', function () {
+                    //console.log(map.getLevel());
+                    level = map.getLevel();
+                    if (level <= 10 && level > 5) { // level 에 따라 다른 json 파일을 사용한다.
+                        detailMode = true;
+                        removePolygon();
+                        const aa = getPolygonData("/json/sig.json")
+                        drawPolygon(aa)
+                    } else if (level > 10) { // level 에 따라 다른 json 파일을 사용한다.
+                        detailMode = false;
+                        removePolygon();
+                        const aa = getPolygonData("/json/sido.json")
+                        drawPolygon(aa)
+                    } else if (level <= 5) {
+                        removePolygon();
+                    }
+                });
+
+
+                let positions = data.map(addrData => {
+
+                    return {
+                        title: addrData.addr,
+                        latlng: new kakao.maps.LatLng(parseFloat(addrData.coordinateY), parseFloat(addrData.coordinateX))
+                    }
+                });
+
+
+
+
+                let imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+
+                for (let i = 0; i < positions.length; i++) {
+
+                    // 마커 이미지의 이미지 크기 입니다
+                    let imageSize = new kakao.maps.Size(24, 35);
+
+                    // 마커 이미지를 생성합니다    
+                    let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+
+                    var clusterer = new kakao.maps.MarkerClusterer({
+                        map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
+                        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
+                        minLevel: 3 // 클러스터 할 최소 지도 레벨 
+                    });
+
+                    var markers = $(positions).map(function (i, position) {
+                        return new kakao.maps.Marker({
+                            map: map, // 마커를 표시할 지도
+                            position: new kakao.maps.LatLng(positions[i].latlng.Ma, positions[i].latlng.La), // 마커를 표시할 위치
+                            title: positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+                            image: markerImage // 마커 이미지 
+                            //position: new kakao.maps.LatLng(position.lat, position.lng)
+                        });
+                    });
+                    clusterer.addMarkers(markers);
+                }
+            })
+        })
+        //fetch 통신 실패 시 실행 영역
+        .catch(err => {
+            alert('fetch error!\nthen 구문에서 오류가 발생했습니다.\n콘솔창을 확인하세요!');
+            console.log(err);
+        });
 
 }
 
 
-
-
-
-
-
-
+//매물검색기능
 document.getElementById("searchButton").addEventListener("click", function () {
     // 입력 필드와 선택 상자의 값을 가져옵니다.
     const searchTradeTypeCode = document.querySelector('select[name="searchTradeTypeCode"]').value;
@@ -231,6 +204,26 @@ document.getElementById("searchButton").addEventListener("click", function () {
             const propertyTypeName = radioElement.getAttribute('data-propertytypename');
             console.log(propertyTypeName);
             console.log(data)
+
+            var ps = new kakao.maps.services.Places();
+
+            // 키워드로 장소를 검색합니다
+            ps.keywordSearch(searchAddr, placesSearchCB);
+            function placesSearchCB(data, status, pagination) {
+                if (status === kakao.maps.services.Status.OK) {
+
+                    // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+                    // LatLngBounds 객체에 좌표를 추가합니다
+                    var bounds = new kakao.maps.LatLngBounds();
+
+                    for (var i = 0; i < data.length; i++) {
+                        bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+                    }
+
+                    // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+                    map.setBounds(bounds);
+                }
+            }
 
             // .select_room 요소
             const selectRoomElement = document.querySelector('.select_room');
@@ -343,6 +336,8 @@ function detailRoom(roomCode) {
 //         document.getElementById('room-list').appendChild(roomElement);
 //     });
 // }
+
+//json 파일 가져오기
 async function getPolygonData(jsonFile) {
     return await fetch(jsonFile) // json 파일 읽어오기
         .then(function (response) {
@@ -351,8 +346,8 @@ async function getPolygonData(jsonFile) {
 }
 
 
-function drawPolygon(aa){
-    aa.then(res=>{
+function drawPolygon(aa) {
+    aa.then(res => {
         res.features.forEach((element, idx) => {
             let coordinates = []; //좌표 저장할 배열
             let name = ''; // 지역 이름
@@ -360,21 +355,21 @@ function drawPolygon(aa){
             coordinates = element.geometry.coordinates;// 1개 지역의 영역을 구성하는 다각형의 모든 좌표 배열
             name = element.properties.SIG_KOR_NM; // 1개 지역의 이름
             cd_location = element.properties.SIG_CD;
-    
-    
+
+
             let ob = new Object;
             ob.name = name;
             ob.path = [];
             ob.location = cd_location;
-    
+
             coordinates[0].forEach((coordinate, i) => {
                 console.log(coordinate[1], coordinate[0]);
                 ob.path.push(new kakao.maps.LatLng(coordinate[1], coordinate[0]));
             })
-    
+
             areas[idx] = ob;
         });
-    
+
         for (var i = 0, len = areas.length; i < len; i++) {
             displayArea(areas[i]);
         }
@@ -382,9 +377,9 @@ function drawPolygon(aa){
 }
 
 function displayArea(area) {
-    
+
     var polygon = new kakao.maps.Polygon({
-        map:map,
+        map: map,
         path: area.path,
         strokeWeight: 2,
         strokeColor: '#004c80',
@@ -394,12 +389,41 @@ function displayArea(area) {
     });
     //polygons.push(polygon.setMap(map));
     polygons.push(polygon);
-    
+    kakao.maps.event.addListener(polygon, 'mouseover', function (mouseEvent) {
+        polygon.setOptions({ fillColor: '#09f' });
+        customOverlay.setContent('<div class="area">' + area.name + '</div>');
+        customOverlay.setPosition(mouseEvent.latLng);
+        customOverlay.setMap(map);
+    });
+
+    kakao.maps.event.addListener(polygon, 'mousemove', function (mouseEvent) {
+
+        customOverlay.setPosition(mouseEvent.latLng);
+    });
+
+    kakao.maps.event.addListener(polygon, 'mouseout', function () {
+        polygon.setOptions({ fillColor: '#fff' });
+        customOverlay.setMap(null);
+    });
+
+    kakao.maps.event.addListener(polygon, 'click', function (mouseEvent) {
+        if (!detailMode) {
+            map.setLevel(10); // level에 따라 이벤트 변경
+            var latlng = mouseEvent.latLng;
+
+            // 지도의 중심을 부드럽게 클릭한 위치로 이동시킵니다.
+            map.panTo(latlng);
+        } else {
+            // 클릭 이벤트 함수
+            // callFunctionWithRegionCode(area.location);
+        }
+    });
+
 }
 
 
 // 모든 폴리곤을 지우는 함수
-    function removePolygon() { 
+function removePolygon() {
     for (let i = 0; i < polygons.length; i++) {
         polygons[i].setMap(null);
     }

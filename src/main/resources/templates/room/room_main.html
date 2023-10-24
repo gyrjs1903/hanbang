@@ -24,8 +24,8 @@
                                         </option>
                                     </select>
                                     <div>
-                                        <th:block th:each="propertyType : ${propertyTypeList}">
-                                            <input type="radio" th:value="${propertyType.propertyTypeCode}" th:data-propertyTypeName="${propertyType.propertyTypeName}" name="searchPropertyTypeCode">
+                                        <th:block th:each="propertyType, state : ${propertyTypeList}">
+                                            <input type="radio" th:value="${propertyType.propertyTypeCode}" th:data-propertyTypeName="${propertyType.propertyTypeName}" name="searchPropertyTypeCode" th:checked="${state.index==0}">
                                             <label>[[${propertyType.propertyTypeName}]]</label>
                                         </th:block>
                                     </div>
