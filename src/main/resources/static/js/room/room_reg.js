@@ -4,6 +4,7 @@ let geocoder = new kakao.maps.services.Geocoder();
 
 //화면 오픈 시 바로 실행되는 함수
 init();
+setInitialSubcategory();
 
 
 function openPost() {
@@ -55,11 +56,40 @@ function init(){
     }
     // 지도를 생성합니다
     map = new kakao.maps.Map(container, options);
-
-
 }
 
+function changeSubPropertyTypeCode(){
+    document.querySelectorAll('input[name="propertyTypeCode"]').forEach(function(radio) {
+        radio.addEventListener('change', function() {
+            var selectedPropertyTypeCode = radio.value;
+            var subcategoryWrapper = document.querySelectorAll('.subproperty-wrapper');
 
+            subcategoryWrapper.forEach(function(wrapper) {
+                var parentPropertyTypeCode = wrapper.getAttribute('data-property-type-code');
+                if (parentPropertyTypeCode === selectedPropertyTypeCode) {
+                    wrapper.style.display = 'block';
+                } else {
+                    wrapper.style.display = 'none';
+                }
+            });
+        });
+    });
+}
+
+// 페이지 로드 시 초기 설정 함수
+function setInitialSubcategory() {
+    var selectedPropertyTypeCode = document.querySelector('input[name="propertyTypeCode"]:checked').value;
+    var subcategoryWrapper = document.querySelectorAll('.subproperty-wrapper');
+
+    subcategoryWrapper.forEach(function(wrapper) {
+        var parentPropertyTypeCode = wrapper.getAttribute('data-property-type-code');
+        if (parentPropertyTypeCode === selectedPropertyTypeCode) {
+            wrapper.style.display = 'block';
+        } else {
+            wrapper.style.display = 'none';
+        }
+    });
+}
 
 
 

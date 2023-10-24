@@ -93,6 +93,33 @@
             , (SELECT NVL(MAX(REPORT_CNT),0) FROM FALSE_OFFERINGS WHERE ROOM_CODE = #{roomCode}) + 1
         )
     </insert>
+
+    <!-- 문의 제목 목록 -->
+    <select id="selectInquiryTitle" resultMap="roomMapper.inquiryTitle">
+        SELECT INQUIRY_TITLE_CODE
+            ,INQUIRY_TITLES
+        FROM INQUIRY_TITLE
+    </select>
+
+    <!-- 문의 하기 -->
+    <insert id="insertInquiry">
+        INSERT INTO INQUIRY(
+            INQUIRY_CODE
+            , FROM_USER_NO
+            , TO_USER_NO
+            , ROOM_CODE
+            , INQUIRY_TITLE_CODE
+            , INQUIRY_CONTENT
+        ) VALUES (
+            (SELECT 'INQUIRY_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(INQUIRY_CODE,9))),0) + 1 ,4,'0') INQUIRY_CODE
+            FROM INQUIRY)
+            , #{fromUserNo}
+            , #{toUserNo}
+            , #{roomCode}
+            , #{inquiryTitleCode}
+            , #{inquiryContent}
+        )
+    </insert>
 </mapper>
 
 

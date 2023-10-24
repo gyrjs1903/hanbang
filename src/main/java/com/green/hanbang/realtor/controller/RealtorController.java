@@ -4,6 +4,8 @@ import com.green.hanbang.member.vo.MemberVO;
 import com.green.hanbang.realtor.service.RealtorService;
 import com.green.hanbang.realtor.vo.LicenseImgVO;
 import com.green.hanbang.realtor.vo.RealtorDetailVO;
+import com.green.hanbang.room.service.RoomService2;
+import com.green.hanbang.room.vo.InquiryVO;
 import com.green.hanbang.util.LicenseUtil;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ import java.util.Optional;
 @RequestMapping("/realtor")
 public class RealtorController {
     private final RealtorService realtorService;
+    private final RoomService2 roomService2;
 
     @RequestMapping("/main")
     public String realtor(){
@@ -76,6 +79,7 @@ public class RealtorController {
         return "realtor/realtor_pwCorrect";
     }
 
+    //본인확인
     @ResponseBody
     @PostMapping("/PWCorrect")
     public String PWCorrect(HttpSession session){
@@ -83,6 +87,7 @@ public class RealtorController {
          return realtorService.selectRealtorPw(loginInfo.getUserNo());
     }
 
+    //본인확인
     @PostMapping("/PWIdentify")
     public String PWIdentify(HttpSession session, Model model){
         MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
@@ -90,9 +95,34 @@ public class RealtorController {
         return "realtor/realtor_update";
     }
 
+    //공인중개사 정보 수정
     @PostMapping("/realtorInfoUpdate")
     public String realtorInfoUpdate(MemberVO memberVO){
         realtorService.updateRealtorInfo(memberVO);
         return "redirect:/realtor/myPage";
+    }
+
+    //문의글 조회
+    @GetMapping("/inquiryBoardList")
+    public String inquiryBoardList(HttpSession session,Model model){
+        MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
+        System.out.println(realtorService.selectInquiryBoard(loginInfo.getUserNo()));
+        model.addAttribute("inquiryBoardList",realtorService.selectInquiryBoard(loginInfo.getUserNo()));
+        return "realtor/inquiry_board";
+    }
+
+    //문의글 상세 조회
+    @GetMapping("/inquiryDetail")
+    public String inquiryDetail(String inquiryCode, Model model){
+        model.addAttribute("inquiryDetail",realtorService.selectInquiryDetail(inquiryCode));
+        return "realtor/inquiry_detail";
+    }
+
+    //문의글 답변 작성
+    @PostMapping("/inquiryAnswer")
+    public String inquiryAnswer(InquiryVO inquiryVO){
+        System.out.println(inquiryVO);
+        realtorService.updateInquiryAnswer(inquiryVO);
+        return "redirect:/realtor/inquiryBoardList";
     }
 }

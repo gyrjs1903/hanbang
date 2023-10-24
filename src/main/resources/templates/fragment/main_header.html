@@ -24,7 +24,8 @@
                 <div th:if="${session.loginInfo?.loginType == 'USER'}" class="member_nav">
                     <div class="member_intro">
                         <div size="32" class="member_profile">
-                            <img src="" alt="" draggable="false">
+                            [[${session.loginInfo}]]
+                            <img src="" alt="프로필 이미지" draggable="false">
                         </div>
                         <div class="member_nickname" onclick="menuOpen()">
                             <p>[[${session.loginInfo?.nickName}]]님</p>

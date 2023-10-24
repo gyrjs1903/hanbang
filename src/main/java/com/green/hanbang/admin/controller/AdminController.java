@@ -62,7 +62,7 @@ public class AdminController {
 
     // 공인중개사 상세 조회
     @GetMapping("/realDetail")
-    public String realDetail(int identificationNum, Model model){
+    public String realDetail(String identificationNum, Model model){
         MemberManageVO realDetail = memberManageService.realDetail(identificationNum);
         model.addAttribute("realDetail", realDetail);
         return "admin/real_detail";

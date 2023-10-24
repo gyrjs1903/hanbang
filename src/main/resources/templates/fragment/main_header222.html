@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<head>
+<meta charset="UTF-8">
+<title> Header Fragment </title>
+</head>
+<body>
+<th:block th:fragment="mainHeader222Fragment">
+    <link rel="stylesheet" href="/css/main/main_header.css">
+    <header class="menu_all">
+        <img class="logo" src="/img/main/HanBangLogo.png" title="한방">
+        <nav class="menu_bar">
+            <ul>
+                <li><a onclick="location.href='/room/roomMain'">지도</a></li>
+                <li><a href="/2">분양정보</a></li>
+                <li><a onclick="location.href='/member/dibsOn'">찜목록</a></li>
+                <li class="alarm_position">
+                    <th:block th:if="${session.loginInfo.loginType == 'REALTOR'}">
+                        <a th:onclick="alarm([[${session.loginInfo}]],[[${authorityAlarm}]],[[${realtorInquiryList}]]);">알림</a>
+                    </th:block>
+                    <th:block th:unless="${session.loginInfo.loginType == 'REALTOR'}">
+                        <a href="/2">알림</a>
+                    </th:block>
+                    <div id="alarm_tag"></div>
+                </li>
+                <!-- 미로그인 시 나올 메뉴  -->
+                <div th:if="${session.loginInfo == null}" class="member_login_join">
+                    <button type="button" class="member_login_join_btn" onclick="location.href='/member/loginForm'">로그인<span>|</span>회원가입</button>
+                </div>
+                <!-- 로그인 완료 시 나올 메뉴 -->
+                <div th:if="${session.loginInfo?.loginType == 'USER'}" class="member_nav">
+                    <div class="member_intro">
+                        <div size="32" class="member_profile">
+                            [[${session.loginInfo}]]
+                            <img src="" alt="프로필 이미지" draggable="false">
+                        </div>
+                        <div class="member_nickname" onclick="menuOpen()">
+                            <p>[[${session.loginInfo?.nickName}]]님</p>
+                            <div id="my_menu_wrap" class="my_menu_wrap">
+                                <nav id="my_menu_nav" class="my_menu_nav" style="border: none;">
+                                    <a class="my_menu" onclick="location.href='/member/memberCall';">전화문의</a>
+                                    <a class="my_menu" onclick="location.href='/member/memberInquiry';">1:1문의</a>
+                                    <a class="my_menu" onclick="location.href='/member/memberReport';">허위매물 신고내역</a>
+                                    <a class="my_menu" onclick="location.href='/member/memberInfo';">내 정보</a>
+                                    <a class="my_menu" onclick="location.href='/member/logout';">로그아웃[이미지]</a>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 공인중개사 로그인 시 나올 메뉴 일단 만들어만 놨어요! -->
+                <div th:if="${session.loginInfo?.loginType == 'REALTOR'}" class="member_nav">
+                    <div class="member_intro">
+                        <div size="32" class="member_profile">
+                            <img src="" alt="" draggable="false">[프사]
+                        </div>
+                        <div class="member_nickname">
+                            <button type="button" class="member_menu_btn" onclick="my_menu_open()">
+                                <p>[닉네임]"공인중개사님"</p>
+                            </button>
+                            <div class="my_menu_wrap">
+                                <nav id="my_menu_nav" class="my_menu_nav" style="border: none;">
+                                    <a class="my_menu" onclick="location.href='/';">방 찾기</a>
+                                    <a class="my_menu" onclick="location.href='/room/reg';">매물 등록하기</a>
+                                    <a class="my_menu" onclick="location.href='/realtor/myPage';">마이페이지</a>
+                                    <a class="my_menu" onclick="location.href='/member/logout';">로그아웃[이미지]</a>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ul>
+        </nav>
+    </header>
+    <script async src="/js/main/main_header222.js"></script>
+</th:block>
+</body>
+</html>

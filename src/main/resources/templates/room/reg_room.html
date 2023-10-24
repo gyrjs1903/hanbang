@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{room/room_layout}">
+    layout:decorate="~{fragment/main_layout}">
 
 <head>
     <meta charset="UTF-8">
@@ -30,17 +30,28 @@
                                 <th>매물유형 <span>*</span></th>
                                 <td>
                                     <header>대분류</header>
-                                    <div th:each="property : ${propertyList}">
-                                        <input type="radio" name="propertyTypeCode" th:value="${property.propertyTypeCode}">[[${property.propertyTypeName}]]</input>
+                                    <div th:each="property, state : ${propertyList}">
+                                        <input type="radio" name="propertyTypeCode"
+                                            th:value="${property.propertyTypeCode}"
+                                            th:checked="${state.index==0}">[[${property.propertyTypeName}]]
+                                        </input>
                                     </div>
                                 </td>
+                                
                                 <td>
                                     <header>소분류</header>
                                     <th:block th:each="property : ${propertyList}">
-                                        <th:block th:each="subProperty : ${property.subPropertyTypeList}">
-                                            <input type="radio" name="subPropertyTypeCode" th:value="${subProperty.subPropertyTypeCode}">
-                                            <label>[[${subProperty.subPropertyTypeName}]]</label>
-                                        </th:block>
+                                        <div th:if="${property.subPropertyTypeList}">
+                                            <div class="subproperty-wrapper" th:attr="data-property-type-code=${property.propertyTypeCode}">
+                                                <th:block th:each="subProperty, state : ${property.subPropertyTypeList}">
+                                                    <input type="radio" name="subPropertyTypeCode"
+                                                        th:value="${subProperty.subPropertyTypeCode}"
+                                                        th:checked="${state.index==0}"
+                                                        th:attr="data-parent=${property.propertyTypeCode}">
+                                                    <label>[[${subProperty.subPropertyTypeName}]]</label>
+                                                </th:block>
+                                            </div>
+                                        </div>
                                     </th:block>
                                 </td>
                             </tr>
@@ -49,7 +60,7 @@
                                 <td>
                                     <div>
                                         <div>
-                                            <label>주소검색</label>
+                                            <label style="display: none;">주소검색</label>
                                             <input type="text" id="addr" name="addr" readonly>
                                             <input type="button" value="검색" id="select" onclick="openPost();">
                                             <label>상세주소</label>
@@ -98,7 +109,7 @@
                                     <input type="radio" name="tradeTypeCode" th:value="${tradeType.tradeTypeCode}">
                                     <span>[[${tradeType.tradeTypeName}]]</span>
                                 </th:block>
-                                
+
                             </td>
                         </tr>
                         <tr>
@@ -106,15 +117,15 @@
                             <td>
                                 <div>
                                     <label for="">전세가</label>
-                                    <input type="text" name="jeonseCost" >
+                                    <input type="text" name="jeonseCost">
                                     <p>만원</p>
                                 </div>
                                 <div>
                                     <label for="">보증금</label>
-                                    <input type="text" name="deposit" >
+                                    <input type="text" name="deposit">
                                     <p>만원</p>
                                     <label for="">월세</label>
-                                    <input type="text" name="monthlyLease" >
+                                    <input type="text" name="monthlyLease">
                                     <p>만원</p>
                                 </div>
                             </td>
@@ -129,7 +140,7 @@
                                 </div>
                                 <div>
                                     <label for="">관리비</label>
-                                    <input type="text" name="maintenanceCost" >
+                                    <input type="text" name="maintenanceCost">
                                 </div>
                             </td>
                         </tr>
@@ -137,8 +148,9 @@
                             <th>입주 가능 일자 <span>*</span></th>
                             <div>
                                 <label for=""></label>
-                                <input type="radio"> 즉시 입주
-                                <input type="radio"> 일자 선택
+                                <input type="radio" name="immediateOccupancy" value="Y" checked> 즉시 입주
+                                <input type="radio" name="immediateOccupancy" value="N"> 일자 선택
+                                <input type="date" name="availableMoveInDate">
                             </div>
                         </tr>
                     </table>
@@ -151,11 +163,13 @@
                             <td>
                                 <th:block th:each="detailOption : ${option.detailOptionList}">
                                     <th:block th:if="${state.index==0}">
-                                        <input type="radio" name="detailOptions" th:value="${detailOption.detailOptionCode}">
+                                        <input type="radio" name="detailOptions"
+                                            th:value="${detailOption.detailOptionCode}">
 
                                     </th:block>
                                     <th:block th:if="${state.index!=0}">
-                                        <input type="checkbox" name="detailOptions" th:value="${detailOption.detailOptionCode}">
+                                        <input type="checkbox" name="detailOptions"
+                                            th:value="${detailOption.detailOptionCode}">
                                     </th:block>
                                     [[${detailOption.detailOptionName}]]
                                 </th:block>
@@ -209,7 +223,7 @@
         <script type="text/javascript"
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=22ce9cdc2a0d0a47b1149d42f3bab1c0&libraries=services,clusterer,drawing"></script>
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-        <script src="/js/room/room.js"></script>
+        <script src="/js/room/room_reg.js"></script>
     </th:block>
 </body>
 

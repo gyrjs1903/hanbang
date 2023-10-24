@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko" xlmns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{realtor/realtor_layout}">
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+    <th:block layout:fragment="content">
+        <th:block th:if="${inquiryBoardList == null || inquiryBoardList == ''}">
+            <div class="row">
+                <div class="col">
+                    새로운 문의글이 없습니다.
+                </div>
+            </div>
+        </th:block>
+        <th:block th:if="${inquiryBoardList != null}">
+            <table>
+                <thead>
+                    <tr>
+                        <td>번 호</td>
+                        <td>제 목</td>
+                        <td>작성자</td>
+                        <td>날 짜</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="inquiry, state : ${inquiryBoardList}">
+                        <td>[[${#lists.size(inquiryBoardList) - state.index}]]</td>
+                        <th:block th:if="${inquiry.inquiryTitleCode == 'INQUIRY_TITLE_001'}">
+                            <td th:onclick="inquiryDetail([[${inquiry.inquiryCode}]])" class="cursor">[[${inquiry.inquiryContent}]]</td>
+                        </th:block>
+                        <th:block th:unless="${inquiry.inquiryTitleCode == 'INQUIRY_TITLE_001'}">
+                            <td th:onclick="inquiryDetail([[${inquiry.inquiryCode}]])" class="cursor">[[${inquiry.inquiryTitleVO.inquiryTitles}]]</td>
+                        </th:block>
+                        <td>[[${inquiry.fromUserNo}]]</td>
+                        <td>[[${inquiry.inquiryDate}]]</td>
+                    </tr>
+                </tbody>
+            </table>
+        </th:block>
+        <script src="/js/realtor/board.js"></script>
+    </th:block>
+</body>
+</html>

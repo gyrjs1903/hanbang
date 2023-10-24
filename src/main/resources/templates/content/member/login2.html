@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{fragment/main_layout}">
+<head>
+<meta charset="UTF-8">
+<title>원하는 방을 한방에 한방👊</title>
+</head>
+<body>
+<th:block layout:fragment="content">
+    <link rel="stylesheet" href="/css/member/login.css">
+    <section class="login_section">
+        <div class="login_frame">
+            <div class="">
+                <header class="email_title">
+                    <h1>이메일로 로그인</h1>
+                </header>
+            </div>
+            <div class="login_ment">
+                <p>한방 사이트 이용을 위해 로그인 해주세요.</p>
+            </div>
+            <form action="/member2/login" method="post" class="login_form">
+                <div class="">
+                    <header class="">
+                        <h1 class="">아이디</h1>
+                    </header>
+                    <div class="">
+                        <div>
+                            <div class="">
+                                <input type="text" class="" name="userName" th:value="${memberVO.userName}" placeholder="이메일 주소 입력">
+                            </div>
+                        </div>
+                    </div>
+                    <header class="">
+                        <h1 class="">비밀번호</h1>
+                    </header>
+                    <div class="">
+                        <div class="pwInput">
+                            <input type="password" id="pwd" name="passWord" placeholder="비밀번호 입력">
+                            <img id="pwShow" src="/img/member/password_show.png" alt="pwShow/Hide">
+                    </div>
+                    <button type="submit" class=""><span class="">로그인</span></button>
+                </div>
+            </form>
+            <div class="">
+                <button type="button" id="passwordFindButton">비밀번호 재설정</button>
+                <button type="button" onclick="location.href='/member/joinForm';">이메일로 가입하기</button>
+            </div>
+        </div>
+    </section>
+    <!-- 비밀번호 찾기 버튼 클릭 시 실행 할 model창 -->
+    <div class="modal fade" id="join-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <form id="joinForm" class="row g-3" action="/member/join" method="post">
+                        <h1 class="modal-title">비밀번호 재설정</h1>
+                        <div class="modal-body">
+                            <div><p>가입한 이메일 정보 입력 후 인증 메일 받기를 클릭하세요.</p></div>
+                            <label for="userName" class="form-label"></label>
+                            <input type="text" class="form-control" id="userName" name="userName" onkeyup="setDisabled();" placeholder="이메일(가입 당시 아이디)">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                            <button id="join-btn" type="button" class="btn btn-primary" onclick="VerificationEmailSend();" disabled>인증메일 받기</button>
+                        </div>
+                    </form>    
+                </div>
+            </div>
+        </div>
+    </div> 
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script async src="/js/member/login.js"></script>
+</th:block>
+</body>
+</html>
