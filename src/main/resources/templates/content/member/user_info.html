@@ -32,87 +32,117 @@
                     </div>
             </div>
             <ul class="info_list">
-                <li class="social_li">
-                    <div class="social"> 
-                        <p>소셜계정 목록 추가 필요 / 카카오톡, 페이스북</p>
+                <li>
+                    <div class="infoT"> 
                         <h1>연결된 소셜계정</h1>
                     </div>
-                    <div class="email-icon"></div>
-                    <div class="kakao-icon"></div>
-                    <div class="facebook-icon"></div>
+                    <div class="social_ico">
+                        <div class="email-icon"></div>
+                        <div class="kakao-icon"></div>
+                        <div class="facebook-icon"></div>
+                    </div>
                 </li>
-                <li class="nickname_li">
-                    <div class="nickname">
-                        <h1>[[${session.loginInfo?.nickName}]]</h1>
+                <li>
+                    <div class="infoT"> 
+                        <h1>닉네임</h1>
+                    </div>
+                    <div class="loginUserData">
+                        <p>[[${session.loginInfo?.nickName}]]</p>
                     </div>
                     <div class="cp">
-                        <p></p>
-                        <img src="/img/member/right_icon.png" alt="닉네임 변경 창" id="updateNN_Btn" class="rightBtn">
+                        <button type="button" id="NNCBtn">
+                            <img src="/img/member/right_icon.png" alt="닉네임 변경 창" class="rightBtn">
+                        </button>
                     </div>
                 </li>
-                <li class="id_li">
-                    <div class="">
-                        <h1>[[${session.loginInfo?.userName}]]</h1>
+                <li>
+                    <div class="infoT">
+                        <h1>아이디</h1>
                     </div>
-                    <div class="">
-                        <p></p>
+                    <div class="loginUserData">
+                        <p>[[${session.loginInfo?.userName}]]</p>
                     </div>
                 </li>
-                <li class="pw_li">
-                    <div class="">
-                        <h1>비밀번호
-                            [[${session.loginInfo}]]
-                        </h1>
+                <li>
+                    <div class="infoT"> 
+                        <h1>비밀번호</h1>
                     </div>
                     <div class="cp">
-                        <img src="/img/member/right_icon.png" alt="비밀번호 변경 창" id="updatePW_Btn" class="rightBtn">
+                        <img src="/img/member/right_icon.png" alt="비밀번호 변경 창" id="PWCBtn" class="rightBtn">
                     </div>
                 </li>
-                <li class="name_li">
-                    <div class="">
+                <li>
+                    <div class="infoT">
                         <h1>이름</h1>
                     </div>
-                    <div class="cp">
+                    <div class="loginUserData">
                         <p>이창규 > [본인인증창]</p>
                     </div>
                 </li>
-                <li class="phone_li">
-                    <div class="">
-                        <h1>[[${session.loginInfo?.phone}]]</h1>
+                <li>
+                    <div class="infoT">
+                        <h1>휴대폰번호</h1>
                     </div>
                     <div class="cp">
                         <div class="">
-                            <p>010-4939-4018 > [본인인증창] [본인인증 완료 시 아래 본인인증 마크와 텍스트]</p>
+                            <p>[[${session.loginInfo?.phone}]] > [본인인증창] [본인인증 완료 시 아래 본인인증 마크와 텍스트]</p>
                             <h1 class="">본인 인증</h1>
                         </div>
                     </div>
                 </li>
-                <li class="privacy_li hidden">
+                <li class="privacy_agreement">
                     <div>
                         <h1>개인정보 수집 및 이용 동의 (선택)</h1>
                         <p>선택정보 제공에 대한 동의를 거부하시는 경우에도</p>
                         <p>서비스 이용이 가능합니다.</p>
-                        <button type="button" class="">
+                        <button type="button" class="view_deatils">
                         <div>
-                            <span class="" onclick="window.open('/member/userinfo_consent.html')">상세보기</span>
+                            <span class="vdBtn" onclick="window.open('/member/userinfo_consent')">상세보기</span>
                         </div>
                         </button>
                     </div>
-                    <button type="button" class="">
-                        <span class="">해제</span>
+                    <button type="button" class="agreement">
+                        <span class="amBtn">동의/해제</span>
                     </button>
                 </li>
             </ul>
-            <div class="">
-                <button type="button" font-weight="regular" class="">
+            <div class="secession">
+                <button type="button" font-weight="regular" class="seceBtn">
                     <div>
-                        <span class=""><a onclick="location.href='/member/memberDelete';">회원탈퇴</a></span>
+                        <span class="seceSpan">
+                            <a onclick="location.href='/member/deleteMember';">회원탈퇴</a>
+                        </span>
                     </div>
                 </button>
             </div>
         </div>
 
+        <!-- 닉네임 변경 창 -->
+        <div class="modal fade" id="NNC" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <form id="NNCForm" class="row g-3" th:action="@{/member/updateNickName}" method="post">
+                            <h1 class="modal-title">닉네임 재설정</h1>
+                            <div class="modal-body">
+                                <h4>닉네임</h4>
+                                <label for="nickName" class="form-label"></label>
+                                <input autocomplete="off" type="text" placeholder="닉네임을 입력해주세요." id="nickName" name="nickName" oninput="countCharacters();" maxlength="10">
+                                <p id="characterCount">0/10</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary data" data-bs-dismiss="modal">닫기</button>
+                                <button type="submit" class="btn btn-primary">확인</button>
+                            </div>
+                        </form>    
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
         <script async src="/js/member/user_info.js"></script>
         </body>
     </th:block>
