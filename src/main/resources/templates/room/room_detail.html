@@ -76,7 +76,12 @@
                                 </li>
                                 <li>
                                     <div>입주가능일</div>
-                                    <div></div>
+                                    <th:block th:if="${roomDetail.immediateOccupancy==Y}">
+                                        <div>즉시입주가능</div>
+                                    </th:block>
+                                    <th:block th:if="${roomDetail.immediateOccupancy==N}">
+                                        <div>[[${roomDetail.availableMoveInDate}]]</div>
+                                    </th:block>
                                 </li>
                                 <li>
                                     <div>건축물용도</div>
@@ -220,7 +225,9 @@
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <button th:if="${session.loginInfo.userNo != personInfo.userNo}" th:onclick="loginResult([[${session.loginInfo}]]);" class="btn btn-primary">문의하기</button>
+                                    <button th:if="${session.loginInfo.userNo != personInfo.userNo}"
+                                        th:onclick="loginResult([[${session.loginInfo}]]);"
+                                        class="btn btn-primary">문의하기</button>
                                 </div>
                             </div>
                         </th:block>
@@ -251,9 +258,10 @@
                     <div class="modal-body">
                         <form action="/room2/insertInquiry" method="post">
                             <input type="hidden" th:value="${personInfo.userNo}" name="toUserNo" id="toUserNo">
-                            <input type="hidden" th:value="${roomDetail.roomCode}" name="roomCode" id="inquiryRoomCode"> 
+                            <input type="hidden" th:value="${roomDetail.roomCode}" name="roomCode" id="inquiryRoomCode">
                             <select name="inquiryTitleCode" id="inquiryTitleCode">
-                                <option th:value="${title.inquiryTitleCode}" th:each="title : ${inquiryTitleList}">[[${title.inquiryTitles}]]</option>
+                                <option th:value="${title.inquiryTitleCode}" th:each="title : ${inquiryTitleList}">
+                                    [[${title.inquiryTitles}]]</option>
                             </select>
                             <textarea name="inquiryContent" id="inquiryContent" cols="30" rows="10"></textarea>
                             <input type="button" value="문의하기" th:onclick="inquiry([[${roomDetail.roomCode}]]);">
@@ -379,7 +387,7 @@
                                         <div><input type="radio" name="reasonCode"
                                                 th:value="${reason.reasonCode}">[[${reason.reason}]]</div>
                                     </th:block>
-                                    <textarea name="reportContent"cols="10" rows="3"></textarea>
+                                    <textarea name="reportContent" cols="10" rows="3"></textarea>
                                 </form>
                             </div>
                         </div>
