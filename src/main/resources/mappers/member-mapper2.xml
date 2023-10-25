@@ -17,10 +17,20 @@
         )
     </insert>
 
+    <!-- 승인완료알림 -->
     <select id="selectAuthorityAlarm" resultType="int">
         SELECT AUTHORITY_UPDATE
         FROM ALARM
         WHERE USER_NO = #{userNo}
+    </select>
+
+    <!-- 문의 글 알림 -->
+    <select id="selectInquiryAlarm" resultMap="realtorMapper.realtorDetail">
+        SELECT TO_USER_NO
+        , INQUIRY_CODE
+        , INQUIRY_ANSWER
+        FROM INQUIRY
+        WHERE TO_USER_NO = #{toUserNo}
     </select>
 </mapper>
 

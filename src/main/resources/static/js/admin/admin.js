@@ -69,7 +69,7 @@ function getMidCateList(memCateCode, itemCode){
     });
 }
 
-// 중분류 클릭 시 --> 소분류
+// 중분류 클릭 시 --> 아이템 목록 조회
 
 function getItemCateList(memCateCode, membershipCode, itemCode){
     fetch('/admin/getItemCateList', { //요청경로
@@ -174,7 +174,10 @@ function addWholeCateFetch(type, memCateCode){
                     </div>`;
 
             document.querySelector('.cate').innerHTML = '';  
-            document.querySelector('.cate').insertAdjacentHTML('afterbegin', str);      
+            document.querySelector('.cate').insertAdjacentHTML('afterbegin', str);
+            
+            //화면 하단에 상품 등록에 있는 대분류 셀렉트 박스 다시 그리기
+            getNewCateList();
         }
         else if(data.type == 'midCate'){
             data.data.forEach((element, idx) => {
@@ -190,6 +193,12 @@ function addWholeCateFetch(type, memCateCode){
 
             document.querySelector('.midCate').innerHTML = '';  
             document.querySelector('.midCate').insertAdjacentHTML('afterbegin', str);      
+
+            const firstCate  = document.querySelector('#selectFirstCate');
+            const secondCate  = document.querySelector('#selectSecondCate');
+
+            firstCate.querySelector('option:first-child').selected = true;
+            secondCate.querySelector('option:first-child').selected = true;
         }
        
     })
@@ -232,23 +241,26 @@ function showItemDetail(itemCode){
                     <ul>
                         <li>
                             <p>상품명 :</p>
-                            <p> ${element.itemName}</p>
+                            <p><span class="itemNameSpan">${element.itemName}</span></p>
                         </li>
                         <li>
                             <p>상품가격 : </p>
-                            <p> ${element.itemPrice}</p>
+                            <p><span class="itemPriceSpan">${element.itemPrice}</span></p>
                         </li>
                         <li>
                             <p>상품소개 : </p>
-                            <p> ${element.itemIntro}</p>
+                            <p><span class="itemIntroSpan">${element.itemIntro}</span></p>
                         </li>
                         <li>
                             <p>상품 상세설명 : </p>
-                            <p> ${element.itemContent}</p>
+                            <p><span class="itemContentSpan">${element.itemContent}</span></p>
                         </li>
-                    </ul> `;
+                    </ul> 
+                    <input type="button" onclick="editItemDetail(this, '${element.itemCode}');" value="수정하기">
+                    `;
         });
 
+        
         itemDetailList.insertAdjacentHTML('afterbegin', str);
     })
     //fetch 통신 실패 시 실행 영역
@@ -258,12 +270,198 @@ function showItemDetail(itemCode){
     });
 }
 
+// 수정하기 버튼 클릭 시 input 태그 생성 함수 
+function editItemDetail(tag, itemCode){
+    if(tag.value == '수정하기'){
+
+        const itemNameSpan =  document.querySelector('.itemNameSpan');
+        const itemName =  itemNameSpan.textContent;
+        itemNameSpan.textContent = '';
+        itemNameSpan.insertAdjacentHTML('afterbegin', `<input type="text" id="itemName" value="${itemName}">`);
+    
+        const itemPriceSpan =  document.querySelector('.itemPriceSpan');
+        const itemPirce =  itemPriceSpan.textContent;
+        itemPriceSpan.textContent = '';
+        itemPriceSpan.insertAdjacentHTML('afterbegin', `<input type="text" id="itemPrice" value="${itemPirce}">`);
+    
+        const itemIntroSpan =  document.querySelector('.itemIntroSpan');
+        const itemIntro =  itemIntroSpan.textContent;
+        itemIntroSpan.textContent = '';
+        itemIntroSpan.insertAdjacentHTML('afterbegin', `<textarea id="itemIntro" cols=30 rows=5>${itemIntro}</textarea>`);
+    
+        const itemContentSpan =  document.querySelector('.itemContentSpan');
+        const itemContent =  itemContentSpan.textContent;
+        itemContentSpan.textContent = '';
+        itemContentSpan.insertAdjacentHTML('afterbegin', `<textarea id="itemContent" cols=30 rows=5>${itemContent}</textarea>`);
+        
+        tag.value = '완료';
+
+    }
+
+     else{
+        updateItemInfo(itemCode);
+      
+        tag.value = '수정하기';
+     }
+}
 
 
+//상품 상세 정보 수정
+function updateItemInfo(itemCode){
+  
+    fetch('/admin/updateItem', { //요청경로
+        method: 'POST',
+        cache: 'no-cache',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        },
+        //컨트롤러로 전달할 데이터
+        body: new URLSearchParams({
+            'itemName' : document.querySelector('#itemName').value,
+            'itemPrice' : document.querySelector('#itemPrice').value,
+            'itemIntro' : document.querySelector('#itemIntro').value,
+            'itemContent' : document.querySelector('#itemContent').value,
+            'itemCode' : itemCode
+        })
+    })
+    .then((response) => {
+        return response.text(); //리턴이 없으므로 json 대신 text
+    })
+    //fetch 통신 후 실행 영역
+    .then((data) => {//data -> controller에서 리턴되는 데이터!
+        alert('수정 완료!');
+        showItemDetail(itemCode);
+
+    })
+    //fetch 통신 실패 시 실행 영역
+    .catch(err=>{
+        alert('fetch error!\nthen 구문에서 오류가 발생했습니다.\n콘솔창을 확인하세요!');
+        console.log(err);
+    });
+   
+}
+
+// 대분류 클릭시 포함된 중분류 카테고리만 조회하기
+function selectNewMidCate(){
+    const firstCate  = document.querySelector('#selectFirstCate').value;
+    const secondCate = document.querySelector('#selectSecondCate');
+
+    fetch('/admin/getNewMidCateList', { //요청경로
+        method: 'POST',
+        cache: 'no-cache',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        },
+        //컨트롤러로 전달할 데이터
+        body: new URLSearchParams({
+            'memCateCode' : firstCate,
+        })
+    })
+    .then((response) => {
+        return response.json(); 
+    })
+    //fetch 통신 후 실행 영역
+    .then((data) => {//data -> controller에서 리턴되는 데이터!
+        secondCate.innerHTML='';
+
+        let str = '';
+
+        str += '<option selected>중분류</option>';
+        data.forEach((element,idx)=>{
+            str += `<option value="${element.membershipCode}">${element.membershipName}</option>`
+        });
+
+        secondCate.insertAdjacentHTML('afterbegin', str);
+    })   
+    //fetch 통신 실패 시 실행 영역
+    .catch(err=>{
+        alert('fetch error!\nthen 구문에서 오류가 발생했습니다.\n콘솔창을 확인하세요!');
+        console.log(err);
+    });
+}
+
+//화면 하단에 상품 등록에 있는 대분류 셀렉트 박스 다시 그리기
+function getNewCateList(){
+    fetch('/admin/getNewCateList', { //요청경로
+        method: 'POST',
+        cache: 'no-cache',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        },
+        //컨트롤러로 전달할 데이터
+        body: new URLSearchParams({
+           
+        })
+    })
+    .then((response) => {
+        return response.json(); //리턴이 없으므로 json 대신 text
+    })
+    //fetch 통신 후 실행 영역
+    .then((data) => {//data -> controller에서 리턴되는 데이터!
+        console.log(data);
+        const firstCate  = document.querySelector('#selectFirstCate');
+        const secondCate  = document.querySelector('#selectSecondCate');
+        firstCate.innerHTML = '';
+
+        let str = '';
+
+        str += '<option selected>대분류</option>';
+        data.forEach((element,idx)=>{
+            str += `<option th:value="${element.memCateCode}">${element.memCateName}</option>`;
+        });
+
+        firstCate.insertAdjacentHTML('afterbegin', str);
+
+        firstCate.querySelector('option:first-child').selected = true;
+        secondCate.querySelector('option:first-child').selected = true;
+
+    })
+    //fetch 통신 실패 시 실행 영역
+    .catch(err=>{
+        alert('fetch error!\nthen 구문에서 오류가 발생했습니다.\n콘솔창을 확인하세요!');
+        console.log(err);
+    });
+
+}
 
 
+// 아이템 등록하기 
+function insertItem(){
+    const firstCate  = document.querySelector('#selectFirstCate').value;
+    const secondCate = document.querySelector('#selectSecondCate').value;
 
+    fetch('/admin/insertItem', { //요청경로
+        method: 'POST',
+        cache: 'no-cache',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        },
+        //컨트롤러로 전달할 데이터
+        body: new URLSearchParams({
+            'memCateCode' : firstCate,
+            'membershipCode' : secondCate,
+            'itemName' : document.querySelector('#itemName').value,
+            'itemPrice' : document.querySelector('#itemPrice').value,
+            'itemIntro' : document.querySelector('#itemIntro').value,
+            'itemContent' : document.querySelector('#itemContent').value
+        })
+    })
+    .then((response) => {
+        return response.text(); //리턴이 없으므로 json 대신 text
+    })
+    //fetch 통신 후 실행 영역
+    .then((data) => {//data -> controller에서 리턴되는 데이터!
 
+        
+
+    })
+    //fetch 통신 실패 시 실행 영역
+    .catch(err=>{
+        alert('fetch error!\nthen 구문에서 오류가 발생했습니다.\n콘솔창을 확인하세요!');
+        console.log(err);
+    });
+   
+}
 
 
 
