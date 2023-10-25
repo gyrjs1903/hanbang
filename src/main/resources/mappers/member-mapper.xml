@@ -11,6 +11,7 @@
         <result column="NICK_NAME"                      property="nickName"/>
         <result column="JOIN_DATE"                      property="joinDate"/>
         <association property="realtorDetailVO"         resultMap="realtorMapper.realtorDetail"/>
+        <collection property="memberImgVO"              resultMap="memberImg" />
     </resultMap>
 
     <resultMap id="memberImg" type="com.green.hanbang.member.vo.MemberImgVO">
@@ -21,11 +22,12 @@
     </resultMap>
 
     <resultMap id="alarm" type="com.green.hanbang.member.vo.AlarmVO">
-        <id column="ALARM_CODE" property="alarmCode"/>
-        <result column="USER_NO" property="userNo"/>
-        <result column="AUTHORITY_UPDATE" property="authorityUpdate"/>
-        <result column="INQUIRY_CODE" property="inquiryCode"/>
+        <id column="ALARM_CODE"             property="alarmCode"/>
+        <result column="USER_NO"            property="userNo"/>
+        <result column="AUTHORITY_UPDATE"   property="authorityUpdate"/>
+        <result column="INQUIRY_CODE"       property="inquiryCode"/>
     </resultMap>
+
     <!-- 회원 가입 -->
     <insert id="join">
         INSERT INTO MEMBER_USER (
@@ -109,35 +111,42 @@
         WHERE USER_NAME = #{userName}
     </select>
 
-    <!-- 회원 탈퇴 기능 -->
-    <delete id="memberDelete">
-        DELETE FROM MEMBER_USER
-        WHERE USER_NAME = #{userName}
-    </delete>
+    <!-- 회원 번호 조회 -->
+    <select id="selectUserNo" resultType="String">
+        SELECT USER_NO
+        FROM MEMBER_USER
+        WHERE USER_NO = #{userNo}
+    </select>
 
-    <!-- 비밀번호 변경 (회원 정보 수정의 경우) -->
+    <!-- 프로필 이미지 불러오기 -->
+    <select id="profileImgLoad" resultMap="member">
+        SELECT MI.USER_NO
+            , PROFILE_IMG_NO
+            , PROFILE_IMG_NAME
+            , ATTACHED_PROFILE_IMG_NAME
+        FROM MEMBER_USER MU
+        JOIN MEMBER_IMG MI
+        ON MU.USER_NO = MI.USER_NO
+    </select>
+
+    <!-- 닉네임 변경 -->
+    <update id="updateNickName">
+        UPDATE MEMBER_USER
+        SET NICK_NAME = #{nickName}
+        WHERE USER_NO = #{userNo}
+    </update>
+
+    <!-- 비밀 번호 변경 (회원 정보 수정의 경우) -->
     <update id="updatePassword">
         UPDATE FROM MEMBER_USER
         SET PASSWORD = #{passWord}
         WHERE USER_NAME = #{userName}
     </update>
 
-    <!-- 회원 번호 조회 -->
-    <select id="selectUserNo" resultType="String">
-        SELECT 'USER_' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(USER_NO, 6))), 0) + 0, 3, '0') AS NEW_USER_NO
-        FROM MEMBER_USER
-    </select>
-
-    <!-- 프로필 이미지 불러오기 -->
-    <select id="profileImgLoad" resultMap="memberImg">
-        SELECT MI.USER_NO
-            , PROFILE_IMG_NO
-            , PROFILE_IMG_NAME
-            , ATTACHED_PROFILE_IMG_NAME
-        FROM MEMBER_USER MU
-        LEFT JOIN MEMBER_IMG MI
-        ON MU.USER_NO = MI.USER_NO
-        WHERE MU.USER_NO = #{userNo}
-    </select>
+    <!-- 회원 탈퇴 -->
+    <delete id="deleteMember">
+        DELETE MEMBER_USER
+        WHERE USER_NO = #{userNo}
+    </delete>
 
 </mapper>

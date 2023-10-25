@@ -70,11 +70,9 @@ public class MemberController {
 
     // 로그인
     @PostMapping("/login")
-    public String login(MemberVO memberVO, MemberImgVO memberImgVO, HttpSession session, HttpServletRequest request) {
+    public String login(MemberVO memberVO, HttpSession session, HttpServletRequest request) {
 
         MemberVO loginInfo = memberService.login(memberVO);
-
-        //System.out.println(memberService.profileImgLoad(loginInfo.getUserNo()));
 
         // 로그인 타입에 따라 페이지 이동
         if (loginInfo != null) {
@@ -104,6 +102,7 @@ public class MemberController {
     public String memberInfo(Model model, HttpSession session) {
         // 현재 로그인한 유저 번호를 조회
         MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
+
         if (loginInfo != null) {
             String userNo = loginInfo.getUserNo();
             String memberInfo = memberService.selectUserNo(userNo);
@@ -138,7 +137,7 @@ public class MemberController {
         return "redirect:/member/memberInfo";
     }
     
-    // 전화문의 페이지로 이동
+    // 전화 문의 페이지로 이동
     @GetMapping("/memberCall")
     public String memberCall() {
         return "content/member/user_call";
@@ -160,7 +159,7 @@ public class MemberController {
         return "content/member/user_inquiry_write";
     }
 
-    // 허위매물 신고내역 페이지로 이동
+    // 허위 매물 신고 내역 페이지로 이동
     @GetMapping("/memberReport")
     public String memberReport() {
         return "content/member/user_report";
@@ -178,4 +177,23 @@ public class MemberController {
     public String memberDibsOn() {
         return "content/member/recent_viewed_room";
     }
+
+    // 닉네임 변경
+    @PostMapping("/updateNickName")
+    public int updateNickName(MemberVO memberVO){
+        return memberService.updateNickName(memberVO);
+    }
+
+    // 비밀 번호 변경
+    @PostMapping("/updatePassWord")
+    public int updatePassWord(MemberVO memberVO){
+        return memberService.updatePassWord(memberVO);
+    }
+
+    // 회원 탈퇴
+    @GetMapping("/deleteMember")
+    public int deleteMember(int userNo){
+        return memberService.deleteMember(userNo);
+    }
+
 }

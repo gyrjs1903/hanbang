@@ -26,6 +26,15 @@ public interface MemberService {
     public String selectUserInfo(MemberVO memberVO);
 
     // 프로필 이미지 불러오기
-    public MemberImgVO profileImgLoad(String userNo);
+    public MemberImgVO profileImgLoad(MemberImgVO memberImgVO);
+
+    // 닉네임 변경
+    public int updateNickName(MemberVO memberVO);
+
+    // 비밀 번호 변경
+    public int updatePassWord(MemberVO memberVO);
+
+    // 회원 탈퇴
+    public int deleteMember(int userNo);
 
 }
