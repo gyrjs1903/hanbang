@@ -12,7 +12,7 @@
         <result column="REQUEST_DATE" property="requestDate"/>
         <result column="REALTOR_NAME" property="realtorName"/>
         <association property="licenseImgVO" resultMap="licenseImg"/>
-        <collection property="inquiryVOList" resultMap="roomMapper.inquiry"/>
+        <collection property="inquiryList" resultMap="roomMapper.inquiry"/>
     </resultMap>
 
     <resultMap id="licenseImg" type="com.green.hanbang.realtor.vo.LicenseImgVO">
@@ -116,10 +116,12 @@
         , I.INQUIRY_TITLE_CODE
         , INQUIRY_CONTENT
         , INQUIRY_TITLES
+        , INQUIRY_ANSWER
         , TO_CHAR(INQUIRY_DATE, 'YYYY-MM-DD') INQUIRY_DATE
         FROM INQUIRY I, INQUIRY_TITLE T
         WHERE TO_USER_NO = #{toUserNo}
         AND I.INQUIRY_TITLE_CODE = T.INQUIRY_TITLE_CODE
+        ORDER BY INQUIRY_ANSWER NULLS FIRST
     </select>
 
     <!-- 문의글 상세 조회 -->

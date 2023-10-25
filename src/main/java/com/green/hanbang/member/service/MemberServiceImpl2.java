@@ -3,6 +3,7 @@ package com.green.hanbang.member.service;
 import com.green.hanbang.member.vo.AlarmVO;
 import com.green.hanbang.member.vo.MemberImgVO;
 import com.green.hanbang.member.vo.MemberVO;
+import com.green.hanbang.realtor.vo.RealtorDetailVO;
 import com.green.hanbang.room.vo.InquiryVO;
 import lombok.RequiredArgsConstructor;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -28,7 +29,7 @@ public class MemberServiceImpl2 implements MemberService2 {
     }
 
     @Override
-    public List<InquiryVO> selectInquiryAlarm(String userNo) {
-        return sqlSession.selectList("member2Mapper.selectInquiryAlarm",userNo);
+    public RealtorDetailVO selectInquiryAlarm(String userNo) {
+        return sqlSession.selectOne("member2Mapper.selectInquiryAlarm",userNo);
     }
 }

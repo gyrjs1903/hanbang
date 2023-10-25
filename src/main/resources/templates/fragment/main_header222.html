@@ -17,10 +17,13 @@
                 <li><a onclick="location.href='/member/dibsOn'">찜목록</a></li>
                 <li class="alarm_position">
                     <th:block th:if="${session.loginInfo.loginType == 'REALTOR'}">
-                        <a th:onclick="alarm([[${session.loginInfo}]],[[${authorityAlarm}]],[[${realtorInquiryList}]]);">알림</a>
+                        <a th:onclick="alarm([[${session.loginInfo.userNo}]],[[${authorityAlarm}]],[[${realtorInquiryCnt}]]);">알림<span class="alarmCnt">[[${alarmCnt}]]</span></a>
                     </th:block>
-                    <th:block th:unless="${session.loginInfo.loginType == 'REALTOR'}">
+                    <th:block th:if="${session.loginInfo.loginType == 'USER'}">
                         <a href="/2">알림</a>
+                    </th:block>
+                    <th:block th:if="${session.loginInfo.loginType == null}">
+                        <a href="/member/loginForm">알림</a>
                     </th:block>
                     <div id="alarm_tag"></div>
                 </li>

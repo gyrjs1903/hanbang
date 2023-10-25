@@ -3,18 +3,26 @@
 
 <!-- 복사해서 사용 -->
 <mapper namespace="member2Mapper">
-    <!-- 공인중개사 승인 알림 -->
+    <!-- 공인중개사 승인 요청 알림 -->
     <insert id="insertAlarm">
-        INSERT INTO ALARM(
-            ALARM_CODE
-            , USER_NO
-            , AUTHORITY_UPDATE
-        ) VALUES (
-            (SELECT 'ALARM_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ALARM_CODE, 7))), 0) + 1, 3, '0') ALARM_CODE
-            FROM ALARM)
-            , #{userNo}
-            , #{authorityUpdate}
-        )
+        MERGE
+        INTO ALARM
+        USING DUAL
+        ON (USER_NO = #{userNo})
+        WHEN MATCHED THEN
+            UPDATE
+            SET AUTHORITY_UPDATE = 2
+        WHEN NOT MATCHED THEN
+            INSERT (
+                ALARM_CODE
+                , USER_NO
+                , AUTHORITY_UPDATE
+            ) VALUES (
+                (SELECT 'ALARM_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ALARM_CODE, 7))), 0) + 1, 3, '0') ALARM_CODE
+                FROM ALARM)
+                , #{userNo}
+                , #{authorityUpdate}
+            )
     </insert>
 
     <!-- 승인완료알림 -->
@@ -26,11 +34,13 @@
 
     <!-- 문의 글 알림 -->
     <select id="selectInquiryAlarm" resultMap="realtorMapper.realtorDetail">
-        SELECT TO_USER_NO
-        , INQUIRY_CODE
-        , INQUIRY_ANSWER
-        FROM INQUIRY
+        SELECT REALTOR_CODE
+            , TO_USER_NO
+            , INQUIRY_CODE
+            , INQUIRY_ANSWER
+        FROM INQUIRY I , REALTOR_DETAIL R
         WHERE TO_USER_NO = #{toUserNo}
+        AND I.TO_USER_NO = R.USER_NO
     </select>
 </mapper>
 

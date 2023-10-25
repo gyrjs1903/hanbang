@@ -137,6 +137,38 @@ body {
 #alarm_tag{
   display: none;
   position: absolute;
-  top: 30px;
-  right: 0;
+  top: 38px;
+  right: -380%;
+  width: 830%;
+  background-color: #fff;
+  padding: 5px 20px;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+#alarm_tag > div{
+  margin: 20px 0;
+  padding: 15px 15px;
+  box-shadow: 3px 4px 5px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  background-color: #f1f1f1;
+}
+#alarm_tag > div:hover{
+  cursor: pointer;
+  background-color: #d1eef7;
+}
+#alarm_tag #authority-alarm{
+  position: relative;
+  padding: 15px 15px 30px 15px;
+}
+#alarm_tag #authority-alarm:hover{
+  cursor: default;
+}
+#authority-alarm span{
+  position: absolute;
+  bottom: 2px;
+  right: 7px;
+  font-size: 15px;
+}
+#authority-alarm span input{
+  margin-left: 5px;
 }

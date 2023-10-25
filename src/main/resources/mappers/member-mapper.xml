@@ -26,6 +26,7 @@
         <result column="USER_NO" property="userNo"/>
         <result column="AUTHORITY_UPDATE" property="authorityUpdate"/>
         <result column="INQUIRY_CODE" property="inquiryCode"/>
+        <result column="ALARM_DATE" property="alarmDate"/>
     </resultMap>
     <!-- 회원 가입 -->
     <insert id="join">
