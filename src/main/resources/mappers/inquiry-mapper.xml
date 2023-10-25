@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="inquiryMapper">
+    <resultMap id="memberInquiry" type="com.green.hanbang.member.vo.MemberInquiryVO">
+        <id column="MEMBER_INQUIRY_WRITE_NO"   property="memberInquiryWriteNo"/>
+        <result column="MEMBER_INQUIRY_CODE"   property="memberInquiryCode"/>
+        <result column="MEMBER_INQUIRY_TITLE"  property="memberInquiryTitle"/>
+        <result column="MEMBER_INQUIRY_DETAIL" property="memberInquiryDetail"/>
+        <result column="MEMBER_WRITE_DATE"     property="memberWriteDate"/>
+        <result column="USER_NO"               property="userNo"/>
+    </resultMap>
+
+    <resultMap id="memberInquiryImg" type="com.green.hanbang.member.vo.MemberInquiryImgVO">
+        <id column="MEMBER_INQUIRY_IMG_NO"                  property="memberInquiryImgNo"/>
+        <result column="MEMBER_INQUIRY_WRITE_NO"            property="memberInquiryWriteNo"/>
+        <result column="MEMBER_INQUIRY_IMG_NAME"            property="memberInquiryImgName"/>
+        <result column="MEMBER_ATTACHED_INQUIRY_IMG_NAME"   property="memberAttachedInquiryImgName"/>
+    </resultMap>
+
+    <resultMap id="memberInquiryType" type="com.green.hanbang.member.vo.MemberInquiryTypeVO">
+        <id column="MEMBER_INQUIRY_CODE"            property="memberInquiryCode"/>
+        <result column="MEMBER_INQUIRY_NAME"        property="memberInquiryName"/>
+    </resultMap>
+
+    <!-- 문의 유형 목록 조회 -->
+    <select id="selectMemberInquiryTypeList" resultMap="memberInquiryType">
+        SELECT MEMBER_INQUIRY_CODE
+        , MEMBER_INQUIRY_NAME
+        FROM MEMBER_INQUIRY_TYPE
+        ORDER BY MEMBER_INQUIRY_CODE
+    </select>
+
+</mapper>

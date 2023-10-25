@@ -39,7 +39,7 @@
             </div>
         </div>
         <div class="row itemList">
-            <div class="itemCate col align-middle scrollBar" id="itemCate">
+            <div class="itemCate col-4 align-middle scrollBar" id="itemCate">
                 <table class="itemListTable table table-hover table-striped">
                     <colgroup>
                         <col width="">
@@ -56,49 +56,48 @@
                     <tbody>
                         <tr>
                             <td colspan="2">
-                                데이터를 조회하려면 상단의 카테고리를 선택해주세요~
+                                데이터를 조회하려면 상단의 카테고리를 선택해주세요.
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <div class="itemDetailList col align-middle">
-                
+            <div class="itemDetailList col-8 align-middle">
+
             </div>
         </div>        
+        
         <div class="row mt-4 membershipRegForm">
-            <div>
-                <div class="col-auto">
-                    <label class="visually-hidden" for="autoSizingSelect">Preference</label>
-                    <select class="form-select" id="autoSizingSelect">
-                      <option selected>Choose...</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </select>
+            <div class="row g-3" >
+                <select class="form-select" id="selectFirstCate"  aria-label="Default select example" onchange="selectNewMidCate()">
+                    <option selected>대분류</option>
+                    <option th:each="category : ${cateList}" th:value="${category.memCateCode}">[[${category.memCateName}]]</option>
+                </select>
+                <select class="form-select" id="selectSecondCate" aria-label="Default select example" name="searchMidCate">
+                    <option selected>중분류</option>
+                    <option th:each="midCategory : ${midCateList}" th:value="${midCategory.membershipCode}">[[${midCategory.membershipName}]]</option>
+                </select>
+                <div class="col-md-6">
+                    <label for="itemName" class="form-label">상품명</label>
+                    <input type="text" class="form-control" id="itemName">
                 </div>
-                <div class="col-auto">
-                    <label class="visually-hidden" for="autoSizingSelect">Preference</label>
-                    <select class="form-select" id="autoSizingSelect">
-                      <option selected>Choose...</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </select>
+                <div class="col-md-6">
+                    <label for="inputPrice" class="form-label">상품 가격</label>
+                    <input type="number" class="form-control" id="itemPrice">
                 </div>
-                <div class="col-auto">
-                    <label class="visually-hidden" for="autoSizingInput">Name</label>
-                    <input type="text" class="form-control" id="autoSizingInput" placeholder="Jane Doe">
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" placeholder="Intro" id="itemIntro"></textarea>
+                    <label for="itemIntro">상품 소개</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" placeholder="Contents" id="itemContent" style="height: 100px"></textarea>
+                    <label for="itemContent">상품 상세설명</label>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary" onclick="insertItem()">등록하기</button>
                 </div>
             </div>
         </div>
-        
-        
-    </div>
-
-
-        
-
         <div class="row">
             <div class="col">
                 <div class=""></div>

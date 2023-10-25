@@ -20,10 +20,9 @@ public interface MembershipService {
     // 맴버쉽 상품 별 세부 상품 조회 (중분류 및 소분류) --> membershipList에서 상품 모두 보기
     public List<MembershipVO> selectMembershipItemList(String memCateCode);
 
-    // 맴버쉽 상품 등록하기
+    // 맴버쉽 카테고리 등록하기
     public int insertCategory(MemCateVO memCateVO);
     public int insertMidCategory(MemCateVO memCateVO);
-    public int insertItem(MemItemVO memItemVO);
 
     //다음에 insert할 CateCode 조회
     public String selectNextCateCode();
@@ -42,4 +41,10 @@ public interface MembershipService {
 
     // 특정 아이템 클릭 시 그 아이템의 상세 정보 조회
     public List<MemItemVO> selectItemDetail(String itemCode);
+
+    //아이템 수정하기
+    public int updateItemInfo (MemItemVO memItemVO);
+
+    // 아이템 등록하기
+    public int insertItem(MemItemVO memItemVO);
 }

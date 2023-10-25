@@ -5,11 +5,11 @@ import com.green.hanbang.admin.service.MemberManageService;
 import com.green.hanbang.admin.service.MembershipService;
 import com.green.hanbang.admin.vo.*;
 import lombok.RequiredArgsConstructor;
-import org.codehaus.groovy.transform.SourceURIASTTransformation;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.Console;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,6 +81,8 @@ public class AdminController {
         return "redirect:/admin/realDetail";
     }
 
+    //////// 공지사항 /////////////////////////////////////////////////
+
     // 공지사항 목록 조회
     @GetMapping("/infoBoard")
     public String selectBoardList(Model model, BoardVO boardVO){
@@ -132,6 +134,8 @@ public class AdminController {
         return "redirect:/admin/infoBoard";
     }
 
+    ////////// 맴버쉽 ///////////////////////////////////////////////////////////////////////////////
+
     // 맴버쉽 카테고리 별 상품 조회 (중분류 및 소분류 조회) --> membershipList에서 조회
     @GetMapping("/membershipList")
     public String membershipList(Model model, String memCateCode){
@@ -141,7 +145,6 @@ public class AdminController {
         return "admin/membershipList";
     }
 
-    /////////////////////////////  맴버쉽 등록  ///////////////////////////////////////////////////////////////
 
     // 맴버쉽 등록 페이지 이동
     @GetMapping("/regMembershipForm")
@@ -179,15 +182,12 @@ public class AdminController {
         return membershipService.selectItemListByMidCate(memItemVO);
     }
 
-    // 맴버쉽 등록/////////////////////////////////////////////////////////////////////////////////////////////////////////
-    @PostMapping("/regMembership")
-    public String regMembership(MemCateVO memCateVO, MembershipVO membershipVO, MemItemVO memItemVO){
-       // membershipService.insertCategory(memCateVO);
-       // membershipService.insertMidCategory(membershipVO);
-       // membershipService.insertItem(memItemVO);
-        return "redirect:/admin/manege";
+    // 아이템 클릭 시 상세보기
+    @ResponseBody
+    @PostMapping("/showItemDetail")
+    public List<MemItemVO> selectItemDetail(String itemCode){
+        return membershipService.selectItemDetail(itemCode);
     }
-
 
     //카테고리 비동기 등록
     @ResponseBody
@@ -221,9 +221,39 @@ public class AdminController {
         return map;
     }
 
+    // 아이템 수정하기
     @ResponseBody
-    @PostMapping("/showItemDetail")
-    public List<MemItemVO> selectItemDetail(String itemCode){
-        return membershipService.selectItemDetail(itemCode);
+    @PostMapping("/updateItem")
+    public void updateItemInfo(MemItemVO memItemVO){
+        membershipService.updateItemInfo(memItemVO);
     }
+
+    // 아이템 등록하기
+    @ResponseBody
+    @PostMapping("/insertItem")
+    public String insertItem(MemItemVO memItemVO){
+        String nextCode = membershipService.selectNextItemCode();
+        memItemVO.setItemCode(nextCode);
+
+        membershipService.insertItem(memItemVO);
+
+        return "redirect:/admin/getItemCateList";
+    }
+
+    //대분류에 따라 그에 속하는 중분류 설렉트 박스 조회
+    @ResponseBody
+    @PostMapping("/getNewMidCateList")
+    public List<MembershipVO> getNewMidCateList(String memCateCode){
+
+        return  membershipService.selectMidCategory(memCateCode);
+    }
+
+    //카테고리 등록시 대분류 셀렉트 박스 데이터 재조회
+    @ResponseBody
+    @PostMapping("/getNewCateList")
+    public List<MemCateVO> getNewCateList(){
+        // 대분류 조회
+        return membershipService.selectCategory();
+    }
+
 }
