@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{fragment/main_layout}">
+<head>
+<meta charset="UTF-8">
+<title>원하는 방을 한방에 한방👊</title>
+</head>
+<body>
+    <th:block layout:fragment="content">
+        <link rel="stylesheet" href="/css/member/user_inquiry_write.css">
+        <header class="user_header">
+            <div>
+                <h1 class="userHT">문의하기</h1>
+            </div>
+        </header>
+        <div class="wrap">
+            <div>
+                <div class="inquiryC">
+                    <div class="inquiryCT">
+                        <p>한방에 궁금하신 점을 문의해주세요.</p>
+                        <p>문의 내용과 답변은 <a onclick="location.href='/member/memberInquiry'">'1:1 문의내역'</a>에서 확인하실 수 있습니다.</p>
+                    </div>
+                    <ul class="inquiryU">
+                        <li class="inquiryL">
+                            <div class="inquiryLT">문의유형</div>
+                            <select name="inquiryCode" class="selectIC">
+                                <option>선택</option>
+                                <option th:each="memberInquiryType : ${memberInquiryTypeList}" th:value="${memberInquiryType.memberInquiryCode}">[[${memberInquiryType.memberInquiryName}]]</option>
+                            </select>
+                        </li>
+                        <li class="inquiryL">
+                            <div class="inquiryLT">제목</div>
+                            <input name="memberInquiryTitle" class="inquiryT">
+                        </li>
+                        <li class="inquiryL">
+                            <div class="inquiryLT">문의내용</div>
+                            <textarea name="memberInquiryDetail" class="inquiryD" placeholder=""></textarea>
+                        </li>
+                        <li class="inquiryL">
+                            <div class="inquiryLT">사진</div>
+                            <div class="imgW">
+                                <div class="imgWW">
+                                    <div class="imgaddW">
+                                        <img src="/img/member/photos_icon.svg" alt="사진 첨부 아이콘" class="photoIcon">
+                                        <button type="button">사진 첨부</button>
+                                        <button type="button" class="hidden">사진 첨부</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="imgT">
+                                <p>- 사진 용량은 사진 한 장당 까지 등록이 가능합니다.</p>
+                                <p>- 사진은 최대 3장까지 등록이 가능합니다.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="inquiryBtn">
+                    <button type="button" class="inquiryBtnS">문의하기</button>
+                </div>
+                <div class="inquiryTA">
+                    <p class="ccT">"고객센터 : "<span>052-1234-1234</span></p>
+                    <p class="tmT">평일 09:00 ~ 18:00 (토, 일요일, 공휴일 휴무)</p>
+                </div>
+            </div>
+        </div>
+    </th:block>
+</body>
+</html>

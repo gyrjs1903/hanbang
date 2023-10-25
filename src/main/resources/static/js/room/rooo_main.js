@@ -234,6 +234,7 @@ document.getElementById("searchButton").addEventListener("click", function () {
             data.forEach((room, idx) => {
                 const roomElement = document.createElement('div');
                 roomElement.className = 'room';
+                roomElement.setAttribute('onclick', `detailRoom(${room.roomCode});`);
                 const imgElement = document.createElement('div');
                 roomElement.append(imgElement);
 

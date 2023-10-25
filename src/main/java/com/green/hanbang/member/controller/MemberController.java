@@ -1,20 +1,25 @@
 package com.green.hanbang.member.controller;
 
+import com.green.hanbang.member.service.MemberInquiryService;
 import com.green.hanbang.member.service.MemberService;
 import com.green.hanbang.member.vo.MemberImgVO;
+import com.green.hanbang.member.vo.MemberInquiryTypeVO;
 import com.green.hanbang.member.vo.MemberVO;
+import com.green.hanbang.util.MemberUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/member")
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
+    private final MemberInquiryService memberInquiryService;
 
     // 회원 가입 페이지 이동
     @GetMapping("/joinForm")
@@ -69,7 +74,7 @@ public class MemberController {
 
         MemberVO loginInfo = memberService.login(memberVO);
 
-        // 로그인 타입에 따라 리다이렉트
+        // 로그인 타입에 따라 페이지 이동
         if (loginInfo != null) {
             session.setAttribute("loginInfo", loginInfo);
             if (loginInfo.getLoginType().equals("USER")) {
@@ -97,32 +102,42 @@ public class MemberController {
     public String memberInfo(Model model, HttpSession session) {
         // 현재 로그인한 유저 번호를 조회
         MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
+
         if (loginInfo != null) {
             String userNo = loginInfo.getUserNo();
-            String memberInfo = memberService.selectUserNo(userNo); // 회원 정보를 가져오는 메소드 호출
+            String memberInfo = memberService.selectUserNo(userNo);
 
-            model.addAttribute("memberInfo", memberInfo); // 가져온 회원 정보를 모델에 추가
+            model.addAttribute("memberInfo", memberInfo);
 
-            return "content/member/user_info"; // 유저 정보 페이지로 이동
+            return "content/member/user_info";
         } else {
-            // 로그인되지 않은 경우에 대한 처리
-            return "redirect:/member/login"; // 로그인 페이지로 이동하거나, 적절한 처리를 수행
+            // 미 로그인 한 상태로 페이지 접근 시 로그인 창으로 이동
+            return "content/member/loginForm";
         }
     }
     
     // 프로필 이미지 등록
-    @PostMapping("/updateProfileImg")
-    public String insertProImg(MemberImgVO memberImgVO, HttpSession session) {
-        MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
-        String userNo = loginInfo.getUserNo();
+    @PostMapping("/updateProfile")
+    public String insertPro(MemberVO memberVO, MemberImgVO memberImgVO, MultipartFile memberImg, HttpSession session) {
+
+        // 유저 번호 조회
+        String userNo = memberService.selectUserNo(memberVO.getUserNo());
+
+        // 프로필 이미지 파일 첨부
+        MemberImgVO vo = MemberUtil.MemberUploadFile(memberImg);
+        vo.setUserNo(userNo);
+
+        // 정보 세팅
         memberImgVO.setUserNo(userNo);
+        MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
+        memberVO.setUserNo(loginInfo.getUserNo());
 
         memberService.insertProImg(memberImgVO);
 
         return "redirect:/member/memberInfo";
     }
     
-    // 전화문의 페이지로 이동
+    // 전화 문의 페이지로 이동
     @GetMapping("/memberCall")
     public String memberCall() {
         return "content/member/user_call";
@@ -134,7 +149,17 @@ public class MemberController {
         return "content/member/user_inquiry";
     }
 
-    // 허위매물 신고내역 페이지로 이동
+    // 1:1문의 작성 페이지로 이동
+    @GetMapping("/memberInquiryWrite")
+    public String memberInquiryWrite(Model model, MemberInquiryTypeVO memberInquiryTypeVO){
+
+        // 문의 유형 목록
+        model.addAttribute("memberInquiryTypeList", memberInquiryService.selectMemberInquiryTypeList(memberInquiryTypeVO));
+
+        return "content/member/user_inquiry_write";
+    }
+
+    // 허위 매물 신고 내역 페이지로 이동
     @GetMapping("/memberReport")
     public String memberReport() {
         return "content/member/user_report";
@@ -152,4 +177,23 @@ public class MemberController {
     public String memberDibsOn() {
         return "content/member/recent_viewed_room";
     }
+
+    // 닉네임 변경
+    @PostMapping("/updateNickName")
+    public int updateNickName(MemberVO memberVO){
+        return memberService.updateNickName(memberVO);
+    }
+
+    // 비밀 번호 변경
+    @PostMapping("/updatePassWord")
+    public int updatePassWord(MemberVO memberVO){
+        return memberService.updatePassWord(memberVO);
+    }
+
+    // 회원 탈퇴
+    @GetMapping("/deleteMember")
+    public int deleteMember(int userNo){
+        return memberService.deleteMember(userNo);
+    }
+
 }

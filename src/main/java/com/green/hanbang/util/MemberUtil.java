@@ -8,8 +8,8 @@ import java.util.UUID;
 
 public class MemberUtil {
     // 파일 첨부 기능 (단일 파일 업로드 - 프로필 사진은 하나만)
-    public static MemberImgVO uploadFile(MultipartFile img){
-        MemberImgVO memberImgVO = new MemberImgVO();
+    public static MemberImgVO MemberUploadFile(MultipartFile img){
+            MemberImgVO memberImgVO = new MemberImgVO();
 
             // 첨부 파일
             String profileImgName = img.getOriginalFilename();
@@ -24,7 +24,7 @@ public class MemberUtil {
 
             // 파일 첨부
             try {
-                File file = new File(ConstantVariable.UPLOAD_PATH + attachedProfileImgName);
+                File file = new File(ConstantVariable.PROFILE_UPLOAD_PATH + attachedProfileImgName);
                 img.transferTo(file);
 
                 memberImgVO.setProfileImgName(profileImgName);

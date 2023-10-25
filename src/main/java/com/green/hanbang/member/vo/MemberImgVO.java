@@ -4,9 +4,8 @@ import lombok.Data;
 
 @Data
 public class MemberImgVO {
-    private String profileImgNO;
+    private String profileImgNo;
     private String profileImgName;
     private String attachedProfileImgName;
     private String userNo;
-
 }
