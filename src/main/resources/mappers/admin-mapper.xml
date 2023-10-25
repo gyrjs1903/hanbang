@@ -4,48 +4,64 @@
 <mapper namespace="adminMapper">
     <resultMap id="manager" type="com.green.hanbang.admin.vo.MemberManageVO">
         <id column="USER_NO"                 property="userNo"/>
-        <result column="USER_NAME"       property="userName"/>
-        <result column="PASSWORD"       property="password"/>
-        <result column="LOGIN_TYPE"      property="loginType"/>
-        <result column="NICK_NAME"      property="nickName"/>
-        <result column="PHONE"      property="phone"/>
-        <result column="JOIN_DATE"  property="joinDate"/>
-        <result column="REALTOR_CODE"  property="realTorCode"/>
-        <result column="OFFICE_NAME"  property="officeName"/>
+        <result column="USER_NAME"           property="userName"/>
+        <result column="PASSWORD"            property="password"/>
+        <result column="LOGIN_TYPE"          property="loginType"/>
+        <result column="NICK_NAME"           property="nickName"/>
+        <result column="PHONE"               property="phone"/>
+        <result column="JOIN_DATE"           property="joinDate"/>
+        <result column="REALTOR_CODE"        property="realTorCode"/>
+        <result column="OFFICE_NAME"         property="officeName"/>
         <result column="IDENTIFICATION_NUM"  property="identificationNum"/>
-        <result column="LICENSE_FILE_NAME"  property="licenseFileName"/>
-        <result column="AUTHORITY"  property="authority"/>
+        <result column="LICENSE_FILE_NAME"   property="licenseFileName"/>
+        <result column="AUTHORITY"           property="authority"/>
     </resultMap>
     
     <resultMap id="board" type="com.green.hanbang.admin.vo.BoardVO">
-        <result column="BOARD_NUM" property="boardNum"/>
-        <result column="INFO_TITLE" property="infoTitle"/>
-        <result column="INFO_CONTENT" property="infoContent"/>
-        <result column="INFO_REGDATE" property="infoRegDate"/>
+        <result column="BOARD_NUM"      property="boardNum"/>
+        <result column="INFO_TITLE"     property="infoTitle"/>
+        <result column="INFO_CONTENT"   property="infoContent"/>
+        <result column="INFO_REGDATE"   property="infoRegDate"/>
     </resultMap>
 
     <resultMap id="memCate" type="com.green.hanbang.admin.vo.MemCateVO">
-        <result column="MEM_CATE_CODE" property="memCateCode"/>
-        <result column="MEM_CATE_NAME" property="memCateName"/>
+        <result column="MEM_CATE_CODE"          property="memCateCode"/>
+        <result column="MEM_CATE_NAME"          property="memCateName"/>
         <collection property="membershipList" resultMap="membership"/>
     </resultMap>
 
     <resultMap id="membership" type="com.green.hanbang.admin.vo.MembershipVO">
-        <result column="MEM_CATE_CODE" property="memCateCode"/>
-        <result column="MEM_CATE_NAME" property="memCateName"/>
-        <result column="MEMBERSHIP_CODE" property="membershipCode"/>
-        <result column="MEMBERSHIP_NAME" property="membershipName"/>
+        <result column="MEM_CATE_CODE"      property="memCateCode"/>
+        <result column="MEM_CATE_NAME"      property="memCateName"/>
+        <result column="MEMBERSHIP_CODE"    property="membershipCode"/>
+        <result column="MEMBERSHIP_NAME"    property="membershipName"/>
         <collection property="memItemList" resultMap="memItem"/>
     </resultMap>
 
     <resultMap id="memItem" type="com.green.hanbang.admin.vo.MemItemVO">
-        <result column="MEM_CATE_CODE" property="memCateCode"/>
-        <result column="MEMBERSHIP_CODE" property="membershipCode"/>
-        <result column="ITEM_CODE" property="itemCode"/>
-        <result column="ITEM_NAME" property="itemName"/>
-        <result column="ITEM_PRICE" property="itemPrice"/>
-        <result column="ITEM_CONTENT" property="itemContent"/>
-        <result column="ITEM_INTRO" property="itemIntro"/>
+        <result column="MEM_CATE_CODE"      property="memCateCode"/>
+        <result column="MEMBERSHIP_CODE"    property="membershipCode"/>
+        <result column="ITEM_CODE"          property="itemCode"/>
+        <result column="ITEM_NAME"          property="itemName"/>
+        <result column="ITEM_PRICE"         property="itemPrice"/>
+        <result column="ITEM_CONTENT"       property="itemContent"/>
+        <result column="ITEM_INTRO"         property="itemIntro"/>
+    </resultMap>
+
+    <resultMap id="event" type="com.green.hanbang.admin.vo.EventVO">
+        <id column="EVENT_CODE"             property="eventCode"/>
+        <result column="EVENT_TITLE"        property="eventTitle"/>
+        <result column="EVENT_CONTENT"      property="eventContent"/>
+        <result column="EVENT_REGDATE"      property="eventRegDate"/>
+        <result column="EVENT_READ_CNT"     property="eventReadCnt"/>
+        <collection property="eventImgList" resultMap="eventImg"/>
+    </resultMap>
+
+    <resultMap id="eventImg" type="com.green.hanbang.admin.vo.EventImgVO">
+        <id column="EVENT_IMG_CODE"                 property="eventImgCode"/>
+        <result column="EVENT_ORIGIN_FILE_NAME"     property="eventOriginFileName"/>
+        <result column="EVENT_ATTACHED_FILE_NAME"   property="eventAttachedFileName"/>
+        <result column="EVENT_CODE"                 property="eventCode"/>
     </resultMap>
 
 <!--    일반 회원 조회 -->
@@ -124,6 +140,8 @@
         WHERE IDENTIFICATION_NUM = #{identificationNum}
     </delete>
 
+<!--//////////////////////////////// 공지사항 ////////////////////////////////////////-->
+
 <!--   공지사항 조회하기-->
     <select id="selectBoard" resultMap="board">
         SELECT BOARD_NUM
@@ -171,7 +189,10 @@
         WHERE BOARD_NUM = #{boardNum}
     </delete>
 
-<!--    맴버쉽 카테고리 출력 (대분류)-->
+    <!--//////////////////////////////// 맴버쉽 ////////////////////////////////////////-->
+
+
+    <!--    맴버쉽 카테고리 출력 (대분류)-->
     <select id="selectCategory" resultMap="memCate">
         SELECT MEM_CATE_CODE
             , MEM_CATE_NAME
@@ -228,8 +249,6 @@
         )
     </insert>
 
-
-
 <!--    코드 생성하기 -->
     <select id="selectNextCateCode" resultType="String">
         SELECT 'CATE_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(MEM_CATE_CODE, 6))), 0) + 1, 3, '0')
@@ -241,7 +260,7 @@
     </select>
     <select id="selectNextItemCode" resultType="String">
         SELECT 'ITEM_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ITEM_CODE, 6))), 0) + 1, 3, '0')
-        FROM ITEM_TABLE
+        FROM MEMITEM_TABLE
     </select>
 
     <!--맴버쉽 등록 화면에서 상단의 카테고리 클릭 시 해당 카테고리에 포함된 상품을 조회하는 쿼리-->
@@ -302,6 +321,59 @@
             , #{membershipCode}
         )
     </insert>
+
+
+    <!--//////////////////////////////// 이벤트 ////////////////////////////////////////-->
+
+    <!-- 새로운 EVENT 등록 쿼리 -->
+    <insert id="insertEvent">
+        INSERT INTO EVENT_BOARD(
+            EVENT_CODE
+            ,EVENT_TITLE
+            ,EVENT_CONTENT
+        ) VALUES(
+            #{eventCode}
+            , #{eventTitle}
+            , #{eventContent}
+        )
+    </insert>
+
+    <!-- EVENT_CODE 자동 생성 쿼리-->
+    <select id="selectNextEventCode" resultType="String">
+        SELECT 'EVENT_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(EVENT_CODE, 7))), 0) + 1, 3, '0')
+        FROM EVENT_BOARD
+    </select>
+
+    <!-- 이미지 첨부 쿼리-->
+    <insert id="insertEventImg">
+        INSERT INTO EVENT_IMG(
+            EVENT_IMG_CODE
+            , EVENT_ORIGIN_FILE_NAME
+            , EVENT_ATTACHED_FILE_NAME
+            , EVENT_CODE
+        )
+        <foreach collection="eventImgList" item="eventImg" separator="UNION ALL" index="idx">
+            SELECT (SELECT 'IMG_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(IMG_CODE,5))),0) +1 + #{idx}, 3,'0')
+                FROM EVENT_IMG)
+                , #{eventImg.eventOriginFileName}
+                , #{eventImg.eventAttachedFileName}
+                , #{eventImg.eventCode}
+            FROM DUAL
+        </foreach>
+    </insert>
+
+
+    <!--  이벤트 상품 조회  -->
+    <select id="selectEventList" resultMap="event">
+        SELECT EVENT.EVENT_CODE
+            , EVENT_TITLE
+            , EVENT_REGDATE
+            , EVENT_READ_CNT
+            , EVENT_ATTACHED_FILE_NAME
+        FROM EVENT_BOARD EVENT, EVENT_IMG IMG
+        WHERE EVENT.EVENT_CODE = IMG.EVENT_CODE
+        ORDER BY EVENT_CODE DESC
+    </select>
 
 
 </mapper>

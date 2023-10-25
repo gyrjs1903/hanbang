@@ -68,35 +68,38 @@
         </div>        
         
         <div class="row mt-4 membershipRegForm">
-            <div class="row g-3" >
-                <select class="form-select" id="selectFirstCate"  aria-label="Default select example" onchange="selectNewMidCate()">
-                    <option selected>대분류</option>
-                    <option th:each="category : ${cateList}" th:value="${category.memCateCode}">[[${category.memCateName}]]</option>
-                </select>
-                <select class="form-select" id="selectSecondCate" aria-label="Default select example" name="searchMidCate">
-                    <option selected>중분류</option>
-                    <option th:each="midCategory : ${midCateList}" th:value="${midCategory.membershipCode}">[[${midCategory.membershipName}]]</option>
-                </select>
-                <div class="col-md-6">
-                    <label for="itemName" class="form-label">상품명</label>
-                    <input type="text" class="form-control" id="itemName">
+            <form>
+                <div class="row g-3" >
+                    <select class="form-select" id="selectFirstCate"  aria-label="Default select example" onchange="selectNewMidCate()">
+                        <option selected>대분류</option>
+                        <option th:each="category : ${cateList}" th:value="${category.memCateCode}">[[${category.memCateName}]]</option>
+                    </select>
+                    <select class="form-select" id="selectSecondCate" aria-label="Default select example" name="searchMidCate">
+                        <option selected>중분류</option>
+                        <option th:each="midCategory : ${midCateList}" th:value="${midCategory.membershipCode}">[[${midCategory.membershipName}]]</option>
+                    </select>
+                    <div class="col-md-6">
+                        <label for="itemName" class="form-label">상품명</label>
+                        <input type="text" class="form-control" id="itemName">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputPrice" class="form-label">상품 가격</label>
+                        <input type="number" class="form-control" id="itemPrice">
+                    </div>
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" placeholder="Intro" id="itemIntro"></textarea>
+                        <label for="itemIntro">상품 소개</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" placeholder="Contents" id="itemContent" style="height: 100px"></textarea>
+                        <label for="itemContent">상품 상세설명</label>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary" onclick="insertItem()">등록하기</button>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <label for="inputPrice" class="form-label">상품 가격</label>
-                    <input type="number" class="form-control" id="itemPrice">
-                </div>
-                <div class="form-floating mb-3">
-                    <textarea class="form-control" placeholder="Intro" id="itemIntro"></textarea>
-                    <label for="itemIntro">상품 소개</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <textarea class="form-control" placeholder="Contents" id="itemContent" style="height: 100px"></textarea>
-                    <label for="itemContent">상품 상세설명</label>
-                </div>
-                <div class="col-12">
-                    <button type="submit" class="btn btn-primary" onclick="insertItem()">등록하기</button>
-                </div>
-            </div>
+                <input class="btn btn-danger resetBtn" type="reset" value="초기화">
+            </form>
         </div>
         <div class="row">
             <div class="col">

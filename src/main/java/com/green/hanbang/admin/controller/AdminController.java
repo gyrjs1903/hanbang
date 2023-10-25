@@ -1,6 +1,7 @@
 package com.green.hanbang.admin.controller;
 
 import com.green.hanbang.admin.service.BoardService;
+import com.green.hanbang.admin.service.EventService;
 import com.green.hanbang.admin.service.MemberManageService;
 import com.green.hanbang.admin.service.MembershipService;
 import com.green.hanbang.admin.vo.*;
@@ -8,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 
 import java.io.Console;
 import java.util.HashMap;
@@ -21,6 +24,7 @@ public class AdminController {
     private final MemberManageService memberManageService;
     private final BoardService boardService;
     private final MembershipService membershipService;
+    private final EventService eventService;
 
     // 관리자 페이지 ( + 맴버쉽 상품의 대분류 조회)
     @GetMapping("/manage")
@@ -256,4 +260,33 @@ public class AdminController {
         return membershipService.selectCategory();
     }
 
+    ////////// 이벤트 ///////////////////////////////////////////////////////////////////////////////
+
+    // 이벤트 목록 조회
+    @GetMapping("/eventList")
+    public String goEventList (EventVO eventVO, Model model){
+        List<EventVO> eventLists = eventService.selectEventList();
+        model.addAttribute("eventLists", eventLists);
+        return "admin/event_list";
+    }
+
+    // 이벤트 등록 폼으로 이동
+    @GetMapping("/regEventForm")
+    public String regEventForm (){
+        return "admin/reg_eventForm";
+    }
+
+    // 상품 등록
+    @PostMapping("/regEvent")
+    public String regEvent(EventVO eventVO, MultipartFile eventImg, MultipartFile[] subEventImg){
+        // 상품 이미지 등록
+        String nextEventCode = eventService.selectNextEventCode();
+        eventVO.setEventCode(nextEventCode);
+
+        // 메인 이미지 등록
+
+        // 서브 이미지 등록
+
+    return "redirect/admin/eventList" ;
+    }
 }
