@@ -145,8 +145,14 @@
 
     <!-- 회원 탈퇴 -->
     <delete id="deleteMember">
-        DELETE MEMBER_USER
-        WHERE USER_NO = #{userNo}
+        DELETE
+        FROM MEMBER_USER MU
+        WHERE EXISTS
+        (
+            SELECT USER_NO = #{userNo}
+            FROM MEMBER_IMG MI
+            WHERE MU.USER_NO = MI.USER_NO
+        );
     </delete>
 
 </mapper>
