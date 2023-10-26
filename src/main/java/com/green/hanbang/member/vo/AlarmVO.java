@@ -8,4 +8,5 @@ public class AlarmVO {
     private String userNo;
     private int authorityUpdate;
     private String inquiryCode;
+    private String alarmDate;
 }

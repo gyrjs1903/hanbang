@@ -23,6 +23,7 @@ layout:decorate="~{realtor/realtor_layout}">
                         <td>제 목</td>
                         <td>작성자</td>
                         <td>날 짜</td>
+                        <td>답글여부</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,6 +37,12 @@ layout:decorate="~{realtor/realtor_layout}">
                         </th:block>
                         <td>[[${inquiry.fromUserNo}]]</td>
                         <td>[[${inquiry.inquiryDate}]]</td>
+                        <th:block th:if="${inquiry.inquiryAnswer == null}">
+                            <td>답글 미작성</td>
+                        </th:block>
+                        <th:block th:unless="${inquiry.inquiryAnswer == null}">
+                            <td>답글 완료</td>
+                        </th:block>
                     </tr>
                 </tbody>
             </table>

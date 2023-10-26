@@ -69,7 +69,7 @@ public class AdminController2 {
     @GetMapping("/updateAuthority")
     public String updateAuthority(MemberManageVO memberManageVO, AlarmVO alarmVO){
         memberManageService.updateAuthority(memberManageVO);
-
+        /////////////추가/////////////
         //승인 요청 알림 insert
         alarmVO.setUserNo(memberManageVO.getUserNo());
         alarmVO.setAuthorityUpdate(1);

@@ -16,5 +16,5 @@ public class RealtorDetailVO {
     private String requestDate;
     private String realtorName;
     private LicenseImgVO licenseImgVO;
-    private List<InquiryVO> inquiryVOList;
+    private List<InquiryVO> inquiryList;
 }
