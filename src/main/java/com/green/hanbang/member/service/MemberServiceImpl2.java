@@ -16,6 +16,11 @@ import java.util.List;
 public class MemberServiceImpl2 implements MemberService2 {
     private final SqlSessionTemplate sqlSession;
 
+    @Override
+    public AlarmVO selectAlarm(String userNo) {
+        return sqlSession.selectOne("member2Mapper.selectAlarm",userNo);
+    }
+
     //승인 알림 insert
     @Override
     public int insertAlarm(AlarmVO alarmVO) {
@@ -31,5 +36,10 @@ public class MemberServiceImpl2 implements MemberService2 {
     @Override
     public RealtorDetailVO selectInquiryAlarm(String userNo) {
         return sqlSession.selectOne("member2Mapper.selectInquiryAlarm",userNo);
+    }
+
+    @Override
+    public List<InquiryVO> selectUserInquiryAlarm(String userNo) {
+        return sqlSession.selectList("member2Mapper.selectUserInquiryAlarm",userNo);
     }
 }

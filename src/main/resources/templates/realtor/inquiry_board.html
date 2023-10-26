@@ -8,6 +8,7 @@ layout:decorate="~{realtor/realtor_layout}">
 </head>
 <body>
     <th:block layout:fragment="content">
+        <link rel="stylesheet" href="/css/realtor/inquiry_board.css">
         <th:block th:if="${inquiryBoardList == null || inquiryBoardList == ''}">
             <div class="row">
                 <div class="col">
@@ -38,7 +39,7 @@ layout:decorate="~{realtor/realtor_layout}">
                         <td>[[${inquiry.fromUserNo}]]</td>
                         <td>[[${inquiry.inquiryDate}]]</td>
                         <th:block th:if="${inquiry.inquiryAnswer == null}">
-                            <td>답글 미작성</td>
+                            <td class="no-answer">답글 미작성</td>
                         </th:block>
                         <th:block th:unless="${inquiry.inquiryAnswer == null}">
                             <td>답글 완료</td>

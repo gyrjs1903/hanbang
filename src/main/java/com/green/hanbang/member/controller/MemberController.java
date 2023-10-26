@@ -2,9 +2,11 @@ package com.green.hanbang.member.controller;
 
 import com.green.hanbang.member.service.MemberInquiryService;
 import com.green.hanbang.member.service.MemberService;
+import com.green.hanbang.member.service.MemberService2;
 import com.green.hanbang.member.vo.MemberImgVO;
 import com.green.hanbang.member.vo.MemberInquiryTypeVO;
 import com.green.hanbang.member.vo.MemberVO;
+import com.green.hanbang.room.vo.InquiryVO;
 import com.green.hanbang.util.MemberUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -14,12 +16,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/member")
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
     private final MemberInquiryService memberInquiryService;
+    private final MemberService2 memberService2;
 
     // 회원 가입 페이지 이동
     @GetMapping("/joinForm")
@@ -139,7 +144,11 @@ public class MemberController {
     
     // 전화 문의 페이지로 이동
     @GetMapping("/memberCall")
-    public String memberCall() {
+    public String memberCall(HttpSession session,Model model) {
+        MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
+        List<InquiryVO> roomInquiryList = memberService2.selectUserInquiryAlarm(loginInfo.getUserNo());
+        System.out.println(roomInquiryList);
+        model.addAttribute("roomInquiryList",roomInquiryList);
         return "content/member/user_call";
     }
 

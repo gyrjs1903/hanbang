@@ -1,7 +1,7 @@
 @charset "UTF-8";
 /* admin_manage2.css */
 
-#alarm_tag{
+#admin_alarm_tag{
     display: none;
     position: absolute;
     width: 320px;
@@ -33,4 +33,13 @@
 }
 .cursor{
     cursor: pointer;
+}
+.cursor-default{
+    cursor: default;
+}
+.close-btn{
+    width: 20px;
+    height: 20px;
+    background-size: cover;
+    background-image: url(../../img/main/ico-alllmenu_close.png);
 }
