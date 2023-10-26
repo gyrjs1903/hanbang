@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<head>
+<meta charset="UTF-8">
+<title>이벤트 상세 페이지</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+    <h4>이벤트 상세 페이지</h4>
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <div class="row mb-3">
+                <div class="col-5">
+                    <th:block th:each="eventImg : ${event.eventImgList}">
+                        <th:block th:if="${eventImg.isMain == 'Y'}">
+                            <img width="100%" height="280px;" th:src="${'/img/admin/' + eventImg.eventAttachedFileName}" alt="">
+                        </th:block>
+                    </th:block>
+                </div>
+                <div class="col-7">
+                    <div class="row mb-3">
+                        <div class="col">[[${event.eventTitle}]]</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">[[${event.eventRegDate}]]</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">[[${event.eventReadCnt}]]</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">[[${event.eventContent}]]</div>
+            </div>
+            <div class="row">
+                <div class="col-12" th:each="eventImg : ${event.eventImgList}">
+                    <img th:if="${eventImg.isMain == 'N'}" width="100%" th:src="${'/img/admin/' + eventImg.eventAttachedFileName}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="button" value="수정" th:onclick="|location.href='@{/admin/updateEventInfoForm(eventCode=${event.eventCode})}'|">
+    <input type="button" value="삭제" th:onclick="|location.href='@{/admin/deleteEvent(eventCode=${event.eventCode})}'|">
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>

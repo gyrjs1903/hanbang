@@ -8,4 +8,5 @@ public class EventImgVO {
     private String eventOriginFileName;
     private String eventAttachedFileName;
     private String eventCode;
+    private String isMain;
 }
