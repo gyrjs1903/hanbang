@@ -17,15 +17,21 @@
                 <li><a onclick="location.href='/member/dibsOn'">찜목록</a></li>
                 <li class="alarm_position">
                     <th:block th:if="${session.loginInfo.loginType == 'REALTOR'}">
-                        <a th:onclick="alarm([[${session.loginInfo.userNo}]],[[${authorityAlarm}]],[[${realtorInquiryCnt}]]);">알림<span class="alarmCnt">[[${alarmCnt}]]</span></a>
+                        <a th:onclick="realtorAlarm([[${session.loginInfo.userNo}]],[[${authorityAlarm}]],[[${realtorInquiryCnt}]],[[${alarmCnt}]]);">알림
+                            <span th:if="${alarmCnt != 0}" class="alarmCnt">[[${alarmCnt}]]</span></a>
                     </th:block>
                     <th:block th:if="${session.loginInfo.loginType == 'USER'}">
-                        <a href="/2">알림</a>
+                        <a th:onclick="userAlarm([[${session.loginInfo.userNo}]],[[${session.loginInfo?.nickName}]],[[${userInquiryAnswer}]]);">알림
+                            <span th:if="${alarmCnt == 1}" class="alarmCnt">1</span>
+                        </a>
                     </th:block>
                     <th:block th:if="${session.loginInfo.loginType == null}">
-                        <a href="/member/loginForm">알림</a>
+                        <a href="/member/loginForm">알림</span></a>
                     </th:block>
-                    <div id="alarm_tag"></div>
+                    <div id="alarm_box">
+                        <div onclick="alarm_close();" class="cursor close-btn"></div>
+                        <div id="alarm_tag"></div>
+                    </div>
                 </li>
                 <!-- 미로그인 시 나올 메뉴  -->
                 <div th:if="${session.loginInfo == null}" class="member_login_join">

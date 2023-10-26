@@ -111,17 +111,51 @@
     <!-- 공인중개사 문의글 조회 -->
     <select id="selectInquiryBoard" resultMap="roomMapper.inquiry">
         SELECT INQUIRY_CODE
+            , FROM_USER_NO
+            , ROOM_CODE
+            , INQUIRY_TITLE_CODE
+            , INQUIRY_CONTENT
+            , INQUIRY_TITLES
+            , INQUIRY_ANSWER
+            , INQUIRY_DATE
+        FROM (
+            SELECT INQUIRY_CODE
+            , FROM_USER_NO
+            , ROOM_CODE
+            , I.INQUIRY_TITLE_CODE
+            , INQUIRY_CONTENT
+            , INQUIRY_TITLES
+            , INQUIRY_ANSWER
+            , TO_CHAR(INQUIRY_DATE, 'YYYY-MM-DD') INQUIRY_DATE
+            FROM INQUIRY I, INQUIRY_TITLE T
+            WHERE TO_USER_NO = #{toUserNo}
+            AND I.INQUIRY_ANSWER IS NULL
+            ORDER BY INQUIRY_DATE
+        )
+        UNION ALL
+        SELECT INQUIRY_CODE
         , FROM_USER_NO
         , ROOM_CODE
-        , I.INQUIRY_TITLE_CODE
+        , INQUIRY_TITLE_CODE
         , INQUIRY_CONTENT
         , INQUIRY_TITLES
         , INQUIRY_ANSWER
-        , TO_CHAR(INQUIRY_DATE, 'YYYY-MM-DD') INQUIRY_DATE
-        FROM INQUIRY I, INQUIRY_TITLE T
-        WHERE TO_USER_NO = #{toUserNo}
-        AND I.INQUIRY_TITLE_CODE = T.INQUIRY_TITLE_CODE
-        ORDER BY INQUIRY_ANSWER NULLS FIRST
+        , INQUIRY_DATE
+        FROM (
+            SELECT INQUIRY_CODE
+            , FROM_USER_NO
+            , ROOM_CODE
+            , I.INQUIRY_TITLE_CODE
+            , INQUIRY_CONTENT
+            , INQUIRY_TITLES
+            , INQUIRY_ANSWER
+            , TO_CHAR(INQUIRY_DATE, 'YYYY-MM-DD') INQUIRY_DATE
+            FROM INQUIRY I, INQUIRY_TITLE T
+            WHERE TO_USER_NO = #{toUserNo}
+            AND I.INQUIRY_TITLE_CODE = T.INQUIRY_TITLE_CODE
+            AND I.INQUIRY_ANSWER IS NOT NULL
+            ORDER BY INQUIRY_DATE DESC
+        )
     </select>
 
     <!-- 문의글 상세 조회 -->

@@ -59,3 +59,25 @@
     position: relative;
     z-index: 1;
 }
+
+table{
+    width: 80%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.room-inquiry-titles{
+    text-align: left;
+    padding-left: 15px;
+}
+
+td{
+    padding: 5px;
+}
+
+.no-room-inquiry{
+    width: 40%;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 30px;
+}

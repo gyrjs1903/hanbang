@@ -1,0 +1,20 @@
+@charset "UTF-8";
+/* inquiry_board.css */
+
+table{
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    border-collapse: collapse;
+}
+tbody > tr:hover {
+    background-color: #e9e5e5;
+}
+td{
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+}
+.no-answer{
+    color: #ff0404;
+    font-weight: 500;
+}

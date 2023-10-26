@@ -39,10 +39,11 @@ layout:decorate="~{realtor/realtor_layout}">
             <th:block th:unless="${inquiryDetail.inquiryAnswer == null}">
                 <div class="row">
                     <div class="col">
-                        답변이 완료된 게시글입니다. <br>
+                        [[${inquiryDetail.inquiryAnswer}]]
                     </div>
                 </div>
             </th:block>
+            <input type="button" value="목 록" onclick="location.href='/realtor/inquiryBoardList';">
         </div>
         <script src="/js/realtor/board.js"></script>
     </th:block>

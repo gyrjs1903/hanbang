@@ -134,7 +134,7 @@ body {
 .alarm_position{
   position: relative;
 }
-#alarm_tag{
+#alarm_box{
   display: none;
   position: absolute;
   top: 38px;
@@ -144,6 +144,14 @@ body {
   padding: 5px 20px;
   box-sizing: border-box;
   border-radius: 5px;
+}
+#alarm_box::before{
+  display: block;
+  content: "";
+  clear: both;
+}
+#alarm_tag{
+  padding-top: 20px;
 }
 #alarm_tag > div{
   margin: 20px 0;
@@ -160,7 +168,7 @@ body {
   position: relative;
   padding: 15px 15px 30px 15px;
 }
-#alarm_tag #authority-alarm:hover{
+#alarm_tag #authority-alarm:hover, #alarm_tag .noAlarm:hover{
   cursor: default;
 }
 #authority-alarm span{
@@ -171,4 +179,33 @@ body {
 }
 #authority-alarm span input{
   margin-left: 5px;
+}
+.alarmCnt{
+  position: absolute;
+  background-color: #fff;
+  padding: 1px 9px;
+  border-radius: 50%;
+  margin-left: 4px;
+  color: #fd2222;
+  font-size: 18px;
+  font-weight: bold;
+  top: -10px;
+  right: -30px;
+}
+/* .alarm-icon{
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  background-image: url(../img/main/sp_main.2b96eea2.png);
+  background-position: -273px -659px;
+} */
+.close-btn{
+  width: 17px;
+  height: 17px;
+  background-image: url(../../img/main/ico-alllmenu_close.png);
+  background-position: center;
+  background-size: cover;
+  float: right;
+  margin: 8px 0;
+  cursor: pointer;
 }

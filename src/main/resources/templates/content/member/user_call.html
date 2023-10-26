@@ -25,10 +25,30 @@
                 <span>보상안내</span>
             </button>
         </div>
-        <div class="">
-            <p>전화 문의한 방이 없습니다.</p>
-            <p>관심있는 방을 문의 해보세요</p>
-        </div>
+        <th:block th:if="${#lists.size(roomInquiryList) != 0}">
+            <table>
+                <thead>
+                    <tr>
+                        <td>No</td>
+                        <td>문의 내용</td>
+                        <td>날 짜</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="inquiry,state : ${roomInquiryList}">
+                        <td>[[${#lists.size(roomInquiryList) - state.index}]]</td>
+                        <td class="room-inquiry-titles">[[${inquiry.inquiryTitleVO.inquiryTitles}]]</td>
+                        <td>[[${inquiry.inquiryDate}]]</td>
+                    </tr>
+                </tbody>
+            </table>
+        </th:block>
+        <th:block  th:unless="${#lists.size(roomInquiryList) != 0}">
+            <div class="no-room-inquiry">
+                <p>문의한 방이 없습니다.</p>
+                <p>관심있는 방을 문의 해보세요</p>
+            </div>
+        </th:block>
     </th:block>
 </body>
 </html>

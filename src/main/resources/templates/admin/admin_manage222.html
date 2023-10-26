@@ -33,11 +33,11 @@
         <div><a th:href="@{/admin/event}">이벤트 관리</a></div>
     </div>
     <div>
-        <h3 onclick="alarm();" class="cursor">알림</h3>
+        <h3><span onclick="alarm();" class="cursor">알림</span></h3>
         <div class="alarm" id="admin_alarm_tag">
             <div class="alarm_header">
-                <div>알림</div>
-                <div onclick="alarm_close();" class="cursor">X</div>
+                <div class="cursor-default">알림</div>
+                <div onclick="alarm_close();" class="cursor close-btn"></div>
             </div>
             <div class="alarm_content">
                 <div id="today_alarm">
