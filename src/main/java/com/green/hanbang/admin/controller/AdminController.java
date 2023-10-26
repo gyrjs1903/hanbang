@@ -5,6 +5,9 @@ import com.green.hanbang.admin.service.EventService;
 import com.green.hanbang.admin.service.MemberManageService;
 import com.green.hanbang.admin.service.MembershipService;
 import com.green.hanbang.admin.vo.*;
+import com.green.hanbang.util.ConstantVariable;
+import com.green.hanbang.util.EventUtil;
+import jakarta.servlet.ServletContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 import java.io.Console;
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -276,17 +280,95 @@ public class AdminController {
         return "admin/reg_eventForm";
     }
 
-    // 상품 등록
+    // 이벤트 등록
     @PostMapping("/regEvent")
     public String regEvent(EventVO eventVO, MultipartFile eventImg, MultipartFile[] subEventImg){
-        // 상품 이미지 등록
+
+        // 이벤트 이미지 등록
         String nextEventCode = eventService.selectNextEventCode();
-        eventVO.setEventCode(nextEventCode);
 
         // 메인 이미지 등록
+        EventImgVO eventImgVO = EventUtil.eventUpload(eventImg);
 
         // 서브 이미지 등록
+        List<EventImgVO> subImgList = EventUtil.multiEventUpload(subEventImg);
+        subImgList.add(eventImgVO);
 
-    return "redirect/admin/eventList" ;
+        for (EventImgVO subImgVO : subImgList){
+            subImgVO.setEventCode(nextEventCode);
+        }
+
+        eventVO.setEventImgList(subImgList);
+
+        // 상품 등록 + 이미지 등록 쿼리 실행
+        eventVO.setEventCode(nextEventCode);
+        eventService.insertEvent(eventVO);
+
+        return "redirect:/admin/regEventForm" ;
     }
+
+    // 이벤트 상세 조회
+    @GetMapping("/eventDetail")
+    public String eventDetail(String eventCode, Model model){
+        EventVO eventVO = eventService.selectEventDetail(eventCode);
+        model.addAttribute("event", eventVO);
+        eventService.updateReadCnt(eventCode);
+        return "admin/event_detail";
+    }
+
+    // 이벤트 삭제
+    @GetMapping("/deleteEvent")
+    public String deleteEvent(EventVO eventVO){
+        EventVO vo = eventService.selectImgList(eventVO);
+
+        for(EventImgVO e : vo.getEventImgList()){
+            File file = new File(ConstantVariable.EVENT_UPLOAD_PATH + e.getEventAttachedFileName());
+            file.delete();
+        }
+
+        eventService.deleteEvent(eventVO.getEventCode());
+
+        return "redirect:/admin/eventList";
+    }
+
+    // 이벤트 내용 및 첨부파일 수정 폼으로 이동
+    @GetMapping("/updateEventInfoForm")
+    public String updateEventInfoForm(String eventCode, Model model){
+        EventVO event = eventService.selectEventDetail(eventCode);
+        model.addAttribute("event", event);
+        return "admin/update_event";
+    }
+
+    // 이벤트 정보 수정 + 첨부파일 수정
+    @PostMapping("/updateEvent")
+    public String updateEventInfo(EventVO eventVO, MultipartFile eventImg, MultipartFile[] subEventImg){
+
+        EventVO vo = eventService.selectImgList(eventVO);
+
+        for(EventImgVO e : vo.getEventImgList()){
+            File file = new File(ConstantVariable.EVENT_UPLOAD_PATH + e.getEventAttachedFileName());
+            file.delete();
+        }
+
+        String nowEventCode = eventVO.getEventCode();
+
+        // 메인 이미지 등록
+        EventImgVO eventImgVO = EventUtil.eventUpload(eventImg);
+
+        // 서브 이미지 등록
+        List<EventImgVO> subImgList = EventUtil.multiEventUpload(subEventImg);
+        subImgList.add(eventImgVO);
+
+        for (EventImgVO subImgVO : subImgList){
+            subImgVO.setEventCode(nowEventCode);
+        }
+
+        eventVO.setEventImgList(subImgList);
+
+
+        eventService.updateEventInfo(eventVO);
+        return "redirect:/admin/eventDetail?eventCode=" + eventVO.getEventCode();
+    }
+
+
 }
