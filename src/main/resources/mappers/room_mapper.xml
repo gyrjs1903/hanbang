@@ -262,23 +262,15 @@
         LEFT JOIN ROOM_ADDR RA ON R.ROOM_CODE = RA.ROOM_CODE
         LEFT JOIN ROOM_IMG RI ON R.ROOM_CODE = RI.ROOM_CODE
         WHERE 1 = 1
+        AND IS_MAIN='Y'
         <if test='searchPropertyTypeCode != null and !searchPropertyTypeCode.equals("")'>
         AND R.PROPERTY_TYPE_CODE = #{searchPropertyTypeCode}
         </if>
         <if test='searchRoomSizePMin != 0 and !searchRoomSizePMin.equals("")'>
-        AND R.ROOM_SIZE_P &gt;= #{searchRoomSizePMin}
-        </if>
-        <if test='searchRoomSizePMax != 0 and !searchRoomSizePMax.equals("")'>
-        AND R.ROOM_SIZE_P &lt;= #{searchRoomSizePMax}
-        </if>
-        <if test='searchRoomSizeMMin != 0 and !searchRoomSizeMMin.equals("")'>
-        AND R.ROOM_SIZE_M &gt;= #{searchRoomSizeMMin}
-        </if>
-        <if test='searchRoomSizeMMax != 0 and !searchRoomSizeMMax.equals("")'>
-        AND R.ROOM_SIZE_M &lt;= #{searchRoomSizeMMax}
+        AND R.ROOM_SIZE_P &lt;= #{searchRoomSizePMin}
         </if>
         <if test='searchFloor != 0 and !searchFloor.equals("")'>
-        AND R.FLOOR = #{searchFloor}
+        AND R.FLOOR &gt;= #{searchFloor}
         </if>
         <if test='searchTradeTypeCode != null and !searchTradeTypeCode.equals("")' >
         AND R.TRADE_TYPE_CODE = #{searchTradeTypeCode}

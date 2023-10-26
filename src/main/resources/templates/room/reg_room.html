@@ -9,12 +9,14 @@
 
 <body>
     <th:block layout:fragment="content">
-        <h1>방내놓기</h1>
-        <div>
-            <ul>
-                <li>전/ 월세 매물만 등록할 수 있습니다.</li>
-                <li>1개의 매물만 등록 가능하며, 다방에서 직거래로 표시됩니다.</li>
-                <li>주소를 다르게 입력할 경우 허위매물로 신고될 수 있으니 꼭 동일하게 입력 바랍니다.</li>
+        <link href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/css/room/reg_room.css">
+        <h1 class="title">방내놓기</h1>
+        <div >
+            <ul class="caution">
+                <li><span>．</span>전/ 월세 매물만 등록할 수 있습니다.</li>
+                <li><span>．</span>1개의 매물만 등록 가능하며, 다방에서 직거래로 표시됩니다.</li>
+                <li><span>．</span>주소를 다르게 입력할 경우 허위매물로 신고될 수 있으니 꼭 동일하게 입력 바랍니다.</li>
             </ul>
         </div>
         <div>
@@ -27,7 +29,7 @@
                     <table>
                         <tbody>
                             <tr>
-                                <th>매물유형 <span>*</span></th>
+                                <th>매물유형 <span class="essential">*</span></th>
                                 <td>
                                     <header>대분류</header>
                                     <div th:each="property, state : ${propertyList}">
@@ -56,7 +58,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>매물주소 <span>*</span></th>
+                                <th>매물주소 <span class="essential" >*</span></th>
                                 <td>
                                     <div>
                                         <div>
@@ -73,25 +75,25 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>매물크기 <span>*</span></th>
+                                <th>매물크기 <span class="essential">*</span></th>
                                 <td>
                                     <div>
                                         <div>
                                             <label>전용면적</label>
-                                            <input type="text" name="roomSizeP" placeholder="평수 입력">
+                                            <input type="text" name="roomSizeP" id="roomSizeP" placeholder="평수 입력"><span>평</span>
                                             <span> = </span>
-                                            <input type="text" name="roomSizeM" placeholder="m&#178; 입력">
+                                            <input type="text" name="roomSizeM" id="roomSizeM" placeholder="m&#178; 입력"><span>m&#178;</span>
                                         </div>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <th>방 정보 <span>*</span></th>
+                                <th>방 정보 <span class="essential">*</span></th>
                                 <td>
                                     <div>
                                         <div>
-                                            <label>방 수</label>
-                                            <input type="text" name="floor" placeholder="평수 입력">
+                                            <label>층수</label>
+                                            <input type="text" name="floor" placeholder="층수 입력">
                                         </div>
                                     </div>
                                 </td>
@@ -103,7 +105,7 @@
                     <h2>거래 정보</h2>
                     <table>
                         <tr>
-                            <th>거래 종류 <span>*</span></th>
+                            <th>거래 종류 <span class="essential">*</span></th>
                             <td>
                                 <th:block th:each="tradeType : ${tradeTypeList}">
                                     <input type="radio" name="tradeTypeCode" th:value="${tradeType.tradeTypeCode}">
@@ -113,7 +115,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <th>가격 정보 <span>*</span></th>
+                            <th>가격 정보 <span class="essential">*</span></th>
                             <td>
                                 <div>
                                     <label for="">전세가</label>
@@ -131,7 +133,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <th>공용관리비 <span>*</span></th>
+                            <th>공용관리비 <span class="essential">*</span></th>
                             <td>
                                 <div>
                                     <label>관리비 여부</label>
@@ -145,7 +147,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <th>입주 가능 일자 <span>*</span></th>
+                            <th>입주 가능 일자 <span class="essential">*</span></th>
                             <div>
                                 <label for=""></label>
                                 <input type="radio" name="immediateOccupancy" value="Y" checked> 즉시 입주
@@ -159,7 +161,7 @@
                     <h2>시설정보</h2>
                     <table>
                         <tr th:each="option, state : ${optionsList}">
-                            <th>[[${option.optionName}]] <span>*</span></th>
+                            <th>[[${option.optionName}]] <span class="essential">*</span></th>
                             <td>
                                 <th:block th:each="detailOption : ${option.detailOptionList}">
                                     <th:block th:if="${state.index==0}">
@@ -181,7 +183,7 @@
                     <h2>사진 등록</h2>
                     <table>
                         <tr>
-                            <th>일반사진 <span>*</span></th>
+                            <th>일반사진 <span class="essential">*</span></th>
                             <td>
                                 <input type="file" name="mainImg">
                                 <span>메인사진</span>
@@ -195,7 +197,7 @@
                     <h2>상세 설명</h2>
                     <table>
                         <tr>
-                            <th>제목 <span>*</span></th>
+                            <th>제목 <span class="essential">*</span></th>
                             <td>
                                 <input type="text" name="title" placeholder="리스트에 노출되는 문구입니다. 40자 이내로 작성해 주세요.">
                                 <div>0/40</div>
@@ -204,7 +206,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <th>상제설명 <span>*</span></th>
+                            <th>상제설명 <span class="essential">*</span></th>
                             <td>
                                 <textarea name="content" id="" cols="30" rows="10"
                                     placeholder="매물 상세 페이지에 노출되는 문구입니다. 1000자 이내로 작성해주세요"></textarea>

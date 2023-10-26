@@ -91,6 +91,41 @@ function setInitialSubcategory() {
     });
 }
 
+const roomSizePInput = document.getElementById("roomSizeP");
+const roomSizeMInput = document.getElementById("roomSizeM");
+
+// 평수를 제곱미터로 변환하는 함수
+function convertPToM(p) {
+    return (p * 3.305785).toFixed(2); // 1평 ≈ 3.305785 제곱미터
+}
+
+// 제곱미터를 평수로 변환하는 함수
+function convertMToP(m) {
+    return (m / 3.305785).toFixed(0);
+}
+
+// 평수 입력 시 제곱미터 값 업데이트
+roomSizePInput.addEventListener("input", function() {
+    const pValue = parseFloat(roomSizePInput.value);
+    if (!isNaN(pValue)) {
+        const mValue = convertPToM(pValue);
+        roomSizeMInput.value = mValue;
+    } else {
+        roomSizeMInput.value = "";
+    }
+});
+
+// 제곱미터 입력 시 평수 값 업데이트
+roomSizeMInput.addEventListener("input", function() {
+    const mValue = parseFloat(roomSizeMInput.value);
+    if (!isNaN(mValue)) {
+        const pValue = convertMToP(mValue);
+        roomSizePInput.value = pValue;
+    } else {
+        roomSizePInput.value = "";
+    }
+});
+
 
 
 

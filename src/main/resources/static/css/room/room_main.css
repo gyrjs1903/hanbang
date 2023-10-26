@@ -1,4 +1,207 @@
 @charset "UTF-8";
-.room div img{
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+/* 슬라이더 스타일 */
+input[type="range"] {
+    -webkit-appearance: none;
     width: 200px;
+    height: 10px; /* 슬라이더의 너비와 높이를 조절합니다. */
+    background: #aaffad; /* 연한 녹색 배경색을 설정합니다. */
+    border: none;
+    border-radius: 5px; /* 슬라이더 레일의 모서리를 둥글게 만듭니다. */
+  }
+  
+  /* 슬라이더 핸들 스타일 */
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 15px; /* 슬라이더 핸들의 너비를 조절합니다. */
+    height: 15px; /* 슬라이더 핸들의 높이를 조절합니다. */
+    background: #008a05; /* 슬라이더 핸들의 배경색을 설정합니다. */
+    border-radius: 50%; /* 슬라이더 핸들의 모서리를 둥글게 만듭니다. */
+    cursor: pointer;
+  }
+  
+  /* 슬라이더 포커스 스타일 */
+  input[type="range"]:focus {
+    outline: none;
+  }
+  
+  /* 슬라이더 활성 상태 스타일 */
+  input[type="range"]:active::-webkit-slider-thumb {
+    background: #31d63a; /* 슬라이더 핸들을 클릭했을 때의 배경색을 설정합니다. */
+  }
+  
+/* 메인 타이틀 */
+.title{
+    font-size: 25px;
+    font-weight: 800;
+    margin-bottom: 20px;
+}
+
+table tr td{
+    height: 600px;
+    border: 1px solid #000;
+    position: relative;
+    padding: 10px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-bottom: 20px;
+}
+table tr td > div{
+    border-bottom: 1px solid #d1d1d1;
+    margin-bottom: 5px;
+    padding: 10px;
+    width: 100%;
+}
+table tr td > div:nth-child(7){
+    border-bottom: 0px;
+}
+.select_room{
+    height: 620px;
+    overflow-y: scroll;
+}
+.select-form{
+    margin-bottom: 20px;
+}
+.select-form table tr td .unit{
+    font-size: 13px;
+    color: #999;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+/* 아래의 모든 코드는 영역::코드로 사용 */
+.select_room::-webkit-scrollbar {
+    width: 10px;  /* 스크롤바의 너비 */
+}
+.select_room::-webkit-scrollbar-thumb {
+    height: 30%; /* 스크롤바의 길이 */
+    background: #31d63a; /* 스크롤바의 색상 */
+    
+    border-radius: 10px;
+}
+/* .select_room::-webkit-scrollbar-track{
+    background: #aaffad;
+} */
+.room {
+    padding-top: 10px;
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.room div img{
+    padding-left: 15px;
+    padding-bottom: 10px;
+    width: 160px;
+}
+
+.room:hover {
+    background-color: rgb(210, 255, 212);
+}
+.room .room-info{
+    width: 100%;
+    font-size: 12px;
+    text-align: center;
+}
+#map{
+    height: 620px;
+    width: 65%;
+}
+.option_title{
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+.sub_option_title{
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+.option_div >div{
+margin-bottom: 5px;
+}
+
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    outline: none !important;
+    border: 2px solid #9999;
+    vertical-align: middle;
+    border-radius: 20%;
+    padding: 10px;
+    align-items: center;
+    margin-bottom: 5px;
+}
+input[type="checkbox"]::before {
+    content: "\2713";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    overflow: hidden;
+    transform: scale(0) translate(-50%, -50%);
+    line-height: 1;
+}
+input[type="checkbox"]:checked {
+    background-color: #23ce4e;
+    border-color: rgba(255, 255, 255, 0.3);
+    color: white;
+}
+input[type="checkbox"]:checked::before {
+    border-radius: 4px;
+    transform: scale(1) translate(-50%, -50%)
+}
+input[type="button"]{
+    width: 60px;
+    height: 30px;
+    border-radius: 5px;
+    position: absolute;
+    right: 5px;
+    bottom: 10px;
+    background-color: #23ce4e;
+    border: 0px;
+
+    font-weight: 800;
+}
+input[type="button" ]:hover{
+    
+    background-color: #aaffad;
+}
+input[type="number"], input[type="text"]{
+    width: 150px;
+    border: 1px solid #999;
+    border-radius: 5px;
+}
+input[type="text"]{
+    width: 91%;
+    height: 40px;
+}
+div label{
+    font-size: 16px;
+    font-weight: 700;
+    margin-right: 14px;
+}
+.room{
+    border-bottom: 1px solid #d1d1d1;
+}
+
+.room .room-info h4{
+    font-size: 25px;
+    font-weight: 800;
+}
+.room .room-info p{
+    font-size: 15px;
+    margin-top: 5px;
+}
+.content{
+    border-top: 1px solid #d1d1d1;;
 }
