@@ -20,7 +20,6 @@ import java.util.Map;
 @RequestMapping("/realtor")
 public class RealtorController {
     private final RealtorService realtorService;
-    private final RoomService2 roomService2;
 
     @RequestMapping("/main")
     public String realtor(){
