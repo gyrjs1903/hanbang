@@ -3,6 +3,7 @@ package com.green.hanbang.member.service;
 import com.green.hanbang.member.vo.AlarmVO;
 import com.green.hanbang.member.vo.MemberImgVO;
 import com.green.hanbang.member.vo.MemberVO;
+import com.green.hanbang.realtor.vo.RealtorDetailVO;
 import com.green.hanbang.room.vo.InquiryVO;
 import lombok.RequiredArgsConstructor;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -72,20 +73,31 @@ public class MemberServiceImpl implements MemberService {
 
     /* ----------------------------------------------------------------------------------- */
 
+
+    @Override
+    public AlarmVO selectAlarm(String userNo) {
+        return sqlSession.selectOne("memberMapper.selectAlarm",userNo);
+    }
+
     //승인 알림 insert
     @Override
     public int insertAlarm(AlarmVO alarmVO) {
-        return sqlSession.insert("member2Mapper.insertAlarm",alarmVO);
+        return sqlSession.insert("memberMapper.insertAlarm",alarmVO);
     }
 
     //승인 알림 띄우기
     @Override
     public int selectAuthorityAlarm(String userNo) {
-        return sqlSession.selectOne("member2Mapper.selectAuthorityAlarm",userNo);
+        return sqlSession.selectOne("memberMapper.selectAuthorityAlarm",userNo);
     }
 
     @Override
-    public List<InquiryVO> selectInquiryAlarm(String userNo) {
-        return sqlSession.selectList("member2Mapper.selectInquiryAlarm",userNo);
+    public RealtorDetailVO selectInquiryAlarm(String userNo) {
+        return sqlSession.selectOne("memberMapper.selectInquiryAlarm",userNo);
+    }
+
+    @Override
+    public List<InquiryVO> selectUserInquiryAlarm(String userNo) {
+        return sqlSession.selectList("memberMapper.selectUserInquiryAlarm",userNo);
     }
 }

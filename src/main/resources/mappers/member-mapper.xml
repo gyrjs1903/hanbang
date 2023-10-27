@@ -157,9 +157,26 @@
 
     <!-- ========================================================================================== -->
 
-    <!-- 공인 중개사 승인 알림 -->
+    <!-- 공인중개사 승인 여부 -->
+    <select id="selectAlarm" resultMap="memberMapper.alarm">
+        SELECT ALARM_CODE
+        , USER_NO
+        , AUTHORITY_UPDATE
+        FROM ALARM
+        WHERE USER_NO = #{userNo}
+    </select>
+
+    <!-- 공인중개사 승인 요청 알림 -->
     <insert id="insertAlarm">
-        INSERT INTO ALARM(
+        MERGE
+        INTO ALARM
+        USING DUAL
+        ON (USER_NO = #{userNo})
+        WHEN MATCHED THEN
+        UPDATE
+        SET AUTHORITY_UPDATE = 2
+        WHEN NOT MATCHED THEN
+        INSERT (
         ALARM_CODE
         , USER_NO
         , AUTHORITY_UPDATE
@@ -171,7 +188,7 @@
         )
     </insert>
 
-    <!-- 승인 완료 알림 -->
+    <!-- 승인완료알림 -->
     <select id="selectAuthorityAlarm" resultType="int">
         SELECT AUTHORITY_UPDATE
         FROM ALARM
@@ -180,11 +197,29 @@
 
     <!-- 문의 글 알림 -->
     <select id="selectInquiryAlarm" resultMap="realtorMapper.realtorDetail">
-        SELECT TO_USER_NO
+        SELECT REALTOR_CODE
+        , TO_USER_NO
         , INQUIRY_CODE
         , INQUIRY_ANSWER
-        FROM INQUIRY
+        FROM INQUIRY I , REALTOR_DETAIL R
         WHERE TO_USER_NO = #{toUserNo}
+        AND I.TO_USER_NO = R.USER_NO
+    </select>
+
+    <!-- 문의 글 답글 완료 알림 -->
+    <select id="selectUserInquiryAlarm" resultMap="roomMapper.inquiry">
+        SELECT INQUIRY_CODE
+        , ROOM_CODE
+        , TO_USER_NO
+        , FROM_USER_NO
+        , I.INQUIRY_TITLE_CODE
+        , INQUIRY_TITLES
+        , INQUIRY_ANSWER
+        , TO_CHAR(INQUIRY_DATE,'YYYY-MM-DD') INQUIRY_DATE
+        FROM INQUIRY I, INQUIRY_TITLE T
+        WHERE FROM_USER_NO = #{userNo}
+        AND I.INQUIRY_TITLE_CODE = T.INQUIRY_TITLE_CODE
+        ORDER BY INQUIRY_DATE DESC
     </select>
 
 </mapper>
