@@ -62,24 +62,4 @@
         realUpload.addEventListener('change', function(e) {
             getImageFile(e);
         });
-    
-        function submitForm() {
-            var fileInput = document.getElementById('profileImg');
-            var file = fileInput.files[0];
-            var formData = new FormData();
-            formData.append('profileImg', file);
-            $.ajax({
-                url: '/member/updateProfile',
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(data){
-                    console.log('정상적으로 프로필 사진 등록이 되었습니다.');
-                },
-                error: function(){
-                    console.log('에러가 발생했습니다. 다시 시도해주세요.');
-                }
-            });
-        }
     });

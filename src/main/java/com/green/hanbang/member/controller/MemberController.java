@@ -33,16 +33,19 @@ public class MemberController {
     // 회원 가입
     @PostMapping("/join")
     public String join(MemberVO memberVO) {
+        // 회원가입 (회원 코드를 조회하기 위해 먼저 실행)
         memberService.join(memberVO);
 
-        // 가입 한 회원 번호 조회
+        // 가입한 회원 번호 가져오기
         String userNo = memberService.selectUserNo(memberVO.getUserNo());
+        System.out.println(memberVO.getUserNo());
 
         MemberImgVO memberImgVO = new MemberImgVO();
         memberImgVO.setUserNo(userNo);
         memberImgVO.setProfileImgName("img/member/profileImg/default_profile_image.png");
         memberImgVO.setAttachedProfileImgName("img/member/profileImg/default_profile_image.png");
 
+        // 프로필 이미지 등록
         memberService.insertProImg(memberImgVO);
 
         String userName = memberVO.getUserName();
@@ -95,7 +98,7 @@ public class MemberController {
     // 내 정보 페이지로 이동
     @GetMapping("/memberInfo")
     public String memberInfo(Model model, HttpSession session) {
-        // 현재 로그인한 유저 번호를 조회
+        // 현재 로그인 한 유저 번호를 조회
         MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
 
         if (loginInfo != null) {
@@ -110,28 +113,32 @@ public class MemberController {
             return "content/member/loginForm";
         }
     }
-    
+
     // 프로필 이미지 등록
     @PostMapping("/updateProfile")
-    public String insertPro(MemberVO memberVO, MemberImgVO memberImgVO, MultipartFile memberImg, HttpSession session) {
-
+    public String insertPro(MemberVO memberVO, @RequestParam("profileImg") MultipartFile memberImg, HttpSession session) {
         // 유저 번호 조회
-        String userNo = memberService.selectUserNo(memberVO.getUserNo());
-
-        // 프로필 이미지 파일 첨부
-        MemberImgVO vo = MemberUtil.MemberUploadFile(memberImg);
-        vo.setUserNo(userNo);
+        String userNo = memberVO.getUserNo();
 
         // 정보 세팅
-        memberImgVO.setUserNo(userNo);
         MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
         memberVO.setUserNo(loginInfo.getUserNo());
 
-        memberService.insertProImg(memberImgVO);
+        // 파일 업로드 및 관련 작업 처리
+        MemberImgVO uploadedMemberImg = MemberUtil.MemberUploadFile(memberImg);
+        uploadedMemberImg.setUserNo(userNo); // 파일 업로드 후 유저 번호 설정
+
+        // DB에 프로필 이미지 정보 등록
+        memberService.insertProImg(uploadedMemberImg);
+
+        String errorMessage = "프로필 이미지 등록에 실패했습니다. 나중에 다시 시도해주세요.";
+
+        // 실패 메시지를 세션에 설정
+        session.setAttribute("errorMessage", errorMessage);
 
         return "redirect:/member/memberInfo";
     }
-    
+
     // 전화 문의 페이지로 이동
     @GetMapping("/memberCall")
     public String memberCall(HttpSession session,Model model) {
@@ -171,10 +178,34 @@ public class MemberController {
         return memberService.userNameCheck(userName);
     }
 
-    // 헤더에 찜목록 누를 시 찜목록 페이지로 이동
+    // 헤더에 찜목록 누를 시 찜목록(최근 본 방) 페이지로 이동
     @GetMapping("/dibsOn")
-    public String memberDibsOn() {
+    public String dibsOn() {
         return "content/member/recent_viewed_room";
+    }
+
+    // 찜한 방 페이지로 이동
+    @GetMapping("/dibsOnRoom")
+    public String dibsOnRoom() {
+        return "content/member/dibs_on_room";
+    }
+
+    // 최근 본 단지 페이지로 이동
+    @GetMapping("/recentViewedApartment")
+    public String recentViewedApartment() {
+        return "content/member/recent_viewed_apartment";
+    }
+
+    // 찜한 단지 페이지로 이동
+    @GetMapping("/dibsOnApartment")
+    public String dibsOnApartment() {
+        return "content/member/dibs_on_apartment";
+    }
+
+    // 즐겨찾기 페이지로 이동
+    @GetMapping("/wishListFavorites")
+    public String wishListFavorites() {
+        return "content/member/wish_list_favorites";
     }
 
     // 닉네임 변경
