@@ -20,12 +20,6 @@
                 </div>
             </div>
         </header>
-<<<<<<< HEAD
-        <div class="">
-            <button class="">
-                <span>보상안내</span>
-            </button>
-        </div>
         <th:block th:if="${#lists.size(roomInquiryList) != 0}">
             <table>
                 <thead>
@@ -44,13 +38,6 @@
                 </tbody>
             </table>
         </th:block>
-        <th:block  th:unless="${#lists.size(roomInquiryList) != 0}">
-            <div class="no-room-inquiry">
-                <p>문의한 방이 없습니다.</p>
-                <p>관심있는 방을 문의 해보세요</p>
-            </div>
-        </th:block>
-=======
         <div class="callWP">
             <div class="compensationTA">
                 <p></p>
@@ -62,12 +49,13 @@
                     <a onclick="">보상안내</a>
                 </button>
             </div>
-            <div class="compenCT">
-                <p>전화 문의한 방이 없습니다.</p>
-                <p>관심있는 방을 문의 해보세요</p>
-            </div>
+            <th:block  th:if="${#lists.size(roomInquiryList) == 0}">
+                <div class="compenCT no-room-inquiry">
+                    <p>문의한 방이 없습니다.</p>
+                    <p>관심있는 방을 문의 해보세요</p>
+                </div>
+            </th:block>
         </div>
->>>>>>> changgyu
     </th:block>
 </body>
 </html>
