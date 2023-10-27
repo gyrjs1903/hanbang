@@ -29,7 +29,7 @@ public class IndexController {
         //공인중개사
         if (loginInfo.getLoginType().equals("REALTOR")) {
             if (memberService.selectAlarm(loginInfo.getUserNo()) != null) {
-                //권한승인알림
+                // 권한승인알림
                 int authorityStatus = memberService.selectAuthorityAlarm(loginInfo.getUserNo());
                 model.addAttribute("authorityAlarm", authorityStatus);
 
