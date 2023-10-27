@@ -60,7 +60,6 @@
     z-index: 1;
 }
 
-<<<<<<< HEAD
 table{
     width: 80%;
     text-align: center;
@@ -81,7 +80,8 @@ td{
     margin: 0 auto;
     text-align: center;
     margin-top: 30px;
-=======
+}
+
 .callWP {
     width: 100%;
     -webkit-box-flex: 1;
@@ -147,5 +147,4 @@ td{
     flex: 0 0 auto;
     padding: 150px 0px 200px;
     text-align: center;
->>>>>>> changgyu
 }

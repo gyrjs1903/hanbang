@@ -43,3 +43,6 @@
     background-size: cover;
     background-image: url(../../img/main/ico-alllmenu_close.png);
 }
+.material-symbols-outlined{
+    margin: 7px;
+}

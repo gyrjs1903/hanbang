@@ -11,7 +11,6 @@ import com.green.hanbang.realtor.vo.RealtorDetailVO;
 import com.green.hanbang.room.vo.FalseOfferingsVO;
 import com.green.hanbang.util.ConstantVariable;
 import com.green.hanbang.util.EventUtil;
-import jakarta.servlet.ServletContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
