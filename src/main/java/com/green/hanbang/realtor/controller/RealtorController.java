@@ -22,7 +22,6 @@ import java.util.Optional;
 @RequestMapping("/realtor")
 public class RealtorController {
     private final RealtorService realtorService;
-    private final RoomService2 roomService2;
 
     @RequestMapping("/main")
     public String realtor(){
