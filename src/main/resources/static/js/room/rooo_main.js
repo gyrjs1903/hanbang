@@ -413,7 +413,7 @@ function displayArea(area) {
             map.panTo(latlng);
         } else {
             // 클릭 이벤트 함수
-            // callFunctionWithRegionCode(area.location);
+            callFunctionWithRegionCode(area.location);
         }
     });
 
@@ -466,3 +466,4 @@ detailOptionCheckboxes.forEach(function(checkbox) {
         }
     });
 });
+
