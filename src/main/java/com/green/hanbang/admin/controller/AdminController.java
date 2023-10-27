@@ -5,13 +5,12 @@ import com.green.hanbang.admin.service.EventService;
 import com.green.hanbang.admin.service.MemberManageService;
 import com.green.hanbang.admin.service.MembershipService;
 import com.green.hanbang.admin.vo.*;
-import com.green.hanbang.member.service.MemberService2;
+import com.green.hanbang.member.service.MemberService;
 import com.green.hanbang.member.vo.AlarmVO;
 import com.green.hanbang.realtor.vo.RealtorDetailVO;
 import com.green.hanbang.room.vo.FalseOfferingsVO;
 import com.green.hanbang.util.ConstantVariable;
 import com.green.hanbang.util.EventUtil;
-import jakarta.servlet.ServletContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +32,7 @@ public class AdminController {
     private final BoardService boardService;
     private final MembershipService membershipService;
     private final EventService eventService;
-    private final MemberService2 memberService2;
+    private final MemberService memberService;
 
     // 관리자 페이지 ( + 맴버쉽 상품의 대분류 조회)
     @GetMapping("/manage")
@@ -94,7 +93,7 @@ public class AdminController {
         //승인 요청 알림 insert
         alarmVO.setUserNo(memberManageVO.getUserNo());
         alarmVO.setAuthorityUpdate(1);
-        memberService2.insertAlarm(alarmVO);
+        memberService.insertAlarm(alarmVO);
         return "redirect:/admin/realList";
     }
     //허위매물신고&공인중개사 승인요청

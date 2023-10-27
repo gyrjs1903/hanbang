@@ -2,7 +2,6 @@ package com.green.hanbang.member.controller;
 
 import com.green.hanbang.member.service.MemberInquiryService;
 import com.green.hanbang.member.service.MemberService;
-import com.green.hanbang.member.service.MemberService2;
 import com.green.hanbang.member.vo.MemberImgVO;
 import com.green.hanbang.member.vo.MemberInquiryTypeVO;
 import com.green.hanbang.member.vo.MemberVO;
@@ -24,7 +23,6 @@ import java.util.List;
 public class MemberController {
     private final MemberService memberService;
     private final MemberInquiryService memberInquiryService;
-    private final MemberService2 memberService2;
 
     // 회원 가입 페이지 이동
     @GetMapping("/joinForm")
@@ -35,29 +33,22 @@ public class MemberController {
     // 회원 가입
     @PostMapping("/join")
     public String join(MemberVO memberVO) {
-        try {
-            int result = memberService.join(memberVO);
-            if (result > 0) {
-                String userNo = memberService.selectUserNo(memberVO.getUserNo()); // 회원 번호 조회
-                if (userNo != null) {
-                    MemberImgVO memberImgVO = new MemberImgVO();
-                    memberImgVO.setUserNo(userNo);
-                    memberImgVO.setProfileImgName("img/member/profileImg/default_profile_image.png");
-                    memberImgVO.setAttachedProfileImgName("img/member/profileImg/default_profile_image.png");
+        memberService.join(memberVO);
 
-                    int imgResult = memberService.insertProImg(memberImgVO);
+        // 가입 한 회원 번호 조회
+        String userNo = memberService.selectUserNo(memberVO.getUserNo());
 
-                    if (imgResult > 0) {
-                        return "content/member/login";
-                    }
-                } else {
-                    // 해당 회원 번호가 존재하지 않을 때 수행할 작업
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "redirect:/member/join";
+        // 회원 번호가 null이 아니면 해당 회원에게 기본 프로필 이미지 삽입
+        MemberImgVO memberImgVO = new MemberImgVO();
+        memberImgVO.setUserNo(userNo);
+        memberImgVO.setProfileImgName("img/member/profileImg/default_profile_image.png");
+        memberImgVO.setAttachedProfileImgName("img/member/profileImg/default_profile_image.png");
+
+        memberService.insertProImg(memberImgVO);
+
+        String userName = memberVO.getUserName();
+
+        return "redirect:/member/login?userName=" + userName;
     }
 
     // 회원 탈퇴
@@ -146,7 +137,7 @@ public class MemberController {
     @GetMapping("/memberCall")
     public String memberCall(HttpSession session,Model model) {
         MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
-        List<InquiryVO> roomInquiryList = memberService2.selectUserInquiryAlarm(loginInfo.getUserNo());
+        List<InquiryVO> roomInquiryList = memberService.selectUserInquiryAlarm(loginInfo.getUserNo());
         System.out.println(roomInquiryList);
         model.addAttribute("roomInquiryList",roomInquiryList);
         return "content/member/user_call";

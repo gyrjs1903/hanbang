@@ -81,3 +81,70 @@ td{
     text-align: center;
     margin-top: 30px;
 }
+
+.callWP {
+    width: 100%;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+}
+
+.callWP div:not(.compensationTA) {
+    width: 1200px;
+    height: 100%;
+    padding: 0px 10px;
+    margin: 40px auto 120px;
+}
+
+.compensationTA {
+    width: 1200px;
+    height: 100px;
+    margin-bottom: 40px;
+    padding: 0px 10px;
+    margin: 40px auto 120px;
+}
+
+.compensationTA p{
+    color: rgb(101, 101, 101);
+}
+
+.compensation {
+    position: absolute;
+    flex: 0 0 auto;
+    display: flex;
+    padding-top: 50px;
+}
+
+.compenBtn {
+    position: relative;
+    bottom: 200px;
+    left: 1000px;
+    width: 140px;
+    height: 44px;
+    color: rgb(255, 255, 255);
+    border: 0;
+    background-color: transparent;
+}
+
+.compenBtn a{
+    border: 0px;
+    border-radius: 2px;
+    background-color: rgb(50, 108, 249);
+    font-size: 14px;
+    font-weight: 400;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 140px;
+    height: 44px;
+    margin-top: auto;
+    margin-left: auto;
+    text-align: center;
+}
+
+.compenCT {
+    flex: 0 0 auto;
+    padding: 150px 0px 200px;
+    text-align: center;
+}

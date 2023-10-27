@@ -12,7 +12,7 @@
         <link href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" rel="stylesheet">
         <link rel="stylesheet" href="/css/room/reg_room.css">
         <h1 class="title">방내놓기</h1>
-        <div >
+        <div>
             <ul class="caution">
                 <li><span>．</span>전/ 월세 매물만 등록할 수 있습니다.</li>
                 <li><span>．</span>1개의 매물만 등록 가능하며, 다방에서 직거래로 표시됩니다.</li>
@@ -24,7 +24,7 @@
                 <input name="userNo" type="hidden" th:value="${session.loginInfo.userNo}">
                 <input name="coordinateY" id="coordinate_y" type="hidden" value=" ">
                 <input name="coordinateX" id="coordinate_x" type="hidden" value=" ">
-                <div>
+                <div class="table">
                     <h2>매물정보</h2>
                     <table>
                         <tbody>
@@ -39,13 +39,15 @@
                                         </input>
                                     </div>
                                 </td>
-                                
+
                                 <td>
                                     <header>소분류</header>
                                     <th:block th:each="property : ${propertyList}">
                                         <div th:if="${property.subPropertyTypeList}">
-                                            <div class="subproperty-wrapper" th:attr="data-property-type-code=${property.propertyTypeCode}">
-                                                <th:block th:each="subProperty, state : ${property.subPropertyTypeList}">
+                                            <div class="subproperty-wrapper"
+                                                th:attr="data-property-type-code=${property.propertyTypeCode}">
+                                                <th:block
+                                                    th:each="subProperty, state : ${property.subPropertyTypeList}">
                                                     <input type="radio" name="subPropertyTypeCode"
                                                         th:value="${subProperty.subPropertyTypeCode}"
                                                         th:checked="${state.index==0}"
@@ -58,20 +60,19 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>매물주소 <span class="essential" >*</span></th>
-                                <td>
+                                <th>매물주소 <span class="essential">*</span></th>
+                                <td class="addr">
                                     <div>
-                                        <div>
-                                            <label style="display: none;">주소검색</label>
-                                            <input type="text" id="addr" name="addr" readonly>
-                                            <input type="button" value="검색" id="select" onclick="openPost();">
-                                            <label>상세주소</label>
-                                            <input type="text" name="detailAddr">
-                                        </div>
-                                        <div id="map" style="width:500px;height:400px;">
-
-                                        </div>
+                                        <label style="display: none;">주소검색</label>
+                                        <input type="text" id="addr" name="addr" readonly>
+                                        <input type="button" value="검색" id="select" onclick="openPost();"> <br>
+                                        <label>상세주소</label>
+                                        <input type="text" name="detailAddr">
                                     </div>
+
+                                </td>
+                                <td>
+                                    <div id="map"></div>
                                 </td>
                             </tr>
                             <tr>
@@ -80,9 +81,11 @@
                                     <div>
                                         <div>
                                             <label>전용면적</label>
-                                            <input type="text" name="roomSizeP" id="roomSizeP" placeholder="평수 입력"><span>평</span>
+                                            <input type="text" name="roomSizeP" id="roomSizeP"
+                                                placeholder="평수 입력"><span>평</span>
                                             <span> = </span>
-                                            <input type="text" name="roomSizeM" id="roomSizeM" placeholder="m&#178; 입력"><span>m&#178;</span>
+                                            <input type="text" name="roomSizeM" id="roomSizeM"
+                                                placeholder="m&#178; 입력"><span>m&#178;</span>
                                         </div>
                                     </div>
                                 </td>
@@ -101,7 +104,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div>
+                <div class="table">
                     <h2>거래 정보</h2>
                     <table>
                         <tr>
@@ -148,38 +151,53 @@
                         </tr>
                         <tr>
                             <th>입주 가능 일자 <span class="essential">*</span></th>
-                            <div>
+                            <td>
                                 <label for=""></label>
                                 <input type="radio" name="immediateOccupancy" value="Y" checked> 즉시 입주
                                 <input type="radio" name="immediateOccupancy" value="N"> 일자 선택
                                 <input type="date" name="availableMoveInDate">
-                            </div>
-                        </tr>
-                    </table>
-                </div>
-                <div>
-                    <h2>시설정보</h2>
-                    <table>
-                        <tr th:each="option, state : ${optionsList}">
-                            <th>[[${option.optionName}]] <span class="essential">*</span></th>
-                            <td>
-                                <th:block th:each="detailOption : ${option.detailOptionList}">
-                                    <th:block th:if="${state.index==0}">
-                                        <input type="radio" name="detailOptions"
-                                            th:value="${detailOption.detailOptionCode}">
-
-                                    </th:block>
-                                    <th:block th:if="${state.index!=0}">
-                                        <input type="checkbox" name="detailOptions"
-                                            th:value="${detailOption.detailOptionCode}">
-                                    </th:block>
-                                    [[${detailOption.detailOptionName}]]
-                                </th:block>
                             </td>
                         </tr>
                     </table>
                 </div>
-                <div>
+                <div class="table">
+                    <h2>시설정보</h2>
+                    <table class="options">
+                        <tr th:each="option, state : ${optionsList}">
+                            <th>[[${option.optionName}]] <span class="essential">*</span></th>
+                            <td>
+                                <th:block th:if="${option.optionCode =='OPTION_003'}">
+                                    <input type="checkbox" class="all_check">
+                                        <label>전체선택</label>
+                                    </th:block>
+                                <th:block th:each="detailOption : ${option.detailOptionList}">
+                                    <th:block th:if="${state.index==0}">
+                                        <input type="radio" name="detailOptions"
+                                            th:value="${detailOption.detailOptionCode}">
+                                    </th:block>
+                                    
+                                    <th:block th:if="${option.optionCode =='OPTION_003'}">
+                                        <th:block th:if="${state.index!=0}">
+                                            <input type="checkbox" name="detailOptions"
+                                                th:value="${detailOption.detailOptionCode}"
+                                                class="detailOptionCheckbox">
+                                        </th:block>
+                                        <label>[[${detailOption.detailOptionName}]]</label>
+                                    </th:block>
+                                    <th:block th:if="${option.optionCode !='OPTION_003'}">
+                                        <th:block th:if="${state.index!=0}">
+                                            <input type="checkbox" name="detailOptions"
+                                                th:value="${detailOption.detailOptionCode}">
+                                        </th:block>
+                                        <label>[[${detailOption.detailOptionName}]]</label>
+                                    </th:block>
+                                </th:block>
+
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="table">
                     <h2>사진 등록</h2>
                     <table>
                         <tr>
@@ -193,7 +211,7 @@
                         </tr>
                     </table>
                 </div>
-                <div>
+                <div class="table">
                     <h2>상세 설명</h2>
                     <table>
                         <tr>

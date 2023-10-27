@@ -1,7 +1,6 @@
 package com.green.hanbang.room.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.green.hanbang.member.service.MemberService;
 import com.green.hanbang.member.vo.MemberVO;
 import com.green.hanbang.room.service.RoomService;
 import com.green.hanbang.room.vo.*;
@@ -13,9 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/room")
@@ -96,4 +93,82 @@ public class RoomController {
     return roomList;
 
     }
+
+////////////////////////////////
+
+    @GetMapping("/roomDetailInfo")
+    public String roomDetailInfo(String roomCode, Model model){
+        //방 모든 정보
+        RoomVO room = roomService.selectRoomInfo(roomCode);
+        System.out.println(room);
+        model.addAttribute("roomDetail",room);
+
+        //선택한 옵션
+        String options = room.getDetailOptions();
+        List<String> optionList = Arrays.asList(options.split(","));
+        model.addAttribute("optionList",optionList);
+
+        //모든 옵션
+        List<OptionsVO> os = roomService.selectOptions();
+        model.addAttribute("allOptionList",roomService.selectOptions());
+
+        //매물번호 (RoomCode 마지막 숫자 4자)
+        String number = room.getRoomCode().substring(room.getRoomCode().length()-4);
+        model.addAttribute("number", number);
+
+        //방 등록한 사람 login_type 조회
+        String loginType = roomService.selectLoginType(room.getUserNo());
+
+        //등록한 사람 정보 조회
+        if(Objects.equals(loginType, "USER")){
+            model.addAttribute("personInfo",roomService.selectRegUser(room.getUserNo()));
+        } else if(Objects.equals(loginType, "REALTOR")){
+            model.addAttribute("personInfo",roomService.selectRegRealtor(room.getUserNo()));
+        }
+
+        //허위 매물 신고 사유
+        model.addAttribute("reasonList",roomService.selectReasonList());
+
+        //매물 문의 제목 조회
+        model.addAttribute("inquiryTitleList",roomService.selectInquiryTitle());
+
+        return "room/room_detail";
+    }
+
+    //옵션 값 있을 시 '있음' 표시
+    @ResponseBody
+    @PostMapping("/roomDetailFetch")
+    public List<String> roomDetailFetch(@RequestBody Map<String, String> data){
+        String options = roomService.selectRoomInfo(data.get("roomCode")).getDetailOptions();
+        List<String> optionList = Arrays.asList(options.split(","));
+        return optionList;
+    }
+
+    //본인인증
+    @ResponseBody
+    @PostMapping("/elDAS")
+    public String elDAS(@RequestBody MemberVO memberVO){
+        if(roomService.selectElDAS(memberVO) == null){
+            return "null";
+        }
+        return roomService.selectElDAS(memberVO);
+    }
+
+    //허위매물신고
+    @PostMapping("/falseOfferings")
+    public String insertFalseOfferings(FalseOfferingsVO falseOfferingsVO){
+        roomService.insertFalseOfferings(falseOfferingsVO);
+        return "redirect:/room/roomDetailInfo?roomCode=" + falseOfferingsVO.getRoomCode();
+    }
+
+    //매물문의
+    @ResponseBody
+    @PostMapping("/insertInquiry")
+    public boolean insertInquiry(@RequestBody InquiryVO inquiryVO, HttpSession session){
+        MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
+        inquiryVO.setFromUserNo(loginInfo.getUserNo());
+
+        return roomService.insertInquiry(inquiryVO);
+    }
+
 }

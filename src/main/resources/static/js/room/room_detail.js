@@ -15,7 +15,7 @@ window.addEventListener('load', () => {
     inquiryModal = new bootstrap.Modal('#inquiry-modal');
     telModal = new bootstrap.Modal('#tel-modal');
     alertBox = document.querySelector('.elDAS-alert-box');
-    fetch('/room2/roomDetailFetch', { //요청경로
+    fetch('/room/roomDetailFetch', { //요청경로
         method: 'POST',
         cache: 'no-cache',
         headers: {
@@ -49,7 +49,7 @@ window.addEventListener('load', () => {
 function elDAS(){
     let userName = document.querySelector('#elDAS-userName').value;
     let passWord = document.querySelector('#elDAS-password').value;
-    fetch('/room2/elDAS', { //요청경로
+    fetch('/room/elDAS', { //요청경로
         method: 'POST',
         cache: 'no-cache',
         headers: {
@@ -110,7 +110,7 @@ function inquiry(roomCode){
         , inquiryTitleCode : document.querySelector('#inquiryTitleCode').value
         , inquiryContent : document.querySelector('#inquiryContent').value
     }
-    fetch('/room2/insertInquiry', { //요청경로
+    fetch('/room/insertInquiry', { //요청경로
         method: 'POST',
         cache: 'no-cache',
         headers: {
@@ -126,7 +126,7 @@ function inquiry(roomCode){
     .then((data) => {//data -> controller에서 리턴되는 데이터!
         if(data){
             alert('매물문의가 등록되었습니다.');
-            location.href=`/room2/roomDetailInfo?roomCode=${roomCode}`
+            location.href=`/room/roomDetailInfo?roomCode=${roomCode}`
         } else {
             alert('문의 등록에 실패했습니다.\n관리자에게 문의하세요.');
         }
