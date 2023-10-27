@@ -59,3 +59,34 @@
     position: relative;
     z-index: 1;
 }
+
+.reportWP {
+    width: 100%;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+}
+
+.reportWP div:not(.reportTA){
+    width: 1200px;
+    height: 100%;
+    padding: 0px 10px;
+    margin: 40px auto 120px;
+}
+
+.reportTA {
+    width: 1200px;
+    height: 100px;
+    margin-bottom: 40px;
+    padding: 0px 10px;
+    margin: 40px auto 120px;
+}
+
+.reportTA p{
+    color: rgb(101, 101, 101);
+}
+
+.reportCT {
+    flex: 0 0 auto;
+    padding: 150px 0px 200px;
+    text-align: center;
+}

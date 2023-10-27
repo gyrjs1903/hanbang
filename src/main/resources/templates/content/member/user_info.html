@@ -22,14 +22,17 @@
         </header>
         <div class="user_my_page">
             <div class="profile">
-                    <div class="profile_change upload">
-                        <form action="/member/updateProfile" method="post" enctype="multipart/form-data">
-                            <input type="file" class="form-control real_upload" id="profileImg" name="profileImg" onchange="chooseImg(this)">
-                            <div id="imagePreview"></div>
-                            <div class="cameraico"><img src="/img/member/camera_icon.png" alt="프로필 사진 변경"></div>
-                            <button type="submit">사진 등록</button>
-                        </form>
-                    </div>
+                <div class="profile_change upload">
+                    <form id="profileForm" action="/member/updateProfile" method="post" enctype="multipart/form-data">
+                        <div id="imagePreview" class="fake_upload">
+                            <input class="form-control real_upload" id="profileImg" name="profileImg" type="file" onchange="submitForm">
+                            <img class="proImg" th:src="@{'http://localhost:8081/' + ${session.loginInfo.memberImgVO.profileImgName}}" alt="프로필 이미지" draggable="false">
+                            <div class="pro_ico">
+                                <img src="/img/member/camera_icon.png" alt="프로필 사진 변경">
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
             <ul class="info_list">
                 <li>
@@ -60,7 +63,7 @@
                         <h1>아이디</h1>
                     </div>
                     <div class="loginUserData">
-                        <p>[[${session.loginInfo?.userName}]]</p>
+                        <p class="LUDname">[[${session.loginInfo?.userName}]]</p>
                     </div>
                 </li>
                 <li>
@@ -68,7 +71,9 @@
                         <h1>비밀번호</h1>
                     </div>
                     <div class="cp">
-                        <img src="/img/member/right_icon.png" alt="비밀번호 변경 창" id="PWCBtn" class="rightBtn">
+                        <button type="button" id="PWCBtn">
+                            <img src="/img/member/right_icon.png" alt="비밀번호 변경 창" class="rightBtn">
+                        </button>
                     </div>
                 </li>
                 <li>
@@ -76,18 +81,28 @@
                         <h1>이름</h1>
                     </div>
                     <div class="loginUserData">
-                        <p>이창규 > [본인인증창]</p>
+                        <p></p>
+                    </div>
+                    <div class="cp">
+                        <button type="button" id="NNCBtn">
+                            <img src="/img/member/right_icon.png" alt="닉네임 변경 창" class="rightBtn">
+                        </button>
                     </div>
                 </li>
                 <li>
                     <div class="infoT">
                         <h1>휴대폰번호</h1>
                     </div>
-                    <div class="cp">
+                    <div class="loginUserData">
                         <div class="">
-                            <p>[[${session.loginInfo?.phone}]] > [본인인증창] [본인인증 완료 시 아래 본인인증 마크와 텍스트]</p>
-                            <h1 class="">본인 인증</h1>
+                            <p>[[${session.loginInfo?.phone}]]</p>
+                            <h1 class="userChecked">본인인증</h1>
                         </div>
+                    </div>
+                    <div class="cp">
+                        <button type="button" id="NNCBtn">
+                            <img src="/img/member/right_icon.png" alt="닉네임 변경 창" class="rightBtn">
+                        </button>
                     </div>
                 </li>
                 <li class="privacy_agreement">
@@ -96,9 +111,9 @@
                         <p>선택정보 제공에 대한 동의를 거부하시는 경우에도</p>
                         <p>서비스 이용이 가능합니다.</p>
                         <button type="button" class="view_deatils">
-                        <div>
-                            <span class="vdBtn" onclick="window.open('/member/userinfo_consent')">상세보기</span>
-                        </div>
+                            <div>
+                                <span class="vdBtn" onclick="openNewWindow('/member/userinfo_consent')">상세보기</span>
+                            </div>
                         </button>
                     </div>
                     <button type="button" class="agreement">
@@ -142,7 +157,7 @@
 
 
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-        <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script async src="/js/member/user_info.js"></script>
         </body>
     </th:block>

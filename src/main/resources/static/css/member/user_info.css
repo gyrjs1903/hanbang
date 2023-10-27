@@ -67,37 +67,69 @@
     border: 1px solid rgb(245, 245, 245);
 }
 
+.real_upload {
+    display: none;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    font-family: "object-fit: cover;";
+    opacity: 1;
+    position: relative;
+    top: 100px;
+}
+
 .profile {
+    position: relative;
     display: flex;
-    -webkit-box-align: center;
     align-items: center;
-    justify-content: center;
-    -webkit-box-pack: center;
     justify-content: center;
     padding-bottom: 68px;
 }
 
-.profile_change {
+.fake_upload {
     position: relative;
-    display: flex;
-    width: 96px;
-    height: 96px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     cursor: pointer;
     align-items: center;
     user-select: none;
 }
 
-.img_preview {
-    width: 48px;
-    height: 48px;
-    z-index: 1;
-    /* background-image: url("/img/member/camera_icon.png"); */
+.real_upload {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    opacity: 0;
+    cursor: pointer;
 }
 
-.profile_change img {
-    width: 100%;
-    height: 100%;
+.pro_ico {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 24px;
+    height: 24px;
+}
+
+.pro_ico img{
+    position: absolute;
+    bottom: 0px;
+    left: 10px;
+    width: 24px;
+    height: 24px;
+}
+
+.img_preview {
+    width: 100px;
+    height: 100px;
+    z-index: 1;
+}
+
+.proImg {
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     object-fit: cover;
     font-family: "object-fit: cover;";
@@ -108,9 +140,13 @@
     cursor: pointer;
 }
 
+.cp button {
+    border: 0;
+    background-color: transparent;
+}
 .rightBtn {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
 }
 
 .info_list {
@@ -183,24 +219,24 @@
     margin-left: auto;
 }
 
-.loginUserData h1 {
+.loginUserData h1:not(.userChecked) {
     font-size: calc(1.375rem + 1.5vw);
 }
 
-.privacy_agreement li + li {
-    margin-top: 12px;
+.LUDname {
+    margin-right: 40px;
 }
 
-.privacy_agreement li {
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: justify;
-    justify-content: space-between;
-    padding: 16px 0px;
+.loginUserData p:not(.LUDname){
+    margin-top: 7px;
+    margin-right: 25px;
+    color: gray;
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: 700;
 }
 
-.privacy_agreement li h1 {
+.privacy_agreement div h1 {
     margin-bottom: 6px;
     color: rgb(34, 34, 34);
     font-size: 14px;
@@ -208,14 +244,31 @@
     font-weight: 700;
 }
 
-.privacy_agreement li p {
+.privacy_agreement div p {
     color: rgb(151, 151, 151);
     font-size: 12px;
     line-height: 20px;
     font-weight: 400;
 }
 
-.view_details {
+.privacy_agreement div button {
+    margin-top: 12px;
+}
+
+.userChecked {
+    display: none;
+    padding-left: 16px;
+    color: rgb(50, 108, 249);
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 700;
+    background-image: url("/img/member/user_check_shield_ico.svg");
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-size: 16px 16px;
+}
+
+.view_deatils {
     flex: 0 0 auto;
     display: inline-flex;
     -webkit-box-align: center;
@@ -224,17 +277,17 @@
     justify-content: center;
     width: auto;
     padding: 0px;
-    border: 0px;
-    background-color: transparent;
     transition: all 150ms ease-out 0s;
     cursor: pointer;
     height: 28px;
     font-size: 12px;
     line-height: 20px;
     font-weight: 700;
+    border: 0;
+    background-color: transparent;
 }
 
-.view_details > div {
+.view_deatils > div {
     display: inline-flex;
     -webkit-box-align: center;
     align-items: center;
@@ -319,4 +372,8 @@
 .seceSpan {
     margin-left: 0px;
     margin-right: 0px;
+}
+
+.seceSpan span{
+    text-decoration: underline;
 }
