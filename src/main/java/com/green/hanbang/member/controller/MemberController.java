@@ -38,7 +38,6 @@ public class MemberController {
         // 가입 한 회원 번호 조회
         String userNo = memberService.selectUserNo(memberVO.getUserNo());
 
-        // 회원 번호가 null이 아니면 해당 회원에게 기본 프로필 이미지 삽입
         MemberImgVO memberImgVO = new MemberImgVO();
         memberImgVO.setUserNo(userNo);
         memberImgVO.setProfileImgName("img/member/profileImg/default_profile_image.png");
@@ -48,7 +47,7 @@ public class MemberController {
 
         String userName = memberVO.getUserName();
 
-        return "redirect:/member/login?userName=" + userName;
+        return "redirect:/member/loginForm?userName=" + userName;
     }
 
     // 회원 탈퇴
