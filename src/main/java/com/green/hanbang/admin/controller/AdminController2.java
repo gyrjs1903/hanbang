@@ -3,7 +3,7 @@ package com.green.hanbang.admin.controller;
 import com.green.hanbang.admin.service.AdminService2;
 import com.green.hanbang.admin.service.MemberManageService;
 import com.green.hanbang.admin.vo.MemberManageVO;
-import com.green.hanbang.member.service.MemberService2;
+import com.green.hanbang.member.service.MemberService;
 import com.green.hanbang.member.vo.AlarmVO;
 import com.green.hanbang.realtor.vo.RealtorDetailVO;
 import com.green.hanbang.room.vo.FalseOfferingsVO;
@@ -25,7 +25,7 @@ import java.util.Map;
 public class AdminController2 {
     private final AdminService2 adminService2;
     private final MemberManageService memberManageService;
-    private final MemberService2 memberService2;
+    private final MemberService memberService;
 
     @GetMapping("/manage")
     public String adminManage(){
@@ -73,7 +73,7 @@ public class AdminController2 {
         //승인 요청 알림 insert
         alarmVO.setUserNo(memberManageVO.getUserNo());
         alarmVO.setAuthorityUpdate(1);
-        memberService2.insertAlarm(alarmVO);
+        memberService.insertAlarm(alarmVO);
         return "redirect:/admin2/realList";
     }
 

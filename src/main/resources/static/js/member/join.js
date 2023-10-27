@@ -287,10 +287,9 @@ $(document).ready(function() {
 
             var isAllInputsFilled = userName !== '' && passWord !== '' && passWordCheck !== '';
     
-            //var isLoginTypeSelected = loginType === 'NULL';
+
 
             if (isUserNameValid && isPasswordValid && isPasswordMatch && isUserNameDuplicationValid && isAllInputsFilled) {
-                // && isLoginTypeSelected
                 joinBtn.prop('disabled', false);
                 joinBtn.removeClass("disabled-button");
                 joinBtn.addClass("enabled-button");
@@ -317,7 +316,7 @@ $(document).ready(function() {
 
         // 초기 페이지 접근 버튼 비활성화 고정
         joinBtn.prop('disabled', true);
-        //joinBtn.addClass("disabled-button");
+
     });
 });
 

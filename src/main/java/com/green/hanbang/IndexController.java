@@ -1,6 +1,6 @@
 package com.green.hanbang;
 
-import com.green.hanbang.member.service.MemberService2;
+import com.green.hanbang.member.service.MemberService;
 import com.green.hanbang.member.vo.AlarmVO;
 import com.green.hanbang.member.vo.MemberVO;
 import com.green.hanbang.realtor.vo.RealtorDetailVO;
@@ -19,28 +19,23 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class IndexController {
-    private final MemberService2 memberService2;
+    private final MemberService memberService;
+
     // 시작페이지
     @GetMapping("/")
-    public String main(){
-        return "main/home";
-    }
-
-    ////////////////////////////////////////////
-    @GetMapping("/2")
-    public String main2(Model model, HttpSession session){
+    public String main(Model model, HttpSession session) {
         MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
         int alarmCnt = 0;
         //공인중개사
-        if(loginInfo.getLoginType().equals("REALTOR")){
-            if(memberService2.selectAlarm(loginInfo.getUserNo()) != null) {
+        if (loginInfo.getLoginType().equals("REALTOR")) {
+            if (memberService.selectAlarm(loginInfo.getUserNo()) != null) {
                 //권한승인알림
-                int authorityStatus = memberService2.selectAuthorityAlarm(loginInfo.getUserNo());
+                int authorityStatus = memberService.selectAuthorityAlarm(loginInfo.getUserNo());
                 model.addAttribute("authorityAlarm", authorityStatus);
 
 
                 //매물문의알림
-                RealtorDetailVO realtor = memberService2.selectInquiryAlarm(loginInfo.getUserNo());
+                RealtorDetailVO realtor = memberService.selectInquiryAlarm(loginInfo.getUserNo());
 
                 int realtorInquiryCnt = 0;
                 for (InquiryVO inquiry : realtor.getInquiryList()) {
@@ -57,22 +52,22 @@ public class IndexController {
             model.addAttribute("alarmCnt", alarmCnt);
         }
         //일반회원
-        if(loginInfo.getLoginType().equals("USER")){
-            List<InquiryVO> userRoomInquiry = memberService2.selectUserInquiryAlarm(loginInfo.getUserNo());
+        if (loginInfo.getLoginType().equals("USER")) {
+            List<InquiryVO> userRoomInquiry = memberService.selectUserInquiryAlarm(loginInfo.getUserNo());
             System.out.println(userRoomInquiry);
             int userInquiryAnswer = 0;
-            for(InquiryVO inquiry : userRoomInquiry){
-                if(inquiry.getInquiryAnswer() != null && inquiry.getInquiryReadCnt() == 0){
+            for (InquiryVO inquiry : userRoomInquiry) {
+                if (inquiry.getInquiryAnswer() != null && inquiry.getInquiryReadCnt() == 0) {
                     userInquiryAnswer += 1;
                 }
             }
-            if(userInquiryAnswer != 0)alarmCnt += 1;
-            model.addAttribute("userInquiryAnswer",userInquiryAnswer);
-            model.addAttribute("alarmCnt",alarmCnt);
+            if (userInquiryAnswer != 0) alarmCnt += 1;
+            model.addAttribute("userInquiryAnswer", userInquiryAnswer);
+            model.addAttribute("alarmCnt", alarmCnt);
         }
-        return "main/home222";
-    }
+        return "main/home";
 
+    }
     //권한 승인완료 알림 지우기
     @ResponseBody
     @PostMapping("/realtorAuthorityAlarm")
@@ -80,6 +75,6 @@ public class IndexController {
         MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
 
         alarmVO.setUserNo(loginInfo.getUserNo());
-        memberService2.insertAlarm(alarmVO);
+        memberService.insertAlarm(alarmVO);
     }
 }
