@@ -1,5 +1,17 @@
 @charset "UTF-8";
 
+.table{
+    margin-bottom: 30px;
+}
+.table h2{
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+header{
+    font-weight: 700;
+    font-size: 18px;
+    text-align: center;
+}
 .title{
     color: rgb(34, 34, 34);
     font-size: 46px;
@@ -38,9 +50,123 @@ table tbody tr{
     margin-bottom: 30px;
 }
 table tbody tr th{
+    width: 13%;
     font-weight: 700;
-    font-size: 18px;
+    font-size: 15px;
+    padding-left: 20px;
+    text-align: left;
+    padding-right: 20px;
+    vertical-align: middle;
+    background-color: rgb(252, 252, 252);
 }
 table{
     width: 100%;
+    text-align: left;
+}
+
+.addr div{
+    display: inline-block;
+    align-items: center;
+    height: 100%;
+}
+#map{
+ width: 400px;
+ height: 250px;
+}
+
+/* 라디오 버튼 스타일 */
+input[type="radio"] {
+    -webkit-appearance: none;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    outline: none !important;
+    border: 2px solid #9999;
+    vertical-align: middle;
+    border-radius: 50%; /* 원 모양으로 */
+    padding: 10px;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+input[type="radio"]::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px; /* 내부 원 크기 조절 */
+    height: 12px;
+    background-color: #fff; /* 원 내부 배경색 */
+    border-radius: 50%; /* 내부 원 모양 */
+}
+
+input[type="radio"]:checked::before {
+    background-color: #23ce4e; /* 체크된 상태 색상 */
+    border-color: rgba(255, 255, 255, 0.3);
+}
+.options tr td 
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    outline: none !important;
+    border: 2px solid #9999;
+    vertical-align: middle;
+    border-radius: 20%;
+    padding: 10px;
+    align-items: center;
+    margin-bottom: 5px;
+}
+input[type="checkbox"]::before {
+    content: "\2713";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    overflow: hidden;
+    transform: scale(0) translate(-50%, -50%);
+    line-height: 1;
+}
+input[type="checkbox"]:checked {
+    background-color: #23ce4e;
+    border-color: rgba(255, 255, 255, 0.3);
+    color: white;
+}
+input[type="checkbox"]:checked::before {
+    border-radius: 4px;
+    transform: scale(1) translate(-50%, -50%)
+} 
+
+/* 버튼 스타일 */
+input[type="submit"] {
+    background-color: #4CAF50; /* 녹색 */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+input[type="submit"]:hover {
+    background-color: #45A049; /* 더 진한 녹색 */
+}
+input[type="button"]{
+    background-color: #4CAF50; /* 녹색 */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 7px;
+    cursor: pointer;
+    font-weight: bold;
+}
+input[type="button"]:hover{
+    background-color: #45A049; /* 더 진한 녹색 */
 }

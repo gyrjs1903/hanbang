@@ -288,7 +288,7 @@ document.getElementById("searchButton").addEventListener("click", function () {
 
 
 function detailRoom(roomCode) {
-    location.href = `/room2/roomDetailInfo?roomCode=${roomCode}`
+    location.href = `/room/roomDetailInfo?roomCode=${roomCode}`
 }
 
 

@@ -4,6 +4,7 @@ let geocoder = new kakao.maps.services.Geocoder();
 
 //화면 오픈 시 바로 실행되는 함수
 init();
+changeSubPropertyTypeCode();
 setInitialSubcategory();
 
 
@@ -76,10 +77,10 @@ function changeSubPropertyTypeCode(){
     });
 }
 
-// 페이지 로드 시 초기 설정 함수
+
 function setInitialSubcategory() {
-    var selectedPropertyTypeCode = document.querySelector('input[name="propertyTypeCode"]:checked').value;
-    var subcategoryWrapper = document.querySelectorAll('.subproperty-wrapper');
+    let selectedPropertyTypeCode = document.querySelector('input[name="propertyTypeCode"]:checked').value;
+    let subcategoryWrapper = document.querySelectorAll('.subproperty-wrapper');
 
     subcategoryWrapper.forEach(function(wrapper) {
         var parentPropertyTypeCode = wrapper.getAttribute('data-property-type-code');
@@ -127,5 +128,14 @@ roomSizeMInput.addEventListener("input", function() {
 });
 
 
+const selectAllCheckbox = document.querySelector(".all_check");
+const detailOptionCheckboxes = document.querySelectorAll(".detailOptionCheckbox");
 
+// "전체선택" 체크박스가 클릭되면 모든 하위 체크박스를 선택 또는 선택 해제
+selectAllCheckbox.addEventListener("change", function() {
+    const isChecked = selectAllCheckbox.checked;
+    detailOptionCheckboxes.forEach(function(checkbox) {
+        checkbox.checked = isChecked;
+    });
+});
 

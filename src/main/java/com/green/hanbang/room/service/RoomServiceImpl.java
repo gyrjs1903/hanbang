@@ -1,5 +1,6 @@
 package com.green.hanbang.room.service;
 
+import com.green.hanbang.member.vo.MemberVO;
 import com.green.hanbang.room.vo.*;
 import lombok.RequiredArgsConstructor;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -47,5 +48,58 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public List<RoomAddrVO> selectRoomAddr() {
         return sqlSession.selectList("roomMapper.selectRoomAddr");
+    }
+
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    @Override
+    public RoomVO selectRoomInfo(String roomCode) {
+        return sqlSession.selectOne("roomMapper.selectRoomInfo",roomCode);
+    }
+
+//    @Override
+//    public List<OptionsVO> selectOptions() {
+//        return sqlSession.selectList("roomMapper.selectOptions");
+//    }
+
+    @Override
+    public String selectLoginType(String userNo) {
+        return sqlSession.selectOne("roomMapper.selectLoginType",userNo);
+    }
+
+    @Override
+    public MemberVO selectRegUser(String userNo) {
+        return sqlSession.selectOne("roomMapper.selectRegUser",userNo);
+    }
+
+    @Override
+    public MemberVO selectRegRealtor(String userNo) {
+        return sqlSession.selectOne("roomMapper.selectRegRealtor",userNo);
+    }
+
+    @Override
+    public String selectElDAS(MemberVO memberVO) {
+        return sqlSession.selectOne("roomMapper.selectElDAS",memberVO);
+    }
+
+    @Override
+    public List<ReasonVO> selectReasonList() {
+        return sqlSession.selectList("roomMapper.selectReasonList");
+    }
+
+    @Override
+    public int insertFalseOfferings(FalseOfferingsVO falseOfferingsVO) {
+        return sqlSession.insert("roomMapper.insertFalseOfferings",falseOfferingsVO);
+    }
+
+    @Override
+    public List<InquiryTitleVO> selectInquiryTitle() {
+        return sqlSession.selectList("roomMapper.selectInquiryTitle");
+    }
+
+    @Override
+    public boolean insertInquiry(InquiryVO inquiryVO) {
+        return sqlSession.insert("roomMapper.insertInquiry",inquiryVO) == 1;
     }
 }

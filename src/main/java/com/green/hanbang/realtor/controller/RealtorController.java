@@ -4,7 +4,6 @@ import com.green.hanbang.member.vo.MemberVO;
 import com.green.hanbang.realtor.service.RealtorService;
 import com.green.hanbang.realtor.vo.LicenseImgVO;
 import com.green.hanbang.realtor.vo.RealtorDetailVO;
-import com.green.hanbang.room.service.RoomService2;
 import com.green.hanbang.room.vo.InquiryVO;
 import com.green.hanbang.util.LicenseUtil;
 import jakarta.servlet.http.HttpSession;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
