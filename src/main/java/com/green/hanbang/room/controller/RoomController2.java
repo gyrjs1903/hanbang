@@ -77,6 +77,9 @@ public class RoomController2 {
     @ResponseBody
     @PostMapping("/elDAS")
     public String elDAS(@RequestBody MemberVO memberVO){
+        if(roomService2.selectElDAS(memberVO) == null){
+            return "null";
+        }
         return roomService2.selectElDAS(memberVO);
     }
 

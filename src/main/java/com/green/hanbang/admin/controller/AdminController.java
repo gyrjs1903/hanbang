@@ -5,6 +5,10 @@ import com.green.hanbang.admin.service.EventService;
 import com.green.hanbang.admin.service.MemberManageService;
 import com.green.hanbang.admin.service.MembershipService;
 import com.green.hanbang.admin.vo.*;
+import com.green.hanbang.member.service.MemberService2;
+import com.green.hanbang.member.vo.AlarmVO;
+import com.green.hanbang.realtor.vo.RealtorDetailVO;
+import com.green.hanbang.room.vo.FalseOfferingsVO;
 import com.green.hanbang.util.ConstantVariable;
 import com.green.hanbang.util.EventUtil;
 import jakarta.servlet.ServletContext;
@@ -29,6 +33,7 @@ public class AdminController {
     private final BoardService boardService;
     private final MembershipService membershipService;
     private final EventService eventService;
+    private final MemberService2 memberService2;
 
     // 관리자 페이지 ( + 맴버쉽 상품의 대분류 조회)
     @GetMapping("/manage")
@@ -84,9 +89,28 @@ public class AdminController {
     }
     // 공인 중개사 승인
     @GetMapping("/updateAuthority")
-    public String updateAuthority(MemberManageVO memberManageVO){
+    public String updateAuthority(MemberManageVO memberManageVO, AlarmVO alarmVO){
         memberManageService.updateAuthority(memberManageVO);
-        return "redirect:/admin/realDetail";
+        //승인 요청 알림 insert
+        alarmVO.setUserNo(memberManageVO.getUserNo());
+        alarmVO.setAuthorityUpdate(1);
+        memberService2.insertAlarm(alarmVO);
+        return "redirect:/admin/realList";
+    }
+    //허위매물신고&공인중개사 승인요청
+    @ResponseBody
+    @PostMapping("/alarm")
+    public Map<String, Object> adminAlarm(){
+        List<FalseOfferingsVO> falseOfferingsList = memberManageService.selectFalseOfferings();
+        List<RealtorDetailVO> realtorDetailList = memberManageService.selectRealtorAuthority();
+        Map<String,Object> map = new HashMap<>();
+        if(!falseOfferingsList.isEmpty()){
+            map.put("falseOfferings",falseOfferingsList);
+        }
+        if(!realtorDetailList.isEmpty()) {
+            map.put("realtorDetail",realtorDetailList);
+        }
+        return map;
     }
 
     //////// 공지사항 /////////////////////////////////////////////////

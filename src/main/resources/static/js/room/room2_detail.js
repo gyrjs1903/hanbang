@@ -4,6 +4,7 @@ let reportPerson = null;
 let roomCode = null;
 let inquiryModal = null;
 let telModal = null;
+let alertBox = null;
 // 옵션값 없을 시 '없음'표시
 window.addEventListener('load', () => {
     // 모달 창
@@ -13,6 +14,7 @@ window.addEventListener('load', () => {
     roomCode = document.querySelector('#roomCodeNumber').value;
     inquiryModal = new bootstrap.Modal('#inquiry-modal');
     telModal = new bootstrap.Modal('#tel-modal');
+    alertBox = document.querySelector('.elDAS-alert-box');
     fetch('/room2/roomDetailFetch', { //요청경로
         method: 'POST',
         cache: 'no-cache',
@@ -47,8 +49,6 @@ window.addEventListener('load', () => {
 function elDAS(){
     let userName = document.querySelector('#elDAS-userName').value;
     let passWord = document.querySelector('#elDAS-password').value;
-    console.log(userName);
-    console.log(passWord);
     fetch('/room2/elDAS', { //요청경로
         method: 'POST',
         cache: 'no-cache',
@@ -66,11 +66,15 @@ function elDAS(){
     })
     //fetch 통신 후 실행 영역
     .then((data) => {//data -> controller에서 리턴되는 데이터!
+        console.log(data);
         if(data != null){
             elDASModal.hide();
             reportModal.show();
+            reportPerson.value = data;
+        } else {
+            alertBox.innerHTML='아이디 혹은 비밀번호를 확인하세요.';
         }
-        reportPerson.value = data;
+
     })
     //fetch 통신 실패 시 실행 영역
     .catch(err=>{
@@ -133,3 +137,19 @@ function inquiry(roomCode){
         console.log(err);
     });
 }
+
+//문의 본인확인 모달 창 닫힐때 실행 이벤트
+const elDASmodal2 = document.querySelector('#elDAS-modal');
+const elDASForm = document.querySelector('#elDASForm');
+elDASmodal2.addEventListener('hidden.bs.modal', event => {
+    elDASForm.reset();
+    alertBox.innerHTML='';
+})
+
+//엔터버튼 누를 시 본인확인 정보 입력
+elDASForm.addEventListener("keypress", (e)=>{
+    if(e.key == 'Enter'){
+        e.preventDefault();
+        document.getElementById('elDAS-btn').onclick();
+    }
+})
