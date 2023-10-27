@@ -14,12 +14,8 @@ window.addEventListener('load', () => {
     roomCode = document.querySelector('#roomCodeNumber').value;
     inquiryModal = new bootstrap.Modal('#inquiry-modal');
     telModal = new bootstrap.Modal('#tel-modal');
-<<<<<<< HEAD:src/main/resources/static/js/room/room_detail.js
-    fetch('/room/roomDetailFetch', { //요청경로
-=======
     alertBox = document.querySelector('.elDAS-alert-box');
-    fetch('/room2/roomDetailFetch', { //요청경로
->>>>>>> d5c5d00ea571e88d12e8079694cb65ef9dfb095f:src/main/resources/static/js/room/room2_detail.js
+    fetch('/room/roomDetailFetch', { //요청경로
         method: 'POST',
         cache: 'no-cache',
         headers: {
@@ -53,13 +49,7 @@ window.addEventListener('load', () => {
 function elDAS(){
     let userName = document.querySelector('#elDAS-userName').value;
     let passWord = document.querySelector('#elDAS-password').value;
-<<<<<<< HEAD:src/main/resources/static/js/room/room_detail.js
-    console.log(userName);
-    console.log(passWord);
     fetch('/room/elDAS', { //요청경로
-=======
-    fetch('/room2/elDAS', { //요청경로
->>>>>>> d5c5d00ea571e88d12e8079694cb65ef9dfb095f:src/main/resources/static/js/room/room2_detail.js
         method: 'POST',
         cache: 'no-cache',
         headers: {
