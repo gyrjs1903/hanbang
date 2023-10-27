@@ -23,7 +23,6 @@ import java.util.List;
 public class MemberController {
     private final MemberService memberService;
     private final MemberInquiryService memberInquiryService;
-    private final MemberService2 memberService2;
 
     // 회원 가입 페이지 이동
     @GetMapping("/joinForm")
@@ -138,7 +137,7 @@ public class MemberController {
     @GetMapping("/memberCall")
     public String memberCall(HttpSession session,Model model) {
         MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
-        List<InquiryVO> roomInquiryList = memberService2.selectUserInquiryAlarm(loginInfo.getUserNo());
+        List<InquiryVO> roomInquiryList = memberService.selectUserInquiryAlarm(loginInfo.getUserNo());
         System.out.println(roomInquiryList);
         model.addAttribute("roomInquiryList",roomInquiryList);
         return "content/member/user_call";

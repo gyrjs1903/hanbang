@@ -8,7 +8,7 @@ function alarm(){
     } else{
         alarmTag.style.display = "none";
     }
-    fetch('/admin2/alarm', { //요청경로
+    fetch('/admin/alarm', { //요청경로
         method: 'POST',
         cache: 'no-cache',
         headers: {

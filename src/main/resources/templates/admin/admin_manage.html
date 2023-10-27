@@ -4,6 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <title>관리자 페이지</title>
+<link rel="stylesheet" href="/css/admin/admin_alarm.css">
 </head>
 <body>
     <div>
@@ -28,6 +29,20 @@
         <h3>이벤트</h3>
         <div><a th:href="@{/admin/eventList}">이벤트 관리</a></div>
     </div>
+    <div>
+        <h3><span onclick="alarm();" class="cursor">알림</span></h3>
+        <div class="alarm" id="admin_alarm_tag">
+            <div class="alarm_header">
+                <div class="cursor-default">알림</div>
+                <div onclick="alarm_close();" class="cursor close-btn"></div>
+            </div>
+            <div class="alarm_content">
+                <div id="today_alarm">
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="/js/admin/admin.js"></script>
+    <script src="/js/admin/admin_alarm.js"></script>    
 </body>
 </html>

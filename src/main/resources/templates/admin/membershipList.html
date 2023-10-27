@@ -4,27 +4,20 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
+<link rel="stylesheet" href="/css/admin/membership_list.css">
 </head>
 <body>
     
     <div style="height: 30px;;"></div>
     
     <th:block th:each="membership : ${membershipList}">
+        <div class="membershipTitle">[[${membership.membershipName}]]</div>
         <div class="membership-div" style="margin-bottom: 10px;">
-            <div th:if="${membership.memCateCode == 'CATE_001'}">
-                [[${membership.membershipName}]]
-                <div  th:each="item : ${membership.memItemList}">
-                    <span>[[${item.itemName}]]</span>
-                    <span>[[${item.itemPrice}]]</span>
-                    <span>[[${item.itemIntro}]]</span>
-                    <span>[[${item.itemContent}]]</span>
-                </div>
-            </div>
-            <div th:if="${membership.memCateCode != 'CATE_001'}" th:each="item : ${membership.memItemList}">
-                <span>[[${item.itemName}]]</span>
-                <span>[[${item.itemPrice}]]</span>
-                <span>[[${item.itemIntro}]]</span>
-                <span>[[${item.itemContent}]]</span>
+            <div class="membershipList" th:each="item : ${membership.memItemList}">
+                <div class="itemName">[[${item.itemName}]]</div>
+                <div class="itemPrice">[[${item.itemPrice}]]</div>
+                <div class="itemIntro">[[${item.itemIntro}]]</div>
+                <div class="itemContent">[[${item.itemContent}]]</div>
             </div>
         </div>
 

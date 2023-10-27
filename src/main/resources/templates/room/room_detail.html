@@ -331,13 +331,14 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="/room/elDAS" method="post">
+                        <form action="/room/elDAS" method="post" id="elDASForm">
                             <div>아이디</div>
                             <div><input type="text" name="userName" id="elDAS-userName"></div>
                             <div>비밀번호</div>
                             <div><input type="password" name="password" id="elDAS-password"></div>
+                            <div class="elDAS-alert-box"></div>
                             <div class="modal-footer">
-                                <input type="button" class="btn btn-primary" onclick="elDAS();" value="본인확인"></input>
+                                <input type="button" id="elDAS-btn" class="btn btn-primary" onclick="elDAS();" value="본인확인"></input>
                             </div>
                         </form>
                     </div>
