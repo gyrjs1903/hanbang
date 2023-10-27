@@ -96,7 +96,7 @@ public class AdminController {
         memberService.insertAlarm(alarmVO);
         return "redirect:/admin/realList";
     }
-    //허위매물신고&공인중개사 승인요청
+    // 허위매물신고 & 공인중개사 승인요청
     @ResponseBody
     @PostMapping("/alarm")
     public Map<String, Object> adminAlarm(){

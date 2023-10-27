@@ -7,22 +7,64 @@
 <title>원하는 방을 한방에 한방👊</title>
 </head>
 <body>
-    <th:block th:fragment="content">
-        <header class="">
+    <th:block layout:fragment="content">
+        <link rel="stylesheet" href="/css/member/dibs_on_room.css">
+        <link rel="stylesheet" href="/css/member/member_common.css">
+        <header class="user_header">
             <div>
-                <h1 class="">관심목록</h1>
-                <div class="">
-                    <a href="/recent_viewed_room">최근 본 방</a>
-                    <a href="/dibs_on_room" aria-current="page" class="active">찜한 방</a>
-                    <a href="/recent_viewed_apartment">최근 본 단지</a>
-                    <a href="/dibs_on_apartment">찜한 단지</a>
-                    <a href="/wish_list_favorites">즐겨찾기</a>
+                <h1 class="userHTD">관심목록</h1>
+                <div class="userHMD" th:if="${session.loginInfo == null}">
+                    <a class="userHMC" onclick="location.href='/member/dibsOn'">최근 본 방</a>
+                    <a class="userHM active" onclick="location.href='/member/loginForm'" aria-current="page">찜한 방</a>
+                    <a class="userHMC" onclick="location.href='/member/recentViewedApartment'">최근 본 단지</a>
+                    <a class="userHMC" onclick="location.href='/member/loginForm'">찜한 단지</a>
+                    <a class="userHMC" onclick="location.href='/member/loginForm'">즐겨찾기</a>
+                </div>
+                <div class="userHMD" th:if="${session.loginInfo != null}">
+                    <a class="userHMC" onclick="location.href='/member/dibsOn'">최근 본 방</a>
+                    <a class="userHMC active" onclick="location.href='/member/dibsOnRoom'" aria-current="page">찜한 방</a>
+                    <a class="userHMC" onclick="location.href='/member/recentViewedApartment'">최근 본 단지</a>
+                    <a class="userHMC" onclick="location.href='/member/dibsOnApartment'">찜한 단지</a>
+                    <a class="userHMC" onclick="location.href='/member/wishListFavorites'">즐겨찾기</a>
                 </div>
             </div>
         </header>
-        <div class="">
-            <p>찜한 방이 없습니다.</p>
-            <p>관심있는 방을 찜 해보세요.</p>
+        <div>
+            <div>
+                <p>
+                    총 <span>[]</span>개의 찜한 방이 있습니다.
+                </p>
+            </div>
+            <ul>
+                <li>
+                    <div>
+                        <div>
+                            <a href="">
+                                <div>
+                                    <div>
+                                        <img>
+                                        <div></div>
+                                        <div></div>
+                                        <div class="dibsOn">
+                                            <button type="button"></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div>
+                <button type="button">1~10</button>
+            </div>
+            <div>
+                <button type="button">방 비교하기</button>
+            </div>
+            <div class="inquiryCT">
+                <p>찜한 방이 없습니다.</p>
+                <p>관심있는 방을 찜 해보세요.</p>
+            </div>
         </div>
     </th:block>
 </body>
