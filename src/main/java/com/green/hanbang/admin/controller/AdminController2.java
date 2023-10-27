@@ -1,6 +1,5 @@
 package com.green.hanbang.admin.controller;
 
-import com.green.hanbang.admin.service.AdminService2;
 import com.green.hanbang.admin.service.MemberManageService;
 import com.green.hanbang.admin.vo.MemberManageVO;
 import com.green.hanbang.member.service.MemberService2;
@@ -23,7 +22,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping("/admin2")
 public class AdminController2 {
-    private final AdminService2 adminService2;
     private final MemberManageService memberManageService;
     private final MemberService2 memberService2;
 
@@ -33,21 +31,7 @@ public class AdminController2 {
     }
 
     /////////////추가///////////////
-    //허위매물신고
-    @ResponseBody
-    @PostMapping("/alarm")
-    public Map<String, Object> adminAlarm(){
-        List<FalseOfferingsVO> falseOfferingsList = adminService2.selectFalseOfferings();
-        List<RealtorDetailVO> realtorDetailList = adminService2.selectRealtorAuthority();
-        Map<String,Object> map = new HashMap<>();
-        if(!falseOfferingsList.isEmpty()){
-            map.put("falseOfferings",falseOfferingsList);
-        }
-        if(!realtorDetailList.isEmpty()) {
-            map.put("realtorDetail",realtorDetailList);
-        }
-        return map;
-    }
+
 
     // 공인중개사 목록 페이지
     @RequestMapping(value = "/realList")

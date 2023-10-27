@@ -1,6 +1,8 @@
 package com.green.hanbang.admin.service;
 
 import com.green.hanbang.admin.vo.MemberManageVO;
+import com.green.hanbang.realtor.vo.RealtorDetailVO;
+import com.green.hanbang.room.vo.FalseOfferingsVO;
 import lombok.RequiredArgsConstructor;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
@@ -46,5 +48,15 @@ public class MemberManageServiceImpl implements MemberManageService {
     @Override
     public int deleteReal(int identificationNum) {
         return sqlSession.delete("adminMapper.deleteReal", identificationNum);
+    }
+
+    @Override
+    public List<FalseOfferingsVO> selectFalseOfferings() {
+        return sqlSession.selectList("adminMapper.selectFalseOfferings");
+    }
+
+    @Override
+    public List<RealtorDetailVO> selectRealtorAuthority() {
+        return sqlSession.selectList("adminMapper.selectRealtorAuthority");
     }
 }
