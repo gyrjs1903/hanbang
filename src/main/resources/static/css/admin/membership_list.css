@@ -1,0 +1,25 @@
+@charset "UTF-8";
+/* membership_ist.css */
+
+.cateName{
+    font-weight: bold;
+    font-size: x-large;
+    text-align: center;
+}
+
+.membershipTitle{
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+.membership-div{
+    display: flex;
+}
+.membershipList{
+    border: 1px solid gray;
+    margin-right: 10px;
+}
+.membershipList > div{
+    margin-bottom: 5px;
+    text-align: center;
+}
