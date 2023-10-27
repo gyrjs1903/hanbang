@@ -9,6 +9,7 @@ let positonData;
 let polygons = [];
 let areas = [];
 setMap();
+roomSize();
 
 let container = document.getElementById('map');
 let options = {
@@ -152,9 +153,6 @@ document.getElementById("searchButton").addEventListener("click", function () {
     const searchPropertyTypeCode = document.querySelector('input[name="searchPropertyTypeCode"]:checked').value;
     const searchAddr = document.querySelector('input[name="searchAddr"]').value;
     const searchRoomSizePMin = document.querySelector('input[name="searchRoomSizePMin"]').value;
-    const searchRoomSizePMax = document.querySelector('input[name="searchRoomSizePMax"]').value;
-    const searchRoomSizeMMin = document.querySelector('input[name="searchRoomSizeMMin"]').value;
-    const searchRoomSizeMMax = document.querySelector('input[name="searchRoomSizeMMax"]').value;
     const searchFloor = document.querySelector('input[name="searchFloor"]').value;
     const searchMonthlyLeaseMax = document.querySelector('input[name="searchMonthlyLeaseMax"]').value;
     const searchDeposit = document.querySelector('input[name="searchDeposit"]').value;
@@ -172,9 +170,6 @@ document.getElementById("searchButton").addEventListener("click", function () {
         searchPropertyTypeCode,
         searchAddr,
         searchRoomSizePMin,
-        searchRoomSizePMax,
-        searchRoomSizeMMin,
-        searchRoomSizeMMax,
         searchFloor,
         searchMonthlyLeaseMax,
         searchDeposit,
@@ -234,7 +229,7 @@ document.getElementById("searchButton").addEventListener("click", function () {
             data.forEach((room, idx) => {
                 const roomElement = document.createElement('div');
                 roomElement.className = 'room';
-                roomElement.setAttribute('onclick', `detailRoom(${room.roomCode});`);
+                roomElement.setAttribute('onclick', `detailRoom('${room.roomCode}')`);
                 const imgElement = document.createElement('div');
                 roomElement.append(imgElement);
 
@@ -261,7 +256,7 @@ document.getElementById("searchButton").addEventListener("click", function () {
 
 
                 //주소
-                const addrInfo = document.createElement('div')
+                const addrInfo = document.createElement('p')
                 addrInfo.textContent = room.roomAddrVO.addr;
                 roomInfo.appendChild(addrInfo);
 
@@ -290,6 +285,8 @@ document.getElementById("searchButton").addEventListener("click", function () {
             console.log(err);
         });
 });
+
+
 function detailRoom(roomCode) {
     location.href = `/room2/roomDetailInfo?roomCode=${roomCode}`
 }
@@ -431,3 +428,41 @@ function removePolygon() {
     areas = [];
     polygons = [];
 }
+
+function roomSize() {
+    const slider = document.getElementById("roomSizeSlider");
+    const valueElement = document.getElementById("roomSizeValue");
+    const meterSquareElement = document.getElementById("meterSquareValue");
+
+    // 슬라이더 값이 변경될 때 이벤트를 처리
+    slider.addEventListener("input", function () {
+        // 슬라이더의 현재 값을 가져와서 표시
+        const selectedValue = slider.value;
+        valueElement.textContent = selectedValue;
+
+        // 평수를 미터 제곱으로 변환하여 표시
+        const squareMeters = (selectedValue * 3.3).toFixed(2);
+        meterSquareElement.textContent = squareMeters;
+    });
+}
+
+
+
+const selectAllCheckbox = document.querySelector(".all_check");
+const detailOptionCheckboxes = document.querySelectorAll(".detailOptionCheckbox");
+
+// "전체선택" 체크박스가 클릭되면 모든 하위 체크박스를 선택 또는 선택 해제
+selectAllCheckbox.addEventListener("change", function() {
+    const isChecked = selectAllCheckbox.checked;
+    detailOptionCheckboxes.forEach(function(checkbox) {
+        checkbox.checked = isChecked;
+    });
+});
+// 하위 체크박스 중 하나라도 클릭되면 전체선택 체크박스를 체크 해제
+detailOptionCheckboxes.forEach(function(checkbox) {
+    checkbox.addEventListener("change", function() {
+        if (!checkbox.checked) {
+            selectAllCheckbox.checked = false;
+        }
+    });
+});

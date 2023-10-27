@@ -23,6 +23,8 @@
             , ATTACHED_FILE_NAME
             , ADDR
             , DETAIL_ADDR
+            , R.IMMEDIATE_OCCUPANCY
+            , TO_CHAR(R.AVAILABLE_MOVE_IN_DATE,'YYYY-MM-DD') as AVAILABLE_MOVE_IN_DATE
         FROM ROOM R, ROOM_IMG I, ROOM_ADDR A
         WHERE R.ROOM_CODE = #{roomCode}
         AND R.ROOM_CODE = I.ROOM_CODE

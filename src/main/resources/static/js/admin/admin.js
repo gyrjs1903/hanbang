@@ -329,7 +329,7 @@ function updateItemInfo(itemCode){
     })
     //fetch 통신 후 실행 영역
     .then((data) => {//data -> controller에서 리턴되는 데이터!
-        alert('수정 완료!');
+        alert('수정이 완료되었습니다.');
         showItemDetail(itemCode);
 
     })
@@ -451,7 +451,7 @@ function insertItem(){
     })
     //fetch 통신 후 실행 영역
     .then((data) => {//data -> controller에서 리턴되는 데이터!
-        
+        alert('등록이 완료되었습니다.');
 
     })
     //fetch 통신 실패 시 실행 영역

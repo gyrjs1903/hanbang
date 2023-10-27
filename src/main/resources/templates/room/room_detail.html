@@ -76,11 +76,11 @@
                                 </li>
                                 <li>
                                     <div>입주가능일</div>
-                                    <th:block th:if="${roomDetail.immediateOccupancy==Y}">
-                                        <div>즉시입주가능</div>
-                                    </th:block>
-                                    <th:block th:if="${roomDetail.immediateOccupancy==N}">
+                                    <th:block th:if="${roomDetail.immediateOccupancy=='N'}">
                                         <div>[[${roomDetail.availableMoveInDate}]]</div>
+                                    </th:block>
+                                    <th:block th:if="${roomDetail.immediateOccupancy=='Y'}">
+                                        <div>즉시입주가능</div>
                                     </th:block>
                                 </li>
                                 <li>
