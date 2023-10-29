@@ -2,9 +2,7 @@ package com.green.hanbang.member.controller;
 
 import com.green.hanbang.member.service.MemberInquiryService;
 import com.green.hanbang.member.service.MemberService;
-import com.green.hanbang.member.vo.MemberImgVO;
-import com.green.hanbang.member.vo.MemberInquiryTypeVO;
-import com.green.hanbang.member.vo.MemberVO;
+import com.green.hanbang.member.vo.*;
 import com.green.hanbang.room.vo.InquiryVO;
 import com.green.hanbang.util.MemberUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -139,7 +137,7 @@ public class MemberController {
         return "redirect:/member/memberInfo";
     }
 
-    // 전화 문의 페이지로 이동
+    // 알림 페이지로 이동 (공인중개사 <-> 회원)
     @GetMapping("/memberCall")
     public String memberCall(HttpSession session,Model model) {
         MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
@@ -163,6 +161,18 @@ public class MemberController {
         model.addAttribute("memberInquiryTypeList", memberInquiryService.selectMemberInquiryTypeList(memberInquiryTypeVO));
 
         return "content/member/user_inquiry_write";
+    }
+
+    // 1:1문의 작성물 전송
+    @PostMapping("memberInquirySave")
+    public String memberInquirySave(MemberInquiryVO memberInquiryVO, MemberInquiryImgVO memberInquiryImgVO, MemberInquiryTypeVO memberInquiryTypeVO){
+
+        memberInquiryService.insertMemberInquiryType(memberInquiryTypeVO);
+        memberInquiryService.insertMemberInquiry(memberInquiryVO);
+        memberInquiryService.insertMemberInquiryImg(memberInquiryImgVO);
+
+        return "redirect:/member/memberInquiry";
+
     }
 
     // 허위 매물 신고 내역 페이지로 이동

@@ -1,6 +1,8 @@
 package com.green.hanbang.member.service;
 
+import com.green.hanbang.member.vo.MemberInquiryImgVO;
 import com.green.hanbang.member.vo.MemberInquiryTypeVO;
+import com.green.hanbang.member.vo.MemberInquiryVO;
 import lombok.RequiredArgsConstructor;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
@@ -14,5 +16,20 @@ public class MemberInquiryServiceImpl implements MemberInquiryService{
     @Override
     public List<MemberInquiryTypeVO> selectMemberInquiryTypeList(MemberInquiryTypeVO memberInquiryTypeVO) {
         return sqlSession.selectList("inquiryMapper.selectMemberInquiryTypeList", memberInquiryTypeVO);
+    }
+
+    @Override
+    public int insertMemberInquiry(MemberInquiryVO memberInquiryVO) {
+        return sqlSession.insert("inquiryMapper.insertMemberInquiry", memberInquiryVO);
+    }
+
+    @Override
+    public int insertMemberInquiryImg(MemberInquiryImgVO memberInquiryImgVO) {
+        return sqlSession.insert("inquiryMapper.insertMemberInquiryImg", memberInquiryImgVO);
+    }
+
+    @Override
+    public int insertMemberInquiryType(MemberInquiryTypeVO memberInquiryTypeVO) {
+        return sqlSession.insert("inquiryMapper.insertMemberInquiryType", memberInquiryTypeVO);
     }
 }
