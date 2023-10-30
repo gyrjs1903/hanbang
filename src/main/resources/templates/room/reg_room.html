@@ -36,8 +36,8 @@
                                     <div th:each="property, state : ${propertyList}">
                                         <input type="radio" name="propertyTypeCode"
                                             th:value="${property.propertyTypeCode}"
-                                            th:checked="${state.index==0}">[[${property.propertyTypeName}]]
-                                        </input>
+                                            th:checked="${state.index==0}">
+                                            <label>[[${property.propertyTypeName}]]</label>
                                     </div>
                                 </td>
 
@@ -239,13 +239,14 @@
                 </div>
                 <input type="submit" value="매물등록">
             </form>
-        </div>
+        </div >
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         <script type="text/javascript"
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=22ce9cdc2a0d0a47b1149d42f3bab1c0&libraries=services,clusterer,drawing"></script>
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
         <script src="/js/room/room_reg.js"></script>
     </th:block>
+    
 </body>
 
 </html>
