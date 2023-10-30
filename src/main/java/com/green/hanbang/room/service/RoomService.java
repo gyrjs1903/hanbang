@@ -53,6 +53,12 @@ public interface RoomService {
     //허위매물 신고
     public int insertFalseOfferings(FalseOfferingsVO falseOfferingsVO);
 
+    //허위매물 방 이미지 조회
+    public List<RoomIMGVO> selectFalseOfferingsImgs(String roomCode);
+
+    //허위매물 방 삭제
+    public int deleteRoom(String roomCode);
+
     //문의 제목 목록 조회
     public List<InquiryTitleVO> selectInquiryTitle();
 

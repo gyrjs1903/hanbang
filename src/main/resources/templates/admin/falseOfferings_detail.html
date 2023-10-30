@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+    <div>
+        <div>신고매물</div>
+        <div>매물번호 [[${#strings.substring(falseOfferingsDetailList[0].roomCode,5,9)}]]</div>
+        <div>[[${falseOfferingsDetailList[0].roomVO.roomAddrVO.addr}]]
+            ,[[${falseOfferingsDetailList[0].roomVO.roomAddrVO.detailAddr}]]
+        </div>
+        <button th:onclick="|location.href='@{/room/roomDetailInfo(roomCode=${falseOfferingsDetailList[0].roomCode})}';|">매물상세페이지 이동</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <td>신고사유</td>
+                <td>신고 날짜</td>
+                <td>비고</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="detail : ${falseOfferingsDetailList}">
+                <th:block th:each="reason : ${reasonList}">
+                    <td th:if="${reason.reasonCode == detail.reasonCode}">
+                        [[${reason.reason}]]
+                        <div class="flaseOfferings-content" th:if="${detail.reportContent != null}">[[${detail.reportContent}]]</div>
+                    </td>
+                </th:block>
+                <td>[[${detail.reportDate}]]</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    <button th:onclick="deleteFalseOfferings([[${falseOfferingsDetailList[0].roomCode}]]);">매물 삭제하기</button>
+    <script src="/js/admin/falseOfferings.js"></script>
+</body>
+
+</html>

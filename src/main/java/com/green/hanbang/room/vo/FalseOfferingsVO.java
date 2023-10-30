@@ -11,4 +11,5 @@ public class FalseOfferingsVO {
     private String reportContent;
     private int reportCnt;
     private String reportDate;
+    private RoomVO roomVO;
 }

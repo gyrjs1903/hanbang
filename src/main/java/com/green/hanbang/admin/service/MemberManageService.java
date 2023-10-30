@@ -30,6 +30,9 @@ public interface MemberManageService {
     //허위매물 신고 4건 이상인 매물 조회
     public List<FalseOfferingsVO> selectFalseOfferings();
 
+    //허위매물 상세 페이지
+    public List<FalseOfferingsVO> selectFalseOfferingsDetail(String roomCode);
+
     //공인중개사 권한 승인 요청
     public List<RealtorDetailVO> selectRealtorAuthority();
 }
