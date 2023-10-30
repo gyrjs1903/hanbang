@@ -77,9 +77,9 @@
                         </div>
                         <div class="member_nickname">
                             <button type="button" class="member_menu_btn" onclick="my_menu_open()">
-                                <p>[닉네임]"공인중개사님"</p>
+                                <p>[[${session.loginInfo?.nickName}]]님</p>
                             </button>
-                            <div class="my_menu_wrap">
+                            <div class="my_menu_wrap" id="realtor_my_menu_wrap">
                                 <nav id="my_menu_nav" class="my_menu_nav" style="border: none;">
                                     <a class="my_menu" onclick="location.href='/';">방 찾기</a>
                                     <a class="my_menu" onclick="location.href='/room/reg';">매물 등록하기</a>

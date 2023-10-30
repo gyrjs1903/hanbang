@@ -17,6 +17,17 @@ function menuOpen() {
     }
 }
 
+function my_menu_open() {
+    let click = document.getElementById("realtor_my_menu_wrap");
+    if (click.style.display === "none" || click.style.display === "") {
+
+        click.style.display = "block";
+
+    } else {
+        click.style.display = "none";
+
+    }
+}
 //알림
 function realtorAlarm(userNo, authorityAlarm, realtorInquiryCnt,alarmCnt) {
     console.log(userNo);
@@ -28,9 +39,9 @@ function realtorAlarm(userNo, authorityAlarm, realtorInquiryCnt,alarmCnt) {
 
         //권한승인 알림
         if (authorityAlarm == 1) {
-            let authority = `<div id="authority-alarm">권한이 승인되었습니다.
+            let authority = `<div class="authority-alarm-wrap";><div id="authority-alarm">권한이 승인되었습니다.
                 <span>다시보지않기<input type="checkbox" onclick="authority(this,${alarmCnt});"></input></span>
-            </div>
+            </div></div>
             `;
             alarmTag.insertAdjacentHTML('afterbegin', authority);
         }
@@ -66,9 +77,10 @@ function authority(chk,alarmCnt){
         })
         //fetch 통신 후 실행 영역
         .then((data) => {//data -> controller에서 리턴되는 데이터!
-            setTimeout(()=>{
-                document.querySelector('#authority-alarm').remove();
-            },100);
+            // setTimeout(()=>{
+            //     document.querySelector('#authority-alarm').slideUP();
+            // },100);
+            $('.authority-alarm-wrap').slideUp(400);
             if(alarmCnt != 0){
                 let cngAlarmCnt = alarmCnt - 1;
                 console.log(cngAlarmCnt);

@@ -194,6 +194,7 @@
         DELETE ROOM_IMG
         WHERE ROOM_CODE = #{roomCode}
     </delete>
+
     <!-- 공인중개사 권한 승인 요청 -->
     <select id="selectRealtorAuthority" resultMap="realtorMapper.realtorDetail">
         SELECT REALTOR_CODE
