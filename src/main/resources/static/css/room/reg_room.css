@@ -2,16 +2,13 @@
 
 .table{
     margin-bottom: 30px;
+    border-top: 3px solid #000;
 }
 .table h2{
     margin-top: 10px;
     margin-bottom: 15px;
 }
-header{
-    font-weight: 700;
-    font-size: 18px;
-    text-align: center;
-}
+
 .title{
     color: rgb(34, 34, 34);
     font-size: 46px;
@@ -20,7 +17,17 @@ header{
     font-weight: 700;
     text-align: center;
 }
-
+td header{
+    padding: 10px 3px;
+    background-color: rgb(252, 252, 252);
+    font-weight: 700;
+    font-size: 14px;
+    text-align: left;
+    
+}
+.caution{
+    margin-bottom: 30px;
+}
 .caution li{
     color: rgb(101, 101, 101);
     font-size: 14px;
