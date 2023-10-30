@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-function saveInquiry() {
+function memberInquirySave() {
     var inquiryType = document.querySelector('select[name="inquiryCode"]').value;
     var inquiryTitle = document.querySelector('input[name="memberInquiryTitle"]').value;
     var inquiryDetail = document.querySelector('textarea[name="memberInquiryDetail"]').value;

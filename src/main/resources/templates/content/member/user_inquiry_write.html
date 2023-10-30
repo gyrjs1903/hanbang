@@ -8,7 +8,9 @@
 </head>
 <body>
     <th:block layout:fragment="content">
-        <link rel="stylesheet" href="/css/member/user_inquiry_write.css">
+        <th:block layout:fragment="content_css">
+            <link rel="stylesheet" href="/css/member/user_inquiry_write.css">
+        </th:block>
         <header class="user_header">
             <div>
                 <h1 class="userHT">문의하기</h1>
@@ -65,6 +67,9 @@
                 </div>
             </div>
         </div>
+    </th:block>
+    <th:block layout:fragment="content_js">
+        <script async src="/js/member/user_inquiry_write.js"></script>
     </th:block>
 </body>
 </html>

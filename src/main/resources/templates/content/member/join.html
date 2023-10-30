@@ -7,51 +7,54 @@
 <title>원하는 방을 한방에 한방👊</title>
 </head>
 <body>
-<th:block layout:fragment="content">
-    <link rel="stylesheet" href="/css/member/join.css">
-    <div class="join_frame">
-        <form id="joinForm" action="/member/join" method="post">
-            <input type="hidden" id="nickName" name="nickName">
-            <h1>회원가입 정보 입력</h1>
-            <div class="lt_wrap">
-                <label for="loginType" class="btitle">회원유형 선택</label>
-                <select class="logintype" name="loginType" id="loginType" th:value="${loginType}">
-                    <option value="NULL">회원 선택</option>
-                    <option value="USER">일반회원</option>
-                    <option value="REALTOR">공인중개사</option>
-                </select>
-            </div>
-            <div>
-                <label for="userName" class="btitle">이메일</label>
-                <input type="text" id="userName" class="" name="userName" placeholder="이메일 주소 입력">
-                <p class="userNameFormGuideT">이메일 주소 형식</p>
-                <p class="userNameFormGuideC">hb1@hanbang.com</p>
-                <p id="userNameInputCheck">이메일을 입력해주세요.</p>
-                <p id="userNameFormCheck">이메일 형식을 확인해주세요.</p>
-                <p id="userNameDuplication">중복된 이메일 입니다.</p>
-            </div>
-            <div class="">
-                <label for="passWord" class="btitle">비밀번호</label>
-                <input id="passWord" type="password" class="pwd1" name="passWord" placeholder="8자리 이상 영문,숫자,특수문자 포함">
-                <p id="passWordInputCheck">비밀번호를 입력해주세요.</p>
-                <img id="pwShow1" src="/img/member/password_show.png" alt="pwShow/Hide">
-                <p id="passWordFormCheck">비밀번호는 문자, 숫자, 특수문자를 포함하여 8-20자 이내로 입력하세요.</p>
-            </div>
-            <div class="">
-                <label for="passWordCheck" class="btitle">비밀번호 확인</label>
-                <input id="passWordCheck" type="password" class="pwd2" placeholder="비밀번호 확인">
-                <img id="pwShow2" src="/img/member/password_show.png" alt="pwShow/Hide">
-                <p id="passWordCheckInputCheck">비밀번호 확인를 입력해주세요.</p>
-                <p id="passWordCheckCheck">입력한 비밀번호가 서로 일치하지 않습니다.</p>
-            </div>
+    <th:block layout:fragment="content">
+        <th:block layout:fragment="content_css">
+            <link rel="stylesheet" href="/css/member/join.css">
+        </th:block>
+        <div class="join_frame">
+            <form id="joinForm" action="/member/join" method="post">
+                <input type="hidden" id="nickName" name="nickName">
+                <h1>회원가입 정보 입력</h1>
+                <div class="lt_wrap">
+                    <label for="loginType" class="btitle">회원유형 선택</label>
+                    <select class="logintype" name="loginType" id="loginType" th:value="${loginType}">
+                        <option value="NULL">회원 선택</option>
+                        <option value="USER">일반회원</option>
+                        <option value="REALTOR">공인중개사</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="userName" class="btitle">이메일</label>
+                    <input type="text" id="userName" class="" name="userName" placeholder="이메일 주소 입력">
+                    <p class="userNameFormGuideT">이메일 주소 형식</p>
+                    <p class="userNameFormGuideC">hb1@hanbang.com</p>
+                    <p id="userNameInputCheck">이메일을 입력해주세요.</p>
+                    <p id="userNameFormCheck">이메일 형식을 확인해주세요.</p>
+                    <p id="userNameDuplication">중복된 이메일 입니다.</p>
+                </div>
+                <div class="">
+                    <label for="passWord" class="btitle">비밀번호</label>
+                    <input id="passWord" type="password" class="pwd1" name="passWord" placeholder="8자리 이상 영문,숫자,특수문자 포함">
+                    <p id="passWordInputCheck">비밀번호를 입력해주세요.</p>
+                    <img id="pwShow1" src="/img/member/password_show.png" alt="pwShow/Hide">
+                    <p id="passWordFormCheck">비밀번호는 문자, 숫자, 특수문자를 포함하여 8-20자 이내로 입력하세요.</p>
+                </div>
+                <div class="">
+                    <label for="passWordCheck" class="btitle">비밀번호 확인</label>
+                    <input id="passWordCheck" type="password" class="pwd2" placeholder="비밀번호 확인">
+                    <img id="pwShow2" src="/img/member/password_show.png" alt="pwShow/Hide">
+                    <p id="passWordCheckInputCheck">비밀번호 확인를 입력해주세요.</p>
+                    <p id="passWordCheckCheck">입력한 비밀번호가 서로 일치하지 않습니다.</p>
+                </div>
 
-            <div>
-                <input class="joinBtn" id="join-btn" type="submit" value="회원가입 완료">
-            </div>
-        </form>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-    <script async src="/js/member/join.js"></script>
-</th:block>
+                <div>
+                    <input class="joinBtn" id="join-btn" type="submit" value="회원가입 완료">
+                </div>
+            </form>
+        </div>
+    </th:block>
+    <th:block layout:fragment="content_js">
+        <script async src="/js/member/join.js"></script>
+    </th:block>
 </body>
 </html>
