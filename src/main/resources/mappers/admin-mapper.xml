@@ -144,11 +144,56 @@
     <!-- 허위매물 신고 조회 -->
     <select id="selectFalseOfferings" resultMap="roomMapper.falseOfferings">
         SELECT ROOM_CODE
-        , REPORT_CNT
-        , REPORT_DATE
+            , MAX(REPORT_CNT) REPORT_CNT
+            , TO_CHAR(MAX(REPORT_DATE),'YYYY-MM-DD') REPORT_DATE
         FROM FALSE_OFFERINGS
-        WHERE REPORT_CNT >= 4
+        GROUP BY ROOM_CODE
+        HAVING MAX(REPORT_CNT) >= 4
     </select>
+
+    <!-- 허위매물 상세 조회 -->
+    <select id="selectFalseOfferingsDetail" resultMap="roomMapper.falseOfferings">
+        SELECT F.ROOM_CODE
+            , REASON_CODE
+            , REPORT_CONTENT
+            , TO_CHAR(REPORT_DATE,'YYYY-MM-DD') REPORT_DATE
+            , ADDR
+            , DETAIL_ADDR
+        FROM FALSE_OFFERINGS F, ROOM_ADDR R
+        WHERE F.ROOM_CODE = #{roomCode}
+        AND F.ROOM_CODE = R.ROOM_CODE
+    </select>
+
+    <!-- 허위 매물 삭제 -->
+    <delete id="deleteFalseOfferings">
+        DELETE FALSE_OFFERINGS
+        WHERE ROOM_CODE = #{roomCode}
+    </delete>
+
+    <!-- 허위 매물 방 삭제 -->
+    <delete id="deleteRoom">
+        DELETE ROOM
+        WHERE ROOM_CODE = #{roomCode}
+    </delete>
+
+    <!-- 허위 매물 주소정보 삭제 -->
+    <delete id="deleteAddr">
+        DELETE ROOM_ADDR
+        WHERE ROOM_CODE = #{roomCode}
+    </delete>
+
+    <!-- 허위 매물 이미지 조회 -->
+    <select id="selectFalseOfferingsImgs" resultMap="roomMapper.roomImg">
+        SELECT ATTACHED_FILE_NAME
+        FROM ROOM_IMG
+        WHERE ROOM_CODE = #{roomCode}
+    </select>
+
+    <!-- 허위 매물 이미지 삭제 -->
+    <delete id="deleteFalseOfferingsImgs">
+        DELETE ROOM_IMG
+        WHERE ROOM_CODE = #{roomCode}
+    </delete>
 
     <!-- 공인중개사 권한 승인 요청 -->
     <select id="selectRealtorAuthority" resultMap="realtorMapper.realtorDetail">

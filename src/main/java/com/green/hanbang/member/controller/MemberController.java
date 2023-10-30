@@ -77,7 +77,7 @@ public class MemberController {
             if (loginInfo.getLoginType().equals("USER")) {
                 return "redirect:/";
             } else if (loginInfo.getLoginType().equals("REALTOR")) {
-                return "redirect:/realtor/main";
+                return "redirect:/";
             } else if (loginInfo.getLoginType().equals("ADMIN")) {
                 return "redirect:/admin/admin_manage";
             }

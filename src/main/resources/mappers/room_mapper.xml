@@ -88,6 +88,7 @@
         <result column="REPORT_CONTENT" property="reportContent"/>
         <result column="REPORT_CNT" property="reportCnt"/>
         <result column="REPORT_DATE" property="reportDate"/>
+        <association property="roomVO" resultMap="room"/>
     </resultMap>
 
     <!-- 허위매물 사유 -->

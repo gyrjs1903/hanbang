@@ -8,7 +8,9 @@ import com.green.hanbang.admin.vo.*;
 import com.green.hanbang.member.service.MemberService;
 import com.green.hanbang.member.vo.AlarmVO;
 import com.green.hanbang.realtor.vo.RealtorDetailVO;
+import com.green.hanbang.room.service.RoomService;
 import com.green.hanbang.room.vo.FalseOfferingsVO;
+import com.green.hanbang.room.vo.RoomIMGVO;
 import com.green.hanbang.util.ConstantVariable;
 import com.green.hanbang.util.EventUtil;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +35,7 @@ public class AdminController {
     private final MembershipService membershipService;
     private final EventService eventService;
     private final MemberService memberService;
+    private final RoomService roomService;
 
     // 관리자 페이지 ( + 맴버쉽 상품의 대분류 조회)
     @GetMapping("/manage")
@@ -110,6 +113,36 @@ public class AdminController {
             map.put("realtorDetail",realtorDetailList);
         }
         return map;
+    }
+
+    //허위매물 신고 페이지 이동
+    @GetMapping("/falseOfferingsList")
+    public String falseOfferingsForm(Model model){
+        model.addAttribute("falseOfferingsList",memberManageService.selectFalseOfferings());
+        return "admin/falseOfferings_list";
+    }
+
+    //허위매물 상세 페이지 이동
+    @GetMapping("/falseOfferingsDetail")
+    public String falseOfferingsDetail(Model model,String roomCode){
+        model.addAttribute("falseOfferingsDetailList",memberManageService.selectFalseOfferingsDetail(roomCode));
+        model.addAttribute("reasonList", roomService.selectReasonList());
+        System.out.println(memberManageService.selectFalseOfferingsDetail(roomCode));
+        return "admin/falseOfferings_detail";
+    }
+
+    //허위매물 삭제
+    @GetMapping("/deleteFalseOfferings")
+    public String deleteFalseOfferings(String roomCode){
+        List<RoomIMGVO> imgs = roomService.selectFalseOfferingsImgs(roomCode);
+
+        for(RoomIMGVO e : imgs){
+            File file = new File(ConstantVariable.ROOM_UPLOAD_PATH + e.getAttachedFileName());
+            file.delete();
+        }
+
+        roomService.deleteRoom(roomCode);
+        return "redirect:/admin/falseOfferingsList";
     }
 
     //////// 공지사항 /////////////////////////////////////////////////

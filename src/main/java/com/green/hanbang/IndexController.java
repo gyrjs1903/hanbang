@@ -27,6 +27,7 @@ public class IndexController {
         if(session.getAttribute("loginInfo") != null){
 
             MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
+            System.out.println(loginInfo);
             int alarmCnt = 0;
             //공인중개사
             if (loginInfo.getLoginType().equals("REALTOR")) {
