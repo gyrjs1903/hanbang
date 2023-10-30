@@ -8,7 +8,9 @@
 </head>
 <body>
     <th:block layout:fragment="content">
-        <link rel="stylesheet" href="/css/member/user_inquiry_write.css">
+        <th:block layout:fragment="content_css">
+            <link rel="stylesheet" href="/css/member/user_inquiry_write.css">
+        </th:block>
         <header class="user_header">
             <div>
                 <h1 class="userHT">문의하기</h1>
@@ -42,9 +44,10 @@
                             <div class="imgW">
                                 <div class="imgWW">
                                     <div class="imgaddW">
+                                        <img id="imagePreview" src="" alt="미리보기 이미지" class="">
                                         <img src="/img/member/photos_icon.svg" alt="사진 첨부 아이콘" class="photoIcon">
-                                        <button type="button">사진 첨부</button>
-                                        <button type="button" class="hidden">사진 첨부</button>
+                                        <input type="file" id="fileInput" class="real_upload" style="display: none;">
+                                        <button type="button" class="fake_upload">사진 첨부</button>
                                     </div>
                                 </div>
                             </div>
@@ -64,6 +67,9 @@
                 </div>
             </div>
         </div>
+    </th:block>
+    <th:block layout:fragment="content_js">
+        <script async src="/js/member/user_inquiry_write.js"></script>
     </th:block>
 </body>
 </html>

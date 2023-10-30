@@ -31,4 +31,55 @@
         ORDER BY MEMBER_INQUIRY_CODE
     </select>
 
+    <!-- 문의 작성 삽입 -->
+    <insert id="insertMemberInquiry">
+        INSERT INTO MEMBER_INQUIRY_WRITE (
+            MEMBER_INQUIRY_WRITE_NO
+            , MEMBER_INQUIRY_CODE
+            , MEMBER_INQUIRY_TITLE
+            , MEMBER_INQUIRY_DETAIL
+            , MEMBER_WRITE_DATE
+            , USER_NO
+        )
+        VALUES (
+            (SELECT 'INQ_WR_'||LPAD(COUNT(*) + 1, 3, '0')
+            FROM MEMBER_INQUIRY_WRITE)
+            , #{memberInquiryCode}
+            , #{memberInquiryTitle}
+            , #{memberInquiryDetail}
+            , #{memberWriteDate}
+            , #{userNo}
+        );
+    </insert>
+
+    <!-- 문의 작성 이미지 파일 삽입 -->
+    <insert id="insertMemberInquiryImg">
+        INSERT INTO MEMBER_INQUIRY_IMG (
+        MEMBER_INQUIRY_IMG_NO
+        , MEMBER_INQUIRY_WRITE_NO
+        , MEMBER_INQUIRY_IMG_NAME
+        , MEMBER_ATTACHED_INQUIRY_IMG_NAME
+        )
+        VALUES (
+        (SELECT 'INQ_IMG_' || LPAD(COUNT(*) + 1, 3, '0')
+        FROM MEMBER_INQUIRY_IMG)
+        , #{memberInquiryImgNo}
+        , #{memberInquiryWriteNo}
+        , #{memberInquiryImgName}
+        , #{memberAttachedInquiryImgName}
+        );
+    </insert>
+
+    <!-- 문의 작성 유형 삽입 -->
+    <insert id="insertMemberInquiryType">
+        INSERT INTO MEMBER_INQUIRY_TYPE (
+        MEMBER_INQUIRY_CODE
+        , MEMBER_INQUIRY_NAME
+        )
+        VALUES (
+        #{memberInquiryCode}
+        , #{memberInquiryName}
+        );
+    </insert>
+
 </mapper>
