@@ -15,24 +15,7 @@
                 <li><a onclick="location.href='/room/roomMain'">지도</a></li>
                 <li><a href="/">분양정보</a></li>
                 <li><a onclick="location.href='/member/dibsOn'">찜목록</a></li>
-                <li class="alarm_position">
-                    <th:block th:if="${session.loginInfo.loginType == 'REALTOR'}">
-                        <a th:onclick="realtorAlarm([[${session.loginInfo.userNo}]],[[${authorityAlarm}]],[[${realtorInquiryCnt}]],[[${alarmCnt}]]);">알림
-                            <span th:if="${alarmCnt != 0}" class="alarmCnt">[[${alarmCnt}]]</span></a>
-                    </th:block>
-                    <th:block th:if="${session.loginInfo.loginType == 'USER'}">
-                        <a th:onclick="userAlarm([[${session.loginInfo.userNo}]],[[${session.loginInfo?.nickName}]],[[${userInquiryAnswer}]]);">알림
-                            <span th:if="${alarmCnt == 1}" class="alarmCnt">1</span>
-                        </a>
-                    </th:block>
-                    <th:block th:if="${session.loginInfo.loginType == null}">
-                        <a href="/member/loginForm">알림</span></a>
-                    </th:block>
-                    <div id="alarm_box">
-                        <div onclick="alarm_close();" class="cursor close-btn"></div>
-                        <div id="alarm_tag"></div>
-                    </div>
-                </li>
+                
                 <!-- 미로그인 시 나올 메뉴  -->
                 <div th:if="${session.loginInfo == null}" class="member_login_join">
                     <button type="button" class="member_login_join_btn" onclick="location.href='/member/loginForm'">로그인<span>|</span>회원가입</button>

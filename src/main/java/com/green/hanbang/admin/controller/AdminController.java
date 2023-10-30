@@ -12,6 +12,7 @@ import com.green.hanbang.room.vo.FalseOfferingsVO;
 import com.green.hanbang.util.ConstantVariable;
 import com.green.hanbang.util.EventUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -172,7 +173,6 @@ public class AdminController {
     public String membershipList(Model model, String memCateCode){
         List<MembershipVO> membershipList = membershipService.selectMembershipItemList(memCateCode);
         model.addAttribute("membershipList", membershipList);
-        System.out.println(membershipList);
         return "admin/membershipList";
     }
 
@@ -184,7 +184,6 @@ public class AdminController {
         model.addAttribute("cateList", membershipService.selectCategory());
         // 중분류 조회
         model.addAttribute("midCateList", membershipService.selectMidCategory(memCateCode));
-        System.out.println( model.addAttribute("midCateList", membershipService.selectMidCategory(memCateCode)));
         return "admin/reg_membership";
     }
 

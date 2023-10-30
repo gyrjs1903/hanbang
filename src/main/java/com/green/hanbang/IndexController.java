@@ -1,5 +1,7 @@
 package com.green.hanbang;
 
+import com.green.hanbang.admin.service.MembershipService;
+import com.green.hanbang.admin.vo.MembershipVO;
 import com.green.hanbang.member.service.MemberService;
 import com.green.hanbang.member.vo.AlarmVO;
 import com.green.hanbang.member.vo.MemberVO;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -20,61 +23,82 @@ import java.util.List;
 @RequiredArgsConstructor
 public class IndexController {
     private final MemberService memberService;
+    private final MembershipService membershipService;
 
     // 시작페이지
     @GetMapping("/")
     public String main(Model model, HttpSession session) {
         MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
         int alarmCnt = 0;
-        //공인중개사
-        if (loginInfo.getLoginType().equals("REALTOR")) {
-            if (memberService.selectAlarm(loginInfo.getUserNo()) != null) {
-                // 권한승인알림
-                int authorityStatus = memberService.selectAuthorityAlarm(loginInfo.getUserNo());
-                model.addAttribute("authorityAlarm", authorityStatus);
 
+        if (loginInfo != null) {
+            if (loginInfo.getLoginType().equals("REALTOR")) {
+                if (memberService.selectAlarm(loginInfo.getUserNo()) != null) {
+                    // 권한승인알림
+                    int authorityStatus = memberService.selectAuthorityAlarm(loginInfo.getUserNo());
+                    model.addAttribute("authorityAlarm", authorityStatus);
 
-                //매물문의알림
-                RealtorDetailVO realtor = memberService.selectInquiryAlarm(loginInfo.getUserNo());
+                    //매물문의알림
+                    RealtorDetailVO realtor = memberService.selectInquiryAlarm(loginInfo.getUserNo());
 
-                int realtorInquiryCnt = 0;
-                for (InquiryVO inquiry : realtor.getInquiryList()) {
-                    if (inquiry.getInquiryAnswer() == null) {
-                        realtorInquiryCnt += 1;
+                    int realtorInquiryCnt = 0;
+                    for (InquiryVO inquiry : realtor.getInquiryList()) {
+                        if (inquiry.getInquiryAnswer() == null) {
+                            realtorInquiryCnt += 1;
+                        }
+                    }
+                    model.addAttribute("realtorInquiryCnt", realtorInquiryCnt);
+
+                    //총 알림 개수
+                    if (authorityStatus == 1) alarmCnt += 1;
+                    if (realtorInquiryCnt != 0) alarmCnt += 1;
+                }
+                model.addAttribute("alarmCnt", alarmCnt);
+            }
+
+            // 일반회원
+            if (loginInfo.getLoginType().equals("USER")) {
+                List<InquiryVO> userRoomInquiry = memberService.selectUserInquiryAlarm(loginInfo.getUserNo());
+                System.out.println(userRoomInquiry);
+                int userInquiryAnswer = 0;
+                for (InquiryVO inquiry : userRoomInquiry) {
+                    if (inquiry.getInquiryAnswer() != null && inquiry.getInquiryReadCnt() == 0) {
+                        userInquiryAnswer += 1;
                     }
                 }
-                model.addAttribute("realtorInquiryCnt", realtorInquiryCnt);
+                if (userInquiryAnswer != 0) alarmCnt += 1;
+                model.addAttribute("userInquiryAnswer", userInquiryAnswer);
+                model.addAttribute("alarmCnt", alarmCnt);
+            }
+        }
 
-                //총 알림 개수
-                if (authorityStatus == 1) alarmCnt += 1;
-                if (realtorInquiryCnt != 0) alarmCnt += 1;
-            }
-            model.addAttribute("alarmCnt", alarmCnt);
-        }
-        //일반회원
-        if (loginInfo.getLoginType().equals("USER")) {
-            List<InquiryVO> userRoomInquiry = memberService.selectUserInquiryAlarm(loginInfo.getUserNo());
-            System.out.println(userRoomInquiry);
-            int userInquiryAnswer = 0;
-            for (InquiryVO inquiry : userRoomInquiry) {
-                if (inquiry.getInquiryAnswer() != null && inquiry.getInquiryReadCnt() == 0) {
-                    userInquiryAnswer += 1;
-                }
-            }
-            if (userInquiryAnswer != 0) alarmCnt += 1;
-            model.addAttribute("userInquiryAnswer", userInquiryAnswer);
-            model.addAttribute("alarmCnt", alarmCnt);
-        }
+        // 대분류 조회
+        model.addAttribute("cateList", membershipService.selectCategory());
         return "main/home";
-
     }
-    //권한 승인완료 알림 지우기
+
+    // 권한 승인완료 알림 지우기
     @ResponseBody
     @PostMapping("/realtorAuthorityAlarm")
-    public void realtorAuthorityAlarm(HttpSession session, AlarmVO alarmVO){
+    public void realtorAuthorityAlarm(HttpSession session, AlarmVO alarmVO) {
         MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
-
-        alarmVO.setUserNo(loginInfo.getUserNo());
-        memberService.insertAlarm(alarmVO);
+        if (loginInfo != null) {
+            alarmVO.setUserNo(loginInfo.getUserNo());
+            memberService.insertAlarm(alarmVO);
+        }
     }
+
+
+    ////////// 메인 페이지 하단 링크로 연결 되는 아이템 목록 ///////////////
+    @GetMapping("/buyItem")
+    public String buyItemList (Model model, String memCateCode){
+        List<MembershipVO> buyItemList = membershipService.selectMembershipItemList(memCateCode);
+        model.addAttribute("buyItemLists", buyItemList);
+        model.addAttribute("cateList", membershipService.selectCategory());
+        return "main/buyItemList";
+    }
+
+
+
+
 }
