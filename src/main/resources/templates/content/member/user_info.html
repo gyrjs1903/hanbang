@@ -26,7 +26,7 @@
                 <div class="profile_change upload">
                     <form id="profileForm" action="/member/updateProfile" method="post" enctype="multipart/form-data">
                         <div id="imagePreview" class="fake_upload">
-                            <input class="form-control real_upload" id="profileImg" name="profileImg" type="file" onchange="submitForm()">
+                            <input class="form-control real_upload" id="profileImg" name="profileImg" type="file" onchange="sendProfile()">
                             <img class="proImg" th:src="@{'http://localhost:8081/' + ${session.loginInfo.memberImgVO.profileImgName}}" alt="프로필 이미지" draggable="false">
                             <div class="pro_ico">
                                 <img src="/img/member/camera_icon.png" alt="프로필 사진 변경">
@@ -155,30 +155,6 @@
                 </div>
             </div>
         </div>
-
-        <script>
-        function submitForm() {
-            var fileInput = document.getElementById('profileImg');
-            var file = fileInput.files[0];
-            var formData = new FormData();
-            formData.append('profileImg', file);
-
-            fetch('/member/updateProfile', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert('프로필 사진이 등록되었습니다!');
-                console.log(data);
-            })
-            .catch(err => {
-                alert('fetch error!\nthen 구문에서 오류가 발생했습니다.\n콘솔창을 확인하세요!');
-                console.log(err);
-            });
-        }
-        </script>
-        </body>
     </th:block>
     <th:block layout:fragment="content_js">
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
