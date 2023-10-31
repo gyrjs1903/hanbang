@@ -25,10 +25,10 @@
                 <input name="coordinateY" id="coordinate_y" type="hidden" value=" ">
                 <input name="coordinateX" id="coordinate_x" type="hidden" value=" ">
                 <div class="table">
-                    <h2>매물정보</h2>
-                    <div>
-                        <span class="essential">*</span>
-                        <p>필수입력 항목</p>
+                    
+                    <div class="table_top">
+                        <h2>매물정보</h2>
+                        <div><span class="essential">*</span>필수입력 항목</div>
                     </div>
                     <table>
                         <colgroup>
@@ -42,12 +42,13 @@
                                 <td>
                                     <header>대분류</header>
                                     <div th:each="property, state : ${propertyList}" class="property">
-                                        <input type="radio" name="propertyTypeCode"
-                                            th:value="${property.propertyTypeCode}" th:checked="${state.index==0}">
-                                        <label>[[${property.propertyTypeName}]]</label>
+                                        <input type="radio" th:id="'propertyType_' + ${property.propertyTypeCode}"
+                                            name="propertyTypeCode" th:value="${property.propertyTypeCode}"
+                                            th:checked="${state.index==0}">
+                                        <label
+                                            th:for="'propertyType_' + ${property.propertyTypeCode}">[[${property.propertyTypeName}]]</label>
                                     </div>
                                 </td>
-
                                 <td style="height: 170px;">
                                     <header>소분류</header>
                                     <th:block th:each="property : ${propertyList}">
@@ -56,17 +57,21 @@
                                                 th:attr="data-property-type-code=${property.propertyTypeCode}">
                                                 <div class="subProperty"
                                                     th:each="subProperty, state : ${property.subPropertyTypeList}">
-                                                    <input type="radio" name="subPropertyTypeCode"
+                                                    <input type="radio"
+                                                        th:id="'subPropertyType_' + ${subProperty.subPropertyTypeCode}"
+                                                        name="subPropertyTypeCode"
                                                         th:value="${subProperty.subPropertyTypeCode}"
                                                         th:checked="${state.index==0}"
                                                         th:attr="data-parent=${property.propertyTypeCode}">
-                                                    <label>[[${subProperty.subPropertyTypeName}]]</label>
+                                                    <label
+                                                        th:for="'subPropertyType_' + ${subProperty.subPropertyTypeCode}">[[${subProperty.subPropertyTypeName}]]</label>
                                                 </div>
                                             </div>
                                         </div>
                                     </th:block>
                                 </td>
                             </tr>
+
                             <tr>
                                 <th>매물주소 <span class="essential">*</span></th>
                                 <td class="addr">
@@ -119,9 +124,8 @@
                                     <input type="radio" name="tradeTypeCode" th:id="${tradeType.tradeTypeCode}"
                                         th:value="${tradeType.tradeTypeCode}"
                                         th:checked="${tradeType.tradeTypeCode == 'TTC_001'}">
-                                    <span>[[${tradeType.tradeTypeName}]]</span>
+                                    <label th:for="${tradeType.tradeTypeCode}">[[${tradeType.tradeTypeName}]]</label>
                                 </th:block>
-
                             </td>
                         </tr>
                         <tr>
@@ -183,37 +187,39 @@
                             <td>
                                 <th:block th:if="${option.optionCode =='OPTION_003'}">
                                     <div>
-                                        <input type="checkbox" class="all_check">
-                                        <label>전체선택</label>
+                                        <input type="checkbox" class="all_check" id="all_check_id">
+                                        <label for="all_check_id">전체선택</label>
                                     </div>
                                 </th:block>
                                 <th:block th:each="detailOption, state1 : ${option.detailOptionList}">
                                     <th:block th:if="${state1.index==0 and state.index==0}">
-                                        <input type="radio" name="detailOptions" checked>
-                                        <label>선택 안함</label>
+                                        <input type="radio" name="detailOptions" id="no_select" checked>
+                                        <label for="no_select">선택 안함</label>
                                     </th:block>
                                     <th:block th:if="${state.index==0}">
                                         <input type="radio" name="detailOptions"
-                                            th:value="${detailOption.detailOptionCode}">
+                                            th:value="${detailOption.detailOptionCode}"
+                                            th:id="'detailOptionCheckbox'+${detailOption.detailOptionCode}">
                                     </th:block>
-
                                     <th:block th:if="${option.optionCode =='OPTION_003'}">
                                         <th:block th:if="${state.index!=0}">
                                             <input type="checkbox" name="detailOptions"
-                                                th:value="${detailOption.detailOptionCode}"
-                                                class="detailOptionCheckbox">
+                                                th:value="${detailOption.detailOptionCode}" class="detailOptionCheckbox"
+                                                th:id="'detailOptionCheckbox'+${detailOption.detailOptionCode}">
                                         </th:block>
-                                        <label>[[${detailOption.detailOptionName}]]</label>
+                                        <label
+                                            th:for="'detailOptionCheckbox'+${detailOption.detailOptionCode}">[[${detailOption.detailOptionName}]]</label>
                                     </th:block>
                                     <th:block th:if="${option.optionCode !='OPTION_003'}">
                                         <th:block th:if="${state.index!=0}">
                                             <input type="checkbox" name="detailOptions"
-                                                th:value="${detailOption.detailOptionCode}">
+                                                th:value="${detailOption.detailOptionCode}"
+                                                th:id="'detailOptionCheckbox'+${detailOption.detailOptionCode}">
                                         </th:block>
-                                        <label>[[${detailOption.detailOptionName}]]</label>
+                                        <label
+                                            th:for="'detailOptionCheckbox'+${detailOption.detailOptionCode}">[[${detailOption.detailOptionName}]]</label>
                                     </th:block>
                                 </th:block>
-
                             </td>
                         </tr>
                     </table>
@@ -230,7 +236,7 @@
                                 <input type="file" id="subImg" name="subImg" accept="image/*" multiple>
                             </td>
                         </tr>
-                        <tr >
+                        <tr>
                             <th class="no-bor-r"></th>
                             <td colspan="3" class="insert-img no-bor-t">
                                 <div id="mainImgList" class="image-list"></div>

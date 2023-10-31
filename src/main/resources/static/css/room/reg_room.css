@@ -1,10 +1,24 @@
 @charset "UTF-8";
 
+
+form {
+    position: relative;
+    padding-bottom: 80px;
+}
+
 .table {
     margin-bottom: 80px;
     border-top: 3px solid #000;
 }
 
+.table .table_top{
+    display: flex;
+    justify-content: space-between;
+}
+.table .table_top div{
+    margin-top: 33px;
+    font-size: 13px;
+}
 .table h2 {
     margin-top: 10px;
     margin-bottom: 15px;
@@ -25,11 +39,14 @@
     font-weight: 700;
     font-size: 14px;
     text-align: left;
-
 }
-.table tr{
+
+
+
+.table tr {
     border: 0;
 }
+
 .table tr th {
     border-right: 1px solid #d1d1d1;
     ;
@@ -84,6 +101,11 @@ form div h2 {
     margin-bottom: 10px;
 }
 
+.table_top .essential {
+    color: red;
+    font-weight: 700;
+}
+
 .essential {
     color: red;
     font-weight: 700;
@@ -112,6 +134,11 @@ table tbody tr td {
 table {
     width: 100%;
     text-align: left;
+}
+
+.table-top {
+    display: flex;
+    justify-content: space-between;
 }
 
 .addr {
@@ -211,7 +238,7 @@ input[type="radio"]::before {
 }
 
 input[type="radio"]:checked::before {
-    background-color: #23ce4e;
+    background-color: #5c75bb;
     /* 체크된 상태 색상 */
     border-color: rgba(255, 255, 255, 0.3);
 }
@@ -244,7 +271,7 @@ input[type="checkbox"]::before {
 }
 
 input[type="checkbox"]:checked {
-    background-color: #23ce4e;
+    background-color: #5c75bb;
     border-color: rgba(255, 255, 255, 0.3);
     color: white;
 }
@@ -256,34 +283,44 @@ input[type="checkbox"]:checked::before {
 
 /* 버튼 스타일 */
 input[type="submit"] {
-    background-color: #4CAF50;
+    background-color: #5c75bb;
     /* 녹색 */
     color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
+    border: 0;
+    border-radius: 10px;
     cursor: pointer;
     font-weight: bold;
+    font-size: 25px;
+    font-weight: 700;
+    width: 210px;
+    height: 80px;
+    line-height: 24px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%);
+
 }
 
 input[type="submit"]:hover {
-    background-color: #45A049;
+    background-color: #405795;
     /* 더 진한 녹색 */
 }
 
 input[type="button"] {
-    background-color: #4CAF50;
+    background-color: #5c75bb;
     /* 녹색 */
     color: #fff;
     border: none;
     border-radius: 5px;
     padding: 13px 15px;
     cursor: pointer;
+
     font-weight: bold;
 }
 
 input[type="button"]:hover {
-    background-color: #45A049;
+    background-color: #405795;
     /* 더 진한 녹색 */
 }
 
@@ -401,7 +438,7 @@ input[type="file"] {
 
 /* 커스텀 디자인한 레이블 스타일 */
 label.custom-file-label {
-    background-color: #3498db;
+    background-color: #5c75bb;
     color: #fff;
     padding: 20px 15px;
     border-radius: 5px;
@@ -410,18 +447,25 @@ label.custom-file-label {
     font-size: 18px;
     font-weight: 700;
 }
-.no-bor-r{
-    border: 0;
+
+label.custom-file-label:hover {
+    background-color: #405795;
 }
-.no-bor-t{
+
+.no-bor-r {
     border: 0;
 }
 
-#subImgList{
+.no-bor-t {
+    border: 0;
+}
+
+#subImgList {
     margin-top: 20px;
     display: flex;
     flex-direction: row;
 }
+
 .image-list {
     max-width: 300px;
     max-height: 200px;
