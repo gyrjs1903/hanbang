@@ -267,7 +267,7 @@ document.getElementById("searchButton").addEventListener("click", function () {
 
                 //상세내용
                 const contentText = document.createElement('p');
-                contentText.textContent = room.content;
+                contentText.textContent = room.title;
                 roomInfo.appendChild(contentText);
 
                 roomElement.appendChild(roomInfo);

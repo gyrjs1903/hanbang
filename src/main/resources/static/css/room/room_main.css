@@ -108,10 +108,7 @@ table tr td > div:nth-child(7){
     font-size: 12px;
     text-align: center;
 }
-#map{
-    height: 620px;
-    width: 65%;
-}
+
 .option_title{
     font-size: 20px;
     font-weight: 700;
@@ -203,5 +200,17 @@ div label{
     margin-top: 5px;
 }
 .content{
-    border-top: 1px solid #d1d1d1;;
+    position: relative;
+    border-top: 1px solid #d1d1d1;
+    height: 800px;
+}
+
+#map{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+.col-4{
+    z-index: 900;
+    background-color: #fff;
 }

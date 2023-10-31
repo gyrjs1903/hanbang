@@ -10,129 +10,146 @@
 <body>
     <th:block layout:fragment="content">
         <link rel="stylesheet" href="/css/room/room_main.css">
-        <link href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" rel="stylesheet">
-        <h3 class="title">지도</h3>
-        <div class="row">
-            <div class="col">
-                <form class="select-form">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <span class="unit">단위 : 만원</span>
-                                    <div class="trade_type">
-                                        <label>전/월세</label>
-                                        <select name="searchTradeTypeCode">
-                                            <option value="">전체</option>
-                                            <option
-                                                th:selected="${roomSearchVO.searchTradeTypeCode == tradeType.tradeTypeCode}"
-                                                th:each="tradeType : ${tradeTypeList}"
-                                                th:value="${tradeType.tradeTypeCode}">[[${tradeType.tradeTypeName}]]
-                                            </option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <th:block th:each="propertyType, state : ${propertyTypeList}">
-                                            <input type="radio" th:value="${propertyType.propertyTypeCode}"
-                                                th:data-propertyTypeName="${propertyType.propertyTypeName}"
-                                                name="searchPropertyTypeCode" th:checked="${state.index==0}">
-                                            <label>[[${propertyType.propertyTypeName}]]</label>
-                                        </th:block>
-                                    </div>
-                                    <div>
-                                        <label>주소검색</label>
-                                        <input type="text" name="searchAddr">
-                                    </div>
-                                    <div>
-                                        <label>방크기</label>
-                                        <input type="range" id="roomSizeSlider" name="searchRoomSizePMin" min="0"
-                                            max="500" value="500" step="1">
-                                        <span>0 ~ </span>
-                                        <span id="roomSizeValue">500</span>
-                                        <span>평 (</span>
-                                        <span id="meterSquareValue">1,652.80</span>
-                                        <span> m&#178; )</span>
-                                        <input type="number" name="searchFloor">
-                                        <label>층 이상</label>
-                                    </div>
-                                    <div>
-                                        <label for="">월세</label>
-                                        <input type="number" name="searchMonthlyLeaseMax">
-                                        <label for="">보증금</label>
-                                        <input type="number" name="searchDeposit">
-                                        <label for="">전세</label>
-                                        <input type="number" name="searchJeonseCost">
-                                        <label for="">관리비</label>
-                                        <input type="number" name="searchMaintenanceCost">
-                                    </div>
-                                    <div>
-                                        <h4 class="option_title">옵션</h4>
-                                        <div class="option_div" th:each="option : ${Options}">
-                                            <h4 class="sub_option_title">[[${option.optionName}]]</h4>
-                                            <div>
-                                                <th:block th:if="${option.optionCode =='OPTION_003'}">
-                                                    <input type="checkbox" class="all_check">
-                                                    <label>전체선택</label>
-                                                    <th:block th:each="detailOption : ${option.detailOptionList}">
-                                                        <input type="checkbox" name="searchDetailOptions"
-                                                            th:value="${detailOption.detailOptionCode}"
-                                                            class="detailOptionCheckbox" />
-                                                        <label>[[${detailOption.detailOptionName}]]</label>
-                                                    </th:block>
+        <div class="content">
+            <!-- <link href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" rel="stylesheet"> -->
+            <h3 class="title">지도</h3>
+            <div class="row">
+                <div class="col">
+                    <form class="select-form">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <span class="unit">단위 : 만원</span>
+                                        <div class="trade_type">
+                                            <label>전/월세</label>
+                                            <select name="searchTradeTypeCode">
+                                                <option value="">전체</option>
+                                                <option
+                                                    th:selected="${roomSearchVO.searchTradeTypeCode == tradeType.tradeTypeCode}"
+                                                    th:each="tradeType : ${tradeTypeList}"
+                                                    th:value="${tradeType.tradeTypeCode}">[[${tradeType.tradeTypeName}]]
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <th:block th:each="propertyType, state : ${propertyTypeList}">
+                                                <th:block th:if="${state.index == 0}">
+                                                    <input type="radio" id="selectNone" name="searchPropertyTypeCode"
+                                                        value="" checked>
+                                                    <label for="selectNone">선택안함</label>
                                                 </th:block>
-                                                <th:block th:if="${option.optionCode !='OPTION_003'}">
-                                                    <th:block th:each="detailOption : ${option.detailOptionList}">
-                                                        <input type="checkbox" name="searchDetailOptions"
-                                                            th:value="${detailOption.detailOptionCode}">
-                                                        <label>[[${detailOption.detailOptionName}]]</label>
+                                                <input type="radio" th:value="${propertyType.propertyTypeCode}"
+                                                    th:data-propertyTypeName="${propertyType.propertyTypeName}"
+                                                    name="searchPropertyTypeCode"
+                                                    th:id="'propertyType_' + ${propertyType.propertyTypeCode}">
+                                                <label th:text="${propertyType.propertyTypeName}"
+                                                    th:for="'propertyType_' + ${propertyType.propertyTypeCode}"></label>
+                                            </th:block>
+                                        </div>
+                                        <div>
+                                            <label>주소검색</label>
+                                            <input type="text" name="searchAddr">
+                                        </div>
+                                        <div>
+                                            <label>방크기</label>
+                                            <input type="range" id="roomSizeSlider" name="searchRoomSizePMin" min="0"
+                                                max="500" value="500" step="1">
+                                            <span>0 ~ </span>
+                                            <span id="roomSizeValue">500</span>
+                                            <span>평 (</span>
+                                            <span id="meterSquareValue">1,652.80</span>
+                                            <span> m&#178; )</span>
+                                            <input type="number" name="searchFloor">
+                                            <label>층 이상</label>
+                                        </div>
+                                        <div>
+                                            <label for="">월세</label>
+                                            <input type="number" name="searchMonthlyLeaseMax">
+                                            <label for="">보증금</label>
+                                            <input type="number" name="searchDeposit">
+                                            <label for="">전세</label>
+                                            <input type="number" name="searchJeonseCost">
+                                            <label for="">관리비</label>
+                                            <input type="number" name="searchMaintenanceCost">
+                                        </div>
+                                        <div>
+                                            <h4 class="option_title">옵션</h4>
+                                            <div class="option_div" th:each="option : ${Options}">
+                                                <h4 class="sub_option_title">[[${option.optionName}]]</h4>
+                                                <div>
+                                                    <th:block th:if="${option.optionCode == 'OPTION_003'}">
+                                                        <input type="checkbox" class="all_check"
+                                                            th:id="'selectAllOptions'">
+                                                        <label for="selectAllOptions">전체선택</label>
+                                                        <th:block th:each="detailOption : ${option.detailOptionList}">
+                                                            <input type="checkbox" name="searchDetailOptions"
+                                                                th:value="${detailOption.detailOptionCode}"
+                                                                th:id="'detailOption_' + ${detailOption.detailOptionCode}">
+                                                            <label
+                                                                th:for="'detailOption_' + ${detailOption.detailOptionCode}">
+                                                                [[${detailOption.detailOptionName}]]
+                                                            </label>
+                                                        </th:block>
                                                     </th:block>
-                                                </th:block>
+                                                    <th:block th:if="${option.optionCode != 'OPTION_003'}">
+                                                        <th:block th:each="detailOption : ${option.detailOptionList}">
+                                                            <input type="checkbox" name="searchDetailOptions"
+                                                                th:value="${detailOption.detailOptionCode}"
+                                                                th:id="'detailOption_' + ${detailOption.detailOptionCode}">
+                                                            <label
+                                                                th:for="'detailOption_' + ${detailOption.detailOptionCode}">
+                                                                [[${detailOption.detailOptionName}]]
+                                                            </label>
+                                                        </th:block>
+                                                    </th:block>
+                                                </div>
+
                                             </div>
                                         </div>
-                                    </div>
-                                    <input type="button" value="검색" id="searchButton">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </form>
+                                        <input type="button" value="검색" id="searchButton">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
             </div>
-        </div>
-        <div class="row content">
-            <div class="col-4">
-                <div class="select_room">
-                    <div th:each="room : ${roomList}" class="room" th:onclick="detailRoom([[${room.roomCode}]]);">
-                        <div>
-                            <img th:src="${'/img/' + 'room/' + room.imgList[0].attachedFileName}" alt="">
-                        </div>
-                        <div class="room-info">
-                            <th:block th:if="${room.tradeTypeCode == 'TTC_001'}">
-                                <h4>월세 [[${room.deposit}]]/[[${room.monthlyLease}]]</h4>
-                            </th:block>
-                            <th:block th:if="${room.tradeTypeCode == 'TTC_002'}">
-                                <h4>전세 [[${room.jeonseCost}]]</h4>
-                            </th:block>
-                            <p>[[${room.roomAddrVO.addr}]]</p>
-                            <input type="hidden" th:value="${room.roomAddrVO.coordinateX}" class="coordinate-X">
-                            <input type="hidden" th:value="${room.roomAddrVO.coordinateY}" class="coordinate-Y">
-                            <p>
-                                <th:block th:each="propertyType : ${propertyTypeList}"
-                                    th:if="${room.propertyTypeCode == propertyType.propertyTypeCode}">
-                                    [[${propertyType.propertyTypeName}]]</th:block>, [[${room.roomSizeP}]]평,
-                                [[${room.floor}]]층
-                            </p>
-
-                            <p>[[${room.content}]]</p>
+            <div class="row">
+                <div class="col-4">
+                    <div class="select_room">
+                        <div th:each="room : ${roomList}" class="room" th:onclick="detailRoom([[${room.roomCode}]]);">
+                            <div>
+                                <img th:src="${'/img/' + 'room/' + room.imgList[0].attachedFileName}" alt="">
+                            </div>
+                            <div class="room-info">
+                                <th:block th:if="${room.tradeTypeCode == 'TTC_001'}">
+                                    <h4>월세 [[${room.deposit}]]/[[${room.monthlyLease}]]</h4>
+                                </th:block>
+                                <th:block th:if="${room.tradeTypeCode == 'TTC_002'}">
+                                    <h4>전세 [[${room.jeonseCost}]]</h4>
+                                </th:block>
+                                <p>[[${room.roomAddrVO.addr}]]</p>
+                                <input type="hidden" th:value="${room.roomAddrVO.coordinateX}" class="coordinate-X">
+                                <input type="hidden" th:value="${room.roomAddrVO.coordinateY}" class="coordinate-Y">
+                                <p>
+                                    <th:block th:each="propertyType : ${propertyTypeList}"
+                                        th:if="${room.propertyTypeCode == propertyType.propertyTypeCode}">
+                                        [[${propertyType.propertyTypeName}]]</th:block>, [[${room.roomSizeP}]]평,
+                                    [[${room.floor}]]층
+                                </p>
+                                <p>[[${room.title}]]</p>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="col-8" id="map"></div>
             </div>
-            <div class="col-8" id="map"></div>
+            <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+            <script type="text/javascript"
+                src="//dapi.kakao.com/v2/maps/sdk.js?appkey=22ce9cdc2a0d0a47b1149d42f3bab1c0&libraries=services,clusterer,drawing"></script>
+            <script src="/js/room/rooo_main.js"></script>
         </div>
-        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-        <script type="text/javascript"
-            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=22ce9cdc2a0d0a47b1149d42f3bab1c0&libraries=services,clusterer,drawing"></script>
-        <script src="/js/room/rooo_main.js"></script>
     </th:block>
 </body>
 
