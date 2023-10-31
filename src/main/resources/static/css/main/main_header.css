@@ -152,6 +152,7 @@ dl, ol, ul{
 #alarm_box{
   display: none;
   position: absolute;
+  z-index: 10;
   top: 60px;
   right: 50%;
   margin-right: -58px;

@@ -42,6 +42,8 @@ public class IndexController {
         return "main/home";
 
     }
+
+    //다른페이지에서 알림창 확인 메소드
     public void setAlarmData(MemberVO loginInfo){
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
 
