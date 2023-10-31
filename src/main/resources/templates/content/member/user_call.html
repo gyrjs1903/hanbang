@@ -8,8 +8,11 @@
 </head>
 <body>
     <th:block layout:fragment="content">
-        <link rel="stylesheet" href="/css/member/user_call.css">
-        <link rel="stylesheet" href="/css/member/member_common.css">
+        <th:block layout:fragment="content_css">
+            <link rel="stylesheet" href="/css/member/user_call.css">
+            <link rel="stylesheet" href="/css/member/member_common.css">
+            <link rel="stylesheet" href="/css/member/list.css">
+        </th:block>
         <header class="user_header">
             <div>
                 <h1 class="userHT">MY 한방</h1>

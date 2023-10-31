@@ -1,41 +1,37 @@
 /* user_inquiry_write.js */
 
-/* 문의하기 버튼 클릭 시 데이터 전송 */
-function memberInquirySave() {
-    var inquiryType = document.querySelector('select[name="inquiryCode"]').value;
-    var inquiryTitle = document.querySelector('input[name="memberInquiryTitle"]').value;
-    var inquiryDetail = document.querySelector('textarea[name="memberInquiryDetail"]').value;
-    var imageFileName = document.querySelector('input[name="fileInput"]').getAttribute('data-file');
+// 문의 버큰 클릭 시 이벤트 처리
+// document.getElementById('inquirySubmitButton').addEventListener('click', function() {
+//     event.preventDefault();
 
-    var data = {
-        inquiryType: inquiryType,
-        inquiryTitle: inquiryTitle,
-        inquiryDetail: inquiryDetail,
-        imageFileName: imageFileName
-    };
+//     var selectedValue = document.querySelector('select[name="inquiryCode"]').value;
+//     var memberInquiryTitle = document.querySelector('input[name="memberInquiryTitle"]').value;
+//     var memberInquiryDetail = document.querySelector('textarea[name="memberInquiryDetail"]').value;
+//     var attachedFiles = document.querySelector('input[type="file"]').files;
 
-    fetch('/memberInquirySave', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log("서버로부터 받은 데이터", data);
-        alert("문의가 성공적으로 전송되었습니다.");
-    })
-    .catch(error => {
-        alert("문의 전송에 실패했습니다. 다시 시도해주세요.");
-        console.error('Error:', error);
-    });
-}
+//     var formData = new FormData();
+//     formData.append('inquiryCode', selectedValue);
+//     formData.append('memberInquiryTitle', memberInquiryTitle);
+//     formData.append('memberInquiryDetail', memberInquiryDetail);
+
+//     for (var i = 0; i < attachedFiles.length; i++) {
+//         formData.append('attachedFiles', attachedFiles[i]);
+//     }
+
+//     fetch('/member/memberInquirySave', {
+//         method: 'POST',
+//         body: formData
+//     })
+//     .then(response => response.text())
+//     .then(data => {
+//         alert("문의가 성공적으로 전송되었습니다.");
+//         console.log(data);
+//     })
+//     .catch(error => {
+//         alert("문의 전송에 실패했습니다. 다시 시도해주세요.");
+//         console.error('Error:', error);
+//     });
+// });
 
 /* 파일 첨부 기능 div로 전달 */
 const fileButton = document.querySelector(".file-button");

@@ -8,8 +8,11 @@
 </head>
 <body>
     <th:block layout:fragment="content">
-        <link rel="stylesheet" href="/css/member/user_report.css">
-        <link rel="stylesheet" href="/css/member/member_common.css">
+        <th:block layout:fragment="content_css">
+            <link rel="stylesheet" href="/css/member/user_report.css">
+            <link rel="stylesheet" href="/css/member/member_common.css">
+            <link rel="stylesheet" href="/css/member/list.css">
+        </th:block>
         <header class="user_header">
             <div>
                 <h1 class="userHT">MY 한방</h1>
@@ -27,9 +30,33 @@
                 <p>신고내역은 신고 당시의 매물 정보입니다.</p>
                 <p>신고하신 내용에 대한 수정 및 삭제는 불가합니다.</p>
             </div>
-            <div class="reportCT">
-                <p>내역이 없습니다.</p>
-            </div>
+            <table class="inquiryCT">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>매물</th>
+                        <th>제 목</th>
+                        <th>문의일</th>
+                        <th>상태</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <th:block th:if="${inquiryList == null}">
+                        <tr class="reportCT">
+                            <td>내역이 없습니다.</td>
+                        </tr>
+                    </th:block>
+                    <th:block th:if="${inquiryList != null}">
+                        <tr th:each="inquiry, state : ${inquiryList}">
+                            <td>[[${#lists.size(inquiryList) - state.index}]]</td>
+                            <td>[[${inquiry.}]]</td>
+                            <td>[[${inquiry.inquiryTitleVO.inquiryTitle}]]</td>
+                            <td>[[${inquiry.inquiryDate}]]</td>
+                            <td>[[status]]</td>
+                        </tr>
+                    </th:block>
+                </tbody>
+            </table>
         </div>
     </th:block>
 </body>

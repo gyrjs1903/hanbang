@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="itemMapper">
+    <resultMap id="buy" type="com.green.hanbang.item.vo.BuyVO">
+        <id column="BUY_CODE"           property="buyCode"/>
+        <result column="ITEM_CODE"      property="itemCode"/>
+        <result column="USER_NO"        property="userNo"/>
+        <result column="BUY_PRICE"      property="buyPrice"/>
+        <result column="BUY_DATE"       property="buyDate"/>
+    </resultMap>
+
+    <resultMap id="package" type="com.green.hanbang.item.vo.PackageItemVO">
+        <id column="BUY_DETAIL_CODE"            property="buyDetailCode"></id>
+        <result column="BUY_CODE"               property="buyCode"/>
+        <result column="ITEM_CODE"              property="itemCode"/>
+        <result column="USER_NO"                property="userNo"/>
+        <result column="START_DATE"             property="startDate"/>
+        <result column="END_DATE"               property="endDate"/>
+        <result column="GENERAL_PRODUCT_CNT"    property="generalProductCnt"/>
+        <result column="PLUS_SEASON_CNT"        property="plusSeasonCnt"/>
+        <result column="PLUS_DAY_CNT"           property="plusDayCnt"/>
+        <result column="IS_VALID"               property="isValid"/>
+    </resultMap>
+
+    <resultMap id="general" type="com.green.hanbang.item.vo.GeneralItemVO">
+        <id column="BUY_DETAIL_CODE"            property="buyDetailCode"/>
+        <result column="BUY_CODE"               property="buyCode"/>
+        <result column="ITEM_CODE"              property="itemCode"/>
+        <result column="USER_NO"                property="userNo"/>
+        <result column="GENERAL_PRODUCT_CNT"    property="generalProductCnt"/>
+        <result column="IS_VALID"               property="isValid"/>
+    </resultMap>
+
+    <resultMap id="plus" type="com.green.hanbang.item.vo.PlusItemVO">
+        <id column="BUY_DETAIL_CODE"            property="buyDetailCode"></id>
+        <result column="BUY_CODE"               property="buyCode"/>
+        <result column="ITEM_CODE"              property="itemCode"/>
+        <result column="USER_NO"                property="userNo"/>
+        <result column="START_DATE"             property="startDate"/>
+        <result column="END_DATE"               property="endDate"/>
+        <result column="PLUS_TYPE"              property="plusType"/>
+        <result column="IS_VALID"               property="isValid"/>
+    </resultMap>
+
+<!--    buyCode 생성 쿼리 -->
+    <select id="selectNextBuyCode" resultType="String" >
+        SELECT 'BUY_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(BUY_CODE, 5))), 0) + 1, 3, '0')
+        FROM BUY_ITEM
+    </select>
+
+<!--   아이템 구매 -->
+    <insert id="goBuyItem">
+        INSERT INTO BUY_ITEM (
+            BUY_CODE
+            , USER_NO
+            , ITEM_CODE
+            , BUY_PRICE
+        )VALUES(
+            #{buyCode}
+            ,#{userNo}
+            ,#{itemCode}
+            ,#{buyPrice}
+        )
+    </insert>
+
+<!--   PackageDetailCode 생성 쿼리-->
+    <select id="selectNextPackageDetailCode" resultType="String" >
+        SELECT 'PACKAGE_DETAIL_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(BUY_DETAIL_CODE, 17))), 0) + 1, 3, '0')
+        FROM PACKAGE_ITEM
+    </select>
+
+    <!--    페키지 아이템 구매 -->
+    <insert id="buyPackageItem">
+        INSERT INTO PACKAGE_ITEM(
+            BUY_DETAIL_CODE
+            , BUY_CODE
+            , ITEM_CODE
+            , USER_NO
+            , END_DATE
+            , GENERAL_PRODUCT_CNT
+            , PLUS_SEASON_CNT
+            , PLUS_DAY_CNT
+            , IS_VALID
+        )VALUES(
+            #{buyDetailCode}
+            , #{buyCode}
+            , #{itemCode}
+            , #{userNo}
+            , ADD_MONTHS(SYSDATE, DECODE(SUBSTR(#{itemCode}, 8), 1, 6, 2, 3, 3, 2, 4, 1) )
+            , 10
+            , DECODE(SUBSTR(#{itemCode}, 8), 1, 10, 2, 5, 3, 5, 4, 2)
+            , DECODE(SUBSTR(#{itemCode}, 8), 1, 10, 2, 50, 3, 100, 4, 10)
+            , 'Y'
+        )
+    </insert>
+
+    <!--   GeneralDetailCode 생성 쿼리-->
+    <select id="selectNextGeneralDetailCode" resultType="String" >
+        SELECT 'GENERAL_DETAIL_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(BUY_DETAIL_CODE, 17))), 0) + 1, 3, '0')
+        FROM GENERAL_ITEM
+    </select>
+
+    <!--    일반 상품 구매-->
+    <insert id="buyGeneralItem">
+        INSERT INTO GENERAL_ITEM(
+            BUY_DETAIL_CODE
+            , BUY_CODE
+            , ITEM_CODE
+            , USER_NO
+            , GENERAL_PRODUCT_CNT
+            , IS_VALID
+        )VALUES(
+            #{buyDetailCode}
+            ,#{buyCode}
+            ,#{itemCode}
+            ,#{userNo}
+            , DECODE(SUBSTR(#{itemCode}, 8), 1, 10, 2, 5, 3, 5)
+            , 'Y'
+        )
+    </insert>
+
+    <!--   plusDetailCode 생성 쿼리-->
+    <select id="selectNextPlusDetailCode" resultType="String" >
+        SELECT 'PLUS_DETAIL_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(BUY_DETAIL_CODE, 17))), 0) + 1, 3, '0')
+        FROM PLUS_ITEM
+    </select>
+
+<!--    플러스 상품 구매-->
+    <insert id="buyPlusItem">
+        INSERT INTO PLUS_ITEM(
+            BUY_DETAIL_CODE
+            , ITEM_CODE
+            , BUY_CODE
+            , USER_NO
+            , PLUS_TYPE
+            , END_DATE
+            , IS_VALID
+        )VALUES(
+            #{buyDetailCode}
+            ,#{itemCode}
+            ,#{buyCode}
+            ,#{userNo}
+            ,DECODE(SUBSTR(#{itemCode}, 8), 4,'S',5,'D')
+            ,DECODE(SUBSTR(#{itemCode}, 8), 4, SYSDATE + 30, 5, SYSDATE + 1)
+            , 'Y'
+        )
+    </insert>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
