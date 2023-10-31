@@ -28,48 +28,52 @@ public class IndexController {
 
             MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
             System.out.println(loginInfo);
-            int alarmCnt = 0;
-            //공인중개사
-            if (loginInfo.getLoginType().equals("REALTOR")) {
-                if (memberService.selectAlarm(loginInfo.getUserNo()) != null) {
-                    // 권한승인알림
-                    int authorityStatus = memberService.selectAuthorityAlarm(loginInfo.getUserNo());
-                    model.addAttribute("authorityAlarm", authorityStatus);
-
-
-                    //매물문의알림
-                    RealtorDetailVO realtor = memberService.selectInquiryAlarm(loginInfo.getUserNo());
-
-                    int realtorInquiryCnt = 0;
-                    for (InquiryVO inquiry : realtor.getInquiryList()) {
-                        if (inquiry.getInquiryAnswer() == null) {
-                            realtorInquiryCnt += 1;
-                        }
-                    }
-                    model.addAttribute("realtorInquiryCnt", realtorInquiryCnt);
-
-                    //총 알림 개수
-                    if (authorityStatus == 1) alarmCnt += 1;
-                    if (realtorInquiryCnt != 0) alarmCnt += 1;
-                }
-                model.addAttribute("alarmCnt", alarmCnt);
-            }
-            //일반회원
-            if (loginInfo.getLoginType().equals("USER")) {
-                List<InquiryVO> userRoomInquiry = memberService.selectUserInquiryAlarm(loginInfo.getUserNo());
-                System.out.println(userRoomInquiry);
-                int userInquiryAnswer = 0;
-                for (InquiryVO inquiry : userRoomInquiry) {
-                    if (inquiry.getInquiryAnswer() != null && inquiry.getInquiryReadCnt() == 0) {
-                        userInquiryAnswer += 1;
-                    }
-                }
-                if (userInquiryAnswer != 0) alarmCnt += 1;
-                model.addAttribute("userInquiryAnswer", userInquiryAnswer);
-                model.addAttribute("alarmCnt", alarmCnt);
-            }
+            setAlarmData(loginInfo,model);
         }
         return "main/home";
+
+    }
+    public void setAlarmData(MemberVO loginInfo,Model model){
+        int alarmCnt = 0;
+        //공인중개사
+        if (loginInfo.getLoginType().equals("REALTOR")) {
+            if (memberService.selectAlarm(loginInfo.getUserNo()) != null) {
+                // 권한승인알림
+                int authorityStatus = memberService.selectAuthorityAlarm(loginInfo.getUserNo());
+                model.addAttribute("authorityAlarm", authorityStatus);
+
+
+                //매물문의알림
+                RealtorDetailVO realtor = memberService.selectInquiryAlarm(loginInfo.getUserNo());
+
+                int realtorInquiryCnt = 0;
+                for (InquiryVO inquiry : realtor.getInquiryList()) {
+                    if (inquiry.getInquiryAnswer() == null) {
+                        realtorInquiryCnt += 1;
+                    }
+                }
+                model.addAttribute("realtorInquiryCnt", realtorInquiryCnt);
+
+                //총 알림 개수
+                if (authorityStatus == 1) alarmCnt += 1;
+                if (realtorInquiryCnt != 0) alarmCnt += 1;
+            }
+            model.addAttribute("alarmCnt", alarmCnt);
+        }
+        //일반회원
+        if (loginInfo.getLoginType().equals("USER")) {
+            List<InquiryVO> userRoomInquiry = memberService.selectUserInquiryAlarm(loginInfo.getUserNo());
+            System.out.println(userRoomInquiry);
+            int userInquiryAnswer = 0;
+            for (InquiryVO inquiry : userRoomInquiry) {
+                if (inquiry.getInquiryAnswer() != null && inquiry.getInquiryReadCnt() == 0) {
+                    userInquiryAnswer += 1;
+                }
+            }
+            if (userInquiryAnswer != 0) alarmCnt += 1;
+            model.addAttribute("userInquiryAnswer", userInquiryAnswer);
+            model.addAttribute("alarmCnt", alarmCnt);
+        }
 
     }
     //권한 승인완료 알림 지우기
@@ -81,6 +85,10 @@ public class IndexController {
         alarmVO.setUserNo(loginInfo.getUserNo());
         memberService.insertAlarm(alarmVO);
     }
+
+
+
+
 }
 
 
