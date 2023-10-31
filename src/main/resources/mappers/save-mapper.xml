@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 복사해서 사용 -->
+<mapper namespace="saveMapper">
+    <resultMap id="memberSave" type="com.green.hanbang.member.vo.MemberSaveVO">
+        <id column="MEMBER_SAVE_NO"                 property="memberSaveNo"/>
+        <result column="ROOM_CODE"                  property="roomCode"/>
+        <result column="USER_NO"                    property="userNo"/>
+        <result column="MEMBER_SAVE_CODE"           property="memberSaveCode"/>
+        <collection property="memberFavoriteVO"     resultMap="memberFavorite"/>
+        <collection property="memberSaveTypeVO"     resultMap="memberSaveType"/>
+    </resultMap>
+
+    <resultMap id="memberFavorite" type="com.green.hanbang.member.vo.MemberFavoriteVO">
+        <id column="MEMBER_FAVO_NO"         property="memberFavoNo"/>
+        <result column="ADDR_CODE"          property="addrCode"/>
+        <result column="USER_NO"            property="userNo"/>
+        <result column="MEMBER_SAVE_CODE"   property="memberSaveCode"/>
+    </resultMap>
+
+    <resultMap id="memberSaveType" type="com.green.hanbang.member.vo.MemberSaveTypeVO">
+        <id column="MEMBER_SAVE_CODE"            property="memberSaveCode"/>
+        <result column="MEMBER_SAVE_NAME"        property="memberSaveName"/>
+    </resultMap>
+
+    <!-- 찜목록 추가 -->
+    <insert id="insertSave">
+        INSERT INTO MEMBER_SAVE(
+            MEMBER_SAVE_NO
+            , ROOM_CODE
+            , USER_NO
+            , MEMBER_SAVE_CODE
+        )
+        VALUES(
+            (SELECT 'MS_'||LPAD(COUNT(*) + 1 , 3, '0')
+            FROM MEMBER_SAVE)
+            , #{roomCode}
+            , #{userNo}
+            , #{memberSaveCode}
+        )
+    </insert>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

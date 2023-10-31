@@ -8,8 +8,11 @@
 </head>
 <body>
     <th:block layout:fragment="content">
-        <link rel="stylesheet" href="/css/member/user_inquiry.css">
-        <link rel="stylesheet" href="/css/member/member_common.css">
+        <th:block layout:fragment="content_css">
+            <link rel="stylesheet" href="/css/member/user_inquiry.css">
+            <link rel="stylesheet" href="/css/member/member_common.css">
+            <link rel="stylesheet" href="/css/member/list.css">
+        </th:block>
         <header class="user_header">
             <div>
                 <h1 class="userHT">MY 한방</h1>
@@ -32,9 +35,33 @@
                     <a onclick="location.href='/member/memberInquiryWrite'">1:1 문의하기</a>
                 </button>
             </div>
-            <div class="inquiryCT">
-                <p>최근 6개월간 문의하신 내역이 없습니다.</p>
-            </div>
+            <table class="inquiryCT">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>유 형</th>
+                        <th>제 목</th>
+                        <th>문의일</th>
+                        <th>상태</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <th:block th:if="${memberInquiryList == null}">
+                        <tr>
+                            <td>최근 6개월간 문의하신 내역이 없습니다.</td>
+                        </tr>
+                    </th:block>
+                    <th:block th:if="${memberInquiryList != null}">
+                        <tr th:each="memberInquiry, state : ${memberInquiryList}">
+                            <td>[[${#lists.size(memberInquiryList) - state.index}]]</td>
+                            <td>[[${memberInquiry.memberInquiryTypeVO.memberInquiryName}]]</td>
+                            <td>[[${memberInquiry.memberInquiryTitle}]]</td>
+                            <td>[[${memberInquiry.memberInquiryWriteDate}]]</td>
+                            <td>[[status]]</td>
+                        </tr>
+                    </th:block>
+                </tbody>
+            </table>
         </div>
     </th:block>
 </body>
