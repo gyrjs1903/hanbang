@@ -36,12 +36,12 @@
                 <li class="alarm_position">
                     <th:block th:if="${session.loginInfo != null}">
                         <th:block th:if="${session.loginInfo.loginType == 'REALTOR'}">
-                            <a class="alarm cursor" th:onclick="realtorAlarm([[${session.loginInfo.userNo}]],[[${authorityAlarm}]],[[${realtorInquiryCnt}]],[[${alarmCnt}]]);">알림
-                                <div th:if="${alarmCnt != 0}" class="alarmCnt">[[${alarmCnt}]]</div></a>
+                            <a class="alarm cursor" th:onclick="realtorAlarm([[${session.loginInfo.userNo}]],[[${session.authorityAlarm}]],[[${session.realtorInquiryCnt}]],[[${session.alarmCnt}]]);">알림
+                                <div th:if="${session.alarmCnt != 0}" class="alarmCnt">[[${session.alarmCnt}]]</div></a>
                         </th:block>
                         <th:block th:if="${session.loginInfo.loginType == 'USER'}">
-                            <a class="alarm cursor" th:onclick="userAlarm([[${session.loginInfo.userNo}]],[[${session.loginInfo?.nickName}]],[[${userInquiryAnswer}]]);">알림
-                                <div th:if="${alarmCnt == 1}" class="alarmCnt">1</div>
+                            <a class="alarm cursor" th:onclick="userAlarm([[${session.loginInfo.userNo}]],[[${session.loginInfo?.nickName}]],[[${session.userInquiryAnswer}]]);">알림
+                                <div th:if="${session.alarmCnt == 1}" class="alarmCnt">1</div>
                             </a>
                         </th:block>
                     </th:block>
@@ -87,7 +87,7 @@
                     <div class="member_nickname" onclick="my_menu_open()">
                         <p>[[${session.loginInfo?.nickName}]]님</p>
                         <div class="my_menu_wrap" id="realtor_my_menu_wrap">
-                            <nav id="my_menu_nav" class="my_menu_nav" style="border: none;">
+                            <nav class="my_menu_nav" style="border: none;">
                                 <a class="my_menu" onclick="location.href='/';">방 찾기</a>
                                 <a class="my_menu" onclick="location.href='/room/reg';">매물 등록하기</a>
                                 <a class="my_menu" onclick="location.href='/realtor/myPage';">마이페이지</a>

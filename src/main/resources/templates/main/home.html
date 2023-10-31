@@ -295,17 +295,14 @@
                     </li>
                     <li>
                         <p class="title">상품소개</p>
-                        <a href="">패키지 상품</a>
-                        <a href="">일반 상품</a>
-                        <a href="">단지 상품</a>
-                        <a href="">프리미엄 상품</a>
-                        <a href="">플러스 상품</a>
-                        <a href="">이 지역 부동산 상품</a>
+                        <div th:each="cateList : ${cateList}" class="buyItemList">
+                            <a th:href="@{/buyItem(memCateCode=${cateList.memCateCode})}">[[${cateList.memCateName}]]</a>
+                        </div>
                     </li>
                     <li>
                         <p class="title">한방 뉴스/고객지원</p>
-                        <a href="">공지사항</a>
-                        <a href="">이벤트</a>
+                        <a href="/admin/infoBoard">공지사항</a>
+                        <a href="/admin/eventList">이벤트</a>
                         <a href="">자주묻는 질문</a>
                     </li>
                     <li>

@@ -35,6 +35,7 @@
                         <li th:each="mCategory : ${membershipCate}">
                             <a class="dropdown-item" th:href="@{/admin/membershipList(memCateCode=${mCategory.memCateCode})}">[[${mCategory.memCateName}]]</a>
                         </li>
+                        <div class="addNewItem" style="margin-left: 13px;"><input type="button" value="신규 등록" class="btn btn-outline-danger" onclick="location.href='/admin/regMembershipForm';"></div>
                     </ul>
                 </th:block>
             </li>
