@@ -94,6 +94,19 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
+    public List<RoomIMGVO> selectFalseOfferingsImgs(String roomCode) {
+        return sqlSession.selectList("adminMapper.selectFalseOfferingsImgs",roomCode);
+    }
+
+    @Override
+    public int deleteRoom(String roomCode) {
+        sqlSession.delete("adminMapper.deleteFalseOfferings",roomCode);
+        sqlSession.delete("adminMapper.deleteFalseOfferingsImgs",roomCode);
+        sqlSession.delete("adminMapper.deleteAddr",roomCode);
+        return sqlSession.delete("adminMapper.deleteRoom",roomCode);
+    }
+
+    @Override
     public List<InquiryTitleVO> selectInquiryTitle() {
         return sqlSession.selectList("roomMapper.selectInquiryTitle");
     }

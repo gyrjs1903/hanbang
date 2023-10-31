@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xlmns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-layout:decorate="~{realtor/realtor_layout}">
+layout:decorate="~{fragment/main_layout}">
 <head>
 <meta charset="UTF-8">
 <title></title>
@@ -11,7 +11,7 @@ layout:decorate="~{realtor/realtor_layout}">
         <form action="/realtor/PWIdentify" method="post" id="pwValue">
             <input type="password" id="password" placeholder="비밀번호를 입력해주세요.">
             <div id="pwCorectText"></div>
-            <div class="col-3 d-grid">
+            <div class="col-5 d-grid">
                 <button type="button" class="btn btn-primary" id="change-btn"
                     th:onclick="realtorCorrection([[${session.loginInfo.userNo}]])">비밀번호확인</button>
             </div>

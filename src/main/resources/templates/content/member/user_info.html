@@ -9,6 +9,7 @@
 <body>
     <th:block layout:fragment="content">
         <link rel="stylesheet" href="/css/member/user_info.css">
+        <link rel="stylesheet" href="/css/member/member_common.css">
         <header class="user_header">
             <div>
                 <h1 class="userHT">MY 한방</h1>
@@ -25,7 +26,7 @@
                 <div class="profile_change upload">
                     <form id="profileForm" action="/member/updateProfile" method="post" enctype="multipart/form-data">
                         <div id="imagePreview" class="fake_upload">
-                            <input class="form-control real_upload" id="profileImg" name="profileImg" type="file" onchange="submitForm">
+                            <input class="form-control real_upload" id="profileImg" name="profileImg" type="file" onchange="sendProfile()">
                             <img class="proImg" th:src="@{'http://localhost:8081/' + ${session.loginInfo.memberImgVO.profileImgName}}" alt="프로필 이미지" draggable="false">
                             <div class="pro_ico">
                                 <img src="/img/member/camera_icon.png" alt="프로필 사진 변경">
@@ -142,7 +143,7 @@
                             <div class="modal-body">
                                 <h4>닉네임</h4>
                                 <label for="nickName" class="form-label"></label>
-                                <input autocomplete="off" type="text" placeholder="닉네임을 입력해주세요." id="nickName" name="nickName" oninput="countCharacters();" maxlength="10">
+                                <input autocomplete="off" type="text" placeholder="닉네임을 입력해주세요." id="nickName" name="nickName" oninput="countCharacters()" maxlength="10">
                                 <p id="characterCount">0/10</p>
                             </div>
                             <div class="modal-footer">
@@ -154,12 +155,10 @@
                 </div>
             </div>
         </div>
-
-
+    </th:block>
+    <th:block layout:fragment="content_js">
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script async src="/js/member/user_info.js"></script>
-        </body>
     </th:block>
 </body>
 </html>

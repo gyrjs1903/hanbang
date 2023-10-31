@@ -3,12 +3,14 @@
 
 <mapper namespace="inquiryMapper">
     <resultMap id="memberInquiry" type="com.green.hanbang.member.vo.MemberInquiryVO">
-        <id column="MEMBER_INQUIRY_WRITE_NO"   property="memberInquiryWriteNo"/>
-        <result column="MEMBER_INQUIRY_CODE"   property="memberInquiryCode"/>
-        <result column="MEMBER_INQUIRY_TITLE"  property="memberInquiryTitle"/>
-        <result column="MEMBER_INQUIRY_DETAIL" property="memberInquiryDetail"/>
-        <result column="MEMBER_WRITE_DATE"     property="memberWriteDate"/>
-        <result column="USER_NO"               property="userNo"/>
+        <id column="MEMBER_INQUIRY_WRITE_NO"            property="memberInquiryWriteNo"/>
+        <result column="MEMBER_INQUIRY_CODE"            property="memberInquiryCode"/>
+        <result column="MEMBER_INQUIRY_TITLE"           property="memberInquiryTitle"/>
+        <result column="MEMBER_INQUIRY_DETAIL"          property="memberInquiryDetail"/>
+        <result column="MEMBER_WRITE_DATE"              property="memberWriteDate"/>
+        <result column="USER_NO"                        property="userNo"/>
+        <collection property="memberInquiryImgVO"       resultMap="memberInquiryImg"/>
+        <collection property="memberInquiryTypeVO"      resultMap="memberInquiryType"/>
     </resultMap>
 
     <resultMap id="memberInquiryImg" type="com.green.hanbang.member.vo.MemberInquiryImgVO">
@@ -25,10 +27,102 @@
 
     <!-- 문의 유형 목록 조회 -->
     <select id="selectMemberInquiryTypeList" resultMap="memberInquiryType">
+        SELECT
+            MEMBER_INQUIRY_CODE
+            , MEMBER_INQUIRY_NAME
+        FROM
+            MEMBER_INQUIRY_TYPE
+        ORDER BY
+            MEMBER_INQUIRY_CODE
+    </select>
+
+    <!-- 문의 작성 삽입 -->
+    <insert id="insertMemberInquiry">
+        INSERT INTO MEMBER_INQUIRY_WRITE (
+            MEMBER_INQUIRY_WRITE_NO
+            , MEMBER_INQUIRY_CODE
+            , MEMBER_INQUIRY_TITLE
+            , MEMBER_INQUIRY_DETAIL
+            , MEMBER_WRITE_DATE
+            , USER_NO
+        )
+        VALUES (
+            (SELECT 'INQ_WR_'||LPAD(COUNT(*) + 1, 3, '0')
+            FROM MEMBER_INQUIRY_WRITE)
+            , #{memberInquiryCode}
+            , #{memberInquiryTitle}
+            , #{memberInquiryDetail}
+            , #{memberWriteDate}
+            , #{userNo}
+        );
+    </insert>
+
+    <!-- 문의 작성 이미지 파일 삽입 -->
+    <insert id="insertMemberInquiryImg">
+        INSERT INTO MEMBER_INQUIRY_IMG (
+            MEMBER_INQUIRY_IMG_NO
+            , MEMBER_INQUIRY_WRITE_NO
+            , MEMBER_INQUIRY_IMG_NAME
+            , MEMBER_ATTACHED_INQUIRY_IMG_NAME
+        )
+        VALUES (
+            (SELECT 'INQ_IMG_' || LPAD(COUNT(*) + 1, 3, '0')
+            FROM MEMBER_INQUIRY_IMG)
+            , #{memberInquiryImgNo}
+            , #{memberInquiryWriteNo}
+            , #{memberInquiryImgName}
+            , #{memberAttachedInquiryImgName}
+        );
+    </insert>
+
+    <!-- 문의 작성 유형 삽입 -->
+    <insert id="insertMemberInquiryType">
+        INSERT INTO MEMBER_INQUIRY_TYPE (
+            MEMBER_INQUIRY_CODE
+            , MEMBER_INQUIRY_NAME
+        )
+        VALUES (
+            #{memberInquiryCode}
+            , #{memberInquiryName}
+        );
+    </insert>
+
+    <!-- 문의 내역 목록 조회 -->
+    <select id="selectInquiryList" resultMap="memberInquiry">
+    SELECT MEMBER_INQUIRY_CODE
+        , MEMBER_INQUIRY_TITLE
+        , MEMBER_WRITE_DATE
+        , USER_NO
+    FROM
+        MEMBER_INQUIRY_WRITE
+    WHERE
+        USER_NO = #{userNo}
+    </select>
+
+    <!-- 문의 내역 상세 조회 -->
+    <select id="selectInquiryDetail" resultMap="memberInquiry">
         SELECT MEMBER_INQUIRY_CODE
-        , MEMBER_INQUIRY_NAME
-        FROM MEMBER_INQUIRY_TYPE
-        ORDER BY MEMBER_INQUIRY_CODE
+            , MEMBER_INQUIRY_TITLE
+            , MEMBER_INQUIRY_DETAIL
+            , MEMBER_WRITE_DATE
+            , MIW.USER_NO
+            , MIW.MEMBER_INQUIRY_CODE
+            , MIT.MEMBER_INQUIRY_NAME
+            , MII.MEMBER_INQUIRY_IMG_NO
+            , MII.MEMBER_INQUIRY_IMG_NAME
+            , MII.MEMBER_ATTACHED_INQUIRY_IMG_NAME
+        FROM
+            MEMBER_INQUIRY_WRITE MIW
+        JOIN
+            MEMBER_INQUIRY_TYPE MIT
+        ON
+            MIW.MEMBER_INQUIRY_CODE = MIT.MEMBER_INQUIRY_CODE
+        JOIN
+            MEMBER_INQUIRY_IMG MII
+        ON
+            MIW.MEMBER_INQUIRY_WRITE_NO = MII.MEMBER_INQUIRY_WRITE_NO
+        WHERE
+            MIW.USER_NO = #{userNo};
     </select>
 
 </mapper>

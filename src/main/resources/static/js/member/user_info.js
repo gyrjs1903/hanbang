@@ -30,12 +30,36 @@
     };
 
 
+    /* 프로필 사진 변경 시 데이터 베이스로 바로 전달 */
+    // function sendProfile() {
+    //     var fileInput = document.getElementById('profileImg');
+    //     var file = fileInput.files;
+    //     var formData = new FormData();
+    //     formData.append('profileImg', file);
+    //     fetch('/member/updateProfile', {
+    //         method: 'POST',
+    //         body: JSON.stringify(),
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         }
+    //     })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         alert('프로필 사진이 등록되었습니다!');
+    //         console.log(data);
+    //     })
+    //     .catch(error => {
+    //         alert('프로필 사진 등록에 실패했습니다. 다시 시도해 주세요!');
+    //         console.error('Error:', error);
+    //     });
+    // }
     /* input file 기능 전달, 이미지 미리보기 */
     document.addEventListener("DOMContentLoaded", function() {
         function preView(e, file) {
             const profileImg = document.querySelector('#imagePreview img');
             profileImg.setAttribute('src', e.target.result);
             profileImg.setAttribute('data-file', file.name);
+            sendProfileImageToServer(e.target.result); // 파일 데이터를 서버로 전송
         }
     
         function getImageFile(e) {
@@ -62,24 +86,5 @@
         realUpload.addEventListener('change', function(e) {
             getImageFile(e);
         });
-    
-        function submitForm() {
-            var fileInput = document.getElementById('profileImg');
-            var file = fileInput.files[0];
-            var formData = new FormData();
-            formData.append('profileImg', file);
-            $.ajax({
-                url: '/member/updateProfile',
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(data){
-                    console.log('정상적으로 프로필 사진 등록이 되었습니다.');
-                },
-                error: function(){
-                    console.log('에러가 발생했습니다. 다시 시도해주세요.');
-                }
-            });
-        }
     });
+    

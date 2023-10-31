@@ -9,6 +9,7 @@
 <body>
     <th:block layout:fragment="content">
         <link rel="stylesheet" href="/css/member/user_call.css">
+        <link rel="stylesheet" href="/css/member/member_common.css">
         <header class="user_header">
             <div>
                 <h1 class="userHT">MY 한방</h1>
@@ -16,16 +17,10 @@
                     <a class="userHMC active" onclick="location.href='/member/memberCall'" aria-current="page">전화문의</a>
                     <a class="userHMC" onclick="location.href='/member/memberInquiry'">1:1 문의내역</a>
                     <a class="userHMC" onclick="location.href='/member/memberReport'">허위매물 신고내역</a>
-                    <a class="userHMC" onclick="location.href='/member/memberAccount'">내 정보</a>
+                    <a class="userHMC" onclick="location.href='/member/memberInfo'">내 정보</a>
                 </div>
             </div>
         </header>
-<<<<<<< HEAD
-        <div class="">
-            <button class="">
-                <span>보상안내</span>
-            </button>
-        </div>
         <th:block th:if="${#lists.size(roomInquiryList) != 0}">
             <table>
                 <thead>
@@ -44,13 +39,6 @@
                 </tbody>
             </table>
         </th:block>
-        <th:block  th:unless="${#lists.size(roomInquiryList) != 0}">
-            <div class="no-room-inquiry">
-                <p>문의한 방이 없습니다.</p>
-                <p>관심있는 방을 문의 해보세요</p>
-            </div>
-        </th:block>
-=======
         <div class="callWP">
             <div class="compensationTA">
                 <p></p>
@@ -62,12 +50,13 @@
                     <a onclick="">보상안내</a>
                 </button>
             </div>
-            <div class="compenCT">
-                <p>전화 문의한 방이 없습니다.</p>
-                <p>관심있는 방을 문의 해보세요</p>
-            </div>
+            <th:block  th:if="${#lists.size(roomInquiryList) == 0}">
+                <div class="compenCT no-room-inquiry">
+                    <p>문의한 방이 없습니다.</p>
+                    <p>관심있는 방을 문의 해보세요</p>
+                </div>
+            </th:block>
         </div>
->>>>>>> changgyu
     </th:block>
 </body>
 </html>

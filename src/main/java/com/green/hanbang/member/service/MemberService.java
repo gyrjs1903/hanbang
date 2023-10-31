@@ -34,7 +34,7 @@ public interface MemberService {
     public MemberImgVO profileImgLoad(MemberImgVO memberImgVO);
 
     // 닉네임 변경
-    public int updateNickName(MemberVO memberVO);
+    public int updateNickname(String userName);
 
     // 비밀 번호 변경
     public int updatePassWord(MemberVO memberVO);

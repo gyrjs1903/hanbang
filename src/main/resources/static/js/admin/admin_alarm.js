@@ -40,7 +40,7 @@ function alarm(){
         if(data.falseOfferings != undefined){
             alarmCnt = data.falseOfferings.length;
             let falseAlarm = `
-                <div class="falseAlram">
+                <div class="falseAlram" onclick="location.href='/admin/falseOfferingsList'";>
                     허위매물신고가 <span class="cnt">${alarmCnt}</span>건 들어왔습니다.
                 </div>
             `;
@@ -50,7 +50,7 @@ function alarm(){
         if(data.realtorDetail != undefined){
             alarmCnt = data.realtorDetail.length;
             let authorityAlarm = `
-                <div class="authorityAlram">
+                <div class="authorityAlram" onclick="location.href='/admin/realList';">
                     공인중개사 승인요청이 <span class="cnt">${alarmCnt}</span>건 있습니다.
                 </div>
             `;

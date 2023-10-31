@@ -28,6 +28,7 @@ public class IndexController {
     // 시작페이지
     @GetMapping("/")
     public String main(Model model, HttpSession session) {
+
         MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
         int alarmCnt = 0;
 
@@ -56,7 +57,7 @@ public class IndexController {
                 model.addAttribute("alarmCnt", alarmCnt);
             }
 
-            // 일반회원
+            //일반회원
             if (loginInfo.getLoginType().equals("USER")) {
                 List<InquiryVO> userRoomInquiry = memberService.selectUserInquiryAlarm(loginInfo.getUserNo());
                 System.out.println(userRoomInquiry);
@@ -72,8 +73,10 @@ public class IndexController {
             }
         }
 
+
         // 대분류 조회
         model.addAttribute("cateList", membershipService.selectCategory());
+
         return "main/home";
     }
 

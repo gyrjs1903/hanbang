@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <td>No</td>
+                <td>매물번호</td>
+                <td>신고건수</td>
+                <td>신고날짜</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="falseOfferings,state : ${falseOfferingsList}">
+                <td>[[${#lists.size(falseOfferingsList)-state.index}]]</td>
+                <td th:onclick="|location.href='@{/admin/falseOfferingsDetail(roomCode=${falseOfferings.roomCode})}';|">[[${#strings.substring(falseOfferings.roomCode,5,9)}]]</td>
+                <td>[[${falseOfferings.reportCnt}]]</td>
+                <td>[[${falseOfferings.reportDate}]]</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

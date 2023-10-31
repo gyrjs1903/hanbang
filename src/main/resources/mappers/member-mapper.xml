@@ -131,29 +131,23 @@
     </select>
 
     <!-- 닉네임 변경 -->
-    <update id="updateNickName">
+    <update id="updateNickname">
         UPDATE MEMBER_USER
         SET NICK_NAME = #{nickName}
-        WHERE USER_NO = #{userNo}
+        WHERE USER_NAME = #{userName}
     </update>
 
     <!-- 비밀 번호 변경 (회원 정보 수정의 경우) -->
     <update id="updatePassword">
-        UPDATE FROM MEMBER_USER
+        UPDATE MEMBER_USER
         SET PASSWORD = #{passWord}
         WHERE USER_NAME = #{userName}
     </update>
 
     <!-- 회원 탈퇴 -->
     <delete id="deleteMember">
-        DELETE
-        FROM MEMBER_USER MU
-        WHERE EXISTS
-        (
-            SELECT USER_NO = #{userNo}
-            FROM MEMBER_IMG MI
-            WHERE MU.USER_NO = MI.USER_NO
-        );
+        DELETE FROM MEMBER_USER
+        WHERE USER_NO = #{userNo}
     </delete>
 
     <!-- ========================================================================================== -->

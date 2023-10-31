@@ -34,7 +34,10 @@
 
 .inquiryC {
     width: 850px;
+    height: 900px;
     margin: 0px auto;
+    border-bottom: 1px solid rgb(231, 231, 231);
+    border-top: 1px solid rgb(231, 231, 231);
 }
 
 .inquiryCT {
@@ -48,7 +51,6 @@
 }
 
 .inquiryU {
-    border-bottom: 1px solid rgb(231, 231, 231);
     border-top: 1px solid rgb(231, 231, 231);
 }
 
@@ -135,6 +137,21 @@
     cursor: pointer;
 }
 
+.imgPv {
+    display: flex;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 106px;
+    height: 106px;
+    border-radius: 2px;
+    border: 1px solid rgb(223, 223, 223);
+    background-color: transparent;
+    cursor: pointer;
+}
+
 .imgaddW button {
     margin-top: 4px;
     color: rgb(34, 34, 34);
@@ -145,7 +162,9 @@
 }
 
 .imgT {
-    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 130px;
 }
 
 .imgT p {
@@ -205,5 +224,12 @@
 }
 
 .photoIcon {
+    margin-top: 10px;
+    width: 24px;
+    height: 24px;
     z-index: -1;
+}
+
+.imgaddW p {
+    margin-top: 10px;
 }

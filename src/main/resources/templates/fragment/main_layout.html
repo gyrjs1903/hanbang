@@ -10,6 +10,7 @@
  integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 <!-- 프로젝트 공통 CSS -->
 <link rel="stylesheet" href="/css/main/common.css">
+<th:block layout:fragment="content_css"></th:block>
 </head>
 <body>
     <div class="container">
@@ -37,6 +38,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
 integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 <!-- 프로젝트 공통 JS-->
-
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<!-- 지금 열리는 html에 연결된 js 파일 로딩 -->
+<th:block layout:fragment="content_js"></th:block>
 </body>
 </html>

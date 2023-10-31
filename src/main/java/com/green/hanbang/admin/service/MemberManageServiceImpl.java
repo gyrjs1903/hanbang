@@ -56,6 +56,11 @@ public class MemberManageServiceImpl implements MemberManageService {
     }
 
     @Override
+    public List<FalseOfferingsVO> selectFalseOfferingsDetail(String roomCode) {
+        return sqlSession.selectList("adminMapper.selectFalseOfferingsDetail",roomCode);
+    }
+
+    @Override
     public List<RealtorDetailVO> selectRealtorAuthority() {
         return sqlSession.selectList("adminMapper.selectRealtorAuthority");
     }
