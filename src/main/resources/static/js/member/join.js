@@ -120,14 +120,14 @@ $(document).ready(function() {
     
         /* 비밀번호 데이터 유효성 검사 정규식 */
         // 문자, 숫자, 특수문자 포함 8-20자 이내
-        let passWordCheck = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/;
+        let passWordCheck = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/; 
 
         var passWordFormCheck = $("#passWordFormCheck");
         var passWordInputCheck = $("#passWordInputCheck");
 
         /* 비밀번호 입력 값 */
         var passWord = currentVal;
-
+        
         /* 비밀번호 체크 */
         if (passWord == '') {
             passWordFormCheck.hide();

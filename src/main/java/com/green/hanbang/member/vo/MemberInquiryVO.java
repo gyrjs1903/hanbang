@@ -8,10 +8,10 @@ public class MemberInquiryVO {
     private String memberInquiryCode;
     private String memberInquiryTitle;
     private String memberInquiryDetail;
-    private String memberWriteDate;
+    private String memberInquiryWriteDate;
     private String userNo;
 
     private MemberInquiryImgVO memberInquiryImgVO;
     private MemberInquiryTypeVO memberInquiryTypeVO;
-
+    private InquiryStatusVO inquiryStatusVO;
 }
