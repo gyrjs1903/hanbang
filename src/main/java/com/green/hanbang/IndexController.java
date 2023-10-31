@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -28,16 +27,18 @@ public class IndexController {
     // 시작페이지
     @GetMapping("/")
     public String main(Model model, HttpSession session) {
+        if(session.getAttribute("loginInfo") != null){
 
-        MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
-        int alarmCnt = 0;
-
-        if (loginInfo != null) {
+            MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
+            System.out.println(loginInfo);
+            int alarmCnt = 0;
+            //공인중개사
             if (loginInfo.getLoginType().equals("REALTOR")) {
                 if (memberService.selectAlarm(loginInfo.getUserNo()) != null) {
                     // 권한승인알림
                     int authorityStatus = memberService.selectAuthorityAlarm(loginInfo.getUserNo());
                     model.addAttribute("authorityAlarm", authorityStatus);
+
 
                     //매물문의알림
                     RealtorDetailVO realtor = memberService.selectInquiryAlarm(loginInfo.getUserNo());
@@ -56,7 +57,6 @@ public class IndexController {
                 }
                 model.addAttribute("alarmCnt", alarmCnt);
             }
-
             //일반회원
             if (loginInfo.getLoginType().equals("USER")) {
                 List<InquiryVO> userRoomInquiry = memberService.selectUserInquiryAlarm(loginInfo.getUserNo());
@@ -72,25 +72,18 @@ public class IndexController {
                 model.addAttribute("alarmCnt", alarmCnt);
             }
         }
-
-
-        // 대분류 조회
-        model.addAttribute("cateList", membershipService.selectCategory());
-
         return "main/home";
-    }
 
-    // 권한 승인완료 알림 지우기
+    }
+    //권한 승인완료 알림 지우기
     @ResponseBody
     @PostMapping("/realtorAuthorityAlarm")
-    public void realtorAuthorityAlarm(HttpSession session, AlarmVO alarmVO) {
+    public void realtorAuthorityAlarm(HttpSession session, AlarmVO alarmVO){
         MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
-        if (loginInfo != null) {
-            alarmVO.setUserNo(loginInfo.getUserNo());
-            memberService.insertAlarm(alarmVO);
-        }
-    }
 
+        alarmVO.setUserNo(loginInfo.getUserNo());
+        memberService.insertAlarm(alarmVO);
+    }
 
     ////////// 메인 페이지 하단 링크로 연결 되는 아이템 목록 ///////////////
     @GetMapping("/buyItem")
@@ -100,8 +93,4 @@ public class IndexController {
         model.addAttribute("cateList", membershipService.selectCategory());
         return "main/buyItemList";
     }
-
-
-
-
 }
