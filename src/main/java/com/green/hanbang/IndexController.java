@@ -27,6 +27,9 @@ public class IndexController {
     // 시작페이지
     @GetMapping("/")
     public String main(Model model, HttpSession session) {
+        // 대분류 조회
+        model.addAttribute("cateList", membershipService.selectCategory());
+
         if(session.getAttribute("loginInfo") != null){
 
             MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
@@ -71,9 +74,10 @@ public class IndexController {
                 model.addAttribute("userInquiryAnswer", userInquiryAnswer);
                 model.addAttribute("alarmCnt", alarmCnt);
             }
-            // 대분류 조회
-            model.addAttribute("cateList", membershipService.selectCategory());
+
         }
+
+
         return "main/home";
 
     }
