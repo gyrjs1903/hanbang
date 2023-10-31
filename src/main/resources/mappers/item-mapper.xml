@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="itemMapper">
+    <resultMap id="buy" type="com.green.hanbang.item.vo.BuyVO">
+        <id column="BUY_CODE"           property="buyCode"/>
+        <result column="ITEM_CODE"      property="itemCode"/>
+        <result column="USER_NO"        property="userNo"/>
+        <result column="BUY_PRICE"      property="buyPrice"/>
+        <result column="BUY_DATE"       property="buyDate"/>
+    </resultMap>
+
+    <resultMap id="package" type="com.green.hanbang.item.vo.PackageItemVO">
+        <id column="BUY_DETAIL_CODE"            property="buyDetailCode"></id>
+        <result column="BUY_CODE"               property="buyCode"/>
+        <result column="USER_NO"                property="userNo"/>
+        <result column="START_DATE"             property="startDate"/>
+        <result column="END_DATE"               property="endDate"/>
+        <result column="GENERAL_PRODUCT_CNT"    property="generalProductCnt"/>
+        <result column="PLUS_SEASON_CNT"        property="plusSeasonCnt"/>
+        <result column="PLUS_DAY_CNT"           property="plusDayCnt"/>
+        <result column="IS_VALID"               property="isValid"/>
+    </resultMap>
+
+    <resultMap id="general" type="com.green.hanbang.item.vo.GeneralItemVO">
+        <id column="BUY_DETAIL_CODE"            property="buyDetailCode"/>
+        <result column="BUY_CODE"               property="buyCode"/>
+        <result column="USER_NO"                property="userNo"/>
+        <result column="GENERAL_PRODUCT_CNT"    property="generalProductCnt"/>
+        <result column="IS_VALID"               property="isValid"/>
+    </resultMap>
+
+    <resultMap id="plus" type="com.green.hanbang.item.vo.PlusItemVO">
+        <id column="BUY_DETAIL_CODE"            property="buyDetailCode"></id>
+        <result column="BUY_CODE"               property="buyCode"/>
+        <result column="USER_NO"                property="userNo"/>
+        <result column="START_DATE"             property="startDate"/>
+        <result column="END_DATE"               property="endDate"/>
+        <result column="PLUS_TYPE"              property="plusType"/>
+        <result column="IS_VALID"               property="isValid"/>
+    </resultMap>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -10,14 +10,14 @@
     
     <div style="height: 30px;;"></div>
     
-    <th:block th:each="membership : ${membershipList}">
-        <div class="membershipTitle">[[${membership.membershipName}]]</div>
+    <th:block th:each="membershipItemList : ${membershipItemList}">
+        <div class="membershipTitle">[[${membershipItemList.membershipName}]]</div>
         <div class="membership-div" style="margin-bottom: 10px;">
-            <div class="membershipList" th:each="item : ${membership.memItemList}">
-                <div class="itemName">[[${item.itemName}]]</div>
-                <div class="itemPrice">[[${item.itemPrice}]]</div>
-                <div class="itemIntro">[[${item.itemIntro}]]</div>
-                <div class="itemContent">[[${item.itemContent}]]</div>
+            <div class="membershipList" th:each="itemInfo : ${membershipItemList.memItemList}">
+                <div class="itemName">[[${itemInfo.itemName}]]</div>
+                <div class="itemPrice">[[${itemInfo.itemPrice}]]</div>
+                <div class="itemIntro">[[${itemInfo.itemIntro}]]</div>
+                <div class="itemContent">[[${itemInfo.itemContent}]]</div>
             </div>
         </div>
 
