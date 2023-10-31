@@ -82,3 +82,7 @@ public class IndexController {
         memberService.insertAlarm(alarmVO);
     }
 }
+
+
+
+
