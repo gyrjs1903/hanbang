@@ -6,6 +6,7 @@ import lombok.Data;
 public class GeneralItemVO {
     private String buyDetailCode;
     private String buyCode;
+    private String itemCode;
     private String userNo;
     private int generalProductCnt;
     private String isValid;

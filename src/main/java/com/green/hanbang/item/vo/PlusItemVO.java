@@ -7,6 +7,7 @@ public class PlusItemVO {
     private String buyDetailCode;
     private String buyCode;
     private String userNo;
+    private String itemCode;
     private String startDate;
     private String endDate;
     private String plusType;

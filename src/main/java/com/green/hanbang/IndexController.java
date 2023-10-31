@@ -95,7 +95,7 @@ public class IndexController {
     @GetMapping("/buyItem")
     public String buyItemList (Model model, String memCateCode){
         List<MembershipVO> buyItemList = membershipService.selectMembershipItemList(memCateCode);
-        model.addAttribute("buyItemLists", buyItemList);
+        model.addAttribute("buyItemList", buyItemList);
         model.addAttribute("cateList", membershipService.selectCategory());
         return "main/buyItemList";
     }
