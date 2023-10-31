@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -98,7 +99,7 @@ public class MemberController {
     public String memberInfo(Model model, HttpSession session) {
         // 현재 로그인 한 유저 번호를 조회
         MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
-
+        System.out.println(loginInfo);
         if (loginInfo != null) {
             String userNo = loginInfo.getUserNo();
             String memberInfo = memberService.selectUserNo(userNo);
@@ -114,25 +115,18 @@ public class MemberController {
 
     // 프로필 이미지 등록
     @PostMapping("/updateProfile")
-    public String insertPro(MemberVO memberVO, @RequestParam("profileImg") MultipartFile memberImg, HttpSession session) {
+    public String insertPro(MemberImgVO memberImgVO, MultipartFile memberImg, HttpSession session) {
+
         // 유저 번호 조회
-        String userNo = memberVO.getUserNo();
-
-        // 정보 세팅
         MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
-        memberVO.setUserNo(loginInfo.getUserNo());
+        String userNo = loginInfo.getUserNo();
 
-        // 파일 업로드 및 관련 작업 처리
+        // 단일 첨부 파일 업로드
         MemberImgVO uploadedMemberImg = MemberUtil.MemberUploadFile(memberImg);
         uploadedMemberImg.setUserNo(userNo); // 파일 업로드 후 유저 번호 설정
 
         // DB에 프로필 이미지 정보 등록
-        memberService.insertProImg(uploadedMemberImg);
-
-        String errorMessage = "프로필 이미지 등록에 실패했습니다. 나중에 다시 시도해주세요.";
-
-        // 실패 메시지를 세션에 설정
-        session.setAttribute("errorMessage", errorMessage);
+        memberService.insertProImg(memberImgVO);
 
         return "redirect:/member/memberInfo";
     }
@@ -172,7 +166,6 @@ public class MemberController {
         memberInquiryService.insertMemberInquiryImg(memberInquiryImgVO);
 
         return "redirect:/member/memberInquiry";
-
     }
 
     // 허위 매물 신고 내역 페이지로 이동
@@ -219,9 +212,12 @@ public class MemberController {
     }
 
     // 닉네임 변경
-    @PostMapping("/updateNickName")
-    public int updateNickName(MemberVO memberVO){
-        return memberService.updateNickName(memberVO);
+    @PostMapping("/updateNickname")
+    public String updateNickname(HttpSession session, String userName, RedirectAttributes rttr){
+        memberService.updateNickname(userName);
+        session.invalidate();
+        rttr.addFlashAttribute("msg", "정보 수정이 완료되었습니다. 재 로그인 시 적용됩니다.");
+        return "redirect:/member/memberInfo";
     }
 
     // 비밀 번호 변경

@@ -57,8 +57,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public int updateNickName(MemberVO memberVO) {
-        return sqlSession.update("memberMapper.updateNickName", memberVO);
+    public int updateNickname(String userName) {
+        return sqlSession.update("memberMapper.updateNickName", userName);
     }
 
     @Override

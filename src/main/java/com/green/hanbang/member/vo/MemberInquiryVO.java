@@ -10,5 +10,8 @@ public class MemberInquiryVO {
     private String memberInquiryDetail;
     private String memberWriteDate;
     private String userNo;
+
     private MemberInquiryImgVO memberInquiryImgVO;
+    private MemberInquiryTypeVO memberInquiryTypeVO;
+
 }

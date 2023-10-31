@@ -131,10 +131,10 @@
     </select>
 
     <!-- 닉네임 변경 -->
-    <update id="updateNickName">
+    <update id="updateNickname">
         UPDATE MEMBER_USER
         SET NICK_NAME = #{nickName}
-        WHERE USER_NO = #{userNo}
+        WHERE USER_NAME = #{userName}
     </update>
 
     <!-- 비밀 번호 변경 (회원 정보 수정의 경우) -->

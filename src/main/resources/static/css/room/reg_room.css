@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 .table{
-    margin-bottom: 30px;
+    margin-bottom: 80px;
     border-top: 3px solid #000;
 }
 .table h2{
@@ -17,13 +17,34 @@
     font-weight: 700;
     text-align: center;
 }
-td header{
+.table tr td header{
     padding: 10px 3px;
     background-color: rgb(252, 252, 252);
     font-weight: 700;
     font-size: 14px;
     text-align: left;
     
+}
+.table tr th{
+    border-right: 1px solid #d1d1d1;;
+}
+.table tr td{
+    padding: 10px 3px;
+    
+}
+.table tr td .subProperty{
+    font-size: 20px;
+    padding: 15px 0;
+}
+.table tr td .subProperty:first-child{
+   border-top: 1px solid #d1d1d1;
+
+}
+.table tr td .property{
+    font-size: 20px;
+    padding: 15px 0;
+    border-top: 1px solid #d1d1d1;
+    border-right: 1px solid #d1d1d1;
 }
 .caution{
     margin-bottom: 30px;
@@ -75,16 +96,30 @@ table{
     text-align: left;
 }
 
-.addr div{
-    display: inline-block;
-    align-items: center;
-    height: 100%;
+.addr{
+    position: relative;
+}
+.addr .addr_select{
+    position: absolute;
+    top: 20px;
+    left: 10px;
+}
+.addr .detail_addr{
+    position: absolute;
+    bottom: 20px;
+    left: 10px;
 }
 #map{
- width: 400px;
- height: 250px;
+ width: 500px;
+ height: 280px;
 }
 
+input[type="text"]{
+    border-radius: 5px;
+    width: 150px;
+    height: 50px;
+    border: 2px solid #a9a9a9;
+}
 /* 라디오 버튼 스타일 */
 input[type="radio"] {
     -webkit-appearance: none;
