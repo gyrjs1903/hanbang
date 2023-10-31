@@ -7,18 +7,25 @@
 </head>
 <body>
 <th:block th:fragment="mainHeaderFragment">
-    <script async src="/js/main/main_header.js" defer></script>
     <link rel="stylesheet" href="/css/main/main_header.css">
     <header class="menu_all">
         <img class="logo" src="/img/main/HanBangLogo.png" title="한방" onclick="location.href='/'" style="cursor: pointer;">
         <nav class="menu_bar">
             <ul>
-                <li><a onclick="location.href='/room/roomMain'">지도</a></li>
-                <li><a href="/">분양정보</a></li>
-                <li><a onclick="location.href='/member/dibsOn'">찜목록</a></li>
+                <li><a href="/room/roomMain">지도</a></li>
                 <li>
                     <th:block th:if="${session.loginInfo == null}">
-                        <a onclick="location.href='/member/loginForm'">방 내놓기</a>
+                        <a href="/member/loginForm">찜목록</a>
+                    </th:block>
+                    <th:block th:if="${session.loginInfo != null}">
+                        <th:block th:if="${session.loginInfo.loginType == 'REALTOR' or session.loginInfo.loginType == 'USER'}">
+                            <a href="/member/dibsOn">찜목록</a>
+                        </th:block>
+                    </th:block>
+                </li>
+                <li>
+                    <th:block th:if="${session.loginInfo == null}">
+                        <a href="/member/loginForm">방 내놓기</a>
                     </th:block>
                     <th:block th:if="${session.loginInfo != null}">
                         <th:block th:if="${session.loginInfo.loginType == 'REALTOR' or session.loginInfo.loginType == 'USER'}">
@@ -29,72 +36,70 @@
                 <li class="alarm_position">
                     <th:block th:if="${session.loginInfo != null}">
                         <th:block th:if="${session.loginInfo.loginType == 'REALTOR'}">
-                            <a th:onclick="realtorAlarm([[${session.loginInfo.userNo}]],[[${authorityAlarm}]],[[${realtorInquiryCnt}]],[[${alarmCnt}]]);">알림
-                                <span th:if="${alarmCnt != 0}" class="alarmCnt">[[${alarmCnt}]]</span></a>
+                            <a class="alarm cursor" th:onclick="realtorAlarm([[${session.loginInfo.userNo}]],[[${session.authorityAlarm}]],[[${session.realtorInquiryCnt}]],[[${session.alarmCnt}]]);">알림
+                                <div th:if="${session.alarmCnt != 0}" class="alarmCnt">[[${session.alarmCnt}]]</div></a>
                         </th:block>
                         <th:block th:if="${session.loginInfo.loginType == 'USER'}">
-                            <a th:onclick="userAlarm([[${session.loginInfo.userNo}]],[[${session.loginInfo?.nickName}]],[[${userInquiryAnswer}]]);">알림
-                                <span th:if="${alarmCnt == 1}" class="alarmCnt">1</span>
+                            <a class="alarm cursor" th:onclick="userAlarm([[${session.loginInfo.userNo}]],[[${session.loginInfo?.nickName}]],[[${session.userInquiryAnswer}]]);">알림
+                                <div th:if="${session.alarmCnt == 1}" class="alarmCnt">1</div>
                             </a>
                         </th:block>
                     </th:block>
                     <th:block th:if="${session.loginInfo == null}">
-                        <a href="/member/loginForm">알림</span></a>
+                        <a class="cursor" href="/member/loginForm">알림</span></a>
                     </th:block>
                     <div id="alarm_box">
                         <div onclick="alarm_close();" class="cursor close-btn"></div>
                         <div id="alarm_tag"></div>
                     </div>
                 </li>
-
-                <!-- 미로그인 시 나올 메뉴  -->
-                <div th:if="${session.loginInfo == null}" class="member_login_join">
-                    <button type="button" class="member_login_join_btn" onclick="location.href='/member/loginForm'">로그인<span>|</span>회원가입</button>
-                </div>
-                <!-- 로그인 완료 시 나올 메뉴 -->
-                <div th:if="${session.loginInfo?.loginType == 'USER'}" class="member_nav">
-                    <div class="member_intro" th:if="${session.loginInfo != null}">
-                        <div size="32" class="member_profile" th:with="imagePath=${session.loginInfo.memberImgVO.profileImgName}">
-                            <img th:src="@{'http://localhost:8081/' + ${imagePath}}" alt="프로필 이미지" draggable="false">
-                        </div>
-                        <div class="member_nickname" onclick="menuOpen()">
-                            <p>[[${session.loginInfo?.nickName}]]님</p>
-                            <div id="my_menu_wrap" class="my_menu_wrap">
-                                <nav id="my_menu_nav" class="my_menu_nav" style="border: none;">
-                                    <a class="my_menu" onclick="location.href='/member/memberCall';">전화문의</a>
-                                    <a class="my_menu" onclick="location.href='/member/memberInquiry';">1:1문의</a>
-                                    <a class="my_menu" onclick="location.href='/member/memberReport';">허위매물 신고내역</a>
-                                    <a class="my_menu" onclick="location.href='/member/memberInfo';">내 정보</a>
-                                    <a class="my_menu" onclick="location.href='/member/logout';">로그아웃[이미지]</a>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 공인중개사 로그인 시 나올 메뉴 일단 만들어만 놨어요! -->
-                <div th:if="${session.loginInfo?.loginType == 'REALTOR'}" class="member_nav">
-                    <div class="member_intro">
-                        <div size="32" class="member_profile">
-                            <img src="" alt="" draggable="false">[프사]
-                        </div>
-                        <div class="member_nickname">
-                            <button type="button" class="member_menu_btn" onclick="my_menu_open()">
-                                <p>[[${session.loginInfo?.nickName}]]님</p>
-                            </button>
-                            <div class="my_menu_wrap" id="realtor_my_menu_wrap">
-                                <nav id="my_menu_nav" class="my_menu_nav" style="border: none;">
-                                    <a class="my_menu" onclick="location.href='/';">방 찾기</a>
-                                    <a class="my_menu" onclick="location.href='/room/reg';">매물 등록하기</a>
-                                    <a class="my_menu" onclick="location.href='/realtor/myPage';">마이페이지</a>
-                                    <a class="my_menu" onclick="location.href='/member/logout';">로그아웃[이미지]</a>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </ul>
+            <!-- 미로그인 시 나올 메뉴  -->
+            <div th:if="${session.loginInfo == null}" class="member_login_join">
+                <button type="button" class="member_login_join_btn" onclick="location.href='/member/loginForm'">로그인<span class="bar"></span>회원가입</button>
+            </div>
+            <!-- 로그인 완료 시 나올 메뉴 -->
+            <div th:if="${session.loginInfo?.loginType == 'USER'}" class="member_nav">
+                <div class="member_intro" th:if="${session.loginInfo != null}">
+                    <div size="32" class="member_profile" th:with="imagePath=${session.loginInfo.memberImgVO.profileImgName}">
+                        <img th:src="@{'http://localhost:8081/' + ${imagePath}}" alt="프로필 이미지" draggable="false">
+                    </div>
+                    <div class="member_nickname" onclick="menuOpen()">
+                        <p>[[${session.loginInfo?.nickName}]]님</p>
+                        <div id="my_menu_wrap" class="my_menu_wrap">
+                            <nav id="my_menu_nav" class="my_menu_nav" style="border: none;">
+                                <a class="my_menu" onclick="location.href='/member/memberCall';">전화문의</a>
+                                <a class="my_menu" onclick="location.href='/member/memberInquiry';">1:1문의</a>
+                                <a class="my_menu" onclick="location.href='/member/memberReport';">허위매물 신고내역</a>
+                                <a class="my_menu" onclick="location.href='/member/memberInfo';">내 정보</a>
+                                <a class="my_menu" onclick="location.href='/member/logout';">로그아웃[이미지]</a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 공인중개사 로그인 시 나올 메뉴 일단 만들어만 놨어요! -->
+            <div th:if="${session.loginInfo?.loginType == 'REALTOR'}" class="member_nav">
+                <div class="member_intro">
+                    <div size="32" class="member_profile">
+                        <img src="" alt="" draggable="false">
+                    </div>
+                    <div class="member_nickname" onclick="my_menu_open()">
+                        <p>[[${session.loginInfo?.nickName}]]님</p>
+                        <div class="my_menu_wrap" id="realtor_my_menu_wrap">
+                            <nav class="my_menu_nav" style="border: none;">
+                                <a class="my_menu" onclick="location.href='/';">방 찾기</a>
+                                <a class="my_menu" onclick="location.href='/room/reg';">매물 등록하기</a>
+                                <a class="my_menu" onclick="location.href='/realtor/myPage';">마이페이지</a>
+                                <a class="my_menu" onclick="location.href='/member/logout';">로그아웃[이미지]</a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </nav>
     </header>
+    <script async src="/js/main/main_header.js" defer></script>
 </th:block>
 </body>
 </html>

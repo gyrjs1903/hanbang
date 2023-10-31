@@ -19,6 +19,16 @@ public class MemberInquiryServiceImpl implements MemberInquiryService{
     }
 
     @Override
+    public List<MemberInquiryVO> selectMemberInquiryList(MemberInquiryVO memberInquiryVO) {
+        return sqlSession.selectList("inquiryMapper.selectMemberInquiryList", memberInquiryVO);
+    }
+
+    @Override
+    public String selectNextInquiryNumber(String memberInquiryWriteNo) {
+        return sqlSession.selectOne(memberInquiryWriteNo);
+    }
+
+    @Override
     public int insertMemberInquiry(MemberInquiryVO memberInquiryVO) {
         return sqlSession.insert("inquiryMapper.insertMemberInquiry", memberInquiryVO);
     }
@@ -28,8 +38,4 @@ public class MemberInquiryServiceImpl implements MemberInquiryService{
         return sqlSession.insert("inquiryMapper.insertMemberInquiryImg", memberInquiryImgVO);
     }
 
-    @Override
-    public int insertMemberInquiryType(MemberInquiryTypeVO memberInquiryTypeVO) {
-        return sqlSession.insert("inquiryMapper.insertMemberInquiryType", memberInquiryTypeVO);
-    }
 }

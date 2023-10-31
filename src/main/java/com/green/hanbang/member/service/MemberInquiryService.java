@@ -11,8 +11,15 @@ public interface MemberInquiryService {
     // 문의 유형 조회
     public List<MemberInquiryTypeVO> selectMemberInquiryTypeList(MemberInquiryTypeVO memberInquiryTypeVO);
 
+    // 문의 목록 조회
+    public List<MemberInquiryVO> selectMemberInquiryList(MemberInquiryVO memberInquiryVO);
+
+    // 다음 문의 작성 번호 조회
+    public String selectNextInquiryNumber(String memberInquiryWriteNo);
+
     // 문의 작성물 전송
     public int insertMemberInquiry(MemberInquiryVO memberInquiryVO); // 제목, 내용 등
     public int insertMemberInquiryImg(MemberInquiryImgVO memberInquiryImgVO); // 첨부 파일
-    public int insertMemberInquiryType(MemberInquiryTypeVO memberInquiryTypeVO); // 문의 유형
+
+
 }

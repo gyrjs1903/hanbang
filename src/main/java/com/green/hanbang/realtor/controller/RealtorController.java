@@ -1,18 +1,24 @@
 package com.green.hanbang.realtor.controller;
 
+import com.green.hanbang.IndexController;
+import com.green.hanbang.member.service.MemberService;
 import com.green.hanbang.member.vo.MemberVO;
 import com.green.hanbang.realtor.service.RealtorService;
 import com.green.hanbang.realtor.vo.LicenseImgVO;
 import com.green.hanbang.realtor.vo.RealtorDetailVO;
 import com.green.hanbang.room.vo.InquiryVO;
 import com.green.hanbang.util.LicenseUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -20,6 +26,7 @@ import java.util.Map;
 @RequestMapping("/realtor")
 public class RealtorController {
     private final RealtorService realtorService;
+    private final MemberService memberService;
 
     @RequestMapping("/main")
     public String realtor(){
@@ -117,9 +124,63 @@ public class RealtorController {
 
     //문의글 답변 작성
     @PostMapping("/inquiryAnswer")
-    public String inquiryAnswer(InquiryVO inquiryVO){
-        System.out.println(inquiryVO);
+    public String inquiryAnswer(InquiryVO inquiryVO,HttpSession session){
+        MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
         realtorService.updateInquiryAnswer(inquiryVO);
+        setAlarmData(loginInfo);
         return "redirect:/realtor/inquiryBoardList";
+    }
+
+    //다른페이지에서 알림창 확인 메소드
+    public void setAlarmData(MemberVO loginInfo){
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+
+        HttpSession session = request.getSession();
+        int alarmCnt = 0;
+        //공인중개사
+        if (loginInfo.getLoginType().equals("REALTOR")) {
+            if (memberService.selectAlarm(loginInfo.getUserNo()) != null) {
+                // 권한승인알림
+                int authorityStatus = memberService.selectAuthorityAlarm(loginInfo.getUserNo());
+
+                //model.addAttribute("authorityAlarm", authorityStatus);
+                session.setAttribute("authorityAlarm", authorityStatus);
+
+                //매물문의알림
+                RealtorDetailVO realtor = memberService.selectInquiryAlarm(loginInfo.getUserNo());
+
+                int realtorInquiryCnt = 0;
+                for (InquiryVO inquiry : realtor.getInquiryList()) {
+                    if (inquiry.getInquiryAnswer() == null) {
+                        realtorInquiryCnt += 1;
+                    }
+                }
+                //model.addAttribute("realtorInquiryCnt", realtorInquiryCnt);
+                session.setAttribute("realtorInquiryCnt", realtorInquiryCnt);
+
+                //총 알림 개수
+                if (authorityStatus == 1) alarmCnt += 1;
+                if (realtorInquiryCnt != 0) alarmCnt += 1;
+            }
+            //model.addAttribute("alarmCnt", alarmCnt);
+            session.setAttribute("alarmCnt", alarmCnt);
+        }
+        //일반회원
+        if (loginInfo.getLoginType().equals("USER")) {
+            List<InquiryVO> userRoomInquiry = memberService.selectUserInquiryAlarm(loginInfo.getUserNo());
+            System.out.println(userRoomInquiry);
+            int userInquiryAnswer = 0;
+            for (InquiryVO inquiry : userRoomInquiry) {
+                if (inquiry.getInquiryAnswer() != null && inquiry.getInquiryReadCnt() == 0) {
+                    userInquiryAnswer += 1;
+                }
+            }
+            if (userInquiryAnswer != 0) alarmCnt += 1;
+            //model.addAttribute("userInquiryAnswer", userInquiryAnswer);
+            session.setAttribute("userInquiryAnswer", userInquiryAnswer);
+            //model.addAttribute("alarmCnt", alarmCnt);
+            session.setAttribute("alarmCnt", alarmCnt);
+        }
+
     }
 }
