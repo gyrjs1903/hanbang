@@ -71,6 +71,8 @@ public class IndexController {
                 model.addAttribute("userInquiryAnswer", userInquiryAnswer);
                 model.addAttribute("alarmCnt", alarmCnt);
             }
+            // 대분류 조회
+            model.addAttribute("cateList", membershipService.selectCategory());
         }
         return "main/home";
 

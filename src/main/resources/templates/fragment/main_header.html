@@ -16,9 +16,6 @@
                 <li><a onclick="location.href='/room/roomMain'">지도</a></li>
                 <li><a href="/">분양정보</a></li>
                 <li><a onclick="location.href='/member/dibsOn'">찜목록</a></li>
-<<<<<<< HEAD
-                
-=======
                 <li>
                     <th:block th:if="${session.loginInfo == null}">
                         <a onclick="location.href='/member/loginForm'">방 내놓기</a>
@@ -49,7 +46,7 @@
                         <div id="alarm_tag"></div>
                     </div>
                 </li>
->>>>>>> 9a1105d5f50dec0e697e3a9609ffcfb5fceea01c
+
                 <!-- 미로그인 시 나올 메뉴  -->
                 <div th:if="${session.loginInfo == null}" class="member_login_join">
                     <button type="button" class="member_login_join_btn" onclick="location.href='/member/loginForm'">로그인<span>|</span>회원가입</button>

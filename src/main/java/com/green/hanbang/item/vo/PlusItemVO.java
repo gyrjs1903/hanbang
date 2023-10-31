@@ -9,6 +9,7 @@ public class PlusItemVO {
     private String userNo;
     private String startDate;
     private String endDate;
-    private String plusDayCnt;
+    private String plusType;
+    private String plusProductCnt;
     private String isValid;
 }
