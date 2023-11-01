@@ -341,3 +341,4 @@ function displaySelectedImages(files, imageList, labelText) {
         }
     }
 }
+

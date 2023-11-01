@@ -27,5 +27,6 @@ public class RoomVO {
     private String availableMoveInDate;
     private String userNo;
     private List<RoomIMGVO> imgList;
+    private PropertyTypeVO propertyTypeVO;
 
 }
