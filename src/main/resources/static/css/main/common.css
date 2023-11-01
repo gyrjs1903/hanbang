@@ -50,3 +50,6 @@ body::-webkit-scrollbar-button {
 .cursor{
     cursor: pointer;
 }
+.realtor_page{
+    padding: 70px 0 0 10px;
+}

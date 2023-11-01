@@ -53,26 +53,32 @@ public class IndexController {
         if (loginInfo.getLoginType().equals("REALTOR")) {
             if (memberService.selectAlarm(loginInfo.getUserNo()) != null) {
                 // 권한승인알림
-                int authorityStatus = memberService.selectAuthorityAlarm(loginInfo.getUserNo());
+                Integer authorityStatus = memberService.selectAuthorityAlarm(loginInfo.getUserNo());
+                System.out.println(authorityStatus);
+                System.out.println("@@@@@@@@@@@@@@@@@");
 
                 //model.addAttribute("authorityAlarm", authorityStatus);
                 session.setAttribute("authorityAlarm", authorityStatus);
 
                 //매물문의알림
                 RealtorDetailVO realtor = memberService.selectInquiryAlarm(loginInfo.getUserNo());
-
                 int realtorInquiryCnt = 0;
-                for (InquiryVO inquiry : realtor.getInquiryList()) {
-                    if (inquiry.getInquiryAnswer() == null) {
-                        realtorInquiryCnt += 1;
+                if(realtor != null){
+                    for (InquiryVO inquiry : realtor.getInquiryList()) {
+                        if (inquiry.getInquiryAnswer() == null) {
+                            realtorInquiryCnt += 1;
+                        }
                     }
+                    //model.addAttribute("realtorInquiryCnt", realtorInquiryCnt);
+                    session.setAttribute("realtorInquiryCnt", realtorInquiryCnt);
                 }
-                //model.addAttribute("realtorInquiryCnt", realtorInquiryCnt);
-                session.setAttribute("realtorInquiryCnt", realtorInquiryCnt);
-
                 //총 알림 개수
                 if (authorityStatus == 1) alarmCnt += 1;
                 if (realtorInquiryCnt != 0) alarmCnt += 1;
+            } else {
+                // 권한 승인 안 되어있을시
+                Integer authorityStatus = memberService.selectAuthorityAlarm(loginInfo.getUserNo());
+                session.setAttribute("authorityAlarm", authorityStatus);
             }
             //model.addAttribute("alarmCnt", alarmCnt);
             session.setAttribute("alarmCnt", alarmCnt);
@@ -110,7 +116,7 @@ public class IndexController {
     @GetMapping("/buyItem")
     public String buyItemList (Model model, String memCateCode){
         List<MembershipVO> buyItemList = membershipService.selectMembershipItemList(memCateCode);
-        model.addAttribute("buyItemLists", buyItemList);
+        model.addAttribute("buyItemList", buyItemList);
         model.addAttribute("cateList", membershipService.selectCategory());
         return "main/buyItemList";
     }

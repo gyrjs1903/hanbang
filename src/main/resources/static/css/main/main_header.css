@@ -158,7 +158,7 @@ dl, ol, ul{
   margin-right: -58px;
   width: 265px;
   background-color: #fff;
-  padding: 5px 20px 20px;
+  padding: 12px 20px 20px;
   box-sizing: border-box;
   border-radius: 5px;
 }
@@ -232,6 +232,5 @@ dl, ol, ul{
   background-position: center;
   background-size: cover;
   float: right;
-  margin: 8px 0;
   cursor: pointer;
 }

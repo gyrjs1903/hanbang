@@ -10,10 +10,14 @@ li{
     margin-top: 100px;
 }
 
+.footer_all>div{
+    padding: 0 30px;
+}
 .footer_one{
     display: flex;
     height: 70px;
-    border-bottom: 1px solid rgb(69, 69, 69);
+    border-bottom: 1px solid rgb(85,85,85);
+    align-items: flex-start;
 }
 
 .footer_nav{
@@ -35,29 +39,67 @@ li{
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    height: 12px;
+    margin: 0 20px;
 }
-
+.footer_ul_one > li > a{
+    color: #e5e5e5;
+    font-size: 15px;
+}
+.footer_ul_one > .personal-info > a{
+    font-weight: bold;
+}
+.go-top{
+    display: flex;
+    border: 1px solid #ccc;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #fff;
+    margin: 7px 0 10px 10px;
+    padding: 10px 15px;
+    box-shadow: 3px 5px 5px rgba(0,0,0,0.2);
+}
+.go-top::before{
+    content: "";
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-right: 3px;
+    border-bottom: 10px solid #111;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+}
 .footer_div_one{
     display: flex;
     -webkit-box-pack: justify;
     justify-content: space-between;
     padding: 30px 0px 37px;
+    align-items: flex-start;
 }
 
 .footer_ul_two{
     -webkit-box-flex: 1;
     flex-grow: 1;
 }
+.footer_ul_two > li{
+    margin: 5px 0;
+}
 
 .footer_div_two{
     flex: 0 0 auto;
     display: flex;
     flex-direction: column;
+    color: #ddd;
 }
-
 .footer_div_thr{
     display: flex;
-    margin-top: 9px;
-    margin-left: 30px;
+    flex-direction: column;
+    text-align: right;
+}
+.footer_div_thr > *{ 
+    margin: 10px 20px;
+}
+.footer_div_thr a{
+    color: #ddd;
+    font-weight: bold;
 }

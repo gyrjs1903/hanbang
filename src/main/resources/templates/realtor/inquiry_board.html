@@ -1,54 +1,75 @@
 <!DOCTYPE html>
-<html lang="ko" xlmns:th="http://www.thymeleaf.org"
-xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-layout:decorate="~{fragment/main_layout}">
+<html lang="ko" xlmns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{fragment/main_layout}">
+
 <head>
-<meta charset="UTF-8">
-<title></title>
+    <meta charset="UTF-8">
+    <title></title>
 </head>
+
 <body>
     <th:block layout:fragment="content">
         <link rel="stylesheet" href="/css/realtor/inquiry_board.css">
-        <th:block th:if="${inquiryBoardList == null || inquiryBoardList == ''}">
-            <div class="row">
-                <div class="col">
+        <div class="row realtor_page">
+            <div class="col-2 side">
+                <div class="cursor btn btn-light d-grid justify-content-start myPage" onclick="location.href='/realtor/myPage';">내 정보</div>
+                <div class="cursor btn btn-light d-grid justify-content-start boardList" onclick="location.href='/realtor/inquiryBoardList';">문의글 확인하기</div>
+            </div>
+            <th:block th:if="${inquiryBoardList == 'null'}">
+                <div class="col-10 text-center no_inquiry">
                     새로운 문의글이 없습니다.
                 </div>
-            </div>
-        </th:block>
-        <th:block th:if="${inquiryBoardList != null}">
-            <table>
-                <thead>
-                    <tr>
-                        <td>번 호</td>
-                        <td>제 목</td>
-                        <td>작성자</td>
-                        <td>날 짜</td>
-                        <td>답글여부</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="inquiry, state : ${inquiryBoardList}">
-                        <td>[[${#lists.size(inquiryBoardList) - state.index}]]</td>
-                        <th:block th:if="${inquiry.inquiryTitleCode == 'INQUIRY_TITLE_001'}">
-                            <td th:onclick="inquiryDetail([[${inquiry.inquiryCode}]])" class="cursor">[[${inquiry.inquiryContent}]]</td>
-                        </th:block>
-                        <th:block th:unless="${inquiry.inquiryTitleCode == 'INQUIRY_TITLE_001'}">
-                            <td th:onclick="inquiryDetail([[${inquiry.inquiryCode}]])" class="cursor">[[${inquiry.inquiryTitleVO.inquiryTitles}]]</td>
-                        </th:block>
-                        <td>[[${inquiry.fromUserNo}]]</td>
-                        <td>[[${inquiry.inquiryDate}]]</td>
-                        <th:block th:if="${inquiry.inquiryAnswer == null}">
-                            <td class="no-answer">답글 미작성</td>
-                        </th:block>
-                        <th:block th:unless="${inquiry.inquiryAnswer == null}">
-                            <td>답글 완료</td>
-                        </th:block>
-                    </tr>
-                </tbody>
-            </table>
-        </th:block>
+            </th:block>
+            <th:block th:if="${inquiryBoardList != 'null'}">
+                <div class="col-10 table_box">
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>번 호</td>
+                                <td>제 목</td>
+                                <td>작성자</td>
+                                <td>날 짜</td>
+                                <td>답글여부</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="inquiry, state : ${inquiryBoardList}">
+                                <td>[[${#lists.size(inquiryBoardList) - state.index}]]</td>
+                                <th:block th:if="${inquiry.inquiryTitleCode == 'INQUIRY_TITLE_001'}">
+                                    <th:block th:if="${#strings.length(inquiry.inquiryContent) > 10}">
+                                        <td th:onclick="inquiryDetail([[${inquiry.inquiryCode}]])" class="cursor">
+                                            [[${#strings.substring(inquiry.inquiryContent,0,10)}]]...
+                                        </td>
+                                    </th:block>                    
+                                    <th:block th:unless="${#strings.length(inquiry.inquiryContent) > 10}">
+                                        <td th:onclick="inquiryDetail([[${inquiry.inquiryCode}]])" class="cursor">
+                                            [[${inquiry.inquiryContent}]]
+                                        </td>
+                                    </th:block>       
+                                </th:block>
+                                <th:block th:unless="${inquiry.inquiryTitleCode == 'INQUIRY_TITLE_001'}">
+                                    <td th:onclick="inquiryDetail([[${inquiry.inquiryCode}]])" class="cursor">
+                                        [[${inquiry.inquiryTitleVO.inquiryTitles}]]</td>
+                                </th:block>
+                                <td>[[${inquiry.fromUserNo}]]</td>
+                                <td>[[${inquiry.inquiryDate}]]</td>
+                                <th:block th:if="${inquiry.inquiryAnswer == null}">
+                                    <td class="no-answer">답글 미작성</td>
+                                </th:block>
+                                <th:block th:unless="${inquiry.inquiryAnswer == null}">
+                                    <td>답글 완료</td>
+                                </th:block>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </th:block>
+        </div>
+    </th:block>
+    <th:block layout:fragment="content_js">
         <script src="/js/realtor/board.js"></script>
+        <script src="/js/realtor/realtor_side.js"></script>
     </th:block>
 </body>
+
 </html>

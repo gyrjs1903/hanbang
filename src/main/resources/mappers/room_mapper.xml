@@ -58,6 +58,7 @@
         <result column="CREATE_DATE" property="createDate"/>
         <result column="USER_NO" property="userNo"/>
         <association property="roomAddrVO" resultMap="roomAddr"/>
+        <association property="propertyTypeVO" resultMap="propertyType"/>
         <collection property="imgList" resultMap="roomImg"/>
     </resultMap>
 
@@ -250,6 +251,7 @@
         R.IMMEDIATE_OCCUPANCY,
         TO_CHAR(R.AVAILABLE_MOVE_IN_DATE,'YYYY.MM.DD') ,
         R.USER_NO,
+        PT.PROPERTY_TYPE_NAME,
         RA.ADDR_CODE,
         RA.ADDR,
         RA.DETAIL_ADDR,
@@ -262,6 +264,7 @@
         FROM ROOM R
         LEFT JOIN ROOM_ADDR RA ON R.ROOM_CODE = RA.ROOM_CODE
         LEFT JOIN ROOM_IMG RI ON R.ROOM_CODE = RI.ROOM_CODE
+        LEFT JOIN PROPERTY_TYPE PT ON R.PROPERTY_TYPE_CODE = PT.PROPERTY_TYPE_CODE
         WHERE 1 = 1
         AND IS_MAIN='Y'
         <if test='searchPropertyTypeCode != null and !searchPropertyTypeCode.equals("")'>
@@ -271,7 +274,7 @@
         AND R.ROOM_SIZE_P &lt;= #{searchRoomSizePMin}
         </if>
         <if test='searchFloor != 0 and !searchFloor.equals("")'>
-        AND R.FLOOR &gt;= #{searchFloor}
+        AND R.FLOOR &lt;= #{searchFloor}
         </if>
         <if test='searchTradeTypeCode != null and !searchTradeTypeCode.equals("")' >
         AND R.TRADE_TYPE_CODE = #{searchTradeTypeCode}

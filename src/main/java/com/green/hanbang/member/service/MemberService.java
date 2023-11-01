@@ -51,7 +51,7 @@ public interface MemberService {
     public int insertAlarm(AlarmVO alarmVO);
 
     //승인 알림 띄우기
-    public int selectAuthorityAlarm(String userNo);
+    public Integer selectAuthorityAlarm(String userNo);
 
     //공인중개사 매물 문의 알림
     public RealtorDetailVO selectInquiryAlarm(String userNo);

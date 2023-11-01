@@ -28,9 +28,17 @@
                         <a href="/member/loginForm">방 내놓기</a>
                     </th:block>
                     <th:block th:if="${session.loginInfo != null}">
-                        <th:block th:if="${session.loginInfo.loginType == 'REALTOR' or session.loginInfo.loginType == 'USER'}">
+                        <th:block th:if="${session.loginInfo.loginType == 'USER'}">
                             <a th:href="@{/room/reg(userNo=${session.loginInfo.userNo})}">방 내놓기</a>
                         </th:block>
+                    <th:block th:if="${session.loginInfo.loginType == 'REALTOR'}">
+                    <th:block th:if="${session.authorityAlarm == 1 or session.authorityAlarm == 2}">
+                        <a th:href="@{/room/reg(userNo=${session.loginInfo.userNo})}">방 내놓기</a>
+                    </th:block>
+                    <th:block th:unless="${session.authorityAlarm == 1 or session.authorityAlarm == 2}">
+                        <a class="roomReg_a" href="javascript:void(0);" onclick="authorityYet();">방 내놓기</a>
+                    </th:block>
+                    </th:block>
                     </th:block>
                 </li>
                 <li class="alarm_position">
@@ -89,7 +97,12 @@
                         <div class="my_menu_wrap" id="realtor_my_menu_wrap">
                             <nav class="my_menu_nav" style="border: none;">
                                 <a class="my_menu" onclick="location.href='/';">방 찾기</a>
-                                <a class="my_menu" onclick="location.href='/room/reg';">매물 등록하기</a>
+                                <th:block th:if="${session.authorityAlarm == 1 or session.authorityAlarm == 2}">
+                                    <a class="my_menu" th:href="@{/room/reg(userNo=${session.loginInfo.userNo})}">매물 등록하기</a>
+                                </th:block>
+                                <th:block th:unless="${session.authorityAlarm == 1 or session.authorityAlarm == 2}">
+                                    <a class="roomReg_a my_menu" href="javascript:void(0);" onclick="authorityYet();">매물 등록하기</a>
+                                </th:block>
                                 <a class="my_menu" onclick="location.href='/realtor/myPage';">마이페이지</a>
                                 <a class="my_menu" onclick="location.href='/member/logout';">로그아웃[이미지]</a>
                             </nav>

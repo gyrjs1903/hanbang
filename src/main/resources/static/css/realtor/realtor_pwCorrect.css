@@ -4,7 +4,7 @@
 form{ 
     position: relative;
     width: 40%;
-    margin: 0 auto;
+    margin: 0 auto 50px;
     padding-top: 150px;
     display: flex;
     flex-direction: column;
@@ -15,7 +15,7 @@ form > *{
 }
 #password{
     padding: 5px 5px 5px 10px;
-    border-radius: 6px;
+    border-radius: 4px;
 }
 #pwCorectText{
     display: block;

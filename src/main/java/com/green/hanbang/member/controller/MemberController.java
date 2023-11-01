@@ -103,7 +103,8 @@ public class MemberController {
     // 로그아웃
     @GetMapping("/logout")
     public String logout(HttpSession session, RedirectAttributes rttr) {
-        session.removeAttribute("loginInfo");
+        //모든 session 정보 삭제
+        session.invalidate();
         return "redirect:/";
     }
 

@@ -1,91 +1,257 @@
 @charset "UTF-8";
+
+.form_con{
+    position: relative;
+}
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+
 /* 슬라이더 스타일 */
 input[type="range"] {
     -webkit-appearance: none;
-    width: 200px;
-    height: 10px; /* 슬라이더의 너비와 높이를 조절합니다. */
-    background: #aaffad; /* 연한 녹색 배경색을 설정합니다. */
+    width: 100%;
+    height: 10px;
+    /* 슬라이더의 너비와 높이를 조절합니다. */
+    background: #c9d8ff;
     border: none;
-    border-radius: 5px; /* 슬라이더 레일의 모서리를 둥글게 만듭니다. */
-  }
-  
-  /* 슬라이더 핸들 스타일 */
-  input[type="range"]::-webkit-slider-thumb {
+    border-radius: 5px;
+    /* 슬라이더 레일의 모서리를 둥글게 만듭니다. */
+}
+
+/* 슬라이더 핸들 스타일 */
+input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 15px; /* 슬라이더 핸들의 너비를 조절합니다. */
-    height: 15px; /* 슬라이더 핸들의 높이를 조절합니다. */
-    background: #008a05; /* 슬라이더 핸들의 배경색을 설정합니다. */
-    border-radius: 50%; /* 슬라이더 핸들의 모서리를 둥글게 만듭니다. */
+    width: 15px;
+    /* 슬라이더 핸들의 너비를 조절합니다. */
+    height: 15px;
+    /* 슬라이더 핸들의 높이를 조절합니다. */
+    background: #5c75bb;
+    /* 슬라이더 핸들의 배경색을 설정합니다. */
+    border-radius: 50%;
+    /* 슬라이더 핸들의 모서리를 둥글게 만듭니다. */
     cursor: pointer;
-  }
-  
-  /* 슬라이더 포커스 스타일 */
-  input[type="range"]:focus {
+}
+
+/* 슬라이더 포커스 스타일 */
+input[type="range"]:focus {
     outline: none;
-  }
-  
-  /* 슬라이더 활성 상태 스타일 */
-  input[type="range"]:active::-webkit-slider-thumb {
-    background: #31d63a; /* 슬라이더 핸들을 클릭했을 때의 배경색을 설정합니다. */
-  }
-  
+}
+
+/* 슬라이더 활성 상태 스타일 */
+input[type="range"]:active::-webkit-slider-thumb {
+    background: #163079;
+    /* 슬라이더 핸들을 클릭했을 때의 배경색을 설정합니다. */
+}
+
 /* 메인 타이틀 */
-.title{
+.title {
     font-size: 25px;
     font-weight: 800;
     margin-bottom: 20px;
 }
 
-table tr td{
-    height: 600px;
-    border: 1px solid #000;
-    position: relative;
-    padding: 10px;
-    padding-left: 0px;
-    padding-right: 0px;
-    padding-bottom: 20px;
+.container {}
+
+.filter_menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-table tr td > div{
-    border-bottom: 1px solid #d1d1d1;
-    margin-bottom: 5px;
-    padding: 10px;
+
+.filter_menu div {
+    color: #fff;
+    font-size: 17px;
+    font-weight: 600;
+    background-color: #5c75bb;
+    width: 16.25%;
+    padding: 20px 0;
+    text-align: center;
+    align-items: center;
+    border: 2px solid #fff;
+}
+
+.filter_menu > .addr {
+    width: 35%;
+    padding: 21px 0;
+    text-align: left;
+    font-size: 13px;
+}
+.arrow {
+    /* position: relative; */
+    display: inline-flex;
+   
+}
+
+.arrow::after {
+    /* position: absolute;
+    /* right: -30px; 
+    top: -3px;  */
+    content: '';
+    width: 15px; /* 사이즈 */
+    height: 15px; /* 사이즈 */
+    border-top: 3px solid #fff; /* 선 두께 */
+    border-right: 3px solid #fff; /* 선 두께 */
+    transform: rotate(135deg); /* 각도 */
+    margin-left: 20px;
+}
+
+.filter_menu .addr input[type="text"] {
+    width: 65%;
+}
+
+.filter_menu .addr label {
+    padding-left: 5px;
+}
+
+.type,
+.filter_room_info,
+.mj_cost,
+.option_div {
+    border: 1px solid #2c2c2c;
+    width: 500px;
+    padding: 20px 10px;
+    border-radius: 20px;
+    background-color: #fff;
+    position: absolute;
+    top:63px;
+    z-index: 900;
+    display: none;
+    
+
+}
+.type{
+    left: 35%;
+}
+.filter_room_info{
+    left: 51.25%;
+
+}
+
+.option_div{
+    right: 0;
+}
+.mj_cost{
+    right: 16.25%;
+}
+
+.filter_room_info>div,
+.mj_cost>div {
+    border-bottom: 1px solid #c0c0c0;;
+    padding-bottom: 5px;
+}
+.text_span{
+    margin: 0 auto;
+    text-align: center;
+}
+.text_span span{
+
+    font-weight: 700;
+    font-size: 15px;
+}
+.option_flex {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* ----------------------------- */
+
+.type {
+    display: flex;
+    flex-direction: column;
+}
+
+.trade_type {
+    margin-bottom: 20px;
+}
+
+.trade_type label {
+    font-weight: bold;
+}
+
+.property-type {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+}
+
+
+.select-trade {
     width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 5px 0;
 }
-table tr td > div:nth-child(7){
-    border-bottom: 0px;
+
+.property-type label {
+    cursor: pointer;
+    padding: 5px 10px;
+    border: 2px solid #5c75bb;
+    /* 라디오 버튼 색상 */
+    background-color: #5c75bb;
+    /* 변경된 배경색 */
+    color: white;
+    /* 텍스트 색상 */
+    border-radius: 5px;
+    font-size: 15px;
 }
-.select_room{
+
+.property-type label:hover {
+    background-color: #162b63;
+    /* 호버 시 배경색 변경 */
+    border: 2px solid #162b63;
+    /* 호버 시 테두리 색상 변경 */
+}
+
+.property-type input[type="radio"] {
+    display: none;
+    /* 라디오 버튼 숨기기 */
+}
+
+.property-type input[type="radio"]:checked+label {
+    background-color:#162b63;
+    /* 선택 시 배경색 변경 */
+    border: 2px solid #162b63;
+    /* 선택 시 테두리 색상 변경 */
+}
+
+/* ---------------------------------- */
+
+.room_size {
+    margin-bottom: 20px;
+}
+
+.select_room {
     height: 620px;
     overflow-y: scroll;
 }
-.select-form{
-    margin-bottom: 20px;
-}
-.select-form table tr td .unit{
+
+.select-form table tr td .unit {
     font-size: 13px;
     color: #999;
     position: absolute;
-    top: 5px;
+    top: -30px;
     right: 5px;
 }
+
 /* 아래의 모든 코드는 영역::코드로 사용 */
 .select_room::-webkit-scrollbar {
-    width: 10px;  /* 스크롤바의 너비 */
+    width: 10px;
+    /* 스크롤바의 너비 */
 }
+
 .select_room::-webkit-scrollbar-thumb {
-    height: 30%; /* 스크롤바의 길이 */
-    background: #31d63a; /* 스크롤바의 색상 */
-    
+    height: 30%;
+    /* 스크롤바의 길이 */
+    background: #5c75bb;
+    /* 스크롤바의 색상 */
     border-radius: 10px;
 }
-/* .select_room::-webkit-scrollbar-track{
-    background: #aaffad;
-} */
+
 .room {
     padding-top: 10px;
     text-align: center;
@@ -94,36 +260,44 @@ table tr td > div:nth-child(7){
     align-items: center;
     justify-content: space-between;
 }
-.room div img{
+
+.room div img {
     padding-left: 15px;
     padding-bottom: 10px;
     width: 160px;
 }
 
 .room:hover {
-    background-color: rgb(210, 255, 212);
+    background-color: #cad7fc;
 }
-.room .room-info{
+
+.room .room-info {
     width: 100%;
     font-size: 12px;
     text-align: center;
 }
-#map{
-    height: 620px;
-    width: 65%;
-}
-.option_title{
+
+.option_div {}
+
+.option_title {
     font-size: 20px;
     font-weight: 700;
     margin-bottom: 10px;
 }
-.sub_option_title{
+
+.sub_option_title {
     font-size: 16px;
     font-weight: 700;
     margin-bottom: 10px;
 }
-.option_div >div{
-margin-bottom: 5px;
+
+.detail-option_div>div {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #c0c0c0;
+}
+
+.detail-option_div>div>label {
+    margin-bottom: 10px;
 }
 
 input[type="checkbox"] {
@@ -142,6 +316,7 @@ input[type="checkbox"] {
     align-items: center;
     margin-bottom: 5px;
 }
+
 input[type="checkbox"]::before {
     content: "\2713";
     position: absolute;
@@ -151,57 +326,77 @@ input[type="checkbox"]::before {
     transform: scale(0) translate(-50%, -50%);
     line-height: 1;
 }
+
 input[type="checkbox"]:checked {
-    background-color: #23ce4e;
+    background-color: #5c75bb;
     border-color: rgba(255, 255, 255, 0.3);
     color: white;
 }
+
 input[type="checkbox"]:checked::before {
     border-radius: 4px;
     transform: scale(1) translate(-50%, -50%)
 }
-input[type="button"]{
+
+input[type="button"] {
     width: 60px;
     height: 30px;
     border-radius: 5px;
-    position: absolute;
     right: 5px;
     bottom: 10px;
-    background-color: #23ce4e;
+    background-color: #5c75bb;
     border: 0px;
-
+    color: #fff;
     font-weight: 800;
+
 }
-input[type="button" ]:hover{
-    
-    background-color: #aaffad;
+
+input[type="button"]:hover {
+
+    background-color: #162b63;
 }
-input[type="number"], input[type="text"]{
+
+input[type="number"],
+input[type="text"] {
     width: 150px;
     border: 1px solid #999;
     border-radius: 5px;
+    background-color: #fff;
 }
-input[type="text"]{
-    width: 91%;
-    height: 40px;
-}
-div label{
+
+
+
+div label {
     font-size: 16px;
     font-weight: 700;
     margin-right: 14px;
 }
-.room{
+
+.main_con {
+    display: flex;
+}
+
+.room {
     border-bottom: 1px solid #d1d1d1;
 }
 
-.room .room-info h4{
+.room .room-info h4 {
     font-size: 25px;
     font-weight: 800;
 }
-.room .room-info p{
+
+.room .room-info p {
     font-size: 15px;
     margin-top: 5px;
 }
-.content{
-    border-top: 1px solid #d1d1d1;;
+.not_room{
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: 30px;
+}
+
+#map {
+    height: 800px;
+    width: 70%;
 }

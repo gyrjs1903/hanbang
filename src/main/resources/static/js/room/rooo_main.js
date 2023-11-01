@@ -67,7 +67,6 @@ function setMap() {
                     ob.location = cd_location;
                     //폴리곤을 만들 좌표 json
                     coordinates[0].forEach((coordinate, i) => {
-                        console.log(coordinate[1], coordinate[0]);
                         ob.path.push(new kakao.maps.LatLng(coordinate[1], coordinate[0]));
                     })
 
@@ -195,10 +194,7 @@ document.getElementById("searchButton").addEventListener("click", function () {
         })
         //fetch 통신 후 실행 영역
         .then((data) => {//data -> controller에서 리턴되는 데이터!
-            const radioElement = document.querySelector('input[name="searchPropertyTypeCode"]:checked');
-            const propertyTypeName = radioElement.getAttribute('data-propertytypename');
-            console.log(propertyTypeName);
-            console.log(data)
+
 
             var ps = new kakao.maps.services.Places();
 
@@ -223,60 +219,68 @@ document.getElementById("searchButton").addEventListener("click", function () {
             // .select_room 요소
             const selectRoomElement = document.querySelector('.select_room');
             const roomContainer = document.createElement('div');
-
-            // 이전에 표시된 내용을 삭제
             selectRoomElement.innerHTML = '';
-            data.forEach((room, idx) => {
-                const roomElement = document.createElement('div');
-                roomElement.className = 'room';
-                roomElement.setAttribute('onclick', `detailRoom('${room.roomCode}')`);
-                const imgElement = document.createElement('div');
-                roomElement.append(imgElement);
 
-                // 방 이미지 추가
-                const roomImage = document.createElement('img');
-                roomImage.src = '/img/room/' + room.imgList[0].attachedFileName;
-                roomImage.alt = '';
-                imgElement.appendChild(roomImage);
-
-                // 방정보 div
-                const roomInfo = document.createElement('div');
-                roomInfo.className = 'room-info';
-
-                //전월세 추가
-                if (room.tradeTypeCode !== 'TTC_001') {
-                    const jeonseInfo = document.createElement('h4');
-                    jeonseInfo.textContent = '전세 ' + room.jeonseCost;
-                    roomInfo.appendChild(jeonseInfo);
-                } else {
-                    const leaseInfo = document.createElement('h4');
-                    leaseInfo.textContent = '월세 ' + room.deposit + '/' + room.monthlyLease;
-                    roomInfo.appendChild(leaseInfo);
-                }
-
-
-                //주소
-                const addrInfo = document.createElement('p')
-                addrInfo.textContent = room.roomAddrVO.addr;
-                roomInfo.appendChild(addrInfo);
-
-                //매물유형, 평, 층
-                const propertyTypeInfo = document.createElement('p');
-                propertyTypeInfo.textContent = propertyTypeName + ', ' + room.roomSizeP + '평, ' + room.floor + '층';
-                roomInfo.appendChild(propertyTypeInfo);
-
-                //상세내용
-                const contentText = document.createElement('p');
-                contentText.textContent = room.content;
-                roomInfo.appendChild(contentText);
-
-                roomElement.appendChild(roomInfo);
-
-                roomContainer.appendChild(roomElement);
-
+            console.log(data);
+            if (data.length == 0) {
+                roomContainer.className='not_room';
+                roomContainer.textContent = '조건에 맞는 방이 없습니다'
                 selectRoomElement.appendChild(roomContainer);
+            } else {
+            data.forEach((room, idx) => {
+                
+                    console.log(room)
+                    const roomElement = document.createElement('div');
+                    roomElement.className = 'room';
+                    roomElement.setAttribute('onclick', `detailRoom('${room.roomCode}')`);
+                    const imgElement = document.createElement('div');
+                    roomElement.append(imgElement);
 
+                    // 방 이미지 추가
+                    const roomImage = document.createElement('img');
+                    roomImage.src = '/img/room/' + room.imgList[0].attachedFileName;
+                    roomImage.alt = '';
+                    imgElement.appendChild(roomImage);
+
+                    // 방정보 div
+                    const roomInfo = document.createElement('div');
+                    roomInfo.className = 'room-info';
+
+                    //전월세 추가
+                    if (room.tradeTypeCode !== 'TTC_001') {
+                        const jeonseInfo = document.createElement('h4');
+                        jeonseInfo.textContent = '전세 ' + room.jeonseCost;
+                        roomInfo.appendChild(jeonseInfo);
+                    } else {
+                        const leaseInfo = document.createElement('h4');
+                        leaseInfo.textContent = '월세 ' + room.deposit + '/' + room.monthlyLease;
+                        roomInfo.appendChild(leaseInfo);
+                    }
+
+
+                    //주소
+                    const addrInfo = document.createElement('p')
+                    addrInfo.textContent = room.roomAddrVO.addr;
+                    roomInfo.appendChild(addrInfo);
+
+                    //매물유형, 평, 층
+                    const propertyTypeInfo = document.createElement('p');
+                    propertyTypeInfo.textContent = room.propertyTypeVO.propertyTypeName + ', ' + room.roomSizeP + '평, ' + room.floor + '층';
+                    roomInfo.appendChild(propertyTypeInfo);
+
+                    //상세내용
+                    const contentText = document.createElement('p');
+                    contentText.textContent = room.title;
+                    roomInfo.appendChild(contentText);
+
+                    roomElement.appendChild(roomInfo);
+
+                    roomContainer.appendChild(roomElement);
+
+                    selectRoomElement.appendChild(roomContainer);
             });
+        }
+
 
         })
         //fetch 통신 실패 시 실행 영역
@@ -452,18 +456,29 @@ const selectAllCheckbox = document.querySelector(".all_check");
 const detailOptionCheckboxes = document.querySelectorAll(".detailOptionCheckbox");
 
 // "전체선택" 체크박스가 클릭되면 모든 하위 체크박스를 선택 또는 선택 해제
-selectAllCheckbox.addEventListener("change", function() {
+selectAllCheckbox.addEventListener("change", function () {
     const isChecked = selectAllCheckbox.checked;
-    detailOptionCheckboxes.forEach(function(checkbox) {
+    detailOptionCheckboxes.forEach(function (checkbox) {
         checkbox.checked = isChecked;
     });
 });
 // 하위 체크박스 중 하나라도 클릭되면 전체선택 체크박스를 체크 해제
-detailOptionCheckboxes.forEach(function(checkbox) {
-    checkbox.addEventListener("change", function() {
+detailOptionCheckboxes.forEach(function (checkbox) {
+    checkbox.addEventListener("change", function () {
         if (!checkbox.checked) {
             selectAllCheckbox.checked = false;
         }
     });
 });
+
+// range input 요소와 연결합니다.
+let floorSlider = document.getElementById("floorSlider");
+let floorValue = document.getElementById("floorValue");
+
+// range input 값이 변경될 때 호출될 함수를 정의합니다.
+floorSlider.addEventListener("input", function () {
+    // range input의 현재 값으로 <span id="floorValue"> 요소의 텍스트 내용을 변경합니다.
+    floorValue.textContent = floorSlider.value;
+});
+
 

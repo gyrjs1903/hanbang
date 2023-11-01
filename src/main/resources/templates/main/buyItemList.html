@@ -9,19 +9,29 @@
 </head>
 <body>
     <div style="height: 30px;;"></div>
-    
-    <th:block th:each="buyItemList : ${buyItemLists}">
-        <div class="membershipTitle">[[${buyItemList.membershipName}]]</div>
-        <div class="membership-div" style="margin-bottom: 10px;">
-            <div class="membershipList" th:each="buyItem : ${buyItemList.memItemList}">
-                <div class="itemName">[[${buyItem.itemName}]]</div>
-                <div class="itemPrice">[[${buyItem.itemPrice}]]</div>
-                <div class="itemIntro">[[${buyItem.itemIntro}]]</div>
-                <div class="itemContent">[[${buyItem.itemContent}]]</div>
-                <input type="submit" value="구매하기" class="btn btn-outline-primary buyBtn">
+
+        <th:block th:each="membershipItem : ${buyItemList}">
+            <div class="membershipTitle">[[${membershipItem.membershipName}]]</div>
+            <div class="membership-div" style="margin-bottom: 10px;">
+                <div class="membershipList" th:each=" item : ${membershipItem.memItemList}">
+                    <div class="itemName">[[${item.itemName}]]</div>
+                    <div class="itemPrice">[[${item.itemPrice}]]</div>
+                    <div class="itemIntro" >[[${item.itemIntro}]]</div>
+                    <div class="itemContent" >[[${item.itemContent}]]</div>
+
+                    <form action="/item/goBuyItem" method="post">
+                        <input type="hidden" name="itemCode" th:value="${item.itemCode}">
+                        <input type="hidden" name="buyPrice" th:value="${item.itemPrice}">
+                        <input type="hidden" name="memCateCode" th:value="${item.memCateCode}">
+                        <input type="submit" value="구매하기" class="btn btn-outline-primary buyBtn">
+                    </form>
+
+                </div>
             </div>
-        </div>
-    </th:block>
+        </th:block>
+
+    
+    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
