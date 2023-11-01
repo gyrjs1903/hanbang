@@ -10,8 +10,12 @@ import com.green.hanbang.member.vo.MemberVO;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -28,31 +32,31 @@ public class ItemController {
         itemService.goBuyItem(buyVO);
 
         if (memCateCode.equals("CATE_001")){
-            String nextPackageCode = itemService.selectNextPackageDetailCode();
-            packageItemVO.setBuyDetailCode(nextPackageCode);
+
+            packageItemVO.setPackageCode(itemService.selectNextPackageDetailCode());
             packageItemVO.setBuyCode(buyVO.getBuyCode());
             packageItemVO.setUserNo(((MemberVO)session.getAttribute("loginInfo")).getUserNo());
 
             itemService.buyPackageItem(packageItemVO);
+
         } else if (memCateCode.equals("CATE_002")){
-            generalItemVO.setBuyDetailCode(itemService.selectNextGeneralDetailCode());
+
+            generalItemVO.setGeneralCode(itemService.selectNextGeneralDetailCode());
             generalItemVO.setBuyCode(buyVO.getBuyCode());
             generalItemVO.setUserNo(((MemberVO)session.getAttribute("loginInfo")).getUserNo());
 
             itemService.buyGeneralItem(generalItemVO);
+
         } else if (memCateCode.equals("CATE_003")){
-            plusItemVO.setBuyDetailCode(itemService.selectNextPlusDetailCode());
+            String aaa = itemService.selectNextPlusDetailCode();
+            plusItemVO.setPlusCode(itemService.selectNextPlusDetailCode());
             plusItemVO.setBuyCode(buyVO.getBuyCode());
             plusItemVO.setUserNo(((MemberVO)session.getAttribute("loginInfo")).getUserNo());
 
             itemService.buyPlusItem(plusItemVO);
         }
 
-
-
-
         return "main/buyItemList";
     }
-
 
 }

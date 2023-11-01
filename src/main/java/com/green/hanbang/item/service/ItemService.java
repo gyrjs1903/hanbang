@@ -5,6 +5,8 @@ import com.green.hanbang.item.vo.GeneralItemVO;
 import com.green.hanbang.item.vo.PackageItemVO;
 import com.green.hanbang.item.vo.PlusItemVO;
 
+import java.util.List;
+
 public interface ItemService {
     // buyCode 생성
     public String selectNextBuyCode();
@@ -29,4 +31,6 @@ public interface ItemService {
 
     // 플러스 상품 구매 후 세부 내역
     public void buyPlusItem(PlusItemVO plusItemVO);
+
+
 }

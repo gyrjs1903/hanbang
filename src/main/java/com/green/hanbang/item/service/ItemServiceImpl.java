@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ItemServiceImpl implements ItemService{
@@ -60,4 +62,6 @@ public class ItemServiceImpl implements ItemService{
     public void buyPlusItem(PlusItemVO plusItemVO) {
         sqlSession.insert("itemMapper.buyPlusItem", plusItemVO);
     }
+
+
 }

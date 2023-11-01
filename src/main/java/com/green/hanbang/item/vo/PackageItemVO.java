@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class PackageItemVO {
-    private String buyDetailCode;
+    private String packageCode;
     private String buyCode;
     private String itemCode;
     private String userNo;
@@ -14,4 +14,6 @@ public class PackageItemVO {
     private int plusSeasonCnt;
     private int plusDayCnt;
     private String isValid;
+    private String memCateCode;
+    private String memCateName;
 }

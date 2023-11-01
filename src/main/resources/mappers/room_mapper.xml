@@ -152,41 +152,41 @@
     <!--매물 insert-->
     <insert id="insertRoom">
         INSERT INTO ROOM(
-        ROOM_CODE
-        , PROPERTY_TYPE_CODE
-        , SUB_PROPERTY_TYPE_CODE
-        , ROOM_SIZE_P
-        , ROOM_SIZE_M
-        , FLOOR
-        , TRADE_TYPE_CODE
-        , MONTHLY_LEASE
-        , DEPOSIT
-        , JEONSE_COST
-        , MAINTENANCE_COST
-        , DETAIL_OPTIONS
-        , TITLE
-        , CONTENT
-        , IMMEDIATE_OCCUPANCY
-        , AVAILABLE_MOVE_IN_DATE
-        , USER_NO
+            ROOM_CODE
+            , PROPERTY_TYPE_CODE
+            , SUB_PROPERTY_TYPE_CODE
+            , ROOM_SIZE_P
+            , ROOM_SIZE_M
+            , FLOOR
+            , TRADE_TYPE_CODE
+            , MONTHLY_LEASE
+            , DEPOSIT
+            , JEONSE_COST
+            , MAINTENANCE_COST
+            , DETAIL_OPTIONS
+            , TITLE
+            , CONTENT
+            , IMMEDIATE_OCCUPANCY
+            , AVAILABLE_MOVE_IN_DATE
+            , USER_NO
         )VALUES(
-        (SELECT 'ROOM_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ROOM_CODE,7))),0)+1, 4, '0') FROM ROOM)
-        , #{propertyTypeCode}
-        , #{subPropertyTypeCode}
-        , #{roomSizeP}
-        , #{roomSizeM}
-        , #{floor}
-        , #{tradeTypeCode}
-        , #{monthlyLease}
-        , #{deposit}
-        , #{jeonseCost}
-        , #{maintenanceCost}
-        , #{detailOptions}
-        , #{title}
-        , #{content}
-        , #{immediateOccupancy}
-        , #{availableMoveInDate}
-        , #{userNo}
+            (SELECT 'ROOM_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ROOM_CODE,7))),0)+1, 4, '0') FROM ROOM)
+            , #{propertyTypeCode}
+            , #{subPropertyTypeCode}
+            , #{roomSizeP}
+            , #{roomSizeM}
+            , #{floor}
+            , #{tradeTypeCode}
+            , #{monthlyLease}
+            , #{deposit}
+            , #{jeonseCost}
+            , #{maintenanceCost}
+            , #{detailOptions}
+            , #{title}
+            , #{content}
+            , #{immediateOccupancy}
+            , #{availableMoveInDate}
+            , #{userNo}
         )
     </insert>
     <!--이미지 insert-->

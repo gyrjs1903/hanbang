@@ -1,6 +1,10 @@
 package com.green.hanbang.room.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.green.hanbang.item.service.ItemService;
+import com.green.hanbang.item.vo.GeneralItemVO;
+import com.green.hanbang.item.vo.PackageItemVO;
+import com.green.hanbang.item.vo.PlusItemVO;
 import com.green.hanbang.member.vo.MemberVO;
 import com.green.hanbang.room.service.RoomService;
 import com.green.hanbang.room.vo.*;
@@ -33,6 +37,32 @@ public class RoomController {
         model.addAttribute("optionsList", optionsList);
         model.addAttribute("propertyList", propertyList);
         model.addAttribute("tradeTypeList", tradeTypeList);
+
+
+        //수연 추가 코드
+        //1. 현재 등록하려는 사람의 타입 (입반, 업자)
+        //2. 업자라면 상품 기능을 사용할 수 있도록 html에 코드추가
+
+        List<PackageItemVO> packageItemList = roomService.selectPackageItemList(loginInfo.getUserNo());
+        List<GeneralItemVO> generalItemList = roomService.selectGeneralItemList(loginInfo.getUserNo());
+        List<PlusItemVO> plusItemList = roomService.selectPlusItemList(loginInfo.getUserNo());
+
+        //내가 가지고 있는 상품의 수량
+        int itemCnt = packageItemList.size() + generalItemList.size() + plusItemList.size();
+        model.addAttribute("itemCnt", itemCnt);
+
+        //상품 목록 데이터 전달
+//        Map<String, Object> itemMap = new HashMap<>();
+//        itemMap.put("packageItemList", packageItemList);
+//        itemMap.put("generalItemList", generalItemList);
+//        itemMap.put("plusItemList", plusItemList);
+
+        model.addAttribute("packageItemList", roomService.selectPackageItemList(loginInfo.getUserNo()));
+        model.addAttribute("generalItemList", roomService.selectGeneralItemList(loginInfo.getUserNo()));
+        model.addAttribute("plusItemList", roomService.selectPlusItemList(loginInfo.getUserNo()));
+
+        System.out.println(roomService.selectPackageItemList(loginInfo.getUserNo()));
+
 
         return "room/reg_room";
     }
