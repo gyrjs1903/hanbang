@@ -28,6 +28,7 @@
                     <ul class="inquiryU">
                         <li class="inquiryL">
                             <div class="inquiryLT">문의유형</div>
+                            <label name="inquiryCode"></label>
                             <select name="inquiryCode" class="selectIC">
                                 <option>선택</option>
                                 <option th:each="memberInquiryType : ${memberInquiryTypeList}" th:value="${memberInquiryType.memberInquiryCode}">[[${memberInquiryType.memberInquiryName}]]</option>
