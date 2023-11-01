@@ -482,3 +482,57 @@ floorSlider.addEventListener("input", function () {
 });
 
 
+$(".type, .filter_room_info, .mj_cost, .option_div").hide();
+
+$(document).ready(function() {
+    // 변수를 사용하여 현재 회전 각도를 추적합니다.
+    var isRotated = false;
+  
+    // 함수를 사용하여 회전 각도를 변경합니다.
+    function toggleRotation(element) {
+      isRotated = !isRotated;
+      var rotation = isRotated ? "135deg" : "315deg";
+      element.css("transform", "rotate(" + rotation + ")");
+    }
+  
+    // 메뉴 항목을 클릭하여 메뉴를 표시하거나 숨깁니다.
+    $(".menu_type").click(function() {
+      $(".type").show();
+      toggleRotation($(".menu_type .arrow::after"));
+      $(".filter_room_info, .mj_cost, .option_div").hide();
+      $(".menu_filter_room_info .arrow::after, .menu_mj_cost .arrow::after, .menu_option_div .arrow::after").css("transform", "rotate(135deg)");
+    });
+  
+    $(".menu_filter_room_info").click(function() {
+      $(".filter_room_info").show();
+      toggleRotation($(".menu_filter_room_info .arrow::after"));
+      $(".type, .mj_cost, .option_div").hide();
+      $(".menu_type .arrow::after, .menu_mj_cost .arrow::after, .menu_option_div .arrow::after").css("transform", "rotate(135deg)");
+    });
+  
+    $(".menu_mj_cost").click(function() {
+      $(".mj_cost").show();
+      toggleRotation($(".menu_mj_cost .arrow::after"));
+      $(".type, .filter_room_info, .option_div").hide();
+      $(".menu_type .arrow::after, .menu_filter_room_info .arrow::after, .menu_option_div .arrow::after").css("transform", "rotate(135deg)");
+    });
+  
+    $(".menu_option_div").click(function() {
+      $(".option_div").show();
+      toggleRotation($(".menu_option_div .arrow::after"));
+      $(".type, .filter_room_info, .mj_cost").hide();
+      $(".menu_type .arrow::after, .menu_filter_room_info .arrow::after, .menu_mj_cost .arrow::after").css("transform", "rotate(135deg)");
+    });
+  
+    // 메뉴 항목 외의 다른 곳을 클릭하면 모든 메뉴 항목을 숨깁니다.
+    $(document).click(function(event) {
+      if (
+        !$(event.target).closest(".menu_type, .menu_filter_room_info, .menu_mj_cost, .menu_option_div").length
+      ) {
+        $(".type, .filter_room_info, .mj_cost, .option_div").hide();
+        // 모든 메뉴 항목의 화살표 스타일을 변경합니다.
+        $(".menu_type .arrow::after, .menu_filter_room_info .arrow::after, .menu_mj_cost .arrow::after, .menu_option_div .arrow::after").css("transform", "rotate(135deg)");
+        isRotated = false; // 회전 상태 초기화
+      }
+    });
+  });
