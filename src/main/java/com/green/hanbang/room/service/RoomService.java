@@ -1,6 +1,10 @@
 package com.green.hanbang.room.service;
 
 
+import com.green.hanbang.admin.vo.MemCateVO;
+import com.green.hanbang.item.vo.GeneralItemVO;
+import com.green.hanbang.item.vo.PackageItemVO;
+import com.green.hanbang.item.vo.PlusItemVO;
 import com.green.hanbang.member.vo.MemberVO;
 import com.green.hanbang.room.vo.*;
 
@@ -64,5 +68,14 @@ public interface RoomService {
 
     //문의 하기
     public boolean insertInquiry(InquiryVO inquiryVO);
+
+    //////////////////////////////////////////
+
+    // 구매 내역 출력
+    public List<PackageItemVO> selectPackageItemList (String userNo);
+    public List<GeneralItemVO> selectGeneralItemList (String userNo);
+    public List<PlusItemVO> selectPlusItemList (String userNo);
+
+
 
 }
