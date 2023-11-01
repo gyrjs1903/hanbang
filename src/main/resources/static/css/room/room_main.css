@@ -98,6 +98,7 @@ input[type="range"]:active::-webkit-slider-thumb {
     margin-left: 20px;
 }
 
+
 .filter_menu .addr input[type="text"] {
     width: 65%;
 }
