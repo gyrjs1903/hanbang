@@ -7,32 +7,41 @@ layout:decorate="~{fragment/main_layout}">
 <title></title>
 </head>
 <body>
+    <th:block layout:fragment="content_css">
+        <link rel="stylesheet" href="/css/realtor/inquriy_detail.css">
+    </th:block>
     <th:block layout:fragment="content">
         <div id="wrap">
-            <div class="row">
-                <div class="col">
+            <div class="row head">
+                <div class="col-8">
                     <th:block th:if="${inquiryDetail.inquiryTitleCode == 'INQUIRY_TITLE_001'}">
-                        <span></span>
+                    <th:block th:if="${#strings.length(inquiryDetail.inquiryContent) > 10}">
+                        <span>[[${#strings.substring(inquiryDetail.inquiryContent,0,10)}]]...</span>
+                    </th:block>                    
+                    <th:block th:unless="${#strings.length(inquiryDetail.inquiryContent) > 10}">
+                        <span>[[${inquiryDetail.inquiryContent}]]</span>
+                    </th:block>                    
                     </th:block>
                     <th:block th:unless="${inquiryDetail.inquiryTitleCode == 'INQUIRY_TITLE_001'}">
                         <span>[[${inquiryDetail.inquiryTitleVO.inquiryTitles}]]</span>
                     </th:block>
                 </div>
-                <div class="col">[[${inquiryDetail.fromUserNo}]]</div>
-                <div class="col">[[${inquiryDetail.inquiryDate}]]</div>
+                <div class="col-2 text-end">[[${inquiryDetail.fromUserNo}]]</div>
+                <div class="col-2 text-center">[[${inquiryDetail.inquiryDate}]]</div>
             </div>
             <div class="row">
-                <div class="col-3">문의내용 : </div>
-                <div class="col-9">[[${inquiryDetail.inquiryContent}]]</div>
+                <div class="col inquriy-content">
+                    <div class="row">[[${inquiryDetail.inquiryContent}]]</div>
+                </div>                
             </div>
             <th:block th:if="${inquiryDetail.inquiryAnswer == null}">
                 <div class="row">
                     <div class="col">
                         <form action="/realtor/inquiryAnswer" method="post" id="inquiryAnswerForm">
                             <input type="hidden" th:value="${inquiryDetail.inquiryCode}" name="inquiryCode">
-                            <textarea name="inquiryAnswer" id="" cols="30" rows="10"></textarea>
+                            <textarea name="inquiryAnswer" id="inquiryAnswer" cols="50" rows="10"></textarea>
+                            <input type="button" value="등록" class="regAnswer-btn" onclick="sendInquiry();">
                         </form>
-                            <input type="button" value="답변하기" onclick="sendInquiry();">
                     </div>
                 </div>
             </th:block>
@@ -43,7 +52,7 @@ layout:decorate="~{fragment/main_layout}">
                     </div>
                 </div>
             </th:block>
-            <input type="button" value="목 록" onclick="location.href='/realtor/inquiryBoardList';">
+            <input type="button" class="inquiryBoard" value="목록" onclick="location.href='/realtor/inquiryBoardList';">
         </div>
         <script src="/js/realtor/board.js"></script>
     </th:block>

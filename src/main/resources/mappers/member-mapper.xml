@@ -184,7 +184,7 @@
     </insert>
 
     <!-- 승인완료알림 -->
-    <select id="selectAuthorityAlarm" resultType="int">
+    <select id="selectAuthorityAlarm" resultType="Integer">
         SELECT AUTHORITY_UPDATE
         FROM ALARM
         WHERE USER_NO = #{userNo}

@@ -1,0 +1,47 @@
+@charset "UTF-8";
+
+#wrap{
+    margin-top: 70px;
+    padding: 70px 50px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+#wrap > .row{
+    margin-bottom: 20px;
+}
+#wrap > .row.head{
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+}
+.inquriy-content > div{
+    margin: 10px 0;
+}
+form{
+    position: relative;
+}
+#inquiryAnswer{
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+}
+#inquiryAnswer:focus{
+    outline: none;
+}
+.regAnswer-btn{
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    border: none;
+    padding: 15px 15px;
+    border-radius: 6px;
+    color: #7e7e7e;
+    font-weight: bold;
+    background-color: transparent;
+}
+.inquiryBoard{
+    float: right;
+    padding: 7px 10px;
+    border: none;
+    border-radius: 4px;
+}

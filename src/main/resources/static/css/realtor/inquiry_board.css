@@ -1,8 +1,20 @@
 @charset "UTF-8";
 /* inquiry_board.css */
 
+.side{
+    /* background-color: #f8f9fa; */
+    padding: 0;
+}
+.side > div{
+    border-bottom: 2px solid #ddd;
+}
+.no_inquiry{
+    font-size: 18px;
+    padding-top: 55px;
+    margin-bottom: 300px;
+}
 table{
-    width: 80%;
+    width: 100%;
     margin: 0 auto;
     text-align: center;
     border-collapse: collapse;
@@ -17,4 +29,11 @@ td{
 .no-answer{
     color: #ff0404;
     font-weight: 500;
+}
+.btn.btn-light{
+    margin-top: 0;
+    border-radius: 0;
+}
+.table_box{
+    padding: 0 20px;
 }

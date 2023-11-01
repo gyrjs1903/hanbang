@@ -75,7 +75,7 @@ public class RealtorController {
 
         realtorService.insertRealtorDetail(realtorDetailVO);
 
-        return "redirect:/realtor/main";
+        return "redirect:/realtor/myPage";
     }
 
     @GetMapping("/pwCorrectPage")
@@ -110,8 +110,12 @@ public class RealtorController {
     @GetMapping("/inquiryBoardList")
     public String inquiryBoardList(HttpSession session,Model model){
         MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
-        System.out.println(realtorService.selectInquiryBoard(loginInfo.getUserNo()));
-        model.addAttribute("inquiryBoardList",realtorService.selectInquiryBoard(loginInfo.getUserNo()));
+        List<InquiryVO> inquiries = realtorService.selectInquiryBoard(loginInfo.getUserNo());
+        if(!inquiries.isEmpty()){
+            model.addAttribute("inquiryBoardList", inquiries);
+        } else {
+            model.addAttribute("inquiryBoardList", "null");
+        }
         return "realtor/inquiry_board";
     }
 
@@ -148,15 +152,16 @@ public class RealtorController {
 
                 //매물문의알림
                 RealtorDetailVO realtor = memberService.selectInquiryAlarm(loginInfo.getUserNo());
-
                 int realtorInquiryCnt = 0;
-                for (InquiryVO inquiry : realtor.getInquiryList()) {
-                    if (inquiry.getInquiryAnswer() == null) {
-                        realtorInquiryCnt += 1;
+                if(!realtor.getInquiryList().isEmpty()){
+                    for (InquiryVO inquiry : realtor.getInquiryList()) {
+                        if (inquiry.getInquiryAnswer() == null) {
+                            realtorInquiryCnt += 1;
+                        }
                     }
+                    //model.addAttribute("realtorInquiryCnt", realtorInquiryCnt);
+                    session.setAttribute("realtorInquiryCnt", realtorInquiryCnt);
                 }
-                //model.addAttribute("realtorInquiryCnt", realtorInquiryCnt);
-                session.setAttribute("realtorInquiryCnt", realtorInquiryCnt);
 
                 //총 알림 개수
                 if (authorityStatus == 1) alarmCnt += 1;

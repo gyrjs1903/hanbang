@@ -30,6 +30,7 @@ function my_menu_open() {
 }
 //알림
 function realtorAlarm(userNo, authorityAlarm, realtorInquiryCnt,alarmCnt) {
+    console.log(authorityAlarm);
     alarmTag.innerHTML = '';
     if (alarmBox.style.display === 'none' || alarmBox.style.display === "") {
 
@@ -48,7 +49,7 @@ function realtorAlarm(userNo, authorityAlarm, realtorInquiryCnt,alarmCnt) {
             let realtorTxt = `<div class="realtorInquiry" onclick="location.href='/realtor/inquiryBoardList'">매물 문의가 ${realtorInquiryCnt}건 있습니다.</div>`
             alarmTag.insertAdjacentHTML('afterbegin', realtorTxt);
         } 
-        if(authorityAlarm != 1 && realtorInquiryCnt == 0 || realtorInquiryCnt == null) {
+        if(authorityAlarm != 1 && realtorInquiryCnt == 0 || authorityAlarm != 1 && realtorInquiryCnt == null) {
             alarmTag.innerHTML = noAlarm;
         }
     } else {
@@ -92,6 +93,10 @@ function authority(chk,alarmCnt){
                 document.querySelector('.alarmCnt').innerHTML = cngAlarmCnt;
                 if(cngAlarmCnt == 0){
                     document.querySelector('.alarmCnt').remove();
+                    setTimeout(() => {
+                        document.querySelector('.close-btn').click();
+                        location.reload();
+                    }, 400);
                 }
             }
         })
@@ -110,7 +115,7 @@ function userAlarm(userNo,nickName,userInquiryAnswer){
 
         alarmBox.style.display = 'block';
 
-        //권한승인 알림
+        //문의 답글 알림
         if (userInquiryAnswer >= 1) {
             let answer = `<div id="user-room-alarm" onclick="location.href='/member/memberCall'">
                 ${nickName}님이 문의하신 글<br> ${userInquiryAnswer}개에 답글이 달렸습니다.
@@ -128,4 +133,19 @@ function userAlarm(userNo,nickName,userInquiryAnswer){
 }
 function alarm_close(){
     alarmBox.style.display = "none";
+}
+
+//공인중개사 미승인 시 방내놓기 비활성
+function authorityYet(){
+    let roomReg = document.querySelector('.roomReg_a');
+    roomReg.style.color = "#fff";
+    roomReg.addEventListener('mouseover',()=>{
+        roomReg.style.color = "#bfc9d0";
+    })
+    roomReg.addEventListener('mouseout',()=>{
+        roomReg.style.color = "#fff";
+    })
+    
+    alert('승인완료 후 매물 등록이 가능합니다.\n관리자에게 문의하세요.');
+    location.href='/realtor/myPage';
 }

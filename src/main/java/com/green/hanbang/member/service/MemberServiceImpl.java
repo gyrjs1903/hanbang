@@ -87,7 +87,7 @@ public class MemberServiceImpl implements MemberService {
 
     //승인 알림 띄우기
     @Override
-    public int selectAuthorityAlarm(String userNo) {
+    public Integer selectAuthorityAlarm(String userNo) {
         return sqlSession.selectOne("memberMapper.selectAuthorityAlarm",userNo);
     }
 
