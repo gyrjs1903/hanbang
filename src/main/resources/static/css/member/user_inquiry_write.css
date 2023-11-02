@@ -120,6 +120,10 @@
 .imgWW {
     display: flex;
     border: none;
+    background-image: url("/img/member/photos_icon.svg");
+    background-repeat: no-repeat;
+    background-size: 30px 30px;
+    background-position: center;
 }
 
 .imgaddW {
@@ -223,13 +227,15 @@
     line-height: 24px;
 }
 
-.photoIcon {
-    margin-top: 10px;
-    width: 24px;
-    height: 24px;
-    z-index: -1;
+
+input[type="file"] {
+    display: none;
 }
 
-.imgaddW p {
-    margin-top: 10px;
+.photo {
+    padding-top: 70px;
+    width: 106px;
+    height: 106px;
+    text-align: center;
+    cursor: pointer;
 }

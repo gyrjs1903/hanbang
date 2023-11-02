@@ -18,72 +18,70 @@
             </div>
         </header>
         <div class="wrap">
-            <div>
-                <form action="/member/memberInquirySave" method="post">
-                <div class="inquiryC">
-                    <div class="inquiryCT">
-                        <p>한방에 궁금하신 점을 문의해주세요.</p>
-                        <p>문의 내용과 답변은 <a onclick="location.href='/member/memberInquiry'">'1:1 문의내역'</a>에서 확인하실 수 있습니다.</p>
+            <form action="/member/memberInquirySave" method="post">
+                <div>
+                    <div class="inquiryC">
+                        <div class="inquiryCT">
+                            <p>한방에 궁금하신 점을 문의해주세요.</p>
+                            <p>문의 내용과 답변은 <a onclick="location.href='/member/memberInquiry'">'1:1 문의내역'</a>에서 확인하실 수 있습니다.</p>
+                        </div>
+                        <ul class="inquiryU">
+                            <li class="inquiryL">
+                                <div class="inquiryLT">문의유형</div>
+                                <select name="memberInquiryCode" class="selectIC">
+                                    <option>선택</option>
+                                    <option th:each="memberInquiryType : ${memberInquiryTypeList}" th:value="${memberInquiryType.memberInquiryCode}">[[${memberInquiryType.memberInquiryName}]]</option>
+                                </select>
+                            </li>
+                            <li class="inquiryL">
+                                <div class="inquiryLT">제목</div>
+                                <input name="memberInquiryTitle" class="inquiryT">
+                            </li>
+                            <li class="inquiryL">
+                                <div class="inquiryLT">문의내용</div>
+                                <textarea name="memberInquiryDetail" class="inquiryD" placeholder=""></textarea>
+                            </li>
+                            <li class="inquiryL">
+                                <div class="inquiryLT">사진</div>
+                                <div class="imgW">
+                                    <div class="imgWW">
+                                        <div class="imgaddW file-button">
+                                            <input type="file" id="fileInput" name="memberAttachedInquriyImgName" class="real-file" multiple/>
+                                            <label for="fileInput" class="photo">사진 첨부</label>
+                                        </div>
+                                    </div>
+                                    <div class="preview-wrap">
+                                        <div>
+                                            <img class="previewImg" alt="미리보기 이미지" style="display: none;">
+                                        </div>
+                                        <div>
+                                            <img class="previewImg" alt="미리보기 이미지" style="display: none;">
+                                        </div>
+                                        <div>
+                                            <img class="previewImg" alt="미리보기 이미지" style="display: none;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="imgT">
+                                <p>- 사진 용량은 사진 한 장당 까지 등록이 가능합니다.</p>
+                                <p>- 사진은 최대 3장까지 등록이 가능합니다.</p>
+                            </li>
+                        </ul>
                     </div>
-                    <ul class="inquiryU">
-                        <li class="inquiryL">
-                            <div class="inquiryLT">문의유형</div>
-                            <label name="inquiryCode"></label>
-                            <select name="inquiryCode" class="selectIC">
-                                <option>선택</option>
-                                <option th:each="memberInquiryType : ${memberInquiryTypeList}" th:value="${memberInquiryType.memberInquiryCode}">[[${memberInquiryType.memberInquiryName}]]</option>
-                            </select>
-                        </li>
-                        <li class="inquiryL">
-                            <div class="inquiryLT">제목</div>
-                            <input name="memberInquiryTitle" class="inquiryT">
-                        </li>
-                        <li class="inquiryL">
-                            <div class="inquiryLT">문의내용</div>
-                            <textarea name="memberInquiryDetail" class="inquiryD" placeholder=""></textarea>
-                        </li>
-                        <li class="inquiryL">
-                            <div class="inquiryLT">사진</div>
-                            <div class="imgW">
-                                <div class="imgWW">
-                                    <div class="imgaddW file-button">
-                                        <img src="/img/member/photos_icon.svg" alt="사진 첨부 아이콘" class="photoIcon">
-                                        <input type="file" id="fileInput" class="real-file" style="display: none;" multiple/>
-                                        <p>사진 첨부</p>
-                                    </div>
-                                </div>
-                                <div class="preview-wrap">
-                                    <div>
-                                        <img class="previewImg" alt="미리보기 이미지" onclick="popImage(this.src)" style="display: none;">
-                                    </div>
-                                    <div>
-                                        <img class="previewImg" alt="미리보기 이미지" onclick="popImage(this.src)" style="display: none;">
-                                    </div>
-                                    <div>
-                                        <img class="previewImg" alt="미리보기 이미지" onclick="popImage(this.src)" style="display: none;">
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="imgT">
-                            <p>- 사진 용량은 사진 한 장당 까지 등록이 가능합니다.</p>
-                            <p>- 사진은 최대 3장까지 등록이 가능합니다.</p>
-                        </li>
-                    </ul>
+                    <div class="inquiryBtn">
+                        <button type="submit" class="inquiryBtnS" >문의하기</button> 
+                    </div>
+                    <div class="inquiryTA">
+                        <p class="ccT">"고객센터 : "<span>052-1234-1234</span></p>
+                        <p class="tmT">평일 09:00 ~ 18:00 (토, 일요일, 공휴일 휴무)</p>
+                    </div>
                 </div>
-                <div class="inquiryBtn">
-                    <button type="submit" class="inquiryBtnS" >문의하기</button> 
-                </div>
-                <div class="inquiryTA">
-                    <p class="ccT">"고객센터 : "<span>052-1234-1234</span></p>
-                    <p class="tmT">평일 09:00 ~ 18:00 (토, 일요일, 공휴일 휴무)</p>
-                </div>
-                </form>
-            </div>
+            </form>
         </div>
     </th:block>
     <th:block layout:fragment="content_js">
-        <script async src="/js/member/user_inquiry_write.js"></script>
+        <script defer src="/js/member/user_inquiry_write.js"></script>
     </th:block>
 </body>
 </html>

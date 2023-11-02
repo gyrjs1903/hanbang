@@ -23,16 +23,10 @@ td{
 }
 
 .callWP {
+    position: relative;
     width: 100%;
     -webkit-box-flex: 1;
     flex-grow: 1;
-}
-
-.callWP div:not(.compensationTA) {
-    width: 1200px;
-    height: 100%;
-    padding: 0px 10px;
-    margin: 40px auto 120px;
 }
 
 .compensationTA {
@@ -49,9 +43,8 @@ td{
 
 .compensation {
     position: absolute;
-    flex: 0 0 auto;
-    display: flex;
-    padding-top: 50px;
+    top: 30px;
+    right: 30px;
 }
 
 .compenBtn {

@@ -1,17 +1,18 @@
 @charset "UTF-8";
 
 .inquiryWP {
+    position: relative;
     width: 100%;
     -webkit-box-flex: 1;
     flex-grow: 1;
 }
 
-.inquiryWP div:not(.inquiryTA){
+/* .inquiryWP div:not(.inquiryTA){
     width: 1200px;
     height: 100%;
     padding: 0px 10px;
     margin: 40px auto 120px;
-}
+} */
 
 .inquiryTA {
     width: 1200px;
@@ -23,19 +24,16 @@
 
 .inquiryTA p{
     color: rgb(101, 101, 101);
+    font-size: 10px;
 }
 
 .inquiryBtnWP {
     position: absolute;
-    flex: 0 0 auto;
-    display: flex;
-    padding-top: 50px;
+    top: 30px;
+    right: 30px;
 }
 
 .inquiryBtn {
-    position: relative;
-    bottom: 200px;
-    left: 1000px;
     width: 140px;
     height: 44px;
     color: rgb(255, 255, 255);
