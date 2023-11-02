@@ -10,7 +10,7 @@
         <result column="MEMBER_INQUIRY_WRITE_DATE"      property="memberInquiryWriteDate"/>
         <result column="USER_NO"                        property="userNo"/>
         <result column="INQUIRY_ST_CODE"                property="inquiryStCode"/>
-        <collection property="memberInquiryImgVO"       resultMap="memberInquiryImg"/>
+        <collection property="memberInquiryImgVOList"   resultMap="memberInquiryImg"/>
         <collection property="memberInquiryTypeVO"      resultMap="memberInquiryType"/>
         <collection property="inquiryStatusVO"          resultMap="inquiryStatus"/>
     </resultMap>
@@ -32,6 +32,12 @@
         <result column="STATUS_NAME"    property="statusName"/>
     </resultMap>
 
+    <!-- 다음 문의 작성 번호를 조회 -->
+    <select id="selectNextInquiryNumber" resultType="String">
+        SELECT ('INQ_WR_'|| LPAD(NVL(MAX(TO_NUMBER(SUBSTR(MEMBER_INQUIRY_WRITE_NO, 8))), 0) + 1, 3, '0')) AS MEMBER_INQUIRY_WRITE_NO
+        FROM MEMBER_INQUIRY_WRITE
+    </select>
+
     <!-- 문의 유형 목록 조회 -->
     <select id="selectMemberInquiryTypeList" resultMap="memberInquiryType">
         SELECT
@@ -46,7 +52,7 @@
     <!-- 상태 불러오기 -->
     <select id="selectStatus" resultMap="inquiryStatus">
         SELECT INQUIRY_ST_CODE
-            , INQUIRY_NAME
+            , STATUS_NAME
         FROM
             INQUIRY_STATUS
         WHERE
@@ -56,22 +62,22 @@
     <!-- 문의 작성 삽입 -->
     <insert id="insertMemberInquiry">
         INSERT INTO MEMBER_INQUIRY_WRITE (
-            MEMBER_INQUIRY_WRITE_NO
-            , MEMBER_INQUIRY_CODE
-            , MEMBER_INQUIRY_TITLE
-            , MEMBER_INQUIRY_DETAIL
-            , MEMBER_INQUIRY_WRITE_DATE
-            , USER_NO
+        MEMBER_INQUIRY_WRITE_NO,
+        MEMBER_INQUIRY_CODE,
+        MEMBER_INQUIRY_TITLE,
+        MEMBER_INQUIRY_DETAIL,
+        USER_NO,
+        INQUIRY_ST_CODE
         )
         VALUES (
-            (SELECT 'INQ_WR_'||LPAD(COUNT(*) + 1, 3, '0')
-            FROM MEMBER_INQUIRY_WRITE)
-            , #{memberInquiryCode}
-            , #{memberInquiryTitle}
-            , #{memberInquiryDetail}
-            , #{memberInquiryWriteDate}
-            , #{userNo}
-        );
+        (SELECT 'INQ_WR_'|| LPAD(NVL(MAX(TO_NUMBER(SUBSTR(MEMBER_INQUIRY_WRITE_NO, 8))), 0) + 1, 3, '0')
+        FROM MEMBER_INQUIRY_WRITE),
+        #{memberInquiryCode},
+        #{memberInquiryTitle},
+        #{memberInquiryDetail},
+        #{userNo},
+        'ST_01'
+        )
     </insert>
 
     <!-- 문의 작성 이미지 파일 삽입 -->
@@ -83,7 +89,7 @@
             , MEMBER_ATTACHED_INQUIRY_IMG_NAME
         )
         <foreach collection="inquiryImgList" item="inquiryImg" separator="UNION ALL" index="idx">
-            (SELECT 'INQ_IMG_' || LPAD(COUNT(*) + 1, 3, '0')
+            (SELECT 'INQ_IMG_' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(MEMBER_INQUIRY_IMG_NO, 9))), 0) + 1, 3, '0')
             FROM MEMBER_INQUIRY_IMG)
             , #{inquiryImg.memberInquiryImgNo}
             , #{inquiryImg.memberInquiryWriteNo}
@@ -92,12 +98,6 @@
         FROM DUAL
         </foreach>
     </insert>
-
-    <!-- 다음 문의 작성 번호를 조회 -->
-    <select id="selectNextInquiryNumber">
-        SELECT CONCAT('INQ_WR_', LPAD(COUNT(*) + 1, 3, '0'))
-        FROM MEMBER_INQUIRY_WRITE
-    </select>
 
     <!-- 문의 내역 목록 조회 -->
     <select id="selectMemberInquiryList" resultMap="memberInquiry">

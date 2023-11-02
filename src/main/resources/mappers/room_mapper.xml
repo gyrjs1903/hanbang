@@ -109,7 +109,9 @@
         <result column="INQUIRY_ANSWER" property="inquiryAnswer"/>
         <result column="INQUIRY_READ_CNT" property="inquiryReadCnt"/>
         <result column="INQUIRY_DATE" property="inquiryDate"/>
+        <result column="INQUIRY_ST_CODE" property="inquiryStCode"/>
         <association property="inquiryTitleVO" resultMap="inquiryTitle"/>
+        <association property="inquiryStatusVO" resultMap="inquiryMapper.inquiryStatus"/>
     </resultMap>
 
     <!-- 매물 문의 타이틀 -->

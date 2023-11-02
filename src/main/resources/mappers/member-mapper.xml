@@ -112,6 +112,13 @@
         WHERE USER_NAME = #{userName}
     </select>
 
+    <!-- 비밀 번호 일치 확인 -->
+    <select id="passWordCheck" resultMap="String">
+        SELECT PASSWORD
+        FORM MEMBER_USER
+        WHERE PASSWORD = #{passWord}
+    </select>
+
     <!-- 회원 번호 조회 -->
     <select id="selectUserNo" resultType="String">
         SELECT USER_NO
@@ -211,6 +218,7 @@
         , INQUIRY_TITLES
         , INQUIRY_ANSWER
         , TO_CHAR(INQUIRY_DATE,'YYYY-MM-DD') INQUIRY_DATE
+        , INQUIRY_ST_CODE
         FROM INQUIRY I, INQUIRY_TITLE T
         WHERE FROM_USER_NO = #{userNo}
         AND I.INQUIRY_TITLE_CODE = T.INQUIRY_TITLE_CODE

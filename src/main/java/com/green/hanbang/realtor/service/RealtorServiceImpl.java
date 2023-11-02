@@ -58,8 +58,13 @@ public class RealtorServiceImpl implements RealtorService{
     }
 
     @Override
-    public List<InquiryVO> selectInquiryBoard(String userNo) {
-        return sqlSession.selectList("realtorMapper.selectInquiryBoard",userNo);
+    public List<InquiryVO> selectInquiryBoard(InquiryVO inquiryVO) {
+        return sqlSession.selectList("realtorMapper.selectInquiryBoard",inquiryVO);
+    }
+
+    @Override
+    public int countInquiryCnt(String userNo) {
+        return sqlSession.selectOne("realtorMapper.countInquiryCnt",userNo);
     }
 
     @Override

@@ -108,10 +108,18 @@ public class RealtorController {
 
     //문의글 조회
     @GetMapping("/inquiryBoardList")
-    public String inquiryBoardList(HttpSession session,Model model){
+    public String inquiryBoardList(HttpSession session,Model model, InquiryVO inquiryVO){
         MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
-        List<InquiryVO> inquiries = realtorService.selectInquiryBoard(loginInfo.getUserNo());
+
+        int totalDataCnt = realtorService.countInquiryCnt(loginInfo.getUserNo());
+        inquiryVO.setTotalDataCnt(totalDataCnt);
+        inquiryVO.setToUserNo(loginInfo.getUserNo());
+        inquiryVO.setPageInfo();
+
+        List<InquiryVO> inquiries = realtorService.selectInquiryBoard(inquiryVO);
         if(!inquiries.isEmpty()){
+            int boardNum = totalDataCnt - (inquiryVO.getNowPage()-1)*inquiryVO.getDisplayDataCnt();
+            model.addAttribute("boardNum",boardNum);
             model.addAttribute("inquiryBoardList", inquiries);
         } else {
             model.addAttribute("inquiryBoardList", "null");

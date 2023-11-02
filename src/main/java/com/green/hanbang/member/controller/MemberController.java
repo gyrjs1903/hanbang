@@ -6,9 +6,8 @@ import com.green.hanbang.member.service.SaveService;
 import com.green.hanbang.member.vo.*;
 import com.green.hanbang.room.service.RoomService;
 import com.green.hanbang.room.vo.InquiryVO;
-import com.green.hanbang.room.vo.PropertyTypeVO;
 import com.green.hanbang.room.vo.RoomIMGVO;
-import com.green.hanbang.room.vo.RoomVO;
+import com.green.hanbang.util.MemberInquiryUtil;
 import com.green.hanbang.util.MemberUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -42,23 +41,22 @@ public class MemberController {
 
     // 회원 가입
     @PostMapping("/join")
-    public String join(MemberVO memberVO, RedirectAttributes rttr) {
+    public String join(MemberVO memberVO, MemberImgVO memberImgVO, RedirectAttributes rttr) {
         // 회원가입 (회원 코드를 조회하기 위해 먼저 실행)
         memberService.join(memberVO);
 
-//        // 가입한 회원 번호 가져오기
-//        String userNo = memberVO.getUserNo();
-//
-//        // 가입한 회원 번호 조회
-//        memberService.selectUserNo(userNo);
-//
-//        MemberImgVO memberImgVO = new MemberImgVO();
-//        memberImgVO.setUserNo(userNo);
-//        memberImgVO.setProfileImgName("img/member/profileImg/default_profile_image.png");
-//        memberImgVO.setAttachedProfileImgName("img/member/profileImg/default_profile_image.png");
-//
-//        // 프로필 이미지 등록
-//        memberService.insertProImg(memberImgVO);
+        // 가입한 회원 번호 가져오기
+        String userNo = memberVO.getUserNo();
+
+        // 가입한 회원 번호 조회
+        memberService.selectUserNo(userNo);
+
+        memberImgVO.setUserNo(userNo);
+        memberImgVO.setProfileImgName("img/member/profileImg/default_profile_image.png");
+        memberImgVO.setAttachedProfileImgName("img/member/profileImg/default_profile_image.png");
+
+        // 프로필 이미지 등록
+        memberService.insertProImg(memberImgVO);
 
         String userName = memberVO.getUserName();
 
@@ -145,17 +143,23 @@ public class MemberController {
         return "redirect:/member/memberInfo";
     }
 
-    // 알림 페이지로 이동 (공인중개사 <-> 회원)
+    // 알림 페이지 이동 (공인중개사 <-> 회원)
     @GetMapping("/memberCall")
     public String memberCall(HttpSession session, Model model) {
         MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
         List<InquiryVO> roomInquiryList = memberService.selectUserInquiryAlarm(loginInfo.getUserNo());
+
+        for(InquiryVO inquiry: roomInquiryList){
+            inquiry.getInquiryStatusVO()
+                    .setStatusName(memberInquiryService.selectStatus(inquiry.getInquiryStCode()).getStatusName());
+        }
+
         System.out.println(roomInquiryList);
         model.addAttribute("roomInquiryList",roomInquiryList);
         return "content/member/user_call";
     }
 
-    // 1:1문의 페이지로 이동
+    // 1:1문의 페이지 이동
     @GetMapping("/memberInquiry")
     public String memberInquiry(Model model, HttpSession session) {
 
@@ -169,13 +173,13 @@ public class MemberController {
 
         // 문의 리스트 목록
         List<MemberInquiryVO> memberInquiryList = memberInquiryService.selectMemberInquiryList(memberInquiryVO);
-        System.out.println(memberInquiryList);
+
         model.addAttribute("memberInquiryList", memberInquiryList);
 
         return "content/member/user_inquiry";
     }
 
-    // 1:1문의 작성 페이지로 이동
+    // 1:1문의 작성 페이지 이동
     @GetMapping("/memberInquiryWrite")
     public String memberInquiryWrite(Model model, MemberInquiryTypeVO memberInquiryTypeVO){
 
@@ -185,41 +189,49 @@ public class MemberController {
         return "content/member/user_inquiry_write";
     }
 
-    // 1:1문의 전송
+    // 1:1문의 전송 (작성 후 문의하기 버튼 클릭)
     @PostMapping("/memberInquirySave")
-    public String memberInquirySave(HttpSession session, MultipartFile[] file, RedirectAttributes rttr){
+    public String memberInquirySave(HttpSession session, MultipartFile[] inqImg, MemberInquiryVO memberInquiryVO, MemberInquiryImgVO memberInquiryImgVO){
 
-        // 현재 로그인 한 유저 번호를 조회
+        // 로그인 한 회원 번호 조회
         MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
         String userNo = loginInfo.getUserNo();
-
-        // MemberInquiryVO에 userNo를 설정
-        MemberInquiryVO memberInquiryVO = new MemberInquiryVO();
         memberInquiryVO.setUserNo(userNo);
 
-        // 문의 이미지 첨부 파일 null 값이 아니면 실행
-        if (file != null) {
-            // 다음 문의 작성 번호를 조회
-            String inquiryWriteNo = memberInquiryService.selectNextInquiryNumber(memberInquiryVO.getMemberInquiryWriteNo());
-            MemberInquiryImgVO memberInquiryImgVO = new MemberInquiryImgVO();
-            memberInquiryImgVO.setMemberInquiryWriteNo(inquiryWriteNo);
-            memberInquiryService.insertMemberInquiryImg(memberInquiryImgVO); // memberInquiryWriteNo
-            memberInquiryService.insertMemberInquiry(memberInquiryVO);
+        memberInquiryService.insertMemberInquiry(memberInquiryVO);
 
-        } else{
+        String memberInquiryWriteNo = memberInquiryService.selectNextInquiryNumber();
 
-            memberInquiryService.insertMemberInquiry(memberInquiryVO);
+        // 첨부 파일
+        List<MemberInquiryImgVO> inqImgList = MemberInquiryUtil.inquiryMultiUpload(inqImg);
+        System.out.println(inqImgList);
+        inqImgList.add(memberInquiryImgVO);
+
+        for (MemberInquiryImgVO inquiryImgVO : inqImgList){
+            inquiryImgVO.setMemberInquiryWriteNo(memberInquiryWriteNo);
+
         }
 
         return "redirect:/member/memberInquiry";
     }
 
-    // 허위 매물 신고 내역 페이지로 이동
+    // 1:1 문의 상세 페이지 이동
+    @GetMapping("/memberInquiryDetail")
+    public String memberInquiryDetail(Model model, MemberInquiryVO memberInquiryVO, MemberInquiryImgVO memberInquiryImgVO){
+
+        // 문의 리스트 목록
+        List<MemberInquiryVO> memberInquiryList = memberInquiryService.selectInquiryDetail(memberInquiryVO);
+
+        model.addAttribute("memberInquiryList", memberInquiryList);
+
+        return "content/member/user_inquiry_detail";
+    }
+
+    // 허위 매물 신고 내역 페이지 이동
     @GetMapping("/memberReport")
-    public String memberReport(Model model, HttpSession session) {
+    public String memberReport() {
 
         // 문의 유형 목록
-
         return "content/member/user_report";
     }
 
@@ -230,7 +242,14 @@ public class MemberController {
         return memberService.userNameCheck(userName);
     }
 
-    // 헤더에 찜목록 클릭 시 최근 본 방 페이지로 이동
+    // 기존 비밀번호 체크
+    @ResponseBody
+    @PostMapping("/changeForPassWordDuplicationCheckFetch")
+    public String changeForPassWordDuplicationCheckFetch(@RequestParam String passWord){
+        return memberService.passWordCheck(passWord);
+    }
+
+    // 헤더에 찜목록 클릭 시 최근 본 방 페이지 이동
     @GetMapping("/dibsOn")
     public String dibsOn(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
@@ -254,10 +273,10 @@ public class MemberController {
             }
         }
 
-        return "content/member/recent_viewed_room?userNo=" + userNo;
+        return "content/member/recent_viewed_room";
     }
 
-    // 찜한 방 페이지로 이동
+    // 찜한 방 페이지 이동
     @GetMapping("/dibsOnRoom")
     public String dibsOnRoom(HttpSession session, String roomCode, Model model) {
         MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
@@ -270,7 +289,7 @@ public class MemberController {
         return "content/member/dibs_on_room";
     }
 
-    // 최근 본 단지 페이지로 이동
+    // 최근 본 단지 페이지 이동
     @GetMapping("/recentViewedApartment")
     public String recentViewedApartment(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
@@ -294,7 +313,7 @@ public class MemberController {
         return "content/member/recent_viewed_apartment?userNo=" + userNo;
     }
 
-    // 찜한 단지 페이지로 이동
+    // 찜한 단지 페이지 이동
     @GetMapping("/dibsOnApartment")
     public String dibsOnApartment(HttpSession session) {
         MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
@@ -304,7 +323,7 @@ public class MemberController {
         return "content/member/dibs_on_apartment";
     }
 
-    // 즐겨찾기 페이지로 이동
+    // 즐겨찾기 페이지 이동
     @GetMapping("/wishListFavorites")
     public String wishListFavorites(Model model, HttpSession session) {
         MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
@@ -314,16 +333,16 @@ public class MemberController {
 
     // 닉네임 변경
     @PostMapping("/updateNickname")
-    public String updateNickname(HttpSession session, String userName, RedirectAttributes rttr){
+    public String updateNickname(String userName){
         memberService.updateNickname(userName);
-        session.invalidate();
-        rttr.addFlashAttribute("msg", "정보 수정이 완료되었습니다. 재 로그인 시 적용됩니다.");
+
         return "redirect:/member/memberInfo";
     }
 
     // 비밀 번호 변경
     @PostMapping("/updatePassWord")
     public int updatePassWord(MemberVO memberVO){
+
         return memberService.updatePassWord(memberVO);
     }
 

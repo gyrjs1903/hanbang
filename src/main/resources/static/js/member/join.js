@@ -35,9 +35,12 @@ document.addEventListener('DOMContentLoaded', function () {
         const generatedNickName = createNickName();
         nicknameInput.value = generatedNickName;
 
+        if (loginTypeSelect.value === 'USER') {
         const formData = new FormData();
         formData.append('nickname', generatedNickName);
-
+        } else {
+            alert('회원 유형이 공인중개사인 경우 닉네임 자동 생성 기능은 동작하지 않습니다.')
+        }
     });
 });
 
