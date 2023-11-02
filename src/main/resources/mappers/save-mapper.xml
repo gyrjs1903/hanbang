@@ -12,12 +12,12 @@
         <collection property="roomVO"               resultMap="roomMapper.room"/>
     </resultMap>
 
-<!--    <resultMap id="memberFavorite" type="com.green.hanbang.member.vo.MemberFavoriteVO">-->
-<!--        <id column="MEMBER_FAVO_NO"         property="memberFavoNo"/>-->
-<!--        <result column="ADDR_CODE"          property="addrCode"/>-->
-<!--        <result column="USER_NO"            property="userNo"/>-->
-<!--        <result column="MEMBER_SAVE_CODE"   property="memberSaveCode"/>-->
-<!--    </resultMap>-->
+    <resultMap id="memberFavorite" type="com.green.hanbang.member.vo.MemberFavoriteVO">
+        <id column="MEMBER_FAVO_NO"         property="memberFavoNo"/>
+        <result column="ADDR_CODE"          property="addrCode"/>
+        <result column="USER_NO"            property="userNo"/>
+        <result column="MEMBER_SAVE_CODE"   property="memberSaveCode"/>
+    </resultMap>
 
     <resultMap id="memberSaveType" type="com.green.hanbang.member.vo.MemberSaveTypeVO">
         <id column="MEMBER_SAVE_CODE"            property="memberSaveCode"/>

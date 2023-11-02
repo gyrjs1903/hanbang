@@ -2,6 +2,8 @@ package com.green.hanbang.member.vo;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class MemberInquiryVO {
     private String memberInquiryWriteNo;
@@ -12,7 +14,7 @@ public class MemberInquiryVO {
     private String userNo;
     private String inquiryStCode;
 
-    private MemberInquiryImgVO memberInquiryImgVO;
+    private List<MemberInquiryImgVO> memberInquiryImgVOList;
     private MemberInquiryTypeVO memberInquiryTypeVO;
     private InquiryStatusVO inquiryStatusVO;
 }

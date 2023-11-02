@@ -37,15 +37,16 @@ public class MemberInquiryUtil {
         }
         return memberInquiryImgVO;
     }
+
     // 다중 파일 업로드
     public static List<MemberInquiryImgVO> inquiryMultiUpload(MultipartFile[] imgs){
         List<MemberInquiryImgVO> memberInquiryImgList = new ArrayList<>();
 
         for(MultipartFile img : imgs){
-            MemberInquiryImgVO miivo = inquiryUploadFile(img);
+            MemberInquiryImgVO inquiryImg = inquiryUploadFile(img);
 
-            if(miivo != null){
-                memberInquiryImgList.add(miivo);
+            if(inquiryImg != null){
+                memberInquiryImgList.add(inquiryImg);
             }
         }
         return memberInquiryImgList;
