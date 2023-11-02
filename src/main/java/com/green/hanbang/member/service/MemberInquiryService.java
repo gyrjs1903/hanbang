@@ -1,5 +1,6 @@
 package com.green.hanbang.member.service;
 
+import com.green.hanbang.member.vo.InquiryStatusVO;
 import com.green.hanbang.member.vo.MemberInquiryImgVO;
 import com.green.hanbang.member.vo.MemberInquiryTypeVO;
 import com.green.hanbang.member.vo.MemberInquiryVO;
@@ -24,4 +25,6 @@ public interface MemberInquiryService {
     // 문의 상세 보기
     public List<MemberInquiryVO> selectInquiryDetail(MemberInquiryVO memberInquiryVO);
 
+    //문의 상태 조회
+    public InquiryStatusVO selectStatus(String inquiryStCode);
 }

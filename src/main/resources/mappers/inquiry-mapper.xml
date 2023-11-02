@@ -52,7 +52,7 @@
     <!-- 상태 불러오기 -->
     <select id="selectStatus" resultMap="inquiryStatus">
         SELECT INQUIRY_ST_CODE
-            , INQUIRY_NAME
+            , STATUS_NAME
         FROM
             INQUIRY_STATUS
         WHERE

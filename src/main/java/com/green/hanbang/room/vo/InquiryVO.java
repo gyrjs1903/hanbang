@@ -1,5 +1,6 @@
 package com.green.hanbang.room.vo;
 
+import com.green.hanbang.member.vo.InquiryStatusVO;
 import com.green.hanbang.realtor.vo.PageVO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ public class InquiryVO extends PageVO {
     private String inquiryAnswer;
     private int inquiryReadCnt;
     private String inquiryDate;
+    private String inquiryStCode;
     private InquiryTitleVO inquiryTitleVO;
-
+    private InquiryStatusVO inquiryStatusVO;
 }

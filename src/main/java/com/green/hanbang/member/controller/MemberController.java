@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -147,6 +148,12 @@ public class MemberController {
     public String memberCall(HttpSession session, Model model) {
         MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
         List<InquiryVO> roomInquiryList = memberService.selectUserInquiryAlarm(loginInfo.getUserNo());
+
+        for(InquiryVO inquiry: roomInquiryList){
+            inquiry.getInquiryStatusVO()
+                    .setStatusName(memberInquiryService.selectStatus(inquiry.getInquiryStCode()).getStatusName());
+        }
+
         System.out.println(roomInquiryList);
         model.addAttribute("roomInquiryList",roomInquiryList);
         return "content/member/user_call";
