@@ -2,6 +2,7 @@ package com.green.hanbang.room.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.hanbang.item.service.ItemService;
+import com.green.hanbang.item.vo.BuyVO;
 import com.green.hanbang.item.vo.GeneralItemVO;
 import com.green.hanbang.item.vo.PackageItemVO;
 import com.green.hanbang.item.vo.PlusItemVO;
@@ -67,7 +68,7 @@ public class RoomController {
         return "room/reg_room";
     }
     @PostMapping("/insertRoom")
-    public String insertRoom(RoomVO roomVO, MultipartFile mainImg, MultipartFile[] subImg, RoomAddrVO roomAddrVO){
+    public String insertRoom(RoomVO roomVO, MultipartFile mainImg, MultipartFile[] subImg, RoomAddrVO roomAddrVO, ApplyItemVO applyItemVO){
         //상품이미지등록
         //RoomCode를 조회
         String roomCode = roomService.selectNextRoomCode();
@@ -90,6 +91,21 @@ public class RoomController {
         roomVO.setRoomAddrVO(roomAddrVO);
         roomVO.setImgList(imgList);
         roomService.insertRoom(roomVO);
+
+        ////////////////////////////////////////////////////////
+
+        System.out.println("11111111111111111111111111" + applyItemVO.getBuyCode());
+        System.out.println("22222222222222222222222222222222"+ applyItemVO);
+
+        // 1. 상품을 선택했다면
+        System.out.println(applyItemVO);
+        if (!applyItemVO.getBuyCode().equals("")){
+            applyItemVO.setRoomCode(roomCode);
+            roomService.insertApplyItem(applyItemVO);
+            roomService.updateItemCnt(applyItemVO);
+        }
+
+
         return "redirect:/room/roomMain";
     }
     @GetMapping("/roomMain")

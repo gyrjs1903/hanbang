@@ -134,4 +134,15 @@ public class RoomServiceImpl implements RoomService {
     public List<PlusItemVO> selectPlusItemList(String userNo) {
         return sqlSession.selectList("itemMapper.selectPlusItemList", userNo);
     }
+
+    // 매물에 상품 적용
+    @Override
+    public int insertApplyItem(ApplyItemVO applyItemVO) {
+        return sqlSession.insert("roomMapper.insertApplyItem", applyItemVO);
+    }
+
+    @Override
+    public void updateItemCnt(ApplyItemVO applyItemVO) {
+        sqlSession.update("roomMapper.updateItemCnt", applyItemVO);
+    }
 }

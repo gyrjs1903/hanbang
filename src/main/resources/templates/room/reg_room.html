@@ -277,9 +277,13 @@
 
                 <!-- ////////////////// 최수연 추가 ///////////////////////// -->
                 <!-- 상품 목록 모달 -->
-                <div>
-                    <span data-bs-toggle="modal" data-bs-target="#ltem-list-modal">내가 가진 상품 사용하기</span>
-                </div>
+              
+                        <span data-bs-toggle="modal" data-bs-target="#ltem-list-modal">상품 사용하기</span>
+                        <input id="apply-item-input" type="text" class="" value="현재 적용중인 상품이 없습니다." width="500px;">
+                        <input id="apply-item-buyCode" type="hidden" name="buyCode" class="" value="" width="500px;">
+                        <input id="apply-item-buyType" type="hidden" name="buyType" class="" value="" width="500px;">
+                        <input id="apply-item-memCateCode" type="hidden" name="memCateCode" class="" value="" width="500px;">
+                 
                 
                 <!-- Modal -->
                 <div class="modal fade" id="ltem-list-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -296,45 +300,122 @@
                             </div>
 
                             <div th:if="${itemCnt != 0}">
-                                    <div th:each="packageItem, state : ${packageItemList}">
-                                        <th:block th:if="${state.index == 0}">
-                                            <div>[[${packageItem.memCateName}]]</div>
-                                        </th:block>
-                                        <div>[[${packageItem.endDate}]]</div>
-                                        <div>[[${packageItem.generalProductCnt}]]</div>
-                                        <div>[[${packageItem.plusSeasonCnt}]]</div>
-                                        <div>[[${packageItem.plusDayCnt}]]</div>
-                                        <div>[[${packageItem.isValid}]]</div>
+                                <div th:each="packageItem, state : ${packageItemList}">
+                                    <th:block th:if="${state.index == 0}">
+                                        <div class="cateName">[[${packageItem.memCateName}]]</div>
+                                    </th:block>
+                                    <div class="info-div">
+                                        <div class="membershipInfo">
+                                            <span class="membershipName">[[${packageItem.membershipName}]]</span>
+                                            <span class="itemName">[[${packageItem.itemName}]]</span>
+                                            <span class="endDate">[[${packageItem.endDate}]]</span>
+                                        </div>
+                                        <div class="itemDateilInfo">
+                                            <div>
+                                                <label class="btn btn-outline-primary" >
+                                                    <div class="itemName">일반 상품</div>
+                                                    <div class="leftCntInfo">
+                                                        <span>잔여</span>
+                                                        <span>&#40;[[${packageItem.generalProductCnt}]]	&#41;</span>
+                                                    </div>
+                                                    <input type="radio" class="btn-check" name="btnradio" th:value="${packageItem.membershipName + ' ' + packageItem.itemName + ' 일반상품'}" th:data-buy-code="${packageItem.buyCode}" data-buy-type="GENERAL" th:data-mem-cate-code="${packageItem.memCateCode}" checked>
+                                                </label>
+                                            </div>
+                                            <div>
+                                                <label class="btn btn-outline-primary" >
+                                                    <div class="itemName">플러스 정기권</div>
+                                                    <div class="leftCntInfo">
+                                                        <span>잔여</span>
+                                                        <span>&#40;[[${packageItem.plusSeasonCnt}]]	&#41;</span>
+                                                    </div>
+                                                    <input type="radio" class="btn-check" name="btnradio" th:value="${packageItem.membershipName + ' ' + packageItem.itemName + ' 플러스 정기권'}" th:data-buy-code="${packageItem.buyCode}" data-buy-type="SEASON" th:data-mem-cate-code="${packageItem.memCateCode}">
+                                                </label>
+                                            </div>
+                                            <div>
+                                                <label class="btn btn-outline-primary" >
+                                                    <div class="itemName">플러스 일일권</div>
+                                                    <div class="leftCntInfo">
+                                                        <span>잔여</span>
+                                                        <span>&#40;[[${packageItem.plusDayCnt}]]&#41;</span>
+                                                    </div>
+                                                    <input type="radio" class="btn-check" name="btnradio" th:value="${packageItem.membershipName + ' ' + packageItem.itemName + ' 플러스 일일권'}" th:data-buy-code="${packageItem.buyCode}" data-buy-type="DAY" th:data-mem-cate-code="${packageItem.memCateCode}">
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div th:each="generalItem : ${generalItemList}">
-                                        <div>[[${generalItem.endDate}]]</div>
-                                        <div>[[${generalItem.generalProductCnt}]]</div>
-                                        <div>[[${generalItem.isValid}]]</div>
+                                </div>
+                                <div th:each="generalItem, state : ${generalItemList}">
+                                    <th:block th:if="${state.index == 0}">
+                                        <div class="cateName">[[${generalItem.memCateName}]]</div>
+                                    </th:block>
+                                    <div class="info-div">
+                                        <div class="membershipInfo">
+                                            <span class="membershipName">[[${generalItem.membershipName}]]</span>
+                                            <span class="itemName">[[${generalItem.itemName}]]</span>
+                                            <span class="endDate">[[${generalItem.endDate}]]</span>
+                                        </div>
+                                        <div class="itemDateilInfo">
+                                            <div>
+                                                <label class="btn btn-outline-primary" >
+                                                    <div class="itemName">일반 상품</div>
+                                                    <div class="leftCntInfo">
+                                                        <span>잔여</span>
+                                                        <span>&#40;[[${generalItem.generalProductCnt}]]	&#41;</span>
+                                                    </div>
+                                                    <input type="radio" class="btn-check" name="btnradio" th:value="${generalItem.itemName}" th:data-buy-code="${generalItem.buyCode}" th:data-mem-cate-code="${generalItem.memCateCode}">
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div th:each="plusItem : ${plusItemList}">
-                                        <div>[[${plusItem.endDate}]]</div>
-                                        <div>[[${plusItem.plusType}]]</div>
-                                        <div>[[${plusItem.isValid}]]</div>
+                                </div>
+                                <div th:each="plusItem, state : ${plusItemList}">
+                                    <th:block th:if="${state.index == 0}">
+                                        <div class="cateName">[[${plusItem.memCateName}]]</div>
+                                    </th:block>
+                                    <div class="info-div">
+                                        <div class="membershipInfo">
+                                            <span class="membershipName">[[${plusItem.membershipName}]]</span>
+                                            <span class="itemName">[[${plusItem.itemName}]]</span>
+                                            <span class="endDate">[[${plusItem.endDate}]]</span>
+                                        </div>
+                                        <div class="itemDateilInfo">
+                                            <div th:if="${plusItem.plusType == 'S'}">
+                                                <label class="btn btn-outline-primary" >
+                                                    <div class="itemName">플러스 정기권</div>
+                                                    <input type="radio" class="btn-check" name="btnradio" th:value="${plusItem.itemName}" th:data-buy-code="${plusItem.buyCode}" th:data-mem-cate-code="${plusItem.memCateCode}">
+                                                </label>
+                                            </div>
+                                            <div th:if="${plusItem.plusType == 'D'}">
+                                                <label class="btn btn-outline-primary" >
+                                                    <div class="itemName">플러스 일일권</div>
+                                                    <input type="radio" class="btn-check" name="btnradio" th:value="${plusItem.itemName}" th:data-buy-code="${plusItem.buyCode}" th:data-mem-cate-code="${plusItem.memCateCode}">
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
+                                </div>
                             </div>
-
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="modalCloseBtn">Close</button>
+                            <button type="button" class="btn btn-primary" onclick="setApplyItemInfo();">Save changes</button>
                         </div>
                     </div>
-                    </div>
                 </div>
-                
+                </div>
 
                 <input type="submit" value="매물등록">
+            
             </form>
+      
+                
+
         </div>
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         <script type="text/javascript"
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=22ce9cdc2a0d0a47b1149d42f3bab1c0&libraries=services,clusterer,drawing"></script>
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
         <script src="/js/room/room_reg.js"></script>
     </th:block>
 

@@ -76,6 +76,12 @@ public interface RoomService {
     public List<GeneralItemVO> selectGeneralItemList (String userNo);
     public List<PlusItemVO> selectPlusItemList (String userNo);
 
+    // 매물에 상품 적용
+    public int insertApplyItem(ApplyItemVO applyItemVO);
+
+    //매물 등록 시 상품 선택했다면 상품 수량 차감
+    void updateItemCnt(ApplyItemVO applyItemVO);
+
 
 
 }

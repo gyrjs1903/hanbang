@@ -14,4 +14,6 @@ public class GeneralItemVO {
     private String isValid;
     private String memCateCode;
     private String memCateName;
+    private String membershipName;
+    private String itemName;
 }

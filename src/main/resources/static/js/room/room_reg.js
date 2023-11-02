@@ -342,3 +342,28 @@ function displaySelectedImages(files, imageList, labelText) {
     }
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function setApplyItemInfo(){
+    const checkedRadio = document.querySelector('#ltem-list-modal')
+                                .querySelector('input[type="radio"]:checked');
+
+    document.querySelector('#apply-item-input').value = checkedRadio.value;
+
+    const buyCode = checkedRadio.dataset.buyCode;
+    document.querySelector('#apply-item-buyCode').value = buyCode;
+    
+    if(checkedRadio.dataset.buyType == undefined){
+        document.querySelector('#apply-item-buyType').value = '';
+    }
+    else{
+        document.querySelector('#apply-item-buyType').value = checkedRadio.dataset.buyType;
+    }
+
+    document.querySelector('#apply-item-memCateCode').value = checkedRadio.dataset.memCateCode;
+    
+   
+    document.querySelector('#modalCloseBtn').click();
+
+
+}
