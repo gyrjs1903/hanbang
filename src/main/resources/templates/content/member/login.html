@@ -27,7 +27,7 @@
                         <div class="">
                             <div>
                                 <div class="">
-                                    <input type="text" class="" name="userName" th:value="${memberVO.userName}" placeholder="이메일 주소 입력">
+                                    <input type="text" class="inputID" name="userName" th:value="${memberVO.userName}" placeholder="이메일 주소 입력">
                                 </div>
                             </div>
                         </div>
@@ -36,16 +36,20 @@
                         </header>
                         <div class="">
                             <div class="pwInput">
-                                <input type="password" id="pwd" name="passWord" placeholder="비밀번호 입력">
+                                <input type="password" id="pwd" name="passWord" class="inputPW" placeholder="비밀번호 입력">
                                 <img id="pwShow" src="/img/member/password_show.png" alt="pwShow/Hide">
                         </div>
-                        <button type="submit" class=""><span class="">로그인</span></button>
+                        <div class="btnArea">
+                            <div>
+                                <button type="submit" class="btn btn-primary"><span class="">로그인</span></button>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-primary" onclick="location.href='/member/joinForm';">회원가입</button>
+                            </div>
+                            <!-- <button type="button" class="btn btn-secondary" id="passwordFindButton">비밀번호 재설정</button> -->
+                        </div>
                     </div>
                 </form>
-                <div class="">
-                    <button type="button" id="passwordFindButton">비밀번호 재설정</button>
-                    <button type="button" onclick="location.href='/member/joinForm';">이메일로 가입하기</button>
-                </div>
             </div>
         </section>
         <!-- 비밀번호 찾기 버튼 클릭 시 실행 할 model창 -->
