@@ -33,7 +33,10 @@ public interface RealtorService {
     public void updateRealtorInfo(MemberVO memberVO);
 
     //공인중개사 문의글 확인
-    public List<InquiryVO> selectInquiryBoard(String userNo);
+    public List<InquiryVO> selectInquiryBoard(InquiryVO inquiryVO);
+
+    //공인중개사 전체 문의글 수 확인
+    public int countInquiryCnt(String userNo);
 
     //문의글 상세 조회
     public InquiryVO selectInquiryDetail(String inquiryCode);
