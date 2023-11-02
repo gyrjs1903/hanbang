@@ -223,12 +223,12 @@ document.getElementById("searchButton").addEventListener("click", function () {
 
             console.log(data);
             if (data.length == 0) {
-                roomContainer.className='not_room';
+                roomContainer.className = 'not_room';
                 roomContainer.textContent = '조건에 맞는 방이 없습니다'
                 selectRoomElement.appendChild(roomContainer);
             } else {
-            data.forEach((room, idx) => {
-                
+                data.forEach((room, idx) => {
+
                     console.log(room)
                     const roomElement = document.createElement('div');
                     roomElement.className = 'room';
@@ -278,8 +278,8 @@ document.getElementById("searchButton").addEventListener("click", function () {
                     roomContainer.appendChild(roomElement);
 
                     selectRoomElement.appendChild(roomContainer);
-            });
-        }
+                });
+            }
 
 
         })
@@ -484,55 +484,68 @@ floorSlider.addEventListener("input", function () {
 
 $(".type, .filter_room_info, .mj_cost, .option_div").hide();
 
-$(document).ready(function() {
-    // 변수를 사용하여 현재 회전 각도를 추적합니다.
-    var isRotated = false;
-  
-    // 함수를 사용하여 회전 각도를 변경합니다.
-    function toggleRotation(element) {
-      isRotated = !isRotated;
-      var rotation = isRotated ? "135deg" : "315deg";
-      element.css("transform", "rotate(" + rotation + ")");
-    }
-  
+$(document).ready(function () {
+
     // 메뉴 항목을 클릭하여 메뉴를 표시하거나 숨깁니다.
-    $(".menu_type").click(function() {
-      $(".type").show();
-      toggleRotation($(".menu_type .arrow::after"));
-      $(".filter_room_info, .mj_cost, .option_div").hide();
-      $(".menu_filter_room_info .arrow::after, .menu_mj_cost .arrow::after, .menu_option_div .arrow::after").css("transform", "rotate(135deg)");
+    $(".menu_type").click(function () {
+        $(this).css("background-color", "#162b63");
+        $(".type").show();
+        $(this).find(".arrow-a").removeClass("arrow-a").addClass("arrow-b");
+        $(".menu_option_div, .menu_filter_room_info, .menu_mj_cost").css("background-color", "#5c75bb");
+        $(".filter_room_info, .mj_cost, .option_div").hide();
+        $(this).siblings().find(".arrow-b").removeClass("arrow-b").addClass("arrow-a");
+
     });
-  
-    $(".menu_filter_room_info").click(function() {
-      $(".filter_room_info").show();
-      toggleRotation($(".menu_filter_room_info .arrow::after"));
-      $(".type, .mj_cost, .option_div").hide();
-      $(".menu_type .arrow::after, .menu_mj_cost .arrow::after, .menu_option_div .arrow::after").css("transform", "rotate(135deg)");
+
+    $(".menu_filter_room_info").click(function () {
+        $(this).css("background-color", "#162b63");
+        $(".filter_room_info").show();
+        $(this).find(".arrow-a").removeClass("arrow-a").addClass("arrow-b");
+        $(".menu_type, .menu_option_div, .menu_mj_cost").css("background-color", "#5c75bb");
+        $(".type, .mj_cost, .option_div").hide();
+        $(this).siblings().find(".arrow-b").removeClass("arrow-b").addClass("arrow-a");
     });
-  
-    $(".menu_mj_cost").click(function() {
-      $(".mj_cost").show();
-      toggleRotation($(".menu_mj_cost .arrow::after"));
-      $(".type, .filter_room_info, .option_div").hide();
-      $(".menu_type .arrow::after, .menu_filter_room_info .arrow::after, .menu_option_div .arrow::after").css("transform", "rotate(135deg)");
+
+    $(".menu_mj_cost").click(function () {
+        $(this).css("background-color", "#162b63");
+        $(".mj_cost").show();
+        $(this).find(".arrow-a").removeClass("arrow-a").addClass("arrow-b");
+        $(".menu_type, .menu_filter_room_info, .menu_option_div").css("background-color", "#5c75bb");
+        $(".type, .filter_room_info, .option_div").hide();
+        $(this).siblings().find(".arrow-b").removeClass("arrow-b").addClass("arrow-a");
+
     });
-  
-    $(".menu_option_div").click(function() {
-      $(".option_div").show();
-      toggleRotation($(".menu_option_div .arrow::after"));
-      $(".type, .filter_room_info, .mj_cost").hide();
-      $(".menu_type .arrow::after, .menu_filter_room_info .arrow::after, .menu_mj_cost .arrow::after").css("transform", "rotate(135deg)");
+
+    $(".menu_option_div").click(function () {
+        $(this).css("background-color", "#162b63");
+        $(".option_div").show();
+        $(this).find(".arrow-a").removeClass("arrow-a").addClass("arrow-b");
+        $(".menu_type, .menu_filter_room_info, .menu_mj_cost").css("background-color", "#5c75bb");
+        $(".type, .filter_room_info, .mj_cost").hide();
+        $(this).siblings().find(".arrow-b").removeClass("arrow-b").addClass("arrow-a");
     });
-  
+
     // 메뉴 항목 외의 다른 곳을 클릭하면 모든 메뉴 항목을 숨깁니다.
-    $(document).click(function(event) {
-      if (
-        !$(event.target).closest(".menu_type, .menu_filter_room_info, .menu_mj_cost, .menu_option_div").length
-      ) {
-        $(".type, .filter_room_info, .mj_cost, .option_div").hide();
-        // 모든 메뉴 항목의 화살표 스타일을 변경합니다.
-        $(".menu_type .arrow::after, .menu_filter_room_info .arrow::after, .menu_mj_cost .arrow::after, .menu_option_div .arrow::after").css("transform", "rotate(135deg)");
-        isRotated = false; // 회전 상태 초기화
-      }
+    $(document).click(function (event) {
+        if (
+            !$(event.target).closest(".menu_type, .menu_filter_room_info, .menu_mj_cost, .menu_option_div, .option_div, .filter_room_info, .type, .mj_cost").length
+        ) {
+
+            $(".type, .filter_room_info, .mj_cost, .option_div").hide();
+            $(".menu_type, .menu_filter_room_info, .menu_mj_cost, .menu_option_div").css("background-color", "#5c75bb");
+            $(".menu_type .arrow-b, .menu_filter_room_info .arrow-b, .menu_mj_cost .arrow-b, .menu_option_div .arrow-b").removeClass("arrow-b").addClass("arrow-a");
+        }
     });
-  });
+});
+
+
+//   document.querySelector('.menu_type').addEventListener('click', (e) => {
+//     alert(11);
+//     e.target.querySelector('span').classList.remove('arrow-a');
+//     e.target.querySelector('span').classList.add('arrow-b');
+//   });
+//   document.querySelector('.menu_type').addEventListener('blur', (e) => {
+//     alert(22);
+//     e.target.querySelector('span').classList.remove('arrow-b');
+//     e.target.querySelector('span').classList.add('arrow-a');
+//   });

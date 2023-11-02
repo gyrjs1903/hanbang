@@ -199,10 +199,8 @@ document.addEventListener("DOMContentLoaded", function () {
     var immediateOccupancyYes = document.getElementById("immediateOccupancyYes");
     var moveInDateField = document.getElementById("moveInDateField");
 
-    // 페이지 로드시 확인하여 필드 상태를 설정
-    if (immediateOccupancyYes.checked) {
-        moveInDateField.disabled = true; // 즉시 입주 선택 시, 비활성화
-    }
+    moveInDateField.disabled = true; // 즉시 입주 선택 시, 비활성화
+
 
     // 라디오 버튼의 변경 이벤트 리스너 추가
     immediateOccupancyYes.addEventListener("change", function () {
@@ -342,3 +340,7 @@ function displaySelectedImages(files, imageList, labelText) {
     }
 }
 
+// const submit= document.querySelector('#submit');
+// submit.addEventListener("click",(e)=>{
+// su
+// });

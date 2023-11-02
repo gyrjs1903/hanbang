@@ -160,7 +160,7 @@
                                 </div>
                                 <div>
                                     <label for="maintenanceCost">관리비</label>
-                                    <input type="text" name="maintenanceCost" id="maintenanceCost" disabled>
+                                    <input type="text" name="maintenanceCost" id="maintenanceCost" readonly>
                                 </div>
                             </td>
                         </tr>
@@ -173,7 +173,7 @@
                                     <label for="immediateOccupancyYes">즉시 입주</label>
                                     <input type="radio" name="immediateOccupancy" value="N" id="immediateOccupancyNo">
                                     <label for="immediateOccupancyNo">일자 선택</label>
-                                    <input type="date" name="availableMoveInDate" id="moveInDateField" disabled>
+                                    <input type="date" name="availableMoveInDate" id="moveInDateField"  readonly>
                                 </div>
                             </td>
                         </tr>
@@ -275,59 +275,7 @@
                     </table>
                 </div>
 
-                <!-- ////////////////// 최수연 추가 ///////////////////////// -->
-                <!-- 상품 목록 모달 -->
-                <div>
-                    <span data-bs-toggle="modal" data-bs-target="#ltem-list-modal">내가 가진 상품 사용하기</span>
-                </div>
                 
-                <!-- Modal -->
-                <div class="modal fade" id="ltem-list-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">사용 가능한 상품</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                         
-                            <div th:if="${itemCnt == 0}">
-                                사용 가능한 상품이 없습니다.
-                            </div>
-
-                            <div th:if="${itemCnt != 0}">
-                                    <div th:each="packageItem, state : ${packageItemList}">
-                                        <th:block th:if="${state.index == 0}">
-                                            <div>[[${packageItem.memCateName}]]</div>
-                                        </th:block>
-                                        <div>[[${packageItem.endDate}]]</div>
-                                        <div>[[${packageItem.generalProductCnt}]]</div>
-                                        <div>[[${packageItem.plusSeasonCnt}]]</div>
-                                        <div>[[${packageItem.plusDayCnt}]]</div>
-                                        <div>[[${packageItem.isValid}]]</div>
-                                    </div>
-                                    <div th:each="generalItem : ${generalItemList}">
-                                        <div>[[${generalItem.endDate}]]</div>
-                                        <div>[[${generalItem.generalProductCnt}]]</div>
-                                        <div>[[${generalItem.isValid}]]</div>
-                                    </div>
-                                    <div th:each="plusItem : ${plusItemList}">
-                                        <div>[[${plusItem.endDate}]]</div>
-                                        <div>[[${plusItem.plusType}]]</div>
-                                        <div>[[${plusItem.isValid}]]</div>
-                                    </div>
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                
-
                 <input type="submit" value="매물등록">
             </form>
         </div>

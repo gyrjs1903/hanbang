@@ -17,13 +17,13 @@
                 <form  class="form_con">
                     <div class="filter_menu">
                         <div class="addr">
-                            <label>주소검색</label>
+                            <label>지역검색</label>
                             <input type="text" name="searchAddr">
                         </div>
-                        <div class="menu_type"><span class="arrow">방유형</span></div>
-                        <div class="menu_filter_room_info"><span class="arrow">방정보</span></div>
-                        <div class="menu_mj_cost"><span class="arrow">전/월세</span></div>
-                        <div class="menu_option_div"><span class="arrow">추가옵션</span></div>
+                        <div class="menu_type">방유형<span class="arrow-a"></span></div>
+                        <div class="menu_filter_room_info">방정보<span class="arrow-a"></span></div>
+                        <div class="menu_mj_cost">전/월세<span class="arrow-a"></span></div>
+                        <div class="menu_option_div">추가옵션<span class="arrow-a"></span></div>
                     </div>
                     <div class="type">
                         <div class="trade_type">
@@ -103,14 +103,15 @@
                             <div class="option_flex">
                                 <th:block th:if="${option.optionCode == 'OPTION_003'}">
                                     <div>
-                                        <input type="checkbox" class="all_check" th:id="'selectAllOptions'">
+                                        <input type="checkbox" class="all_check" id="'selectAllOptions'">
                                         <label for="selectAllOptions">전체선택</label>
                                     </div>
                                     <th:block th:each="detailOption : ${option.detailOptionList}">
                                         <div>
                                             <input type="checkbox" name="searchDetailOptions"
                                                 th:value="${detailOption.detailOptionCode}"
-                                                th:id="'detailOption_' + ${detailOption.detailOptionCode}">
+                                                th:id="'detailOption_' + ${detailOption.detailOptionCode}"
+                                                class="detailOptionCheckbox">
                                             <label th:for="'detailOption_' + ${detailOption.detailOptionCode}">
                                                 [[${detailOption.detailOptionName}]]
                                             </label>

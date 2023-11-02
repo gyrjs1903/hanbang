@@ -162,13 +162,19 @@
             , TRADE_TYPE_CODE
             , MONTHLY_LEASE
             , DEPOSIT
-            , JEONSE_COST
-            , MAINTENANCE_COST
+            <if test='jeonseCost != null and jeonseCost.equals("")'>
+                , JEONSE_COST
+            </if>
+            <if test='maintenanceCost != null and maintenanceCost.equals("")'>
+                , MAINTENANCE_COST
+            </if>
             , DETAIL_OPTIONS
             , TITLE
             , CONTENT
             , IMMEDIATE_OCCUPANCY
+        <if test='availableMoveInDate != null and availableMoveInDate.equals("")'>
             , AVAILABLE_MOVE_IN_DATE
+        </if>
             , USER_NO
         )VALUES(
             (SELECT 'ROOM_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ROOM_CODE,7))),0)+1, 4, '0') FROM ROOM)
@@ -178,15 +184,21 @@
             , #{roomSizeM}
             , #{floor}
             , #{tradeTypeCode}
-            , #{monthlyLease}
-            , #{deposit}
-            , #{jeonseCost}
-            , #{maintenanceCost}
+            , NVL(#{monthlyLease},'')
+            , NVL(#{deposit},'')
+            <if test='jeonseCost != null and jeonseCost.equals("")'>
+                , #{jeonseCost}
+            </if>
+            <if test='maintenanceCost != null and maintenanceCost.equals("")'>
+                , #{maintenanceCost}
+            </if>
             , #{detailOptions}
             , #{title}
             , #{content}
             , #{immediateOccupancy}
+        <if test='availableMoveInDate != null and availableMoveInDate.equals("")'>
             , #{availableMoveInDate}
+        </if>
             , #{userNo}
         )
     </insert>

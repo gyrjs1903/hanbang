@@ -18,7 +18,6 @@ public class RoomVO {
     private String deposit;
     private String jeonseCost;
     private String maintenanceCost;
-    //private String[] detailOptions;
     private String detailOptions;
     private String title;
     private String content;
