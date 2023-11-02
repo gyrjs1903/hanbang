@@ -153,3 +153,24 @@ elDASForm.addEventListener("keypress", (e)=>{
         document.getElementById('elDAS-btn').onclick();
     }
 })
+
+// ----------------------------찜하기------------------------------------------------------
+
+function likeRoom(roomCode, subPropertyTypeCode) {
+    $.ajax({
+        type: "POST",
+        url: "/member/like",
+        data: {
+            roomCode: roomCode,
+            subPropertyTypeCode : subPropertyTypeCode
+        },
+        success: function(response) {
+            alert("찜목록에 추가되었습니다.");
+        },
+        error: function(error) {
+            alert("로그인 한 회원만 찜하기가 가능합니다.");
+            console.log(roomCode);
+            console.log(subPropertyTypeCode);
+        }
+    });
+}

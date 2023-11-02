@@ -9,6 +9,7 @@
         <result column="MEMBER_INQUIRY_DETAIL"          property="memberInquiryDetail"/>
         <result column="MEMBER_INQUIRY_WRITE_DATE"      property="memberInquiryWriteDate"/>
         <result column="USER_NO"                        property="userNo"/>
+        <result column="INQUIRY_ST_CODE"                property="inquiryStCode"/>
         <collection property="memberInquiryImgVO"       resultMap="memberInquiryImg"/>
         <collection property="memberInquiryTypeVO"      resultMap="memberInquiryType"/>
         <collection property="inquiryStatusVO"          resultMap="inquiryStatus"/>
@@ -27,8 +28,8 @@
     </resultMap>
 
     <resultMap id="inquiryStatus" type="com.green.hanbang.member.vo.InquiryStatusVO">
-        <id column="INQUIRY_ST_CODE"    property="inquiryStCode" />
-        <result column="STATUS_NAME"    property="statusName" />
+        <id column="INQUIRY_ST_CODE"    property="inquiryStCode"/>
+        <result column="STATUS_NAME"    property="statusName"/>
     </resultMap>
 
     <!-- 문의 유형 목록 조회 -->
@@ -45,9 +46,11 @@
     <!-- 상태 불러오기 -->
     <select id="selectStatus" resultMap="inquiryStatus">
         SELECT INQUIRY_ST_CODE
-        , INQUIRY_NAME
-        FROM INQUIRY_STATUS
-        WHERE INQUIRY_ST_CODE = #{inquiryStCode}
+            , INQUIRY_NAME
+        FROM
+            INQUIRY_STATUS
+        WHERE
+            INQUIRY_ST_CODE = #{inquiryStCode}
     </select>
 
     <!-- 문의 작성 삽입 -->
@@ -103,14 +106,19 @@
         , MEMBER_INQUIRY_WRITE_DATE
         , MIW.MEMBER_INQUIRY_CODE
         , MIW.USER_NO
+        , STATUS_NAME
     FROM
         MEMBER_INQUIRY_WRITE MIW
     JOIN
         MEMBER_INQUIRY_TYPE MIT
     ON
         MIW.MEMBER_INQUIRY_CODE = MIT.MEMBER_INQUIRY_CODE
+    JOIN
+        INQUIRY_STATUS IST
+    ON
+        MIW.INQUIRY_ST_CODE = IST.INQUIRY_ST_CODE
     WHERE
-        USER_NO = #{userNo}
+        MIW.USER_NO = #{userNo}
     </select>
 
     <!-- 문의 내역 상세 조회 -->
@@ -125,6 +133,7 @@
             , MII.MEMBER_INQUIRY_IMG_NO
             , MII.MEMBER_INQUIRY_IMG_NAME
             , MII.MEMBER_ATTACHED_INQUIRY_IMG_NAME
+            , MIW.MEMBER_INQUIRY_CODE
         FROM
             MEMBER_INQUIRY_WRITE MIW
         JOIN
@@ -135,6 +144,10 @@
             MEMBER_INQUIRY_IMG MII
         ON
             MIW.MEMBER_INQUIRY_WRITE_NO = MII.MEMBER_INQUIRY_WRITE_NO
+        JOIN
+            INQUIRY_STATUS IS
+        ON
+            MIW.INQUIRY_ST_CODE = IS.INQUIRY_ST_CODE
         WHERE
             MIW.USER_NO = #{userNo};
     </select>

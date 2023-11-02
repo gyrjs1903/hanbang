@@ -2,9 +2,12 @@ package com.green.hanbang.member.controller;
 
 import com.green.hanbang.member.service.MemberInquiryService;
 import com.green.hanbang.member.service.MemberService;
+import com.green.hanbang.member.service.SaveService;
 import com.green.hanbang.member.vo.*;
 import com.green.hanbang.room.service.RoomService;
 import com.green.hanbang.room.vo.InquiryVO;
+import com.green.hanbang.room.vo.PropertyTypeVO;
+import com.green.hanbang.room.vo.RoomIMGVO;
 import com.green.hanbang.room.vo.RoomVO;
 import com.green.hanbang.util.MemberUtil;
 import jakarta.servlet.http.Cookie;
@@ -12,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +32,7 @@ public class MemberController {
     private final MemberService memberService;
     private final MemberInquiryService memberInquiryService;
     private final RoomService roomService;
+    private final SaveService saveService;
 
     // 회원 가입 페이지 이동
     @GetMapping("/joinForm")
@@ -164,6 +169,7 @@ public class MemberController {
 
         // 문의 리스트 목록
         List<MemberInquiryVO> memberInquiryList = memberInquiryService.selectMemberInquiryList(memberInquiryVO);
+        System.out.println(memberInquiryList);
         model.addAttribute("memberInquiryList", memberInquiryList);
 
         return "content/member/user_inquiry";
@@ -186,10 +192,10 @@ public class MemberController {
         // 현재 로그인 한 유저 번호를 조회
         MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
         String userNo = loginInfo.getUserNo();
+
         // MemberInquiryVO에 userNo를 설정
         MemberInquiryVO memberInquiryVO = new MemberInquiryVO();
         memberInquiryVO.setUserNo(userNo);
-        memberInquiryService.insertMemberInquiry(memberInquiryVO); // userNo
 
         // 문의 이미지 첨부 파일 null 값이 아니면 실행
         if (file != null) {
@@ -198,7 +204,13 @@ public class MemberController {
             MemberInquiryImgVO memberInquiryImgVO = new MemberInquiryImgVO();
             memberInquiryImgVO.setMemberInquiryWriteNo(inquiryWriteNo);
             memberInquiryService.insertMemberInquiryImg(memberInquiryImgVO); // memberInquiryWriteNo
+            memberInquiryService.insertMemberInquiry(memberInquiryVO);
+
+        } else{
+
+            memberInquiryService.insertMemberInquiry(memberInquiryVO);
         }
+
         return "redirect:/member/memberInquiry";
     }
 
@@ -247,10 +259,13 @@ public class MemberController {
 
     // 찜한 방 페이지로 이동
     @GetMapping("/dibsOnRoom")
-    public String dibsOnRoom(HttpSession session) {
+    public String dibsOnRoom(HttpSession session, String roomCode, Model model) {
         MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
-
         String userNo = loginInfo.getUserNo();
+        model.addAttribute("userNo", userNo);
+
+        List<MemberSaveVO> save = saveService.selectSaveRoomList(userNo);
+        model.addAttribute("saveList", save);
 
         return "content/member/dibs_on_room";
     }
@@ -317,5 +332,45 @@ public class MemberController {
     public int deleteMember(int userNo){
         return memberService.deleteMember(userNo);
     }
+
+    // 찜하기
+    @PostMapping("/like")
+    public ResponseEntity<String> like(String subPropertyTypeCode, String roomCode, HttpSession session, Model model){
+        MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
+
+        if(loginInfo == null){
+            return ResponseEntity.badRequest().body("회원만 가능합니다.");
+        }
+
+        String userNo = loginInfo.getUserNo();
+        MemberSaveVO memberSaveVO = new MemberSaveVO();
+        memberSaveVO.setRoomCode(roomCode);
+        memberSaveVO.setUserNo(userNo);
+
+        if (subPropertyTypeCode.equals("STYPE_005")) {
+            memberSaveVO.setMemberSaveCode("SAVE_002");
+
+            saveService.insertSaveRoom(memberSaveVO);
+        }
+        else {
+            memberSaveVO.setMemberSaveCode("SAVE_001");
+
+            saveService.insertSaveApart(memberSaveVO);
+        }
+
+        return ResponseEntity.ok().body("찜 목록에 추가되었습니다.");
+    }
+
+//    @RequestMapping("/setCookie")
+//    public String setCookie(HttpServletResponse response) {
+//        Cookie cookie = new Cookie("myCookie", "cookieValue");
+//        response.addCookie(cookie);
+//        return "Cookie is set";
+//    }
+//
+//    @RequestMapping("/getCookie")
+//    public String getCookie(@CookieValue(value = "myCookie", defaultValue = "defaultValue") String cookieValue){
+//        return "Cookie value is:" + cookieValue;
+//    }
 
 }

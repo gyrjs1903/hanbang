@@ -50,13 +50,14 @@ li{
 }
 .go-top{
     display: flex;
-    border: none;
+    border: 1px solid #ccc;
     flex-direction: column;
     align-items: center;
     border-radius: 50%;
     background-color: #fff;
     margin: 7px 0 10px 10px;
     padding: 10px 15px;
+    box-shadow: 3px 5px 5px rgba(0,0,0,0.2);
 }
 .go-top::before{
     content: "";
@@ -92,9 +93,11 @@ li{
 }
 .footer_div_thr{
     display: flex;
+    flex-direction: column;
+    text-align: right;
 }
-.footer_div_thr > *{
-    margin-right: 20px;
+.footer_div_thr > *{ 
+    margin: 10px 20px;
 }
 .footer_div_thr a{
     color: #ddd;

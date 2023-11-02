@@ -10,6 +10,7 @@ public class MemberInquiryVO {
     private String memberInquiryDetail;
     private String memberInquiryWriteDate;
     private String userNo;
+    private String inquiryStCode;
 
     private MemberInquiryImgVO memberInquiryImgVO;
     private MemberInquiryTypeVO memberInquiryTypeVO;

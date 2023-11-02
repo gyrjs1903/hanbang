@@ -21,5 +21,4 @@ public interface MemberInquiryService {
     public int insertMemberInquiry(MemberInquiryVO memberInquiryVO); // 제목, 내용 등
     public int insertMemberInquiryImg(MemberInquiryImgVO memberInquiryImgVO); // 첨부 파일
 
-
 }

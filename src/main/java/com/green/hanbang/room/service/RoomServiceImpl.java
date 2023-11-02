@@ -1,5 +1,8 @@
 package com.green.hanbang.room.service;
 
+import com.green.hanbang.item.vo.GeneralItemVO;
+import com.green.hanbang.item.vo.PackageItemVO;
+import com.green.hanbang.item.vo.PlusItemVO;
 import com.green.hanbang.member.vo.MemberVO;
 import com.green.hanbang.room.vo.*;
 import lombok.RequiredArgsConstructor;
@@ -114,5 +117,21 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public boolean insertInquiry(InquiryVO inquiryVO) {
         return sqlSession.insert("roomMapper.insertInquiry",inquiryVO) == 1;
+    }
+
+    // 상품 구매 내역 출력
+    @Override
+    public List<PackageItemVO> selectPackageItemList(String userNo) {
+        return sqlSession.selectList("itemMapper.selectPackageItemList", userNo);
+    }
+
+    @Override
+    public List<GeneralItemVO> selectGeneralItemList(String userNo) {
+        return sqlSession.selectList("itemMapper.selectGeneralItemList", userNo);
+    }
+
+    @Override
+    public List<PlusItemVO> selectPlusItemList(String userNo) {
+        return sqlSession.selectList("itemMapper.selectPlusItemList", userNo);
     }
 }
