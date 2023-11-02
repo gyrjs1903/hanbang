@@ -8,24 +8,29 @@
 }
 .img-box{
     display: flex;
+    justify-content: space-between;
+    margin-top: 70px;
 }
 .img-box > p{
     box-sizing: border-box;
-    width: calc(100% / 3);
-    height: 90%;
+    width: calc((100% - 20px) / 3);
+    overflow: hidden;
 }
 img{
     width: 100%;
-    height: auto;
+    height: 330px;
     object-fit: cover;
     overflow: hidden;
     object-position: center;
 }
+img:hover{
+    transform: scale(1.1);
+}
 .container-box{
     display: grid;
-    grid-template-columns: 510px 360px;
+    grid-template-columns: 815px 360px;
     gap: 0 40px;
-    padding: 0 10px;
+    padding: 80px 10px;
 }
 .box{
     margin-bottom: 100px;
@@ -68,6 +73,7 @@ img{
     border: 1px solid rgb(223, 223, 223);
     border-radius: 2px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 20px;
+    background-color: #fff;
 }
 .wing > .wing-box > .row{
     margin-bottom: 15px; 

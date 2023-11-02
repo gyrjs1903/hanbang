@@ -24,8 +24,8 @@ public class MemberInquiryServiceImpl implements MemberInquiryService{
     }
 
     @Override
-    public String selectNextInquiryNumber(String memberInquiryWriteNo) {
-        return sqlSession.selectOne(memberInquiryWriteNo);
+    public String selectNextInquiryNumber() {
+        return sqlSession.selectOne("inquiryMapper.selectNextInquiryNumber");
     }
 
     @Override
@@ -34,8 +34,15 @@ public class MemberInquiryServiceImpl implements MemberInquiryService{
     }
 
     @Override
-    public int insertMemberInquiryImg(MemberInquiryImgVO memberInquiryImgVO) {
-        return sqlSession.insert("inquiryMapper.insertMemberInquiryImg", memberInquiryImgVO);
+    public List<MemberInquiryVO>  selectInquiryDetail(MemberInquiryVO memberInquiryVO) {
+        return sqlSession.selectList("inquiryMapper.selectInquiryDetail", memberInquiryVO);
     }
+
+//    @Override
+//    public int insertMemberInquiryImg(MemberInquiryImgVO memberInquiryImgVO) {
+//        return sqlSession.insert("inquiryMapper.insertMemberInquiryImg", memberInquiryImgVO);
+//    }
+
+
 
 }

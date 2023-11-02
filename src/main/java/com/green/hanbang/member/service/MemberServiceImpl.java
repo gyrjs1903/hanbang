@@ -37,6 +37,11 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public String passWordCheck(String passWord) {
+        return sqlSession.selectOne("memberMapper.passWordCheck", passWord);
+    }
+
+    @Override
     public int memberDelete(MemberVO memberVO) {
         return sqlSession.delete("memberMapper.memberDelete", memberVO);
     }

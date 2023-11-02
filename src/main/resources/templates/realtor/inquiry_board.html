@@ -23,6 +23,13 @@
             <th:block th:if="${inquiryBoardList != 'null'}">
                 <div class="col-10 table_box">
                     <table>
+                        <colgroup>
+                            <col width="8%">
+                            <col width="*">
+                            <col width="15%">
+                            <col width="15%">
+                            <col width="15%">
+                        </colgroup>
                         <thead>
                             <tr>
                                 <td>번 호</td>
@@ -34,7 +41,7 @@
                         </thead>
                         <tbody>
                             <tr th:each="inquiry, state : ${inquiryBoardList}">
-                                <td>[[${#lists.size(inquiryBoardList) - state.index}]]</td>
+                                <td>[[${boardNum - state.index}]]</td>
                                 <th:block th:if="${inquiry.inquiryTitleCode == 'INQUIRY_TITLE_001'}">
                                     <th:block th:if="${#strings.length(inquiry.inquiryContent) > 10}">
                                         <td th:onclick="inquiryDetail([[${inquiry.inquiryCode}]])" class="cursor">
@@ -62,6 +69,14 @@
                             </tr>
                         </tbody>
                     </table>
+                    <div class="page">
+                        <a th:href="@{/realtor/inquiryBoardList(nowPage=${inquiryVO.beginPage-1})}" th:if="${inquiryVO.prev}"><span>이전</span></a>
+                        <th:block th:each="pageNum : ${#numbers.sequence(inquiryVO.beginPage,inquiryVO.endPage)}">
+                            <a th:href="@{/realtor/inquiryBoardList(nowPage=${pageNum})}"><span th:text="${pageNum}"></span></a>
+                        </th:block>
+                        <a th:href="@{/realtor/inquiryBoardList(nowPage=${inquiryVO.endPage+1})}" th:if="${inquiryVO.next}"><span>다음</span></a>
+                    </div>
+                    </div>
                 </div>
             </th:block>
         </div>

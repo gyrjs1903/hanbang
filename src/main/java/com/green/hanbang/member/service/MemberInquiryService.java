@@ -15,10 +15,13 @@ public interface MemberInquiryService {
     public List<MemberInquiryVO> selectMemberInquiryList(MemberInquiryVO memberInquiryVO);
 
     // 다음 문의 작성 번호 조회
-    public String selectNextInquiryNumber(String memberInquiryWriteNo);
+    public String selectNextInquiryNumber();
 
     // 문의 작성물 전송
     public int insertMemberInquiry(MemberInquiryVO memberInquiryVO); // 제목, 내용 등
-    public int insertMemberInquiryImg(MemberInquiryImgVO memberInquiryImgVO); // 첨부 파일
+    // public int insertMemberInquiryImg(MemberInquiryImgVO memberInquiryImgVO); // 첨부 파일
+
+    // 문의 상세 보기
+    public List<MemberInquiryVO> selectInquiryDetail(MemberInquiryVO memberInquiryVO);
 
 }

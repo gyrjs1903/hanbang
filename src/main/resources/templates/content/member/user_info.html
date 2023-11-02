@@ -155,6 +155,50 @@
                 </div>
             </div>
         </div>
+
+        <!-- 비밀번호 변경 창 -->
+        <div class="modal fade" id="PWC" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <form id="PWCForm" class="row g-3" th:action="@{/member/updatePassWord}" method="post">
+                            <h1 class="modal-title">비밀번호 재설정</h1>
+                            <div class="modal-body">
+                                <div>
+                                    <h4>기존 비밀번호</h4>
+                                    <label for="oldPassWord" class="form-label"></label>
+                                    <input id="oldPassWord" autocomplete="off" type="password" placeholder="기존 비밀번호를 입력해주세요." name="oldPassWord" oninput="countCharacters()" style="width: 100%;">
+                                    <img id="pwShow1" src="/img/member/password_show.png" alt="pwShow/Hide">
+                                    <p id="oldPassWordInput">기존 비밀번호를 입력해주세요.</p>
+                                    <p id="oldPassWordInput">기존 비밀번호와 일치하지 않습니다.</p>
+                                </div>
+                                <div>
+                                    <h4>새로운 비밀번호</h4>
+                                    <label for="newPassWord" class="form-label"></label>
+                                    <input id="newPassWord" type="password" placeholder="새로운 비밀번호을 입력해주세요."  name="newPassWord" oninput="countCharacters()" style="width: 100%;">
+                                    <img id="pwShow2" src="/img/member/password_show.png" alt="pwShow/Hide">
+                                    <p id="oldPassWordInputCheck">비밀번호를 입력해주세요.</p>
+                                    <p id="oldPassWordFormCheck">비밀번호는 문자, 숫자, 특수문자를 포함하여 8-20자 이내로 입력하세요.</p>
+                                </div>
+                                <div>
+                                    <h4>새로운 비밀번호 확인</h4>
+                                    <label for="newPassWordCheck" class="form-label"></label>
+                                    <input id="newPassWordCheck" type="password" placeholder="새로운 비밀번호 확인을 입력해주세요." name="newPassWordCheck" oninput="countCharacters()" style="width: 100%;">
+                                    <img id="pwShow3" src="/img/member/password_show.png" alt="pwShow/Hide">
+                                    <p id="passWordCheckInputCheck">비밀번호 확인를 입력해주세요.</p>
+                                    <p id="passWordCheckCheck">입력한 비밀번호가 서로 일치하지 않습니다.</p>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary data" data-bs-dismiss="modal">닫기</button>
+                                <button type="submit" class="btn btn-primary" id="updatePassWord">확인</button>
+                            </div>
+                        </form>    
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </th:block>
     <th:block layout:fragment="content_js">
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>

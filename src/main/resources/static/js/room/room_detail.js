@@ -72,7 +72,31 @@ function elDAS(){
             reportModal.show();
             reportPerson.value = data;
         } else {
-            alertBox.innerHTML='아이디 혹은 비밀번호를 확인하세요.';
+            if(alertBox.textContent == ''){
+                alertBox.innerHTML='아이디 혹은 비밀번호를 확인하세요.';
+             } else {
+                alertBox.style.fontWeight = 'bold';
+                alertBox.animate({
+                    transform : [
+                        'scale(1)',
+                        'scale(1.005)'
+                    ]
+                },
+                {
+                    duration : 200
+                });
+                setTimeout(() => {
+                    alertBox.animate({
+                        transform : [
+                            'scale(1.005)',
+                            'scale(1)'
+                        ]
+                    },
+                    {
+                        duration : 200
+                    })
+                }, 200);
+            }
         }
 
     })
