@@ -8,24 +8,24 @@
         <result column="ROOM_CODE"                  property="roomCode"/>
         <result column="USER_NO"                    property="userNo"/>
         <result column="MEMBER_SAVE_CODE"           property="memberSaveCode"/>
-        <collection property="memberFavoriteVO"     resultMap="memberFavorite"/>
         <collection property="memberSaveTypeVO"     resultMap="memberSaveType"/>
+        <collection property="roomVO"               resultMap="roomMapper.room"/>
     </resultMap>
 
-    <resultMap id="memberFavorite" type="com.green.hanbang.member.vo.MemberFavoriteVO">
-        <id column="MEMBER_FAVO_NO"         property="memberFavoNo"/>
-        <result column="ADDR_CODE"          property="addrCode"/>
-        <result column="USER_NO"            property="userNo"/>
-        <result column="MEMBER_SAVE_CODE"   property="memberSaveCode"/>
-    </resultMap>
+<!--    <resultMap id="memberFavorite" type="com.green.hanbang.member.vo.MemberFavoriteVO">-->
+<!--        <id column="MEMBER_FAVO_NO"         property="memberFavoNo"/>-->
+<!--        <result column="ADDR_CODE"          property="addrCode"/>-->
+<!--        <result column="USER_NO"            property="userNo"/>-->
+<!--        <result column="MEMBER_SAVE_CODE"   property="memberSaveCode"/>-->
+<!--    </resultMap>-->
 
     <resultMap id="memberSaveType" type="com.green.hanbang.member.vo.MemberSaveTypeVO">
         <id column="MEMBER_SAVE_CODE"            property="memberSaveCode"/>
         <result column="MEMBER_SAVE_NAME"        property="memberSaveName"/>
     </resultMap>
 
-    <!-- 찜목록 추가 -->
-    <insert id="insertSave">
+    <!-- 찜 하기 (원룸, 오피스텔) -->
+    <insert id="insertSaveRoom">
         INSERT INTO MEMBER_SAVE(
             MEMBER_SAVE_NO
             , ROOM_CODE
@@ -37,39 +37,78 @@
             FROM MEMBER_SAVE)
             , #{roomCode}
             , #{userNo}
-            , #{memberSaveCode}
+            , 'SAVE_001'
         )
     </insert>
 
+    <!-- 찜 하기 (아파트) -->
+    <insert id="insertSaveApart">
+        INSERT INTO MEMBER_SAVE(
+            MEMBER_SAVE_NO
+            , ROOM_CODE
+            , USER_NO
+            , MEMBER_SAVE_CODE
+        )
+        VALUES(
+            (SELECT 'MS_'||LPAD(COUNT(*) + 1 , 3, '0')
+            FROM MEMBER_SAVE)
+            , #{roomCode}
+            , #{userNo}
+            , 'SAVE_002'
+        )
+    </insert>
+
+    <!-- 찜 목록 불러오기 (원룸, 오피스텔) -->
+    <select id="selectSaveRoomList" resultMap="memberSave">
+        SELECT MS.MEMBER_SAVE_NO
+            , MS.ROOM_CODE
+            , MS.USER_NO
+            , MS.MEMBER_SAVE_CODE
+            , R.SUB_PROPERTY_TYPE_CODE
+            , R.ROOM_SIZE_M
+            , R.FLOOR
+            , R.TRADE_TYPE_CODE
+            , R.CONTENT
+            , R.DEPOSIT
+            , R.MONTHLY_LEASE
+            , R.JEONSE_COST
+            , R.MAINTENANCE_COST
+            , RI.ATTACHED_FILE_NAME
+        FROM MEMBER_SAVE MS
+        JOIN ROOM R
+        ON MS.ROOM_CODE = R.ROOM_CODE
+        JOIN ROOM_IMG RI
+        ON MS.ROOM_CODE = RI.ROOM_CODE
+        WHERE MEMBER_SAVE_CODE = 'SAVE_001'
+        AND MS.USER_NO = #{userNo}
+        AND RI.IS_MAIN = 'Y'
+    </select>
+
+    <!-- 찜 목록 불러오기 (아파트) -->
+    <select id="selectSaveApartList" resultMap="memberSave">
+        SELECT MS.MEMBER_SAVE_NO
+        , MS.ROOM_CODE
+        , MS.USER_NO
+        , MS.MEMBER_SAVE_CODE
+        , R.SUB_PROPERTY_TYPE_CODE
+        , R.ROOM_SIZE_M
+        , R.FLOOR
+        , R.TRADE_TYPE_CODE
+        , R.CONTENT
+        , R.DEPOSIT
+        , R.MONTHLY_LEASE
+        , R.JEONSE_COST
+        , R.MAINTENANCE_COST
+        , RI.ATTACHED_FILE_NAME
+        FROM MEMBER_SAVE MS
+        JOIN ROOM R
+        ON MS.ROOM_CODE = R.ROOM_CODE
+        JOIN ROOM_IMG RI
+        ON MS.ROOM_CODE = RI.ROOM_CODE
+        WHERE MEMBER_SAVE_CODE = 'SAVE_002'
+        AND MS.USER_NO = #{userNo}
+        AND RI.IS_MAIN = 'Y'
+    </select>
+
+
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
