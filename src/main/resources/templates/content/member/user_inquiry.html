@@ -55,7 +55,7 @@
                         <tr th:each="memberInquiry, state : ${memberInquiryList}">
                             <td>[[${#lists.size(memberInquiryList) - state.index}]]</td>
                             <td>[[${memberInquiry.memberInquiryTypeVO.memberInquiryName}]]</td>
-                            <td><a href="location.href='/member/memberInquiryDetail'">
+                            <td><a onclick="location.href='/member/memberInquiryDetail'">
                                 [[${memberInquiry.memberInquiryTitle}]]
                             </a></td>
                             <td>[[${memberInquiry.memberInquiryWriteDate}]]</td>

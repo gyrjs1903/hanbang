@@ -76,7 +76,7 @@
                     </div>
                 </li>
             </ul>
-            <div th:if="${#lists.size(saveList)} > 0">
+            <!-- <div th:if="${#lists.size(saveList)} > 0">
                 <ul class="pagination">
                     <li th:class="${currentPage == 1} ? disabled">
                         <a th:if="${currentPage != 1}" th:href="@{/(page=1)}">처음</a>
@@ -99,7 +99,7 @@
                         <span th:if="${currentPage == totalPages}">마지막</span>
                     </li>
                 </ul>
-            </div>
+            </div> -->
             <div>
                 <button type="button">방 비교하기</button>
             </div>

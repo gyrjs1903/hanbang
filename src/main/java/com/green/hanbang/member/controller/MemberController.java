@@ -210,7 +210,7 @@ public class MemberController {
 
     // 1:1 문의 상세 페이지 이동
     @GetMapping("/memberInquiryDetail")
-    public String memberInquiryDetail(Model model,MemberInquiryVO memberInquiryVO){
+    public String memberInquiryDetail(Model model, MemberInquiryVO memberInquiryVO, MemberInquiryImgVO memberInquiryImgVO){
 
         // 문의 리스트 목록
         List<MemberInquiryVO> memberInquiryList = memberInquiryService.selectInquiryDetail(memberInquiryVO);
@@ -222,7 +222,7 @@ public class MemberController {
 
     // 허위 매물 신고 내역 페이지 이동
     @GetMapping("/memberReport")
-    public String memberReport(Model model, HttpSession session) {
+    public String memberReport() {
 
         // 문의 유형 목록
         return "content/member/user_report";
@@ -233,6 +233,13 @@ public class MemberController {
     @PostMapping("/userNameDuplicationCheckFetch")
     public String userNameDuplicationCheckFetch(@RequestParam String userName){
         return memberService.userNameCheck(userName);
+    }
+
+    // 기존 비밀번호 체크
+    @ResponseBody
+    @PostMapping("/changeForPassWordDuplicationCheckFetch")
+    public String changeForPassWordDuplicationCheckFetch(@RequestParam String passWord){
+        return memberService.passWordCheck(passWord);
     }
 
     // 헤더에 찜목록 클릭 시 최근 본 방 페이지 이동
@@ -319,18 +326,16 @@ public class MemberController {
 
     // 닉네임 변경
     @PostMapping("/updateNickname")
-    public String updateNickname(HttpSession session, String userName, RedirectAttributes rttr){
+    public String updateNickname(String userName){
         memberService.updateNickname(userName);
-        session.invalidate();
-        rttr.addFlashAttribute("msg", "정보 수정이 완료되었습니다. 재 로그인 시 적용됩니다.");
+
         return "redirect:/member/memberInfo";
     }
 
     // 비밀 번호 변경
     @PostMapping("/updatePassWord")
-    public int updatePassWord(HttpSession session, MemberVO memberVO, RedirectAttributes rttr){
-        session.invalidate();
-        rttr.addFlashAttribute("msg", "비밀번호 변경이 완료되었습니다. 다음 로그인 시 해당 비밀번호를 입력해주세요!");
+    public int updatePassWord(MemberVO memberVO){
+
         return memberService.updatePassWord(memberVO);
     }
 

@@ -21,6 +21,9 @@ public interface MemberService {
     // 이메일(아이디) 중복 확인
     public String userNameCheck(String userName);
 
+    // 비밀 번호 일치 확인
+    public String passWordCheck(String passWord);
+
     // 회원 탈퇴
     public int memberDelete(MemberVO memberVO);
 

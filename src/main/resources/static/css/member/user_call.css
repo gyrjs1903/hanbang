@@ -48,9 +48,6 @@ td{
 }
 
 .compenBtn {
-    position: relative;
-    bottom: 200px;
-    left: 1000px;
     width: 140px;
     height: 44px;
     color: rgb(255, 255, 255);

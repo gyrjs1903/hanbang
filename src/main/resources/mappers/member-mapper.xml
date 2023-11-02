@@ -112,6 +112,13 @@
         WHERE USER_NAME = #{userName}
     </select>
 
+    <!-- 비밀 번호 일치 확인 -->
+    <select id="passWordCheck" resultMap="String">
+        SELECT PASSWORD
+        FORM MEMBER_USER
+        WHERE PASSWORD = #{passWord}
+    </select>
+
     <!-- 회원 번호 조회 -->
     <select id="selectUserNo" resultType="String">
         SELECT USER_NO
