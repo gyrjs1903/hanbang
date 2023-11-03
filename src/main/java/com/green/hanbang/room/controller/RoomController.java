@@ -137,7 +137,11 @@ public class RoomController {
         //선택한 옵션
         String options = room.getDetailOptions();
         List<String> optionList = Arrays.asList(options.split(","));
-        model.addAttribute("optionList",optionList);
+        if(Objects.equals(optionList.get(0), "on")){
+            model.addAttribute("optionList","on");
+        } else {
+            model.addAttribute("optionList", optionList);
+        }
 
         //모든 옵션
         List<OptionsVO> os = roomService.selectOptions();

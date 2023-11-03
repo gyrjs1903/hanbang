@@ -265,7 +265,7 @@ height: 30px;
 }
 
 .select_room {
-    height: 620px;
+    height: 800px;
     overflow-y: scroll;
 }
 
@@ -304,6 +304,9 @@ height: 30px;
     padding-left: 15px;
     padding-bottom: 10px;
     width: 160px;
+    height: 160px;
+    overflow: hidden;
+    overflow: visible;
 }
 
 .room:hover {
