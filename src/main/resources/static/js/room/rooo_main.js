@@ -489,7 +489,7 @@ $(document).ready(function () {
     // 메뉴 항목을 클릭하여 메뉴를 표시하거나 숨깁니다.
     $(".menu_type").click(function () {
         $(this).css("background-color", "#162b63");
-        $(".type").show();
+        $(".type").toggle();
         $(this).find(".arrow-a").removeClass("arrow-a").addClass("arrow-b");
         $(".menu_option_div, .menu_filter_room_info, .menu_mj_cost").css("background-color", "#5c75bb");
         $(".filter_room_info, .mj_cost, .option_div").hide();
@@ -499,7 +499,7 @@ $(document).ready(function () {
 
     $(".menu_filter_room_info").click(function () {
         $(this).css("background-color", "#162b63");
-        $(".filter_room_info").show();
+        $(".filter_room_info").toggle();
         $(this).find(".arrow-a").removeClass("arrow-a").addClass("arrow-b");
         $(".menu_type, .menu_option_div, .menu_mj_cost").css("background-color", "#5c75bb");
         $(".type, .mj_cost, .option_div").hide();
@@ -508,7 +508,7 @@ $(document).ready(function () {
 
     $(".menu_mj_cost").click(function () {
         $(this).css("background-color", "#162b63");
-        $(".mj_cost").show();
+        $(".mj_cost").toggle();
         $(this).find(".arrow-a").removeClass("arrow-a").addClass("arrow-b");
         $(".menu_type, .menu_filter_room_info, .menu_option_div").css("background-color", "#5c75bb");
         $(".type, .filter_room_info, .option_div").hide();
@@ -518,7 +518,7 @@ $(document).ready(function () {
 
     $(".menu_option_div").click(function () {
         $(this).css("background-color", "#162b63");
-        $(".option_div").show();
+        $(".option_div").toggle();
         $(this).find(".arrow-a").removeClass("arrow-a").addClass("arrow-b");
         $(".menu_type, .menu_filter_room_info, .menu_mj_cost").css("background-color", "#5c75bb");
         $(".type, .filter_room_info, .mj_cost").hide();
