@@ -187,22 +187,6 @@ public class MemberController {
         return "redirect:/member/memberInfo";
     }
 
-<<<<<<< HEAD
-    // 매물 문의 알림 페이지 이동 (공인중개사 <-> 회원)
-    @GetMapping("/memberCall")
-    public String memberCall(HttpSession session, Model model) {
-        MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
-        List<InquiryVO> roomInquiryList = memberService.selectUserInquiryAlarm(loginInfo.getUserNo());
-
-        for(InquiryVO inquiry: roomInquiryList){
-            inquiry.getInquiryStatusVO()
-                    .setStatusName(memberInquiryService.selectStatus(inquiry.getInquiryStCode()).getStatusName());
-        }
-
-        model.addAttribute("roomInquiryList",roomInquiryList);
-        return "content/member/user_call";
-    }
-
     //답글 읽을 시 readCnt 증가
     @ResponseBody
     @PostMapping("/readInquiryAnswer")
@@ -262,7 +246,6 @@ public class MemberController {
         }
 
     }
-=======
     // -------- 허위 매물 신고 관련 --------------
     // 허위 매물 신고 내역 페이지 이동
     @GetMapping("/memberReport")
@@ -275,7 +258,6 @@ public class MemberController {
         }
     }
     // -------- 1:1문의 관련 --------------
->>>>>>> changgyu
     // 1:1문의 페이지 이동
     @GetMapping("/memberInquiry")
     public String memberInquiry(Model model, HttpSession session) {
