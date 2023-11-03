@@ -29,7 +29,7 @@ dl, ol, ul{
 }
 .menu_bar  li { 
   margin: 0 15px;
-  line-height: 70px;
+  line-height: 90px;
 }
 
 .menu_bar li  a {
@@ -153,7 +153,7 @@ dl, ol, ul{
   display: none;
   position: absolute;
   z-index: 10;
-  top: 60px;
+  top: 70px;
   right: 50%;
   margin-right: -58px;
   width: 265px;

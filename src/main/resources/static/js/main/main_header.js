@@ -5,6 +5,8 @@ let noAlarm = '<div class="noAlarm">새로운 알림이 없습니다.</div>';
 let closeBtn = '';
 let alarm = document.querySelector('.alarm');
 
+
+
 function menuOpen() {
     let click = document.getElementById("my_menu_wrap");
     if (click.style.display === "none" || click.style.display === "") {
@@ -83,9 +85,6 @@ function authority(chk,alarmCnt){
         })
         //fetch 통신 후 실행 영역
         .then((data) => {//data -> controller에서 리턴되는 데이터!
-            // setTimeout(()=>{
-            //     document.querySelector('#authority-alarm').slideUP();
-            // },100);
             $('.authority-alarm-wrap').slideUp(400);
             if(alarmCnt != 0){
                 let cngAlarmCnt = alarmCnt - 1;
@@ -111,14 +110,17 @@ function authority(chk,alarmCnt){
 
 function userAlarm(userNo,nickName,userInquiryAnswer){
     alarmTag.innerHTML = '';
+    console.log(userInquiryAnswer + "userInquiry");
     if (alarmBox.style.display === 'none' || alarmBox.style.display === "") {
 
         alarmBox.style.display = 'block';
 
         //문의 답글 알림
         if (userInquiryAnswer >= 1) {
+            const reduceCnt =  parseInt(document.querySelector('.reduceCnt').value);
+            userInquiryAnswer = userInquiryAnswer - reduceCnt;
             let answer = `<div id="user-room-alarm" onclick="location.href='/member/memberCall'">
-                ${nickName}님이 문의하신 글<br> ${userInquiryAnswer}개에 답글이 달렸습니다.
+                ${nickName}님이 문의하신 글<br> <span class="userInquiryCnt">${userInquiryAnswer - reduceCnt}</span>개에 답글이 달렸습니다.
             </div>
             `;
             alarmTag.insertAdjacentHTML('afterbegin', answer);

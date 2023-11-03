@@ -219,10 +219,16 @@
         , INQUIRY_ANSWER
         , TO_CHAR(INQUIRY_DATE,'YYYY-MM-DD') INQUIRY_DATE
         , INQUIRY_ST_CODE
+        , INQUIRY_READ_CNT
         FROM INQUIRY I, INQUIRY_TITLE T
         WHERE FROM_USER_NO = #{userNo}
         AND I.INQUIRY_TITLE_CODE = T.INQUIRY_TITLE_CODE
         ORDER BY INQUIRY_DATE DESC
     </select>
 
+    <update id="updateInquiryReadCnt">
+        UPDATE INQUIRY
+        SET INQUIRY_READ_CNT = (SELECT NVL(MAX(INQUIRY_READ_CNT),0) FROM INQUIRY) +1
+        WHERE INQUIRY_CODE = #{inquiryCode}
+    </update>
 </mapper>

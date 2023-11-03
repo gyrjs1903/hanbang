@@ -16,7 +16,7 @@ public class PageVO {
     public PageVO(){
         nowPage = 1;
         displayPageCnt = 5;
-        displayDataCnt = 5;
+        displayDataCnt = 10;
     }
 
     //페이징 처리를 하기 위한 모든 변수의 값을 세팅하는 메소드

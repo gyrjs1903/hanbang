@@ -61,4 +61,7 @@ public interface MemberService {
 
     //매물 문의 답글 완료 알림
     public List<InquiryVO> selectUserInquiryAlarm(String userNo);
+
+    //문의 답글 확인 후 ReadCnt 증가
+    public void updateInquiryReadCnt(String inquiryCode);
 }
