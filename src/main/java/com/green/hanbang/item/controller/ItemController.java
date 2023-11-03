@@ -7,6 +7,8 @@ import com.green.hanbang.item.vo.GeneralItemVO;
 import com.green.hanbang.item.vo.PackageItemVO;
 import com.green.hanbang.item.vo.PlusItemVO;
 import com.green.hanbang.member.vo.MemberVO;
+import com.sun.mail.iap.Response;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -24,7 +26,7 @@ public class ItemController {
     private final ItemService itemService;
 
     @PostMapping("/goBuyItem")
-    public String buyItem(BuyVO buyVO, HttpSession session, PackageItemVO packageItemVO, GeneralItemVO generalItemVO, PlusItemVO plusItemVO, String memCateCode){
+    public String buyItem(BuyVO buyVO, HttpSession session, PackageItemVO packageItemVO, GeneralItemVO generalItemVO, PlusItemVO plusItemVO, String memCateCode,  HttpServletRequest request){
         String buyNextCode = itemService.selectNextBuyCode();
         buyVO.setBuyCode(buyNextCode);
         buyVO.setUserNo(((MemberVO)session.getAttribute("loginInfo")).getUserNo());
@@ -56,7 +58,7 @@ public class ItemController {
             itemService.buyPlusItem(plusItemVO);
         }
 
-        return "main/buyItemList";
+        return "redirect:/";
     }
 
 }

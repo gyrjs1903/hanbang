@@ -120,6 +120,16 @@
         <result column="INQUIRY_TITLES" property="inquiryTitles"/>
     </resultMap>
 
+<!--    매물 상품 적용 -->
+    <resultMap id="applyItem" type="com.green.hanbang.room.vo.ApplyItemVO">
+        <id column="APPLY_CODE"     property="applyCode"/>
+        <result column="ROOM_CODE"  property="roomCode"/>
+        <result column="BUY_CODE"   property="buyCode"/>
+        <result column="CAN_APPLY"  property="canApply"/>
+        <result column="BUY_TYPE"  property="buyType"/>
+        <result column="END_DATE"  property="endDate"/>
+    </resultMap>
+
     <!--option select-->
     <select id="selectOptions" resultMap="options">
         SELECT OP.OPTION_CODE
@@ -446,4 +456,124 @@
         , #{inquiryContent}
         )
     </insert>
+
+    <!--  수연 추가 쿼리    -->
+    <!-- 매물에 상품 적용하기   -->
+    <insert id="insertApplyItem">
+        INSERT INTO APPLY_ITEM(
+            APPLY_CODE
+            , ROOM_CODE
+            , BUY_CODE
+            , BUY_TYPE
+            , END_DATE
+        )VALUES(
+            (SELECT 'APPLY_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(APPLY_CODE,7))),0) + 1 ,4,'0') APPLY_CODE
+            FROM APPLY_ITEM)
+            , #{roomCode}
+            , #{buyCode}
+            , #{buyType}
+            , DECODE(#{buyType}, 'DAY' , SYSDATE + 1 ,  SYSDATE + 30)
+        )
+    </insert>
+
+    <update id="updateItemCnt">
+        <if test='memCateCode.equals("CATE_001")'>
+            UPDATE PACKAGE_ITEM
+            SET
+            <if test='buyType.equals("GENERAL")'>
+                GENERAL_PRODUCT_CNT = GENERAL_PRODUCT_CNT - 1
+            </if>
+            <if test='buyType.equals("SEASON")'>
+                PLUS_SEASON_CNT = PLUS_SEASON_CNT - 1
+            </if>
+            <if test='buyType.equals("DAY")'>
+                PLUS_DAY_CNT = PLUS_DAY_CNT - 1
+            </if>
+        </if>
+        <if test='memCateCode.equals("CATE_002")'>
+            UPDATE GENERAL_ITEM
+            SET
+            GENERAL_PRODUCT_CNT = GENERAL_PRODUCT_CNT - 1
+        </if>
+        <if test='memCateCode.equals("CATE_003")'>
+            UPDATE PLUS_ITEM
+            SET
+            IS_VALID = 'N'
+        </if>
+        WHERE BUY_CODE = #{buyCode}
+    </update>
+
+    <!-- 사용한 패키지 상품의 잔여 수량 확인 -->
+    <select id="getPackageIsValid" resultType="String">
+        SELECT PACKAGE_CODE
+        FROM PACKAGE_ITEM
+        WHERE BUY_CODE = #{buyCode}
+        AND GENERAL_PRODUCT_CNT = 0
+        AND PLUS_SEASON_CNT = 0
+        AND PLUS_DAY_CNT = 0
+    </select>
+
+<!--    사용한 패키지 상품의 잔여 수량 확인-->
+    <select id="getGeneralIsValid" resultType="String">
+        SELECT GENERAL_CODE
+        FROM GENERAL_ITEM
+        WHERE BUY_CODE = #{buyCode}
+        AND GENERAL_PRODUCT_CNT = 0
+    </select>
+
+    <update id="updatePackageIsValid">
+        UPDATE PACKAGE_ITEM
+        SET
+        IS_VALID = 'N'
+        WHERE BUY_CODE = #{buyCode}
+    </update>
+
+    <update id="updateGeneralIsValid">
+        UPDATE GENERAL_ITEM
+        SET
+        IS_VALID = 'N'
+        WHERE BUY_CODE = #{buyCode}
+    </update>
+
+<!--    로그인 시 아이템 종료일에 따라 IS_VALID 값 변경 -->
+    <update id="updatePackageValidWhenLogin">
+        UPDATE PACKAGE_ITEM
+        SET
+        IS_VALID = 'N'
+        WHERE PACKAGE_CODE IN (
+                                SELECT PACKAGE_CODE
+                                FROM PACKAGE_ITEM
+                                WHERE USER_NO = #{userNo}
+                                AND IS_VALID = 'Y'
+                                AND END_DATE &lt; SYSDATE
+        )
+    </update>
+
+    <update id="updateGeneralValidWhenLogin">
+        UPDATE GENERAL_ITEM
+        SET
+        IS_VALID = 'N'
+        WHERE GENERAL_CODE IN (
+                                SELECT GENERAL_CODE
+                                FROM GENERAL_ITEM
+                                WHERE USER_NO = #{userNo}
+                                AND IS_VALID = 'Y'
+                                AND END_DATE &lt; SYSDATE
+        )
+    </update>
+
+    <update id="updatePlusValidWhenLogin">
+        UPDATE PLUS_ITEM
+        SET
+        IS_VALID = 'N'
+        WHERE PLUS_CODE IN (
+                                SELECT PLUS_CODE
+                                FROM PLUS_ITEM
+                                WHERE USER_NO = #{userNo}
+                                AND IS_VALID = 'Y'
+                                AND END_DATE &lt; SYSDATE
+        )
+    </update>
+
+
 </mapper>

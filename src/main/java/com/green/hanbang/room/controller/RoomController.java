@@ -2,6 +2,7 @@ package com.green.hanbang.room.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.hanbang.item.service.ItemService;
+import com.green.hanbang.item.vo.BuyVO;
 import com.green.hanbang.item.vo.GeneralItemVO;
 import com.green.hanbang.item.vo.PackageItemVO;
 import com.green.hanbang.item.vo.PlusItemVO;
@@ -74,7 +75,7 @@ public class RoomController {
         }
     }
     @PostMapping("/insertRoom")
-    public String insertRoom(RoomVO roomVO, MultipartFile mainImg, MultipartFile[] subImg, RoomAddrVO roomAddrVO){
+    public String insertRoom(RoomVO roomVO, MultipartFile mainImg, MultipartFile[] subImg, RoomAddrVO roomAddrVO, ApplyItemVO applyItemVO){
         //상품이미지등록
         //RoomCode를 조회
         String roomCode = roomService.selectNextRoomCode();
@@ -98,6 +99,46 @@ public class RoomController {
         roomVO.setImgList(imgList);
         System.out.println(roomVO);
         roomService.insertRoom(roomVO);
+
+        ////////////////////////////////////////////////////////
+
+        System.out.println("22222222222222222222222222222222"+ applyItemVO);
+
+        // 1. 상품을 선택했다면
+        System.out.println(applyItemVO);
+        if (!applyItemVO.getBuyCode().equals("")){
+            applyItemVO.setRoomCode(roomCode);
+
+            //매물 등록 시 상품 정보 추가
+            roomService.insertApplyItem(applyItemVO);
+
+            //사용한 매물에 대한 개수 차감
+            roomService.updateItemCnt(applyItemVO);
+
+            //차감했는데 만약 사용개수로 0개로 업데이트 됐으면 사용불가로 변경
+
+            if(applyItemVO.getMemCateCode().equals("CATE_001")){
+                boolean result =  roomService.getPackageIsValid(applyItemVO.getBuyCode());
+
+                if(!result){
+                    roomService.updatePackageIsValid(applyItemVO.getBuyCode());
+                }
+
+            }
+            else if(applyItemVO.getMemCateCode().equals("CATE_002")){
+                boolean result =  roomService.getGeneralIsValid(applyItemVO.getBuyCode());
+
+                if(!result){
+                    roomService.updateGeneralIsValid(applyItemVO.getBuyCode());
+                }
+
+            }
+
+
+
+        }
+
+
         return "redirect:/room/roomMain";
     }
     @GetMapping("/roomMain")

@@ -10,17 +10,17 @@
     border-radius: 5px;
     z-index: 2;
 }
-.alarm_header{
+.admin_alarm_header{
     display: flex;
     justify-content: space-between;
     padding: 15px;
     border-bottom: 1px solid #ddd;
 }
-.alarm_content{
+.admin_alarm_content{
     padding: 10px 20px;
     background-color: #f1f1f1;
 }
-#today_alarm > div{
+#admin_today_alarm > div{
     border-radius: 5px;
     margin: 20px 0;
     padding: 15px;

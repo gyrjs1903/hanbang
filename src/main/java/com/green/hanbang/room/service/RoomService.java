@@ -76,6 +76,25 @@ public interface RoomService {
     public List<GeneralItemVO> selectGeneralItemList (String userNo);
     public List<PlusItemVO> selectPlusItemList (String userNo);
 
+    // 매물에 상품 적용
+    public int insertApplyItem(ApplyItemVO applyItemVO);
 
+    //매물 등록 시 상품 선택했다면 상품 수량 차감
+    void updateItemCnt(ApplyItemVO applyItemVO);
+
+    // 패키지 상품의 갯수 조회
+    public boolean getPackageIsValid (String buyCode);
+
+    // 일반 상품의 갯수 조회
+    public boolean getGeneralIsValid (String buyCode);
+
+    //
+    void updatePackageIsValid(String buyCode);
+    void updateGeneralIsValid(String buyCode);
+
+    // 로그인 시 아이템의 END_DATE에 따라  IS_VALID 값 변경
+    public void updatePackageValidWhenLogin (String userNo);
+    public void updateGeneralValidWhenLogin (String userNo);
+    public void updatePlusValidWhenLogin (String userNo);
 
 }

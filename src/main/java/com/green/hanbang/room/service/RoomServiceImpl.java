@@ -134,4 +134,67 @@ public class RoomServiceImpl implements RoomService {
     public List<PlusItemVO> selectPlusItemList(String userNo) {
         return sqlSession.selectList("itemMapper.selectPlusItemList", userNo);
     }
+
+    // 매물에 상품 적용
+    @Override
+    public int insertApplyItem(ApplyItemVO applyItemVO) {
+        return sqlSession.insert("roomMapper.insertApplyItem", applyItemVO);
+    }
+
+    // 상품 사용 시 갯수 차감
+    @Override
+    public void updateItemCnt(ApplyItemVO applyItemVO) {
+        sqlSession.update("roomMapper.updateItemCnt", applyItemVO);
+    }
+
+    // 패키지 상품 잔여 갯수 조회
+    @Override
+    public boolean getPackageIsValid(String buyCode) {
+        String result = sqlSession.selectOne("roomMapper.getPackageIsValid", buyCode);
+
+        if(result == null){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    // 일반 상품 잔여 갯수 조회
+    @Override
+    public boolean getGeneralIsValid(String buyCode) {
+        String result = sqlSession.selectOne("roomMapper.getGeneralIsValid", buyCode);
+
+        if(result == null){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    @Override
+    public void updatePackageIsValid(String buyCode) {
+        sqlSession.update("roomMapper.updatePackageIsValid", buyCode);
+    }
+
+    @Override
+    public void updateGeneralIsValid(String buyCode) {
+        sqlSession.update("roomMapper.updateGeneralIsValid", buyCode);
+    }
+
+    @Override
+    public void updatePackageValidWhenLogin(String userNo) {
+        sqlSession.update("roomMapper.updatePackageValidWhenLogin", userNo);
+    }
+
+    @Override
+    public void updateGeneralValidWhenLogin(String userNo) {
+        sqlSession.update("roomMapper.updateGeneralValidWhenLogin", userNo);
+    }
+
+    @Override
+    public void updatePlusValidWhenLogin(String userNo) {
+        sqlSession.update("roomMapper.updatePlusValidWhenLogin", userNo);
+    }
 }

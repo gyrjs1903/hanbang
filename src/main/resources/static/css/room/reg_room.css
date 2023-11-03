@@ -477,6 +477,7 @@ label.custom-file-label:hover {
     height: 200px;
     /* 이미지의 높이를 고정 크기 200px로 설정 */
 }
+
 #error-div{
     position: fixed;
     right: 0; /* 화면 왼쪽에 고정 */
@@ -503,3 +504,47 @@ label.custom-file-label:hover {
     z-index: 501;
     cursor: pointer;
 }
+
+/* ----------------------------------------------------------------------------- */
+/* 상품 적용 모달창 디자인 */
+#apply-item-input{
+    width: 300px;
+}
+.cateName{
+    margin: 10px 0;
+}
+.info-div{
+    margin: 10px 0;
+}
+.endDate{
+    float: right;
+}
+.membershipInfo{
+    margin-bottom: 10px;
+}
+.info-div{
+    margin-top: 5px;
+    padding: 10px;
+    border: 1px solid #405795;
+    border-radius: 10px;
+}
+.packageDateilInfo, .generalDateilInfo, .plusDateilInfo{
+    text-align: center;
+}
+.packageDateilInfo > div , .generalDateilInfo > div, .plusDateilInfo > div {
+    display: inline-block;
+    margin-right: 15px;
+    justify-content: space-between;
+
+}
+.itemName{
+    color: #000;
+}
+.leftCntInfo{
+    font-size: small;
+    color: #000;
+}
+.packageIsValid, .generalIsValid, .plusIsValid{
+    display: none;
+}
+
