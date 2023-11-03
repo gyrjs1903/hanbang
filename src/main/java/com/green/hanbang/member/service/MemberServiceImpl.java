@@ -105,4 +105,9 @@ public class MemberServiceImpl implements MemberService {
     public List<InquiryVO> selectUserInquiryAlarm(String userNo) {
         return sqlSession.selectList("memberMapper.selectUserInquiryAlarm",userNo);
     }
+
+    @Override
+    public void updateInquiryReadCnt(String inquiryCode) {
+        sqlSession.update("memberMapper.updateInquiryReadCnt",inquiryCode);
+    }
 }

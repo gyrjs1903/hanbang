@@ -4,6 +4,7 @@ table{
     width: 80%;
     text-align: center;
     margin: 0 auto;
+    margin-top: 70px;
 }
 
 .room-inquiry-titles{
@@ -14,12 +15,16 @@ table{
 td{
     padding: 5px;
 }
-
-.no-room-inquiry{
-    width: 40%;
-    margin: 0 auto;
-    text-align: center;
-    margin-top: 30px;
+.room-inquiry-answer{
+    display: none;
+}
+.toggle-tr td{
+    text-align: left;
+    padding: 20px 0 20px 107px;
+}
+.no-room-inquiry td{
+    padding-top: 19px;
+    font-weight: bold;
 }
 
 .callWP {

@@ -195,6 +195,7 @@
     <update id="updateInquiryAnswer">
         UPDATE INQUIRY
         SET INQUIRY_ANSWER = #{inquiryAnswer}
+            , INQUIRY_ST_CODE = 'ST_04'
         WHERE INQUIRY_CODE = #{inquiryCode}
     </update>
 
