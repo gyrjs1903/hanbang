@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org"
-                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-                layout:decorate="~{fragment/main_layout}">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{fragment/main_layout}">
+
 <head>
-<meta charset="UTF-8">
-<title>원하는 방을 한방에 한방👊</title>
+    <meta charset="UTF-8">
+    <title>원하는 방을 한방에 한방👊</title>
 </head>
+
 <body>
     <th:block layout:fragment="content">
         <th:block layout:fragment="content_css">
@@ -24,24 +25,49 @@
                 </div>
             </div>
         </header>
-        <th:block th:if="${#lists.size(roomInquiryList) != 0}">
-            <table>
-                <thead>
-                    <tr>
-                        <td>No</td>
-                        <td>문의 내용</td>
-                        <td>날 짜</td>
-                    </tr>
-                </thead>
+        <table>
+            <thead>
+                <tr>
+                    <td>No</td>
+                    <td>문의 내용</td>
+                    <td>날 짜</td>
+                    <td>상 태</td>
+                </tr>
+            </thead>
+            <th:block th:if="${#lists.size(roomInquiryList) != 0}">
                 <tbody>
-                    <tr th:each="inquiry,state : ${roomInquiryList}">
-                        <td>[[${#lists.size(roomInquiryList) - state.index}]]</td>
-                        <td class="room-inquiry-titles">[[${inquiry.inquiryTitleVO.inquiryTitles}]]</td>
-                        <td>[[${inquiry.inquiryDate}]]</td>
+                    <th:block th:each="inquiry,state : ${roomInquiryList}">
+                        <tr>
+                            <td>[[${#lists.size(roomInquiryList) - state.index}]]</td>
+                            <th:block th:if="${inquiry.inquiryAnswer != null}">
+                                <td class="room-inquiry-titles cursor" th:onclick="inquiryAnswer(this,[[${inquiry.inquiryCode}]]);">
+                                    <span>[[${inquiry.inquiryTitleVO.inquiryTitles}]]</span>
+                                </td>
+                            </th:block>
+                            <th:block th:unless="${inquiry.inquiryAnswer != null}">
+                                <td class="room-inquiry-titles">
+                                    <span class="default">[[${inquiry.inquiryTitleVO.inquiryTitles}]]</span>
+                                </td>
+                            </th:block>
+                            <td>[[${inquiry.inquiryDate}]]</td>
+                            <td>[[${inquiry.inquiryStatusVO.statusName}]]</td>
+                        </tr>
+                        <tr class="room-inquiry-answer toggle-tr" th:if="${inquiry.inquiryAnswer != null}">
+                            <td colspan="4">[[${inquiry.inquiryAnswer}]]</td>
+                        </tr>
+                    </th:block>
+                </tbody>
+            </th:block>
+            <th:block th:if="${#lists.size(roomInquiryList) == 0}">
+                <tbody class="compenCT no-room-inquiry">
+                    <tr>
+                        <td colspan="4">문의한 방이 없습니다.
+                            <p>관심있는 방을 문의 해보세요</p>
+                        </td>
                     </tr>
                 </tbody>
-            </table>
-        </th:block>
+            </th:block>
+        </table>
         <div class="callWP">
             <div class="compensationTA">
                 <p></p>
@@ -53,13 +79,11 @@
                     <a onclick="">보상안내</a>
                 </button>
             </div>
-            <th:block  th:if="${#lists.size(roomInquiryList) == 0}">
-                <div class="compenCT no-room-inquiry">
-                    <p>문의한 방이 없습니다.</p>
-                    <p>관심있는 방을 문의 해보세요</p>
-                </div>
-            </th:block>
         </div>
     </th:block>
+    <th:block layout:fragment="content_js">
+        <script src="/js/member/user_call.js" defer></script>
+    </th:block>
 </body>
+
 </html>

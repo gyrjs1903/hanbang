@@ -12,33 +12,30 @@
         <link rel="stylesheet" href="/css/realtor/inquiry_board.css">
         <div class="row realtor_page">
             <div class="col-2 side">
-                <div class="cursor btn btn-light d-grid justify-content-start myPage" onclick="location.href='/realtor/myPage';">내 정보</div>
-                <div class="cursor btn btn-light d-grid justify-content-start boardList" onclick="location.href='/realtor/inquiryBoardList';">문의글 확인하기</div>
+                <div class="cursor btn btn-light d-grid justify-content-start myPage"
+                    onclick="location.href='/realtor/myPage';">내 정보</div>
+                <div class="cursor btn btn-light d-grid justify-content-start boardList"
+                    onclick="location.href='/realtor/inquiryBoardList';">문의글 확인하기</div>
             </div>
-            <th:block th:if="${inquiryBoardList == 'null'}">
-                <div class="col-10 text-center no_inquiry">
-                    새로운 문의글이 없습니다.
-                </div>
-            </th:block>
-            <th:block th:if="${inquiryBoardList != 'null'}">
-                <div class="col-10 table_box">
-                    <table>
-                        <colgroup>
-                            <col width="8%">
-                            <col width="*">
-                            <col width="15%">
-                            <col width="15%">
-                            <col width="15%">
-                        </colgroup>
-                        <thead>
-                            <tr>
-                                <td>번 호</td>
-                                <td>제 목</td>
-                                <td>작성자</td>
-                                <td>날 짜</td>
-                                <td>답글여부</td>
-                            </tr>
-                        </thead>
+            <div class="col-10 table_box">
+                <table>
+                    <colgroup>
+                        <col width="8%">
+                        <col width="*">
+                        <col width="15%">
+                        <col width="15%">
+                        <col width="15%">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <td>번 호</td>
+                            <td>제 목</td>
+                            <td>작성자</td>
+                            <td>날 짜</td>
+                            <td>상 태</td>
+                        </tr>
+                    </thead>
+                    <th:block th:if="${inquiryBoardList != 'null'}">
                         <tbody>
                             <tr th:each="inquiry, state : ${inquiryBoardList}">
                                 <td>[[${boardNum - state.index}]]</td>
@@ -47,12 +44,12 @@
                                         <td th:onclick="inquiryDetail([[${inquiry.inquiryCode}]])" class="cursor">
                                             [[${#strings.substring(inquiry.inquiryContent,0,10)}]]...
                                         </td>
-                                    </th:block>                    
+                                    </th:block>
                                     <th:block th:unless="${#strings.length(inquiry.inquiryContent) > 10}">
                                         <td th:onclick="inquiryDetail([[${inquiry.inquiryCode}]])" class="cursor">
                                             [[${inquiry.inquiryContent}]]
                                         </td>
-                                    </th:block>       
+                                    </th:block>
                                 </th:block>
                                 <th:block th:unless="${inquiry.inquiryTitleCode == 'INQUIRY_TITLE_001'}">
                                     <td th:onclick="inquiryDetail([[${inquiry.inquiryCode}]])" class="cursor">
@@ -68,18 +65,31 @@
                                 </th:block>
                             </tr>
                         </tbody>
-                    </table>
+                    </th:block>
+                    <th:block th:if="${inquiryBoardList == 'null'}">
+                        <tbody>
+                            <tr class="col-10 text-center no_inquiry">
+                                <td colspan="5">새로운 문의글이 없습니다.</td>
+                            </tr>
+                        </tbody>
+                    </th:block>
+                </table>
+                <th:block th:if="${inquiryBoardList != 'null'}">
                     <div class="page">
-                        <a th:href="@{/realtor/inquiryBoardList(nowPage=${inquiryVO.beginPage-1})}" th:if="${inquiryVO.prev}"><span>이전</span></a>
+                        <a th:href="@{/realtor/inquiryBoardList(nowPage=${inquiryVO.beginPage-1})}"
+                            th:if="${inquiryVO.prev}"><span>이전</span></a>
                         <th:block th:each="pageNum : ${#numbers.sequence(inquiryVO.beginPage,inquiryVO.endPage)}">
-                            <a th:href="@{/realtor/inquiryBoardList(nowPage=${pageNum})}"><span th:text="${pageNum}"></span></a>
+                            <a th:href="@{/realtor/inquiryBoardList(nowPage=${pageNum})}"><span
+                                    th:text="${pageNum}"></span></a>
                         </th:block>
-                        <a th:href="@{/realtor/inquiryBoardList(nowPage=${inquiryVO.endPage+1})}" th:if="${inquiryVO.next}"><span>다음</span></a>
+                        <a th:href="@{/realtor/inquiryBoardList(nowPage=${inquiryVO.endPage+1})}"
+                            th:if="${inquiryVO.next}"><span>다음</span></a>
                     </div>
-                    </div>
-                </div>
-            </th:block>
+                </th:block>
+            </div>
         </div>
+    </th:block>
+    </div>
     </th:block>
     <th:block layout:fragment="content_js">
         <script src="/js/realtor/board.js"></script>

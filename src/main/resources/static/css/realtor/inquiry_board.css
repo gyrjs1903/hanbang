@@ -8,16 +8,16 @@
 .side > div{
     border-bottom: 2px solid #ddd;
 }
-.no_inquiry{
+.no_inquiry td{
     font-size: 18px;
-    padding-top: 55px;
-    margin-bottom: 300px;
+    padding: 20px 0;
 }
 table{
     width: 100%;
     margin: 0 auto;
     text-align: center;
     border-collapse: collapse;
+    border-top: 2px solid #a3a3a3;
 }
 tbody > tr:hover {
     background-color: #e9e5e5;

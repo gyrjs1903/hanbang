@@ -4,6 +4,7 @@ import com.green.hanbang.member.service.MemberInquiryService;
 import com.green.hanbang.member.service.MemberService;
 import com.green.hanbang.member.service.SaveService;
 import com.green.hanbang.member.vo.*;
+import com.green.hanbang.realtor.vo.RealtorDetailVO;
 import com.green.hanbang.room.service.RoomService;
 import com.green.hanbang.room.vo.InquiryVO;
 import com.green.hanbang.room.vo.RoomIMGVO;
@@ -18,6 +19,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -150,7 +153,7 @@ public class MemberController {
         return "redirect:/member/memberInfo";
     }
 
-    // 알림 페이지 이동 (공인중개사 <-> 회원)
+    // 매물 문의 알림 페이지 이동 (공인중개사 <-> 회원)
     @GetMapping("/memberCall")
     public String memberCall(HttpSession session, Model model) {
         MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
@@ -161,11 +164,69 @@ public class MemberController {
                     .setStatusName(memberInquiryService.selectStatus(inquiry.getInquiryStCode()).getStatusName());
         }
 
-        System.out.println(roomInquiryList);
         model.addAttribute("roomInquiryList",roomInquiryList);
         return "content/member/user_call";
     }
 
+    //답글 읽을 시 readCnt 증가
+    @ResponseBody
+    @PostMapping("/readInquiryAnswer")
+    public void readInquiryAnswer(@RequestBody InquiryVO inquiryVO,HttpSession session){
+        MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
+        memberService.updateInquiryReadCnt(inquiryVO.getInquiryCode());
+        setAlarmData(loginInfo);
+    }
+
+    //다른페이지에서 알림창 확인 메소드
+    public void setAlarmData(MemberVO loginInfo){
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+
+        HttpSession session = request.getSession();
+        int alarmCnt = 0;
+        //공인중개사
+        if (loginInfo.getLoginType().equals("REALTOR")) {
+            if (memberService.selectAlarm(loginInfo.getUserNo()) != null) {
+                // 권한승인알림
+                Integer authorityStatus = memberService.selectAuthorityAlarm(loginInfo.getUserNo());
+
+                session.setAttribute("authorityAlarm", authorityStatus);
+
+                //매물문의알림
+                RealtorDetailVO realtor = memberService.selectInquiryAlarm(loginInfo.getUserNo());
+                int realtorInquiryCnt = 0;
+                if(realtor != null){
+                    for (InquiryVO inquiry : realtor.getInquiryList()) {
+                        if (inquiry.getInquiryAnswer() == null) {
+                            realtorInquiryCnt += 1;
+                        }
+                    }
+                    session.setAttribute("realtorInquiryCnt", realtorInquiryCnt);
+                }
+                //총 알림 개수
+                if (authorityStatus == 1) alarmCnt += 1;
+                if (realtorInquiryCnt != 0) alarmCnt += 1;
+            } else {
+                // 권한 승인 안 되어있을시
+                Integer authorityStatus = memberService.selectAuthorityAlarm(loginInfo.getUserNo());
+                session.setAttribute("authorityAlarm", authorityStatus);
+            }
+            session.setAttribute("alarmCnt", alarmCnt);
+        }
+        //일반회원
+        if (loginInfo.getLoginType().equals("USER")) {
+            List<InquiryVO> userRoomInquiry = memberService.selectUserInquiryAlarm(loginInfo.getUserNo());
+            int userInquiryAnswer = 0;
+            for (InquiryVO inquiry : userRoomInquiry) {
+                if (inquiry.getInquiryAnswer() != null && inquiry.getInquiryReadCnt() == 0) {
+                    userInquiryAnswer += 1;
+                }
+            }
+            if (userInquiryAnswer != 0) alarmCnt += 1;
+            session.setAttribute("userInquiryAnswer", userInquiryAnswer);
+            session.setAttribute("alarmCnt", alarmCnt);
+        }
+
+    }
     // 1:1문의 페이지 이동
     @GetMapping("/memberInquiry")
     public String memberInquiry(Model model, HttpSession session) {
