@@ -10,8 +10,13 @@ import com.green.hanbang.member.vo.MemberVO;
 import com.green.hanbang.room.service.RoomService;
 import com.green.hanbang.room.vo.*;
 import com.green.hanbang.util.RoomUtil;
+<<<<<<< HEAD
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+=======
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+>>>>>>> changgyu
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -170,7 +175,7 @@ public class RoomController {
 ////////////////////////////////
 
     @GetMapping("/roomDetailInfo")
-    public String roomDetailInfo(String roomCode, Model model){
+    public String roomDetailInfo(String roomCode, Model model, HttpServletRequest request){
         //방 모든 정보
         RoomVO room = roomService.selectRoomInfo(roomCode);
         System.out.println(room);
