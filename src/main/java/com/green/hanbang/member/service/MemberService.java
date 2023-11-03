@@ -12,8 +12,14 @@ public interface MemberService {
     // 회원 가입
     public int join(MemberVO memberVO);
 
+    // 다음에 들어갈 회원 번호 조회
+    public String selectNextUserNo();
+
     // 프로필 이미지 등록
-    public int insertProImg(MemberImgVO memberImgVO);
+    public void insertProfile(MemberImgVO memberImgVO);
+
+    // 프로필 이미지 수정
+    public void updateProfile(MemberImgVO memberImgVO);
 
     // 로그인
     public MemberVO login(MemberVO memberVO);
@@ -24,20 +30,14 @@ public interface MemberService {
     // 비밀 번호 일치 확인
     public String passWordCheck(String passWord);
 
-    // 회원 탈퇴
-    public int memberDelete(MemberVO memberVO);
-
     // 회원 번호 조회
     public String selectUserNo(String userNo);
 
     // 회원 정보 조회
     public String selectUserInfo(MemberVO memberVO);
 
-    // 프로필 이미지 불러오기
-    public MemberImgVO profileImgLoad(MemberImgVO memberImgVO);
-
     // 닉네임 변경
-    public int updateNickname(String userName);
+    public void updateNickname(String userName);
 
     // 비밀 번호 변경
     public int updatePassWord(MemberVO memberVO);

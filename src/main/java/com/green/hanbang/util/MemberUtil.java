@@ -9,29 +9,29 @@ import java.util.UUID;
 public class MemberUtil {
     // 파일 첨부 기능 (단일 파일 업로드 - 프로필 사진은 하나만)
     public static MemberImgVO MemberUploadFile(MultipartFile img){
-            MemberImgVO memberImgVO = new MemberImgVO();
+        MemberImgVO memberImgVO = new MemberImgVO();
 
-            // 첨부 파일
-            String profileImgName = img.getOriginalFilename();
+        // 첨부 파일
+        String profileImgName = img.getOriginalFilename();
 
-            // 첨부될 파일명
-            String uuid = UUID.randomUUID().toString();
+        // 첨부될 파일명
+        String uuid = UUID.randomUUID().toString();
 
-            // 확장자명
-            int dotIndex = profileImgName.lastIndexOf(".");
-            String extension = profileImgName.substring(dotIndex);
-            String attachedProfileImgName = uuid + extension;
+        // 확장자명
+        int dotIndex = profileImgName.lastIndexOf(".");
+        String extension = profileImgName.substring(dotIndex);
+        String attachedProfileImgName = uuid + extension;
 
-            // 파일 첨부
-            try {
-                File file = new File(ConstantVariable.PROFILE_UPLOAD_PATH + attachedProfileImgName);
-                img.transferTo(file);
+        // 파일 첨부
+        try {
+            File file = new File(ConstantVariable.PROFILE_UPLOAD_PATH + attachedProfileImgName);
+            img.transferTo(file);
 
-                memberImgVO.setProfileImgName(profileImgName);
-                memberImgVO.setAttachedProfileImgName(attachedProfileImgName);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            memberImgVO.setProfileImgName(profileImgName);
+            memberImgVO.setAttachedProfileImgName(attachedProfileImgName);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         return memberImgVO;
     }
