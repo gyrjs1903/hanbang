@@ -1,4 +1,182 @@
 /* user_info.js */
+/* ----------------- 기타 등등 --------------------- */
+    /* 개인정보 동의 상세보기 */
+    function openNewWindow(url) {
+        window.open(url);
+    };
+
+
+
+/* ----------------- 프로필 사진 관련--------------------- */
+    // const profileImage = document.getElementById("proImg"); // <img>
+    // const imageInput = document.getElementById("profileImg"); // <input>
+
+    // let initCheck; // 초기 프로필 이미지 상태를 저장하는 변수
+
+    // let deleteCheck = -1;
+
+    // let originalImage; // 초기 프로필 이미지 파일 경로 저장
+
+    // if(imageInput != null){
+
+    //     // 프로필 이미지가 출력되는 img 태그의 src
+    //     originalImage = profileImage.getAttribute("src");
+
+    //     // 서버로부터 이미지 URL 받아오기
+    //     fetch('/member/getProfileImageUrlFetch', {
+    //         method: 'POST',
+    //         cache: 'no-cache',
+    //         headers: {
+    //             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+    //         },
+    //     })
+    //     .then((response) => {
+    //         if(!response.ok){
+    //             alert('fetch error!\n컨트롤러로 통신중에 오류가 발생했습니다.');
+    //             return ;
+    //         }
+    //         return response.json();
+    //     })
+    //     .then((data) => {
+            
+    //         const originalImageUrl = data.imageURL;
+
+    //         // 회원 프로필 화면 진입 시
+    //         // 현재 회원의 프로필 이미지 상태 확인
+    //         if(originalImage == originalImageUrl){
+    //             // 기본 이미지인 경우
+    //             initCheck = false;
+    //         } else {
+    //             initCheck = true;
+    //         }
+
+    //         imageInput.addEventListener("change", e => {
+    //             // 2MB로 최대 크기 제한 (파일 최대 크기 지정 byte)
+    //             const maxSize = 1 * 1024 * 1024 * 2;
+
+    //             // 업로드한 파일의 정보가 담긴 객체
+    //             const file = e.target.files[0];
+
+    //             // 선택된 파일의 크기가 최대 크기를 초과한 경우
+    //             if(file.size > maxSize){
+    //                 alert("2MB 이하의 이미지를 선택해 주세요.");
+    //                 imageInput.value = "";
+                    
+    //                 // 취소 == 파일 없음 == 초기 상태
+    //                 deleteCheck = -1;
+
+    //                 // 기존 프로필 이미지로 변경
+    //                 profileImage.setAttribute("src", originalImage);
+
+    //                 return;
+    //             }
+
+    //             // 파일을 읽고 파일을 저장
+    //             const reader = new FileReader();
+
+    //             // 매개변수에 작성된 파일을 읽어서 저장 후
+    //             // 파일을 나타내는 URL을 result 속성으로 얻어올 수 있게 함
+    //             reader.readAsDataURL(file);
+            
+    //             // 다 읽었을 떄
+    //             reader.onload = e => {
+
+    //                 const url = e.target.result;
+
+    //                 // 프로필 이미지(img) 태그에 src 속성으로 추가
+    //                 profileImage.setAttribute("src", url);
+
+    //                 deleteCheck = -1;
+
+    //             }
+
+    //         });
+
+    //         document.getElementById("profileForm").addEventListener("submit", e =>{
+            
+    //             let flag = true;
+    
+    //             // 프로필 이미지가 없다 -> 있다.
+    //             if(!initCheck && deleteCheck == 1) flag = false;
+    
+    //             // 이전 프로필 이미지가 있다 -> 삭제
+    //             if(initCheck && deleteCheck == 0) flag = false;
+    
+    //             // 이전 프로필이미지가 있다 -> 새 이미지
+    //             if(initCheck && deleteCheck == 1) flag = false;
+    
+    //             if(flag) {
+    //                 // form 기본 이벤트 제거
+    //                 e.preventDefault();
+    //                 alert('이미지 변경 후 클릭하세요.');
+    //             }
+    //         });
+
+    //     });
+    // }
+
+    // if(!File.prototype.match("image.*")){
+    //     alert("이미지 파일 형식만 등록 가능합니다.");
+    //     return;
+    // }
+
+    // document.addEventListener('DOMContentLoaded', function () {
+    //     const input = document.getElementById('profileImg');
+    //     const img = document.getElementById('proImg');
+    //     const form = document.getElementById('profileForm');
+    
+    //     input.addEventListener('change', function (event) {
+    //         const file = event.target.files[0];
+    //         const reader = new FileReader();
+    //         reader.onload = function (e) {
+    //             img.src = e.target.result;
+    //         }
+    //         reader.readAsDataURL(file);
+    //     });
+    
+    //     form.addEventListener('submit', function (event) {
+    //         event.preventDefault();
+    //         const formData = new FormData(form);
+    
+    //         fetch('/member/updateProfile', {
+    //             method: 'POST',
+    //             body: formData
+    //         })
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             alert("프로필 등록이 완료 되었습니다!");
+    //             console.log(data);
+
+    //         })
+    //         .catch(error => {
+    //             console.error('Error:', error);
+    //         });
+    //     });
+    // });
+
+
+const profileImg = document.getElementById("profileImg");
+const proImg = document.getElementById("proImg");
+
+
+// 파일이 선택되었을 때 이벤트 핸들러 등록
+profileImg.addEventListener("change", function () {
+    displaySelectedImages(profileImg.files[0], proImg, "프로필");
+});
+
+function displaySelectedImages(file, image, label) {
+    image.innerHTML = ""; // 이미지 목록 초기화
+
+    if (file.type.startsWith("image/")) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            image.src = e.target.result; // 선택한 이미지 미리보기
+        }
+        reader.readAsDataURL(file);
+    } else {
+        console.error(label + " 파일을 선택하세요.");
+    }
+}
 
 /* ----------------- 닉네임 변경 모달창 관련 --------------------- */
     /* 닉네임 변경 글자수 기능 */
@@ -23,12 +201,6 @@
             $("#PWC").modal("show");
         });
     });
-
-    /* 개인정보 동의 상세보기 */
-    function openNewWindow(url) {
-        window.open(url, '_blank');
-    };
-
 /* ----------------- 비밀번호 변경 모달창 관련 --------------------- */
 $(document).ready(function() {
 
@@ -231,3 +403,4 @@ $(function(){
         }
     });
 });
+

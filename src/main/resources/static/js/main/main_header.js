@@ -3,7 +3,7 @@ let alarmBox = document.querySelector('#alarm_box');
 let alarmTag = document.querySelector('#alarm_tag');
 let noAlarm = '<div class="noAlarm">새로운 알림이 없습니다.</div>';
 let closeBtn = '';
-let alarm = document.querySelector('.alarm');
+let alarmCss = document.querySelector('.alarm');
 
 
 
@@ -57,12 +57,12 @@ function realtorAlarm(userNo, authorityAlarm, realtorInquiryCnt,alarmCnt) {
     } else {
         alarmBox.style.display = 'none';
     }
-    alarm.style.color = "#fff";
-    alarm.addEventListener('mouseover',()=>{
-        alarm.style.color = "#bfc9d0";
+    alarmCss.style.color = "#fff";
+    alarmCss.addEventListener('mouseover',()=>{
+        alarmCss.style.color = "#bfc9d0";
     })
-    alarm.addEventListener('mouseout',()=>{
-        alarm.style.color = "#fff";
+    alarmCss.addEventListener('mouseout',()=>{
+        alarmCss.style.color = "#fff";
     })
 }
 

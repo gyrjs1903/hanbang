@@ -22,8 +22,18 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public int insertProImg(MemberImgVO memberImgVO) {
-        return sqlSession.insert("memberMapper.insertProImg", memberImgVO);
+    public String selectNextUserNo() {
+        return sqlSession.selectOne("memberMapper.selectNextUserNo");
+    }
+
+    @Override
+    public void insertProfile(MemberImgVO memberImgVO) {
+        sqlSession.insert("memberMapper.insertProImg", memberImgVO);
+    }
+
+    @Override
+    public void updateProfile(MemberImgVO memberImgVO) {
+        sqlSession.update("memberMapper.updateProfile", memberImgVO);
     }
 
     @Override
@@ -42,11 +52,6 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public int memberDelete(MemberVO memberVO) {
-        return sqlSession.delete("memberMapper.memberDelete", memberVO);
-    }
-
-    @Override
     public String selectUserNo(String userNo) {
         return sqlSession.selectOne("memberMapper.selectUserNo", userNo);
     }
@@ -57,13 +62,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberImgVO profileImgLoad(MemberImgVO memberImgVO) {
-        return sqlSession.selectOne("memberMapper.profileImgLoad", memberImgVO);
-    }
-
-    @Override
-    public int updateNickname(String userName) {
-        return sqlSession.update("memberMapper.updateNickName", userName);
+    public void updateNickname(String userName) {
+        sqlSession.update("memberMapper.updateNickName", userName);
     }
 
     @Override

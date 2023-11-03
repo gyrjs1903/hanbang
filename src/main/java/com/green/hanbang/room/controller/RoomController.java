@@ -170,7 +170,7 @@ public class RoomController {
 ////////////////////////////////
 
     @GetMapping("/roomDetailInfo")
-    public String roomDetailInfo(String roomCode, Model model){
+    public String roomDetailInfo(String roomCode, Model model, HttpServletRequest request){
         //방 모든 정보
         RoomVO room = roomService.selectRoomInfo(roomCode);
         System.out.println(room);

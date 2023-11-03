@@ -26,11 +26,10 @@
                 <div class="profile_change upload">
                     <form id="profileForm" action="/member/updateProfile" method="post" enctype="multipart/form-data">
                         <div id="imagePreview" class="fake_upload">
-                            <input class="form-control real_upload" id="profileImg" name="profileImg" type="file" onchange="sendProfile()">
-                            <img class="proImg" th:src="@{'http://localhost:8081/' + ${session.loginInfo.memberImgVO.profileImgName}}" alt="프로필 이미지" draggable="false">
-                            <div class="pro_ico">
-                                <img src="/img/member/camera_icon.png" alt="프로필 사진 변경">
-                            </div>
+                            <label for="profileImg" class="selPro">프로필 선택</label>
+                            <input type="file" class="form-control real_upload" id="profileImg" name="img">
+                            <img id="proImg" class="proImg" th:src="@{'/img/member/profileImg/' + ${session.loginInfo.memberImgVO.attachedProfileImgName}}" alt="프로필 이미지" draggable="false">
+                            <button type="submit" class="addPro">프로필 등록</button>
                         </div>
                     </form>
                 </div>
@@ -113,7 +112,7 @@
                         <p>서비스 이용이 가능합니다.</p>
                         <button type="button" class="view_deatils">
                             <div>
-                                <span class="vdBtn" onclick="openNewWindow('/member/userinfo_consent')">상세보기</span>
+                                <span class="vdBtn" onclick="openNewWindow('/member/consent')">상세보기</span>
                             </div>
                         </button>
                     </div>

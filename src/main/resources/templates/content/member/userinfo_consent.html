@@ -1,38 +1,32 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org"
-                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-                layout:decorate="~{fragment/main_layout}">
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <title>원하는 방을 한방에 한방👊</title>
 </head>
 <body>
-    <th:block layout:fragment="content">
-        <link rel="stylesheet" href="/css/member/userinfo_consent.css">
-        <body>
-            <div>
-                <section>
-                    <h1>개인정보 수집 및 이용 동의 (선택)</h1>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>수집·이용 항목</th>
-                                <th>수집·이용 목적</th>
-                                <th>보유기간</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>생년월일, 성별</td>
-                                <td>개인화 서비스 (이벤트, 혜택 정보, 맞춤형 서비스)제공</td>
-                                <td class="important">회원탈퇴 및 동의 철회 시 까지</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <p>본 동의를 거부하실 수 있습니다. 다만 거부 시 동의를 통해 제공 가능한 개인화된 맞춤 서비스를 제공 받을 수 없습니다.</p>
-                </section>
-            </div>
-        </body>
-    </th:block>
+    <link rel="stylesheet" href="/css/member/userinfo_consent.css">
+    <div>
+        <section>
+            <h1>개인정보 수집 및 이용 동의 (선택)</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>수집·이용 항목</th>
+                        <th>수집·이용 목적</th>
+                        <th>보유기간</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>생년월일, 성별</td>
+                        <td>개인화 서비스 (이벤트, 혜택 정보, 맞춤형 서비스)제공</td>
+                        <td class="important">회원탈퇴 및 동의 철회 시 까지</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>본 동의를 거부하실 수 있습니다. 다만 거부 시 동의를 통해 제공 가능한 개인화된 맞춤 서비스를 제공 받을 수 없습니다.</p>
+        </section>
+    </div>
 </body>
 </html>
