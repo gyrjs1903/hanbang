@@ -113,7 +113,7 @@
     </select>
 
     <!-- 비밀 번호 일치 확인 -->
-    <select id="passWordCheck" resultMap="String">
+    <select id="passWordCheck" resultType="String">
         SELECT PASSWORD
         FORM MEMBER_USER
         WHERE PASSWORD = #{passWord}
