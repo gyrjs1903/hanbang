@@ -190,6 +190,7 @@
                 WHERE ITEM_CODE = PACKAGE_ITEM.ITEM_CODE) ITEM_NAME
         FROM PACKAGE_ITEM
         WHERE USER_NO = #{userNo}
+        AND IS_VALID = 'Y'
         ORDER BY END_DATE ASC
     </select>
 
@@ -217,6 +218,7 @@
             WHERE ITEM_CODE = GENERAL_ITEM.ITEM_CODE) ITEM_NAME
         FROM GENERAL_ITEM
         WHERE USER_NO = #{userNo}
+        AND IS_VALID = 'Y'
         ORDER BY END_DATE ASC
     </select>
 
@@ -245,6 +247,7 @@
 
         FROM PLUS_ITEM
         WHERE USER_NO = #{userNo}
+        AND IS_VALID = 'Y'
         ORDER BY END_DATE ASC
     </select>
 

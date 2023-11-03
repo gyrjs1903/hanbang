@@ -310,15 +310,15 @@
                                             <span class="itemName">[[${packageItem.itemName}]]</span>
                                             <span class="endDate">[[${packageItem.endDate}]]</span>
                                         </div>
-                                        <div class="itemDateilInfo">
+                                        <div class="packageDateilInfo">
                                             <div>
                                                 <label class="btn btn-outline-primary" >
                                                     <div class="itemName">일반 상품</div>
                                                     <div class="leftCntInfo">
                                                         <span>잔여</span>
-                                                        <span>&#40;[[${packageItem.generalProductCnt}]]	&#41;</span>
+                                                        <span id="package-generalCnt-span">&#40;[[${packageItem.generalProductCnt}]]	&#41;</span>
                                                     </div>
-                                                    <input type="radio" class="btn-check" name="btnradio" th:value="${packageItem.membershipName + ' ' + packageItem.itemName + ' 일반상품'}" th:data-buy-code="${packageItem.buyCode}" data-buy-type="GENERAL" th:data-mem-cate-code="${packageItem.memCateCode}" checked>
+                                                    <input type="radio" id="checkGeneral" class="btn-check" name="btnradio" th:value="${packageItem.membershipName + ' ' + packageItem.itemName + ' 일반상품'}" th:data-buy-code="${packageItem.buyCode}" data-buy-type="GENERAL" th:data-mem-cate-code="${packageItem.memCateCode}" checked>
                                                 </label>
                                             </div>
                                             <div>
@@ -326,9 +326,9 @@
                                                     <div class="itemName">플러스 정기권</div>
                                                     <div class="leftCntInfo">
                                                         <span>잔여</span>
-                                                        <span>&#40;[[${packageItem.plusSeasonCnt}]]	&#41;</span>
+                                                        <span id="plus-season-span">&#40;[[${packageItem.plusSeasonCnt}]]	&#41;</span>
                                                     </div>
-                                                    <input type="radio" class="btn-check" name="btnradio" th:value="${packageItem.membershipName + ' ' + packageItem.itemName + ' 플러스 정기권'}" th:data-buy-code="${packageItem.buyCode}" data-buy-type="SEASON" th:data-mem-cate-code="${packageItem.memCateCode}">
+                                                    <input type="radio" id="checkPlusSeason" class="btn-check" name="btnradio" th:value="${packageItem.membershipName + ' ' + packageItem.itemName + ' 플러스 정기권'}" th:data-buy-code="${packageItem.buyCode}" data-buy-type="SEASON" th:data-mem-cate-code="${packageItem.memCateCode}">
                                                 </label>
                                             </div>
                                             <div>
@@ -336,12 +336,13 @@
                                                     <div class="itemName">플러스 일일권</div>
                                                     <div class="leftCntInfo">
                                                         <span>잔여</span>
-                                                        <span>&#40;[[${packageItem.plusDayCnt}]]&#41;</span>
+                                                        <span class="plus-day-span">&#40;[[${packageItem.plusDayCnt}]]&#41;</span>
                                                     </div>
-                                                    <input type="radio" class="btn-check" name="btnradio" th:value="${packageItem.membershipName + ' ' + packageItem.itemName + ' 플러스 일일권'}" th:data-buy-code="${packageItem.buyCode}" data-buy-type="DAY" th:data-mem-cate-code="${packageItem.memCateCode}">
+                                                    <input type="radio" id="checkPlusDay" class="btn-check" name="btnradio" th:value="${packageItem.membershipName + ' ' + packageItem.itemName + ' 플러스 일일권'}" th:data-buy-code="${packageItem.buyCode}" data-buy-type="DAY" th:data-mem-cate-code="${packageItem.memCateCode}">
                                                 </label>
                                             </div>
                                         </div>
+                                        <input type="hidden" id="packageIsValid" name="isValid" th:value="${packageItem.isValid}">
                                     </div>
                                 </div>
                                 <div th:each="generalItem, state : ${generalItemList}">
@@ -354,18 +355,19 @@
                                             <span class="itemName">[[${generalItem.itemName}]]</span>
                                             <span class="endDate">[[${generalItem.endDate}]]</span>
                                         </div>
-                                        <div class="itemDateilInfo">
+                                        <div class="generalDateilInfo">
                                             <div>
                                                 <label class="btn btn-outline-primary" >
                                                     <div class="itemName">일반 상품</div>
                                                     <div class="leftCntInfo">
                                                         <span>잔여</span>
-                                                        <span>&#40;[[${generalItem.generalProductCnt}]]	&#41;</span>
+                                                        <span class="generalProductCnt">&#40;[[${generalItem.generalProductCnt}]]	&#41;</span>
                                                     </div>
                                                     <input type="radio" class="btn-check" name="btnradio" th:value="${generalItem.itemName}" th:data-buy-code="${generalItem.buyCode}" th:data-mem-cate-code="${generalItem.memCateCode}">
                                                 </label>
                                             </div>
                                         </div>
+                                        <input type="hidden" id="generalIsValid" name="isValid" th:value="${generalItem.isValid}">
                                     </div>
                                 </div>
                                 <div th:each="plusItem, state : ${plusItemList}">
@@ -378,7 +380,7 @@
                                             <span class="itemName">[[${plusItem.itemName}]]</span>
                                             <span class="endDate">[[${plusItem.endDate}]]</span>
                                         </div>
-                                        <div class="itemDateilInfo">
+                                        <div class="plusDateilInfo">
                                             <div th:if="${plusItem.plusType == 'S'}">
                                                 <label class="btn btn-outline-primary" >
                                                     <div class="itemName">플러스 정기권</div>
@@ -392,6 +394,7 @@
                                                 </label>
                                             </div>
                                         </div>
+                                        <input type="hidden" id="plusIsValid" name="isValid" th:value="${plusItem.isValid}">
                                     </div>
                                 </div>
                             </div>

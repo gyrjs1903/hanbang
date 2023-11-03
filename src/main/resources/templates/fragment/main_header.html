@@ -8,9 +8,62 @@
 <body>
 <th:block th:fragment="mainHeaderFragment">
     <link rel="stylesheet" href="/css/main/main_header.css">
+    <link rel="stylesheet" href="/css/admin/admin_alarm.css">
     <header class="menu_all">
         <img class="logo" src="/img/main/HanBangLogo.png" title="한방" onclick="location.href='/'" style="cursor: pointer;">
         <nav class="menu_bar">
+            <!-- 관리자 로그인 시 출력되는 메뉴 -->
+            <th:block th:if="${session.loginInfo !=null}">
+                <th:block th:if="${session.loginInfo.loginType == 'ADMIN'}">
+                    <ul class="adminMenu">
+                        <li class="nav-item adminMenuLi">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                회원관리
+                            </a>
+                            <ul class="dropdown-menu adminMemberManage">
+                                <li><a class="dropdown-item" a th:href="@{/admin/userList}">개인 회원</a></li>
+                                <li><a class="dropdown-item" a th:href="@{/admin/realList}">공인 중개사</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/infoBoard}">공지사항</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            맴버쉽 상품 
+                            </a>
+                            <th:block>
+                                <ul class="dropdown-menu"  id="membershipList" >
+                                    <li th:each="mCategory : ${membershipCate}">
+                                        <a class="dropdown-item" th:href="@{/admin/membershipList(memCateCode=${mCategory.memCateCode})}">[[${mCategory.memCateName}]]</a>
+                                    </li>
+                                    <div class="addNewItem" style="margin-left: 13px;"><input type="button" value="신규 등록" class="w-btn-outline w-btn-blue-outline" onclick="location.href='/admin/regMembershipForm';"></div>
+                                </ul>
+                            </th:block>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/eventList}">이벤트</a>
+                        </li>
+                        <li class="nav-item">
+                            <h4>
+                                <span onclick="alarm();" class="cursor">
+                                    <span class="material-symbols-outlined">notifications</span>
+                                </span>
+                            </h4>
+                            <div class="adminAlarm" id="admin_alarm_tag">
+                                <div class="admin_alarm_header">
+                                    <div class="cursor-default">알림</div>
+                                    <div onclick="alarm_close();" class="cursor close-btn"></div>
+                                </div>
+                                <div class="admin_alarm_content">
+                                    <div id="admin_today_alarm"></div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </th:block>
+            </th:block>
+                
             <ul>
                 <li><a href="/room/roomMain">지도</a></li>
                 <li>
@@ -112,7 +165,9 @@
             </div>
         </nav>
     </header>
+     
     <script async src="/js/main/main_header.js" defer></script>
+    <script src="/js/admin/admin_alarm.js"></script>   
 </th:block>
 </body>
 </html>

@@ -500,10 +500,10 @@ label.custom-file-label:hover {
     border: 1px solid #405795;
     border-radius: 10px;
 }
-.itemDateilInfo{
+.packageDateilInfo, .generalDateilInfo, .plusDateilInfo{
     text-align: center;
 }
-.itemDateilInfo > div {
+.packageDateilInfo > div , .generalDateilInfo > div, .plusDateilInfo > div {
     display: inline-block;
     margin-right: 15px;
     justify-content: space-between;
@@ -515,4 +515,7 @@ label.custom-file-label:hover {
 .leftCntInfo{
     font-size: small;
     color: #000;
+}
+.packageIsValid, .generalIsValid, .plusIsValid{
+    display: none;
 }

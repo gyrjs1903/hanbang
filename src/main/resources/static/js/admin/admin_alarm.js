@@ -1,12 +1,12 @@
-let alarmTag = document.getElementById('admin_alarm_tag');
+let adminAlarmTag = document.getElementById('admin_alarm_tag');
 
 function alarm(){
-    if(alarmTag.style.display === "none" || alarmTag.style.display === ""){
+    if(adminAlarmTag.style.display === "none" || adminAlarmTag.style.display === ""){
 
-        alarmTag.style.display = "block";
+        adminAlarmTag.style.display = "block";
 
     } else{
-        alarmTag.style.display = "none";
+        adminAlarmTag.style.display = "none";
     }
     fetch('/admin/alarm', { //요청경로
         method: 'POST',
@@ -26,8 +26,8 @@ function alarm(){
     .then((data) => {//data -> controller에서 리턴되는 데이터!
         console.log(data);
         console.log(Object.keys(data).length);
-        let todayAlarm = document.querySelector('#today_alarm');
-        todayAlarm.textContent='';
+        let adminTodayAlarm = document.querySelector('#admin_today_alarm');
+        adminTodayAlarm.textContent='';
         let alarmCnt ='';
         if(Object.keys(data).length == 0){
             let noneAlarm = `
@@ -35,7 +35,7 @@ function alarm(){
                     새로운 알림이 없습니다.
                 </div>
             `;
-            todayAlarm.insertAdjacentHTML('afterbegin',noneAlarm);
+            adminTodayAlarm.insertAdjacentHTML('afterbegin',noneAlarm);
         }
         if(data.falseOfferings != undefined){
             alarmCnt = data.falseOfferings.length;
@@ -44,7 +44,7 @@ function alarm(){
                     허위매물신고가 <span class="cnt">${alarmCnt}</span>건 들어왔습니다.
                 </div>
             `;
-            todayAlarm.insertAdjacentHTML('afterbegin',falseAlarm);
+            adminTodayAlarm.insertAdjacentHTML('afterbegin',falseAlarm);
         }
 
         if(data.realtorDetail != undefined){
@@ -54,7 +54,7 @@ function alarm(){
                     공인중개사 승인요청이 <span class="cnt">${alarmCnt}</span>건 있습니다.
                 </div>
             `;
-            todayAlarm.insertAdjacentHTML('afterbegin',authorityAlarm);
+            adminTodayAlarm.insertAdjacentHTML('afterbegin',authorityAlarm);
         }
     })
     //fetch 통신 실패 시 실행 영역
@@ -65,5 +65,5 @@ function alarm(){
 }
 
 function alarm_close(){
-    alarmTag.style.display = "none";
+    adminAlarmTag.style.display = "none";
 }

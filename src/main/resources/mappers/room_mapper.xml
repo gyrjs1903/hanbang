@@ -468,7 +468,6 @@
             SET
             <if test='buyType.equals("GENERAL")'>
                 GENERAL_PRODUCT_CNT = GENERAL_PRODUCT_CNT - 1
-
             </if>
             <if test='buyType.equals("SEASON")'>
                 PLUS_SEASON_CNT = PLUS_SEASON_CNT - 1
@@ -488,9 +487,78 @@
             IS_VALID = 'N'
         </if>
         WHERE BUY_CODE = #{buyCode}
+    </update>
 
+    <!-- 사용한 패키지 상품의 잔여 수량 확인 -->
+    <select id="getPackageIsValid" resultType="String">
+        SELECT PACKAGE_CODE
+        FROM PACKAGE_ITEM
+        WHERE BUY_CODE = #{buyCode}
+        AND GENERAL_PRODUCT_CNT = 0
+        AND PLUS_SEASON_CNT = 0
+        AND PLUS_DAY_CNT = 0
+    </select>
 
+<!--    사용한 패키지 상품의 잔여 수량 확인-->
+    <select id="getGeneralIsValid" resultType="String">
+        SELECT GENERAL_CODE
+        FROM GENERAL_ITEM
+        WHERE BUY_CODE = #{buyCode}
+        AND GENERAL_PRODUCT_CNT = 0
+    </select>
 
+    <update id="updatePackageIsValid">
+        UPDATE PACKAGE_ITEM
+        SET
+        IS_VALID = 'N'
+        WHERE BUY_CODE = #{buyCode}
+    </update>
+
+    <update id="updateGeneralIsValid">
+        UPDATE GENERAL_ITEM
+        SET
+        IS_VALID = 'N'
+        WHERE BUY_CODE = #{buyCode}
+    </update>
+
+<!--    로그인 시 아이템 종료일에 따라 IS_VALID 값 변경 -->
+    <update id="updatePackageValidWhenLogin">
+        UPDATE PACKAGE_ITEM
+        SET
+        IS_VALID = 'N'
+        WHERE PACKAGE_CODE IN (
+                                SELECT PACKAGE_CODE
+                                FROM PACKAGE_ITEM
+                                WHERE USER_NO = #{userNo}
+                                AND IS_VALID = 'Y'
+                                AND END_DATE &lt; SYSDATE
+        )
+    </update>
+
+    <update id="updateGeneralValidWhenLogin">
+        UPDATE GENERAL_ITEM
+        SET
+        IS_VALID = 'N'
+        WHERE GENERAL_CODE IN (
+                                SELECT GENERAL_CODE
+                                FROM GENERAL_ITEM
+                                WHERE USER_NO = #{userNo}
+                                AND IS_VALID = 'Y'
+                                AND END_DATE &lt; SYSDATE
+        )
+    </update>
+
+    <update id="updatePlusValidWhenLogin">
+        UPDATE PLUS_ITEM
+        SET
+        IS_VALID = 'N'
+        WHERE PLUS_CODE IN (
+                                SELECT PLUS_CODE
+                                FROM PLUS_ITEM
+                                WHERE USER_NO = #{userNo}
+                                AND IS_VALID = 'Y'
+                                AND END_DATE &lt; SYSDATE
+        )
     </update>
 
 

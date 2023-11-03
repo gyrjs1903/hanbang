@@ -367,3 +367,40 @@ function setApplyItemInfo(){
 
 
 }
+
+// 패키지 상품의 각 상품 중 잔여 갯수가 0일때 버튼 비활성화
+
+// span태그의 () 제거하는 정규식
+let reg = /[()]/gim;
+
+// 일반 상품 잔여 갯수 확인 후 0이면 disabled 속성 추가 
+const generalCntSpan = document.querySelector('#package-generalCnt-span').innerHTML;
+
+const generalCnt = generalCntSpan.replace(reg,'');
+
+if(generalCnt == 0){
+    const checkGeneral = document.querySelector('#checkGeneral');
+    checkGeneral.checked = false;
+    checkGeneral.disabled= true;
+}
+
+// 플러스 정기원 잔여 갯수 확인 후 0이면 disabled 속성 추가 
+const plusSeasonCntSpan = document.querySelector('#plus-season-span').innerHTML;
+
+const plusSeasonCnt = plusSeasonCntSpan.replace(reg,'');
+
+if(plusSeasonCnt == 0){
+    const checkPlusSeason = document.querySelector('#checkPlusSeason');
+    checkPlusSeason.disabled= true;
+}
+
+// 플러스 1일권 잔여 갯수 확인 후 0이면 disabled 속성 추가 
+const plusDayCntSpan = document.querySelector('#plus-day-span').innerHTML;
+
+const plusDayCnt = plusDayCntSpan.replace(reg,'');
+
+if(plusDayCnt == 0){
+    const checkPlusDay = document.querySelector('#checkPlusDay');
+    checkGeneral.disabled= true;
+}
+

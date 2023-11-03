@@ -87,12 +87,19 @@ public class MemberController {
         // 로그인 타입에 따라 페이지 이동
         if (loginInfo != null) {
             session.setAttribute("loginInfo", loginInfo);
+
+            // 수연 소스 추가
+            // 로그인 시 사용자가 가지고 있는 상품 조회 후 상품의 endDate 비교 후 isValid 값 변경
+            roomService.updatePackageValidWhenLogin(loginInfo.getUserNo());
+            roomService.updateGeneralValidWhenLogin(loginInfo.getUserNo());
+            roomService.updatePlusValidWhenLogin(loginInfo.getUserNo());
+
             if (loginInfo.getLoginType().equals("USER")) {
                 return "redirect:/";
             } else if (loginInfo.getLoginType().equals("REALTOR")) {
                 return "redirect:/";
             } else if (loginInfo.getLoginType().equals("ADMIN")) {
-                return "redirect:/admin/admin_manage";
+                return "redirect:/admin/manage";
             }
         }
         // 아이디나 비밀번호가 틀린 경우
