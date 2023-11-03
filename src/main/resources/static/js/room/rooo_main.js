@@ -234,6 +234,7 @@ document.getElementById("searchButton").addEventListener("click", function () {
                     roomElement.className = 'room';
                     roomElement.setAttribute('onclick', `detailRoom('${room.roomCode}')`);
                     const imgElement = document.createElement('div');
+                    imgElement.className = 'img_frame'
                     roomElement.append(imgElement);
 
                     // 방 이미지 추가
@@ -295,49 +296,6 @@ function detailRoom(roomCode) {
     location.href = `/room/roomDetailInfo?roomCode=${roomCode}`
 }
 
-
-
-
-// kakao.maps.event.addListener(map, 'dragend', function() {
-//     // 현재 지도 화면의 경계 좌표를 가져옵니다.
-//     var bounds = map.getBounds();
-//     var swLatLng = bounds.getSouthWest();
-//     var neLatLng = bounds.getNorthEast();
-
-//     // 서버에 경계 좌표를 전송하여 방 데이터를 가져옵니다.
-//     fetch('/room/getRoomsInBounds', {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json; charset=UTF-8'
-//         },
-//         body: JSON.stringify({
-//             swLat: swLatLng.getLat(),
-//             swLng: swLatLng.getLng(),
-//             neLat: neLatLng.getLat(),
-//             neLng: neLatLng.getLng()
-//         })
-//     })
-//     .then((response) => response.json())
-//     .then((roomData) => {
-//         // 방 데이터를 HTML로 표시합니다.
-//         renderRoomData(roomData);
-//     })
-//     .catch(err => {
-//         console.error('방 데이터를 가져오는 데 실패했습니다:', err);
-//     });
-// });
-
-// function renderRoomData(roomData) {
-//     // HTML 페이지에서 기존 방 데이터를 지웁니다.
-//     document.getElementById('room-list').innerHTML = '';
-
-//     // 방 데이터를 반복하고 HTML 요소를 만듭니다.
-//     roomData.forEach(function(room) {
-//         var roomElement = document.createElement('div');
-//         roomElement.innerHTML = '방 이름: ' + room.name + ', 가격: ' + room.price;
-//         document.getElementById('room-list').appendChild(roomElement);
-//     });
-// }
 
 //json 파일 가져오기
 async function getPolygonData(jsonFile) {

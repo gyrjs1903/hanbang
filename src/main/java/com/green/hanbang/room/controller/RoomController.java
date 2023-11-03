@@ -9,6 +9,8 @@ import com.green.hanbang.member.vo.MemberVO;
 import com.green.hanbang.room.service.RoomService;
 import com.green.hanbang.room.vo.*;
 import com.green.hanbang.util.RoomUtil;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -25,18 +27,22 @@ public class RoomController {
     private final RoomService roomService;
 
     @GetMapping("/reg")
-    public String regRoom(Model model, HttpSession session){
-        //옵션 셀렉트
-        List<OptionsVO> optionsList = roomService.selectOptions();
-        //매물유형 셀렉트
-        List<PropertyTypeVO> propertyList = roomService.selectProperty();
-        //전월세 셀렉트
-        List<TradeTypeVO> tradeTypeList = roomService.selectTradeType();
-
+    public String regRoom(Model model, HttpSession session, HttpServletResponse response){
         MemberVO loginInfo  = (MemberVO) session.getAttribute("loginInfo");
-        model.addAttribute("optionsList", optionsList);
-        model.addAttribute("propertyList", propertyList);
-        model.addAttribute("tradeTypeList", tradeTypeList);
+        if(loginInfo ==null){
+            return "redirect:/member/loginForm";
+        }else {
+            //옵션 셀렉트
+            List<OptionsVO> optionsList = roomService.selectOptions();
+            //매물유형 셀렉트
+            List<PropertyTypeVO> propertyList = roomService.selectProperty();
+            //전월세 셀렉트
+            List<TradeTypeVO> tradeTypeList = roomService.selectTradeType();
+
+
+            model.addAttribute("optionsList", optionsList);
+            model.addAttribute("propertyList", propertyList);
+            model.addAttribute("tradeTypeList", tradeTypeList);
 
 
 //        //수연 추가 코드
@@ -64,7 +70,8 @@ public class RoomController {
 //        System.out.println(roomService.selectPackageItemList(loginInfo.getUserNo()));
 //
 
-        return "room/reg_room";
+            return "room/reg_room";
+        }
     }
     @PostMapping("/insertRoom")
     public String insertRoom(RoomVO roomVO, MultipartFile mainImg, MultipartFile[] subImg, RoomAddrVO roomAddrVO){
@@ -137,11 +144,13 @@ public class RoomController {
         //선택한 옵션
         String options = room.getDetailOptions();
         List<String> optionList = Arrays.asList(options.split(","));
-        if(Objects.equals(optionList.get(0), "on")){
+
+        if(optionList.size()==1&&Objects.equals(optionList.get(0), "on")){
             model.addAttribute("optionList","on");
         } else {
             model.addAttribute("optionList", optionList);
         }
+
 
         //모든 옵션
         List<OptionsVO> os = roomService.selectOptions();

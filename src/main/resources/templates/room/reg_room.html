@@ -12,6 +12,7 @@
         <!-- <link href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" rel="stylesheet"> -->
         <link rel="stylesheet" href="/css/room/reg_room.css">
         <h1 class="title">방내놓기</h1>
+        <div id="error-div"><span class="close">닫기</span></div>
         <div>
             <ul class="caution">
                 <li><span>．</span>전/ 월세 매물만 등록할 수 있습니다.</li>
@@ -20,7 +21,7 @@
             </ul>
         </div>
         <div>
-            <form action="/room/insertRoom" method="post" enctype="multipart/form-data">
+            <form id="roomForm" action="/room/insertRoom" method="post" enctype="multipart/form-data">
                 <input name="userNo" type="hidden" th:value="${session.loginInfo.userNo}">
                 <input name="coordinateY" id="coordinate_y" type="hidden" value=" ">
                 <input name="coordinateX" id="coordinate_x" type="hidden" value=" ">
@@ -77,7 +78,7 @@
                                 <td class="addr">
                                     <div class="addr_select">
                                         <div class="ad_laber">주소검색</div>
-                                        <input type="text" id="addr" name="addr" readonly>
+                                        <input type="text" id="addr" name="addr" readonly placeholder="검색버튼을 눌러주세요">
                                         <input type="button" value="검색" id="select" onclick="openPost();">
                                     </div>
                                     <div class="detail_addr">
@@ -233,7 +234,7 @@
                                 <label for="mainImg" class="custom-file-label">대표사진 추가</label>
                                 <input type="file" id="mainImg" name="mainImg" accept="image/*">
                                 <label for="subImg" class="custom-file-label">상세내용 사진 추가</label>
-                                <input type="file" id="subImg" name="subImg" accept="image/*" multiple>
+                                <input type="file" id="subImg" name="subImg" accept="image/*" multiple="multiple" onchange="limitFileSelection(this, 3);">
                             </td>
                         </tr>
                         <tr>
@@ -276,7 +277,7 @@
                 </div>
 
                 
-                <input type="submit" id="submit" value="매물등록">
+                <input type="button" id="submitButton" onclick="roomInsertCkeck();" value="매물등록">
             </form>
         </div>
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>

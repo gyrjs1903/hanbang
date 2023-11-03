@@ -139,7 +139,7 @@
             <div class="main_con">
                 <div class="col-4 select_room">
                     <div th:each="room : ${roomList}" class="room" th:onclick="detailRoom([[${room.roomCode}]]);">
-                        <div>
+                        <div class="img_frame">
                             <img th:src="${'/img/' + 'room/' + room.imgList[0].attachedFileName}" alt="">
                         </div>
                         <div class="room-info">

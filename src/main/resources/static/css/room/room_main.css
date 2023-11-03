@@ -305,8 +305,9 @@ height: 30px;
     padding-bottom: 10px;
     width: 160px;
     height: 160px;
+    object-fit: cover;
     overflow: hidden;
-    overflow: visible;
+    object-position: center;
 }
 
 .room:hover {

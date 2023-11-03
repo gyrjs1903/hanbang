@@ -340,7 +340,92 @@ function displaySelectedImages(files, imageList, labelText) {
     }
 }
 
-// const submit= document.querySelector('#submit');
-// submit.addEventListener("click",(e)=>{
-// su
-// });
+
+
+
+
+
+function roomInsertCkeck() {
+    let submitButton = document.querySelector('#submitButton')
+    const tradeTypeCode_TTC_001 = document.querySelector("#TTC_001").checked;
+    const tradeTypeCode_TTC_002 = document.querySelector("#TTC_002").checked;
+    const maintenanceYes = document.querySelector("#maintenanceYes").checked;
+    const immediateOccupancyNo = document.querySelector("#immediateOccupancyNo").checked;
+
+
+    const roomForm = document.querySelector('#roomForm')
+    if (roomForm.addr.value == '') {
+        inputInvalidate('주소를 기입해주세요')
+        return;
+    }
+    if (roomForm.roomSizeP.value == '' && roomForm.roomSizeM.value == '') {
+        inputInvalidate('전용면적을 기입해주세요')
+        return;
+    }
+    if (roomForm.floor.value == '') {
+        inputInvalidate('층수을 기입해주세요')
+        return;
+    }
+    if (tradeTypeCode_TTC_001 && roomForm.deposit.value == '' && roomForm.monthlyLease.value == '' && !tradeTypeCode_TTC_002) {
+        inputInvalidate('보증금 또는 월세를 기입해주세요')
+        return;
+    }
+    if (tradeTypeCode_TTC_002 && roomForm.jeonseCost.value == '' && !tradeTypeCode_TTC_001) {
+        alert(111111);
+        inputInvalidate('전세를 기입해주세요')
+        return;
+    }
+    if (maintenanceYes && roomForm.maintenanceCost.value == '') {
+        inputInvalidate('관리비를 기입해주세요')
+        return;
+    }
+    if (immediateOccupancyNo && roomForm.availableMoveInDate.value == '') {
+        inputInvalidate('입주가능일자를 기입해주세요')
+        return;
+    }
+    if (roomForm.mainImg.value == '') {
+        inputInvalidate('대표이미지를 선택해주세요')
+        return;
+    }
+    if (roomForm.subImg.value == '') {
+        inputInvalidate('상세내용이미지를 선택해주세요')
+        return;
+    }
+    if (roomForm.title.value == '') {
+        inputInvalidate('제목란에 기입해주세요')
+        return;
+    }
+    if (roomForm.content.value == '') {
+        inputInvalidate('상세설명란에 기입해주세요')
+        return;
+    }
+
+    roomForm.submit();
+}
+function inputInvalidate(message) {
+    const errorDiv = document.querySelector("#error-div")
+    let spanTag = document.createElement("span")
+    spanTag.className = "close"
+
+    errorDiv.style.display = 'flex';
+    errorDiv.textContent = message;
+    errorDiv.appendChild(spanTag);
+    spanTag.addEventListener("click", () => {
+        errorDiv.style.display = 'none';
+    })
+
+    // 일정 시간(밀리초)이 지난 후에 요소를 숨깁니다.
+    setTimeout(function () {
+        errorDiv.style.display = 'none';
+    }, 3000);
+}
+
+
+
+
+function limitFileSelection(input, maxFiles) {
+    if (input.files.length > maxFiles) {
+        alert('이미지 파일은 최대 ' + maxFiles + '개까지 선택할 수 있습니다.');
+        input.value = ''; // 파일 선택 초기화
+    }
+}
