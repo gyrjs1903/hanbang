@@ -37,10 +37,10 @@ public interface MemberService {
     public String selectUserInfo(MemberVO memberVO);
 
     // 닉네임 변경
-    public void updateNickname(String userName);
+    public void updateNickname(MemberVO memberVO);
 
     // 비밀 번호 변경
-    public int updatePassWord(MemberVO memberVO);
+    public void updatePassword(MemberVO memberVO);
 
     // 회원 탈퇴
     public int deleteMember(int userNo);

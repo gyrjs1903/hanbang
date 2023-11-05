@@ -28,7 +28,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void insertProfile(MemberImgVO memberImgVO) {
-        sqlSession.insert("memberMapper.insertProImg", memberImgVO);
+        sqlSession.insert("memberMapper.insertProfile", memberImgVO);
     }
 
     @Override
@@ -62,13 +62,13 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void updateNickname(String userName) {
-        sqlSession.update("memberMapper.updateNickName", userName);
+    public void updateNickname(MemberVO memberVO) {
+        sqlSession.update("memberMapper.updateNickname", memberVO);
     }
 
     @Override
-    public int updatePassWord(MemberVO memberVO) {
-        return sqlSession.update("memberMapper.updatePassWord", memberVO);
+    public void updatePassword(MemberVO memberVO) {
+        sqlSession.update("memberMapper.updatePassword", memberVO);
     }
 
     @Override
