@@ -218,13 +218,7 @@ dl, ol, ul{
   right: -28px;
   line-height: 25px;
 }
-/* .alarm-icon{
-  display: inline-block;
-  width: 50px;
-  height: 50px;
-  background-image: url(../img/main/sp_main.2b96eea2.png);
-  background-position: -273px -659px;
-} */
+
 .close-btn{
   width: 17px;
   height: 17px;
@@ -238,23 +232,25 @@ dl, ol, ul{
 /* amdin menu design */
 .dropdown-toggle::after {
   display: none;
-}      
+}    
 
-.adminMemberManage .show{
-  text-align: center;
+.adminMemberManage li{
+  line-height: 45px;
 }
 
-.adminMemberManage > .dropdown-item{
-  display: inline-block;
-  padding: 3px;
+.adminMenu-li > ul.show{
+  transform: translate(870px 75px);
 }
-
+.membershipList > li {
+  line-height: 45px;
+}
 .w-btn-outline {
     position: relative;
-    padding: 0px 15px;
     border-radius: 15px;
     text-decoration: none;
     transition: 0.25s;
+    padding: 0 10px;
+    margin-left: 13px;
 }
 .w-btn-blue-outline {
   border: 3px solid #5c75bb;
@@ -267,3 +263,12 @@ dl, ol, ul{
   color: #d4dfe6;
 }
 
+.nav-item > a:after{
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #bfc9d0;
+}

@@ -1,6 +1,19 @@
 @charset "UTF-8";
 /* admin_manage2.css */
-
+.admin-alarm-li{
+    position: relative;
+}
+.admin-alarm{
+    font-weight: bold;
+    font-size: 16px;
+    color: #fff;
+    line-height: 90px;
+}
+.admin-alarm:hover{
+    position: relative;
+    color: #bfc9d0;
+    transition: 0.3s;
+}
 #admin_alarm_tag{
     display: none;
     position: absolute;

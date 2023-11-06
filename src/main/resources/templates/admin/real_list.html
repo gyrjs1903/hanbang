@@ -1,56 +1,74 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+    layout:decorate="~{fragment/main_layout}">
 <head>
 <meta charset="UTF-8">
 <title>공인중개사 목록</title>
 </head>
 <body>
-     <!-- 검색 -->
-     <div>
-        <form action="/admin/realList" method="post">
-            <input type="text" name="realSearch">
-            <input type="submit" value="검색">
-        </form>
-    </div>
+    <th:block layout:fragment="content">
+        <link rel="stylesheet" href="/css/admin/realtor_list.css">
+        <div class="realSearch-div">
+            <div class="realSearch-sub">
+                <div class="cursor btn btn-light d-grid justify-content-start user"
+                    onclick="location.href='/admin/userList';">개인회원</div>
+                <div class="cursor btn btn-light d-grid justify-content-start realtor "
+                    onclick="location.href='/admin/realList';">공인 중개사</div>
+            </div>
+            <div class="realSearch-main">
+                 <!-- 검색 -->
+                <div class="searchForm-div">
+                    <form action="/admin/realList" method="post">
+                        <input type="text" name="realSearch" class="searchInput">
+                        <input type="submit" value="검색" class="searchBtn">
+                    </form>
+                </div>
+                <!-- 공인중개사 정보 테이블 -->
+                <table class="realtorList-table" >
+                    <colgroup>
+                        <col width="5%">
+                        <col width="10%"> 
+                        <col width="10%">
+                        <col width="10%">
+                        <col width="5%">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <td>No</td>
+                            <td>코드</td>
+                            <td>공인중개사명</td>
+                            <td>사업자번호</td>
+                            <td>권한여부</td>
+                        </tr>
+                    </thead>
+                    <th:block th:if="${#lists.size(realList)==0}">
+                        <tbody>
+                            <tr class="no_realtor">
+                                <td colspan="5">조회된 회원이 없습니다.</td>
+                            </tr>
+                        </tbody>
+                    </th:block>
+                    <th:block th:if="${#lists.size(realList)!=0}">
+                        <tbody>
+                            <tr th:each="real : ${realList}">
+                                <td>[[${real.userNo}]]</td>
+                                <td>[[${real.realTorCode}]]</td>
+                                <td>[[${real.officeName}]]</td>
+                                <td><a th:href="@{/admin/realDetail(identificationNum=${real.identificationNum})}">[[${real.identificationNum}]]</a></td>
+                                <td>
+                                    [[${real.authority}]]
+                                </td>
+                            </tr>
+                        </tbody>
+                    </th:block>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </th:block>
+    
 
-    <table>
-        <colgroup>
-            <col width="5%">
-            <col width="10%"> 
-            <col width="10%">
-            <col width="10%">
-            <col width="5%">
-        </colgroup>
-        <thead>
-            <tr>
-                <td>No</td>
-                <td>코드</td>
-                <td>공인중개사명</td>
-                <td>사업자번호</td>
-                <td>권한여부</td>
-            </tr>
-        </thead>
-        <tbody>
-            <th:block th:if="${#lists.size(realList)==0}">
-                <tr>
-                    <td colspan="5">조회된 회원이 없습니다.</td>
-                </tr>
-            </th:block>
-
-            <th:block th:if="${#lists.size(realList)!=0}">
-                <tr th:each="real : ${realList}">
-                    <td>[[${real.userNo}]]</td>
-                    <td>[[${real.realTorCode}]]</td>
-                    <td>[[${real.officeName}]]</td>
-                    <td><a th:href="@{/admin/realDetail(identificationNum=${real.identificationNum})}">[[${real.identificationNum}]]</a></td>
-                    <td>[[${real.licenseFileName}]]</td>
-                    <td>
-                        [[${real.authority}]]
-                    </td>
-                </tr>
-            </th:block>
-        </tbody>
-    </table>
+    
 </body>
 </html>
