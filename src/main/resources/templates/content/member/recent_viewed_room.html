@@ -32,32 +32,48 @@
         <div>
             <div>
                 <p>
-                    총 <span>[[${#lists.size(recentRooms)}]]</span>개의 최근 본 방이 있습니다.
+                    총 <span></span>개의 최근 본 방이 있습니다.
                 </p>
                 <p>
                     최근 본 방은 최대 30개까지 저장됩니다.
                 </p>
             </div>
             <ul>
-                <li th:each="room : ${recentRooms}">
+                <li>
                     <div>
                         <div>
-                            <a th:href="@{'/room/details/' + ${room.roomCode}}">
-                                <img th:src="@{'/img/' + ${room.imageFileName}}" alt="매물 메인 이미지">
-                                <p>[[${room.propertyType.propertyTypeName}]]</p>
-                                <p>[[${room.tradeType.tradeTypeName}]] [[${room.monthlyLease}]]/[[${room.deposit}]]</p>
-                                <p>[[${room.floor}]]층, [[${room.roomSizeM}]]m², 관리비[[${room.maintenanceCost}]]만</p>
-                                <p>[[${room.title}]]</p>
+                            <a>
+                                <ul>
+                                    <li>
+                                        <img id="cookieIsMain" src="" alt="매물 메인 이미지">
+                                    </li>
+                                    <li>
+                                        <p id="cookiePropertyTypeName"></p>
+                                    </li>
+                                    <li>
+                                        <p id="cookieTradeTypeName"></p><p id="cookieMonthlyLease"></p><p id="cookieDeposit"></p>
+                                    </li>
+                                    <li>
+                                        <p id="cookieFloor"></p><p id="cookieRoomSizeM"></p><p id="cookieMaintenanceCost"></p>
+                                    </li>
+                                    <li>
+                                        <p id="cookieTitle"></p>
+                                    </li>
+                                </ul>
                             </a>
                         </div>
                     </div>
                 </li>
             </ul>
-            <div class="inquiryCT" th:if="${#lists.size(recentRooms)} == 0">
+            <div class="inquiryCT">
                 <p>최근 본 방이 없습니다.</p>
                 <p>관심있는 방을 둘러보세요.</p>
             </div>
         </div>
+    </th:block>
+    <th:block layout:fragment="content_js">
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+        <script async src="/js/member/recent_viewed_room.js"></script>
     </th:block>
 </body>
 </html>
