@@ -2,7 +2,6 @@
 /* inquiry_board.css */
 
 .side{
-    /* background-color: #f8f9fa; */
     padding: 0;
 }
 .side > div{
@@ -17,13 +16,13 @@ table{
     margin: 0 auto;
     text-align: center;
     border-collapse: collapse;
-    border-top: 2px solid #a3a3a3;
+    border-top: 4px solid #bfc9d0;
 }
 tbody > tr:hover {
     background-color: #e9e5e5;
 }
 td{
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #eef3f7;
     padding: 10px;
 }
 .no-answer{
@@ -35,7 +34,7 @@ td{
     border-radius: 0;
 }
 .table_box{
-    padding: 0 20px;
+    padding: 40px 20px;
 }
 .page{
     text-align: center;

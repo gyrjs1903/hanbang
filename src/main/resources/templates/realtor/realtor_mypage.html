@@ -17,16 +17,33 @@
                 <div class="col-2 side">
                     <div class="cursor btn btn-light d-grid justify-content-start myPage" onclick="location.href='/realtor/myPage';">내 정보</div>
                     <div class="cursor btn btn-light d-grid justify-content-start boardList" onclick="location.href='/realtor/inquiryBoardList';">문의글 확인하기</div>
+                    <div class="cursor btn btn-light d-grid justify-content-start buyItemList" onclick="location.href='/realtor/buyItemList';">상품구매목록</div>
                 </div>
                 <div class="col-10">
                     <div class="info">
                         <form action="" method="post">
                             <div class="cate">이메일</div>
                             <div><input type="text" th:value="${realtorInfo.userName}" readonly></div>
-                            <div class="cate">닉네임</div>
-                            <div><input type="text" th:value="${realtorInfo.nickName}"></div>
                             <div class="cate">전화번호</div>
                             <div><input type="text" th:value="${realtorInfo.phone}"></div>
+                            <div class="cate">사무소명</div>
+                            <div>
+                                <th:block th:if="${realtorOfficeInfo == null}">
+                                    <input type="text" placeholder="인증요청중">
+                                </th:block>
+                                <th:block th:unless="${realtorOfficeInfo == null}">
+                                    <input type="text" th:value="${realtorOfficeInfo.officeName}">
+                                </th:block>
+                            </div>
+                            <div class="cate">중개사 번호</div>
+                            <div>
+                                <th:block th:if="${realtorOfficeInfo == null}">
+                                    <input type="text" placeholder="인증요청중">
+                                </th:block>
+                                <th:block th:unless="${realtorOfficeInfo == null}">
+                                    <input type="text" th:value="${realtorOfficeInfo.identificationNum}">
+                                </th:block>
+                            </div>
                             <br>
                             <div class="cate">구분</div>
                             <div class="acceptanceBox">

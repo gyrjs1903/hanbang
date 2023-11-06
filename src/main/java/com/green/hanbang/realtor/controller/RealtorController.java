@@ -1,11 +1,15 @@
 package com.green.hanbang.realtor.controller;
 
 import com.green.hanbang.IndexController;
+import com.green.hanbang.item.vo.GeneralItemVO;
+import com.green.hanbang.item.vo.PackageItemVO;
+import com.green.hanbang.item.vo.PlusItemVO;
 import com.green.hanbang.member.service.MemberService;
 import com.green.hanbang.member.vo.MemberVO;
 import com.green.hanbang.realtor.service.RealtorService;
 import com.green.hanbang.realtor.vo.LicenseImgVO;
 import com.green.hanbang.realtor.vo.RealtorDetailVO;
+import com.green.hanbang.room.service.RoomService;
 import com.green.hanbang.room.vo.InquiryVO;
 import com.green.hanbang.util.LicenseUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,6 +31,7 @@ import java.util.Map;
 public class RealtorController {
     private final RealtorService realtorService;
     private final MemberService memberService;
+    private final RoomService roomService;
 
     @RequestMapping("/main")
     public String realtor(){
@@ -39,6 +44,7 @@ public class RealtorController {
         model.addAttribute("realtorInfo",realtorService.selectRealtorMyPage(loginInfo.getUserNo()));
         model.addAttribute("authority",realtorService.selectAuthorityStatue(loginInfo.getUserNo()));
         model.addAttribute("realtorDetailInfo",realtorService.selectRealtorDetailInfo(loginInfo.getUserNo()));
+        model.addAttribute("realtorOfficeInfo",realtorService.selectRealtorOfficeInfo(loginInfo.getUserNo()));
         return "realtor/realtor_mypage";
     }
 
@@ -96,13 +102,18 @@ public class RealtorController {
     public String PWIdentify(HttpSession session, Model model){
         MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
         model.addAttribute("realtorInfo",realtorService.selectRealtorMyPage(loginInfo.getUserNo()));
+        model.addAttribute("realtorOfficeInfo",realtorService.selectRealtorOfficeInfo(loginInfo.getUserNo()));
         return "realtor/realtor_update";
     }
 
     //공인중개사 정보 수정
     @PostMapping("/realtorInfoUpdate")
     public String realtorInfoUpdate(MemberVO memberVO){
+        System.out.println("@@@@@@@@@@@@"+memberVO);
         realtorService.updateRealtorInfo(memberVO);
+        if(memberVO.getRealtorDetailVO() != null){
+            realtorService.updateRealtorOffice(memberVO);
+        }
         return "redirect:/realtor/myPage";
     }
 
@@ -138,9 +149,30 @@ public class RealtorController {
     @PostMapping("/inquiryAnswer")
     public String inquiryAnswer(InquiryVO inquiryVO,HttpSession session){
         MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
+
         realtorService.updateInquiryAnswer(inquiryVO);
         setAlarmData(loginInfo);
         return "redirect:/realtor/inquiryBoardList";
+    }
+
+    //공인중개사 상품 구매 목록 조회
+    @GetMapping("/buyItemList")
+    public String selectBuyItem(HttpSession session, Model model){
+        MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
+
+        List<PackageItemVO> packageItemVOList = roomService.selectPackageItemList(loginInfo.getUserNo());
+        List<GeneralItemVO> generalItemVOList = roomService.selectGeneralItemList(loginInfo.getUserNo());
+        List<PlusItemVO> plusItemVOList = roomService.selectPlusItemList(loginInfo.getUserNo());
+        model.addAttribute("packageItemVOList",packageItemVOList);
+        model.addAttribute("generalItemVOList",generalItemVOList);
+        model.addAttribute("plusItemVOList",plusItemVOList);
+        System.out.println("@@@@@@@@@@@@패키지@@@@@@@@@@@");
+        System.out.println(packageItemVOList);
+        System.out.println("@@@@@@@@@@@@일반@@@@@@@@@@@");
+        System.out.println(generalItemVOList);
+        System.out.println("@@@@@@@@@@@@플러스@@@@@@@@@@@");
+        System.out.println(plusItemVOList);
+        return "/realtor/buy_item";
     }
 
     //다른페이지에서 알림창 확인 메소드

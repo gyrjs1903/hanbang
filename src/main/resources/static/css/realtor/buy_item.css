@@ -1,0 +1,45 @@
+@charset "UTF-8";
+
+.packageForm, .generalForm, .plusForm{
+    display: none;
+    padding: 30px;
+}
+.buy-item-list-table{
+    border-collapse: collapse;
+}
+.packageForm.active, .generalForm.active, .plusForm.active{
+    display: block;
+}
+.buy-item-list-table > thead > tr:last-child{
+    border: 1px solid #eef3f7;
+}
+.buy-item-list-table > thead > tr:last-child > th{
+    border: 1px solid #eef3f7;
+}
+.buy-item-list-table > thead > tr:first-child{
+    border-bottom: 1px solid #eef3f7;
+    border-left: 1px solid #eef3f7;
+    border-right: 1px solid #eef3f7;
+}
+.buy-item-list-table > thead > tr:first-child > th{
+    border-bottom: 1px solid #eef3f7;
+    border-left: 1px solid #eef3f7;
+    border-right: 1px solid #eef3f7;
+}
+
+.buy-item-list-table > thead > tr:first-child{
+    border-top: 4px solid #bfc9d0;
+}
+.buy-item-list-table > thead > tr:first-child > th{
+    border-top: 4px solid #bfc9d0;
+}
+
+.buy-item-list-table > thead th{
+    padding: 10px;
+}
+
+.buy-item-list-table > tbody > tr > td{
+    padding: 15px;
+    border: 1px solid #eef3f7;
+}
+

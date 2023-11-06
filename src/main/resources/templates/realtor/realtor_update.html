@@ -19,17 +19,21 @@
                         onclick="location.href='/realtor/myPage';">내 정보</div>
                     <div class="cursor btn btn-light d-grid justify-content-start boardList"
                         onclick="location.href='/realtor/inquiryBoardList';">문의글 확인하기</div>
+                        <div class="cursor btn btn-light d-grid justify-content-start buyItemList" onclick="location.href='/realtor/buyItemList';">상품구매목록</div>
                 </div>
                 <div class="col-10">
                     <div class="info">
                         <form action="/realtor/realtorInfoUpdate" method="post">
                             <div class="cate">이메일</div>
                             <div><input type="text" th:value="${realtorInfo.userName}" readonly></div>
-                            <div class="cate">닉네임</div>
-                            <div><input type="text" name="nickName" th:value="${realtorInfo.nickName}"></div>
                             <div class="cate">전화번호</div>
                             <div><input type="text" th:value="${realtorInfo.phone}" name="phone"
-                                    th:placeholder="${realtorInfo.phone}"></div>
+                                    th:placeholder="${realtorInfo.phone}">
+                            </div>
+                            <th:block th:unless="${realtorOfficeInfo == null}">
+                                <div class="cate">사무소명</div>
+                                <div><input type="text" th:value="${realtorOfficeInfo.officeName}" name="realtorDetailVO.officeName" required></div>
+                            </th:block>
                             <input type="hidden" th:value="${realtorInfo.userNo}" name="userNo">
                             <input type="submit" class="cursor btn btn-light correct-btn" value="수정하기"></input>
                         </form>

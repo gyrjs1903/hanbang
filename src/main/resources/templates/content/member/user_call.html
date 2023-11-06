@@ -53,7 +53,7 @@
                             <td>[[${inquiry.inquiryStatusVO.statusName}]]</td>
                         </tr>
                         <tr class="room-inquiry-answer toggle-tr" th:if="${inquiry.inquiryAnswer != null}">
-                            <td colspan="4">[[${inquiry.inquiryAnswer}]]</td>
+                            <td colspan="4"><pre>[[${inquiry.inquiryAnswer}]]</pre></td>
                         </tr>
                     </th:block>
                 </tbody>

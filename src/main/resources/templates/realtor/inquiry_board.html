@@ -8,14 +8,18 @@
 </head>
 
 <body>
-    <th:block layout:fragment="content">
+    <th:block layout:fragment="content_css">
+        <link rel="stylesheet" href="/css/realtor/realtor_mypage.css">
         <link rel="stylesheet" href="/css/realtor/inquiry_board.css">
+    </th:block>
+    <th:block layout:fragment="content">
         <div class="row realtor_page">
             <div class="col-2 side">
                 <div class="cursor btn btn-light d-grid justify-content-start myPage"
                     onclick="location.href='/realtor/myPage';">내 정보</div>
                 <div class="cursor btn btn-light d-grid justify-content-start boardList"
                     onclick="location.href='/realtor/inquiryBoardList';">문의글 확인하기</div>
+                    <div class="cursor btn btn-light d-grid justify-content-start buyItemList" onclick="location.href='/realtor/buyItemList';">상품구매목록</div>
             </div>
             <div class="col-10 table_box">
                 <table>
@@ -28,7 +32,7 @@
                     </colgroup>
                     <thead>
                         <tr>
-                            <td>번 호</td>
+                            <td>No</td>
                             <td>제 목</td>
                             <td>작성자</td>
                             <td>날 짜</td>

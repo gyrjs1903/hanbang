@@ -29,8 +29,14 @@ public interface RealtorService {
     //공인중개사 detail정보 입력 시 인증하기 버튼 disabled
     public String selectRealtorDetailInfo(String userNo);
 
+    //공인중개사 인증 완료 시 상세정보 조회
+    public RealtorDetailVO selectRealtorOfficeInfo(String userNo);
+
     //공인중개사 정보 수정
     public void updateRealtorInfo(MemberVO memberVO);
+
+    //공인중개사 사무소명 수정
+    public void updateRealtorOffice(MemberVO memberVO);
 
     //공인중개사 문의글 확인
     public List<InquiryVO> selectInquiryBoard(InquiryVO inquiryVO);

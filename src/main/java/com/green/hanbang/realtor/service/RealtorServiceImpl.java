@@ -53,8 +53,18 @@ public class RealtorServiceImpl implements RealtorService{
     }
 
     @Override
+    public RealtorDetailVO selectRealtorOfficeInfo(String userNo) {
+        return sqlSession.selectOne("realtorMapper.selectRealtorOfficeInfo",userNo);
+    }
+
+    @Override
     public void updateRealtorInfo(MemberVO memberVO) {
         sqlSession.update("realtorMapper.updateRealtorInfo",memberVO);
+    }
+
+    @Override
+    public void updateRealtorOffice(MemberVO memberVO) {
+        sqlSession.update("realtorMapper.updateRealtorOffice",memberVO);
     }
 
     @Override
