@@ -21,7 +21,7 @@
 }
 
 .userHT {
-    margin: 80px 0px 64px;
+    /* margin: 80px 0px 64px; */
     font-size: 46px;
     line-height: 70px;
     letter-spacing: -1px;
@@ -29,7 +29,7 @@
 }
 
 .userHTD {
-    margin: 80px 558px 64px;
+    /* margin: 80px 558px 64px; */
     font-size: 46px;
     line-height: 70px;
     letter-spacing: -1px;

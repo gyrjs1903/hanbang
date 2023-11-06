@@ -28,7 +28,7 @@
                         <div id="imagePreview" class="fake_upload">
                             <label for="profileImg" class="selPro">프로필 선택</label>
                             <input type="file" class="form-control real_upload" id="profileImg" name="img">
-                            <img id="proImg" class="proImg" th:src="@{'/img/member/profileImg/' + ${session.loginInfo.memberImgVO.attachedProfileImgName}}" alt="프로필 이미지" draggable="false">
+                            <img id="proImg" class="proImg" th:src="@{'http://localhost:8081/img/member/profileImg/' + ${session.loginInfo.memberImgVO.attachedProfileImgName}}" alt="프로필 이미지" draggable="false">
                             <button type="submit" class="addPro">프로필 등록</button>
                         </div>
                     </form>

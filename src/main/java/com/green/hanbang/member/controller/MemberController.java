@@ -8,6 +8,7 @@ import com.green.hanbang.realtor.vo.RealtorDetailVO;
 import com.green.hanbang.room.service.RoomService;
 import com.green.hanbang.room.vo.InquiryVO;
 import com.green.hanbang.room.vo.RoomIMGVO;
+import com.green.hanbang.room.vo.RoomVO;
 import com.green.hanbang.util.MemberInquiryUtil;
 import com.green.hanbang.util.MemberUtil;
 import jakarta.servlet.http.Cookie;
@@ -177,7 +178,7 @@ public class MemberController {
 
     // 프로필 이미지 수정
     @PostMapping("/updateProfile")
-    public String updateProfile(MultipartFile img, RedirectAttributes ra, MemberImgVO memberImgVO, HttpSession session) {
+    public String updateProfile(MultipartFile img, HttpSession session) {
 
         // 유저 번호 조회
         MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
@@ -316,7 +317,6 @@ public class MemberController {
 
         // 첨부 파일
         List<MemberInquiryImgVO> inqImgList = MemberInquiryUtil.inquiryMultiUpload(imgs);
-        inqImgList.add(memberInquiryImgVO);
 
         for (MemberInquiryImgVO inquiryImgVO : inqImgList){
             inquiryImgVO.setMemberInquiryWriteNo(memberInquiryWriteNo);
@@ -391,27 +391,8 @@ public class MemberController {
 
     // 헤더에 찜목록 클릭 시 최근 본 방 페이지 이동
     @GetMapping("/dibsOn")
-    public String dibsOn(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
-
-        MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
-
-        // 유저 번호 가져오기
-        String userNo = loginInfo.getUserNo();
-
-        // 쿠키 생성
-        Cookie userCookie = new Cookie("userNo", userNo);
-        response.addCookie(userCookie);
-
-        // 최근 본 방 정보를 쿠키에서 가져와서 필요한 작업 수행
-        if (request.getCookies() != null) {
-            for (Cookie cookie : request.getCookies()) {
-                if (cookie.getName().equals("recentProperty")) {
-                    String recentPropertyInfo = cookie.getValue();
-                    // 최근 본 방 정보를 사용 하여 페이지에 표시하거나 다른 작업 수행
-                    System.out.println("최근 본 방 정보: " + recentPropertyInfo);
-                }
-            }
-        }
+    public String dibsOn(HttpServletRequest request) {
+        Cookie[] list = request.getCookies();
 
         return "content/member/recent_viewed_room";
     }
@@ -434,23 +415,7 @@ public class MemberController {
     public String recentViewedApartment(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
 
-        // 쿠키 생성
-        Cookie userCookie = new Cookie("userNo", loginInfo.getUserNo());
-        response.addCookie(userCookie);
-
-        // 쿠키 가져오기
-        Cookie[] cookies = request.getCookies();
-        String userNo = null;
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("userNo")) {
-                    userNo = cookie.getValue();
-                    break;
-                }
-            }
-        }
-
-        return "content/member/recent_viewed_apartment?userNo=" + userNo;
+        return "content/member/recent_viewed_apartment";
     }
 
     // 찜한 단지 페이지 이동
