@@ -195,6 +195,7 @@ public class MemberController {
         return "redirect:/member/memberInfo";
     }
 
+
     //답글 읽을 시 readCnt 증가
     @ResponseBody
     @PostMapping("/readInquiryAnswer")
@@ -254,6 +255,7 @@ public class MemberController {
         }
 
     }
+
     // -------- 허위 매물 신고 관련 --------------
     // 허위 매물 신고 내역 페이지 이동
     @GetMapping("/memberReport")
