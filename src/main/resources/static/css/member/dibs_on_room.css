@@ -1,1 +1,14 @@
 @charset "UTF-8";
+
+.roomListWrap {
+    display: flex;
+}
+
+.roomListWrap img{
+    width: 280px;
+    height: 180px;
+}
+
+.roomListWrap li {
+    margin-left: 20px;
+}
