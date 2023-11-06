@@ -44,10 +44,10 @@ public class MemberInquiryServiceImpl implements MemberInquiryService{
         return sqlSession.selectOne("inquiryMapper.selectStatus",inquiryStCode);
     }
 
-//    @Override
-//    public int insertMemberInquiryImg(MemberInquiryImgVO memberInquiryImgVO) {
-//        return sqlSession.insert("inquiryMapper.insertMemberInquiryImg", memberInquiryImgVO);
-//    }
+    @Override
+    public int insertMemberInquiryImg(MemberInquiryImgVO memberInquiryImgVO) {
+        return sqlSession.insert("inquiryMapper.insertMemberInquiryImg", memberInquiryImgVO);
+    }
 
 
 

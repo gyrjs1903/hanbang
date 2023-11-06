@@ -114,7 +114,6 @@
 
 .imgW {
     display: flex;
-    flex-direction: column;
 }
 
 .imgWW {
@@ -238,4 +237,14 @@ input[type="file"] {
     height: 106px;
     text-align: center;
     cursor: pointer;
+}
+
+.preview-wrap {
+    display: flex;
+}
+
+.image-container img{
+    width: 100px;
+    height: 100px;
+    margin-left: 15px;
 }
