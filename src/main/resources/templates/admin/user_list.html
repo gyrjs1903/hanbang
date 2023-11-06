@@ -1,45 +1,61 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{fragment/main_layout}" >
 <head>
 <meta charset="UTF-8">
 <title>회원 목록</title>
 </head>
 <body>
-    <!-- 검색 -->
-    <div>
-        <form action="/admin/userList" method="post">
-            <input type="text" name="userSearch">
-            <input type="submit" value="검색">
-        </form>
-    </div>
+    <th:block layout:fragment="content">
+        <link rel="stylesheet" href="/css/admin/user_list.css">
+        <div class="userSearch">
+            <div class="userSearch-sub">
+                <div class="cursor btn btn-light d-grid justify-content-start user"
+                    onclick="location.href='/admin/userList';">개인회원</div>
+                <div class="cursor btn btn-light d-grid justify-content-start realtor "
+                    onclick="location.href='/admin/realList';">공인 중개사</div>
+            </div>
+            <div class="userSearch-main">
+                <div class="searchForm-div">
+                    <form action="/admin/userList" method="post">
+                        <input type="text" name="userSearch" class="searchInput" placeholder="검색어를 입력하세요.">
+                        <input type="submit" value="검색" class="searchBtn">
+                    </form>
+                </div>
 
-    <!-- 게시글 목록  -->
-    <table>
-        <colgroup>
-            <col width="5%">
-            <col width="10%">
-        </colgroup>
-        <thead>
-            <tr>
-                <td>No</td>
-                <td>사용자명</td>
-            </tr>
-        </thead>
-        <tbody>
-            <th:block th:if="${#lists.size(userList)==0}">
-                <tr>
-                    <td colspan="5">조회된 회원이 없습니다.</td>
-                </tr>
-            </th:block>
-
-            <th:block th:if="${#lists.size(userList)!=0}">
-                <tr th:each="user : ${userList}">
-                    <td>[[${user.userNo}]]</td>
-                    <td><a th:href="@{/admin/userDetail(userNo=${user.userNo})}">[[${user.userName}]]</a></td>
-                </tr>
-            </th:block>
-        </tbody>
-    </table>
+                <!-- 게시글 목록  -->
+                <table class="userList-table">
+                    <colgroup>
+                        <col width="8%">
+                        <col width="15%">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <td>No</td>
+                            <td>사용자명</td>
+                        </tr>
+                    </thead>
+                    <th:block th:if="${#lists.size(userList)==0}">
+                        <tbody>
+                            <tr class="no_user">
+                                <td colspan="5">조회된 회원이 없습니다.</td>
+                            </tr>
+                        </tbody>
+                    </th:block>
+                    <th:block th:if="${#lists.size(userList)!=0}">
+                        <tbody>
+                            <tr th:each="user : ${userList}">
+                                <td>[[${user.userNo}]]</td>
+                                <td><a th:href="@{/admin/userDetail(userNo=${user.userNo})}">[[${user.userName}]]</a></td>
+                            </tr>
+                        </tbody>
+                    </th:block>
+                </table>
+            </div>
+        </div>
+        
+    </th:block>
+    
 </body>
 </html>

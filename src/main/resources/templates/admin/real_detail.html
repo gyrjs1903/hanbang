@@ -1,50 +1,57 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{fragment/main_layout}" >
 <head>
 <meta charset="UTF-8">
 <title>공인중개사 상세 조회</title>
 </head>
 <body>
-    <table>
-        <colgroup>
-            <col width="5%">
-            <col width="10%"> 
-            <col width="10%">
-            <col width="5%">
-            <col width="10%">
-            <col width="10%">
-            <col width="10%">
-        </colgroup>
-        <thead>
-            <tr>
-                <td>No</td>
-                <td>코드</td>
-                <td>공인중개사명</td>
-                <td>사업자번호</td>
-                <td>자격증 파일</td>
-                <td>권한 여부</td>
-                <td>승인 신청 날짜</td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="rDetail : ${realDetail}">
-                <td>[[${rDetail.userNo}]]</td>
-                <td>[[${rDetail.realTorCode}]]</td>
-                <td>[[${rDetail.officeName}]]</td>
-                <td>[[${rDetail.identificationNum}]]</td>
-                <td>[[${rDetail.licenseFileName}]]</td>
-                <td>
-                    [[${rDetail.authority}]]
-                    <div th:style="${rDetail.authority == 'N' ? 'display : block':'display : none'}">
-                        <input type="button" value="승인" th:onclick = "updateAuthority([[${rDetail.realTorCode}]],[[${rDetail.userNo}]]);">    
-                    </div>
-                </td>
-                <td>[[${rDetail.requestDate}]]</td>
-                <input type="submit" value="삭제" th:onclick="|location.href='@{/admin/deleteReal(identificationNum=${rDetail.identificationNum})}'|">
-            </tr>
-        </tbody>
-    </table>
+    <th:block layout:fragment="content">
+        <table>
+            <colgroup>
+                <col width="5%">
+                <col width="10%"> 
+                <col width="10%">
+                <col width="5%">
+                <col width="10%">
+                <col width="10%">
+                <col width="10%">
+                <col width="5%">
+            </colgroup>
+            <thead>
+                <tr>
+                    <td>No</td>
+                    <td>코드</td>
+                    <td>공인중개사명</td>
+                    <td>사업자번호</td>
+                    <td>자격증 파일</td>
+                    <td>권한 여부</td>
+                    <td>승인 신청 날짜</td>
+                    <td>탈퇴</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="rDetail : ${realDetail}">
+                    <td>[[${rDetail.userNo}]]</td>
+                    <td>[[${rDetail.realTorCode}]]</td>
+                    <td>[[${rDetail.officeName}]]</td>
+                    <td>[[${rDetail.identificationNum}]]</td>
+                    <td>[[${rDetail.licenseFileName}]]</td>
+                    <td>
+                        [[${rDetail.authority}]]
+                        <div th:style="${rDetail.authority == 'N' ? 'display : block':'display : none'}">
+                            <input type="button" value="승인" th:onclick = "updateAuthority([[${rDetail.realTorCode}]],[[${rDetail.userNo}]]);">    
+                        </div>
+                    </td>
+                    <td>[[${rDetail.requestDate}]]</td>
+                    <td>
+                        <input type="submit" value="삭제" th:onclick="|location.href='@{/admin/deleteReal(identificationNum=${rDetail.identificationNum})}'|">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </th:block>
     <script src="/js/admin/admin.js"></script>
 </body>
 </html>
