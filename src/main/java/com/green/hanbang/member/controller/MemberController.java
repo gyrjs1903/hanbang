@@ -260,7 +260,6 @@ public class MemberController {
         }
     }
     // -------- 1:1문의 관련 --------------
-
     // 1:1문의 페이지 이동
     @GetMapping("/memberInquiry")
     public String memberInquiry(Model model, HttpSession session) {
