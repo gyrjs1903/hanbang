@@ -321,3 +321,17 @@
 .seceSpan span{
     text-decoration: underline;
 }
+
+
+/* 비밀번호 모달 창 */
+
+#PWC img {
+    position: absolute;
+    right: 20px;
+    width: 24px;
+    height: 24px;
+}
+#PWC p {
+    color: red;
+    display: none;
+}

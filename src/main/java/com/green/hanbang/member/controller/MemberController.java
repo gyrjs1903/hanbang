@@ -82,15 +82,25 @@ public class MemberController {
 
     // 닉네임 변경
     @PostMapping("/updateNickname")
-    public String updateNickname(String userName){
-        memberService.updateNickname(userName);
+    public String updateNickname(@RequestParam String nickName, HttpSession session, MemberVO memberVO){
+        MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
+        String userNo = loginInfo.getUserNo();
+        memberVO.setUserNo(userNo);
+        memberVO.setNickName(nickName);
+        memberService.updateNickname(memberVO);
         return "redirect:/member/memberInfo";
     }
 
     // 비밀 번호 변경
     @PostMapping("/updatePassWord")
-    public int updatePassWord(MemberVO memberVO){
-        return memberService.updatePassWord(memberVO);
+    public String updatePassWord(@RequestParam String passWord, HttpSession session, MemberVO memberVO){
+        MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
+        String userNo = loginInfo.getUserNo();
+        memberVO.setUserNo(userNo);
+        memberVO.setPassWord(passWord);
+
+        memberService.updatePassword(memberVO);
+        return "redirect:/member/memberInfo";
     }
 
     // 회원 탈퇴
@@ -134,10 +144,8 @@ public class MemberController {
         // 회원 가입 (회원 코드 조회를 위해 선실행)
         memberService.join(memberVO);
 
-        String userNo = memberVO.getUserNo();
+        String userNo = memberService.selectNextUserNo();
         System.out.println(userNo);
-        memberService.selectUserNo(userNo);
-
 
         memberImgVO.setUserNo(userNo);
         memberImgVO.setProfileImgName("img/member/profileImg/default_profile_image.png");
@@ -297,7 +305,7 @@ public class MemberController {
 
     // 1:1문의 전송 (작성 후 문의 버튼 클릭)
     @PostMapping("/memberInquirySave")
-    public String memberInquirySave(HttpSession session, MultipartFile[] inqImg, MemberInquiryVO memberInquiryVO, MemberInquiryImgVO memberInquiryImgVO){
+    public String memberInquirySave(HttpSession session, MultipartFile[] imgs, MemberInquiryVO memberInquiryVO, MemberInquiryImgVO memberInquiryImgVO){
 
         // 로그인 한 회원 번호 조회
         MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
@@ -309,8 +317,7 @@ public class MemberController {
         String memberInquiryWriteNo = memberInquiryService.selectNextInquiryNumber();
 
         // 첨부 파일
-        List<MemberInquiryImgVO> inqImgList = MemberInquiryUtil.inquiryMultiUpload(inqImg);
-        System.out.println(inqImgList);
+        List<MemberInquiryImgVO> inqImgList = MemberInquiryUtil.inquiryMultiUpload(imgs);
         inqImgList.add(memberInquiryImgVO);
 
         for (MemberInquiryImgVO inquiryImgVO : inqImgList){
