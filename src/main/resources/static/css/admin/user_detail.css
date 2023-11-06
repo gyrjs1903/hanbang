@@ -1,0 +1,38 @@
+@charset "UTF-8";
+/* user_detail.css */
+
+.table-title{
+    margin: 50px 0;
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.detail-info-table{
+    width: 100%;
+    margin: 20px auto 0 auto;
+    text-align: center;
+    border-collapse: collapse;
+    border-top: 2px solid #a3a3a3;
+}
+
+tbody > tr:hover {
+    background-color: #e9e5e5;
+}
+
+td{
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+}
+.basic-info-span{
+    font-weight: bold;
+}
+.deleteBtn{
+    background-color: white;
+    color: red;
+    font-weight: bold;
+    font-size: small;
+    padding: 5px;
+    border: 1px solid red;
+    border-radius: 8px;
+}

@@ -10,16 +10,19 @@ import com.green.hanbang.member.vo.MemberVO;
 import com.green.hanbang.room.service.RoomService;
 import com.green.hanbang.room.vo.*;
 import com.green.hanbang.util.RoomUtil;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.codehaus.groovy.util.StringUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.thymeleaf.util.StringUtils;
 
 import java.util.*;
 
@@ -172,7 +175,7 @@ public class RoomController {
 ////////////////////////////////
 
     @GetMapping("/roomDetailInfo")
-    public String roomDetailInfo(String roomCode, Model model, HttpServletRequest request){
+    public String roomDetailInfo(String roomCode, Model model, HttpServletResponse response, HttpServletRequest request){
         //방 모든 정보
         RoomVO room = roomService.selectRoomInfo(roomCode);
         System.out.println(room);
@@ -212,6 +215,160 @@ public class RoomController {
 
         //매물 문의 제목 조회
         model.addAttribute("inquiryTitleList",roomService.selectInquiryTitle());
+
+        // --쿠키 생성-----------------------------------------------------------------------------------
+        
+        // 매물 이미지 쿠키
+        RoomIMGVO roomImg = new RoomIMGVO();
+        for (RoomIMGVO e: room.getImgList()){
+            if (e.getIsMain().equals("Y")){
+                roomImg = e;
+            }
+        }
+
+        Cookie cookie1 = new Cookie("isMain", roomImg.getAttachedFileName());
+        
+        // 매물 제목 쿠키
+        String originCookie = "";
+
+        Cookie[] cookies = request.getCookies();
+
+        for(Cookie cookie : cookies) {
+            if(cookie.getName().equals("title")) {
+                originCookie = cookie.getValue();
+            }
+        }
+
+        originCookie = originCookie + "_" + room.getTitle();
+
+        Cookie cookie2 = new Cookie("title", originCookie);
+
+        String[] originCookieLsit = cookie2.getValue().split("_");
+
+
+        // 매물 유형 쿠키
+        String propertyTypeNameCookie = "";
+
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("propertyTypeName")){
+                propertyTypeNameCookie = cookie.getValue();
+            }
+        }
+
+        propertyTypeNameCookie = propertyTypeNameCookie + "_" + room.getPropertyTypeVO().getPropertyTypeName();
+
+        Cookie cookie3 = new Cookie("propertyTypeName", propertyTypeNameCookie);
+
+        // 거래 유형 쿠키
+        String tradeTypeNameCookie = "";
+
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("tradeTypeName")){
+                tradeTypeNameCookie = cookie.getValue();
+            }
+        }
+
+        tradeTypeNameCookie = tradeTypeNameCookie + "_" + room.getPropertyTypeVO().getPropertyTypeName();
+
+        Cookie cookie4 = new Cookie("tradeTypeName", tradeTypeNameCookie);
+
+        // 월세 쿠키
+        String monthlyLeaseCookie = "";
+
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("monthlyLease")){
+                monthlyLeaseCookie = cookie.getValue();
+            }
+        }
+
+        monthlyLeaseCookie = monthlyLeaseCookie + "_" + room.getMonthlyLease();
+
+        Cookie cookie5 = new Cookie("monthlyLease", monthlyLeaseCookie);
+
+        // 보증금 쿠키
+        String depositCookie = "";
+
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("deposit")){
+                depositCookie = cookie.getValue();
+            }
+        }
+
+        depositCookie = depositCookie + "_" + room.getDeposit();
+
+        Cookie cookie6 = new Cookie("deposit", depositCookie);
+
+        // 건물 층 정보 쿠키
+        String floorCookie = "";
+
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("floor")){
+                floorCookie = cookie.getValue();
+            }
+        }
+
+        floorCookie = floorCookie + "_" + room.getFloor();
+
+        Cookie cookie7 = new Cookie("floor", floorCookie);
+
+        // 평(m²) 정보 쿠키
+        String roomSizeMCookie = "";
+
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("roomSizeM")){
+                roomSizeMCookie = cookie.getValue();
+            }
+        }
+
+        roomSizeMCookie = roomSizeMCookie + "_" + room.getRoomSizeM();
+
+        Cookie cookie8 = new Cookie("roomSizeM", roomSizeMCookie);
+
+        // 관리비 정보 쿠키
+        String maintenanceCostCookie = "";
+
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("maintenanceCost")){
+                maintenanceCostCookie = cookie.getValue();
+            }
+        }
+
+        maintenanceCostCookie = maintenanceCostCookie + "_" + room.getMaintenanceCost();
+
+        Cookie cookie9 = new Cookie("maintenanceCost", maintenanceCostCookie);
+        
+        // 쿠키를 보낼 URL 지정
+        cookie1.setPath("/member/dibsOn");
+        cookie2.setPath("/member/dibsOn");
+        cookie3.setPath("/member/dibsOn");
+        cookie4.setPath("/member/dibsOn");
+        cookie5.setPath("/member/dibsOn");
+        cookie6.setPath("/member/dibsOn");
+        cookie7.setPath("/member/dibsOn");
+        cookie8.setPath("/member/dibsOn");
+        cookie9.setPath("/member/dibsOn");
+
+        // 쿠키 24시간 저장
+        cookie1.setMaxAge(24*60*60);
+        cookie2.setMaxAge(24*60*60);
+        cookie3.setMaxAge(24*60*60);
+        cookie4.setMaxAge(24*60*60);
+        cookie5.setMaxAge(24*60*60);
+        cookie6.setMaxAge(24*60*60);
+        cookie7.setMaxAge(24*60*60);
+        cookie8.setMaxAge(24*60*60);
+        cookie9.setMaxAge(24*60*60);
+
+        // 쿠키 저장
+        response.addCookie(cookie1);
+        response.addCookie(cookie2);
+        response.addCookie(cookie3);
+        response.addCookie(cookie4);
+        response.addCookie(cookie5);
+        response.addCookie(cookie6);
+        response.addCookie(cookie7);
+        response.addCookie(cookie8);
+        response.addCookie(cookie9);
 
         return "room/room_detail";
     }

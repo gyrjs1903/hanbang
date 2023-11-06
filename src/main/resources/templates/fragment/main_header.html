@@ -18,14 +18,11 @@
             <th:block th:if="${session.loginInfo !=null}">
                 <th:block th:if="${session.loginInfo.loginType == 'ADMIN'}">
                     <ul class="adminMenu">
-                        <li class="nav-item adminMenuLi">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <li><a href="/room/roomMain">지도</a></li>
+                        <li class="nav-item adminMenu-li">
+                            <a class="nav-link" href="/admin/userList" role="button">
                                 회원관리
                             </a>
-                            <ul class="dropdown-menu adminMemberManage">
-                                <li><a class="dropdown-item" a th:href="@{/admin/userList}">개인 회원</a></li>
-                                <li><a class="dropdown-item" a th:href="@{/admin/realList}">공인 중개사</a></li>
-                            </ul>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" th:href="@{/admin/infoBoard}">공지사항</a>
@@ -35,21 +32,21 @@
                             맴버쉽 상품 
                             </a>
                             <th:block>
-                                <ul class="dropdown-menu"  id="membershipList" >
+                                <ul class="dropdown-menu membershipList"  >
                                     <li th:each="mCategory : ${membershipCate}">
                                         <a class="dropdown-item" th:href="@{/admin/membershipList(memCateCode=${mCategory.memCateCode})}">[[${mCategory.memCateName}]]</a>
                                     </li>
-                                    <div class="addNewItem" style="margin-left: 13px;"><input type="button" value="신규 등록" class="w-btn-outline w-btn-blue-outline" onclick="location.href='/admin/regMembershipForm';"></div>
+                                    <li><input type="button" value="신규 등록" class="w-btn-outline w-btn-blue-outline" onclick="location.href='/admin/regMembershipForm';"></li>
                                 </ul>
                             </th:block>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" th:href="@{/admin/eventList}">이벤트</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item admin-alarm-li">
                             <h4>
                                 <span onclick="alarm();" class="cursor">
-                                    <span class="material-symbols-outlined">notifications</span>
+                                    <span class="admin-alarm">알림</span>
                                 </span>
                             </h4>
                             <div class="adminAlarm" id="admin_alarm_tag">
@@ -62,61 +59,66 @@
                                 </div>
                             </div>
                         </li>
+                        <li>
+                            <a class="my_menu" onclick="location.href='/member/logout';">로그아웃[이미지]</a>
+                        </li>
                     </ul>
                 </th:block>
             </th:block>
-                
-            <ul>
-                <li><a href="/room/roomMain">지도</a></li>
-                <li>
-                    <th:block th:if="${session.loginInfo == null}">
-                        <a href="/member/loginForm">찜목록</a>
-                    </th:block>
-                    <th:block th:if="${session.loginInfo != null}">
-                        <th:block th:if="${session.loginInfo.loginType == 'REALTOR' or session.loginInfo.loginType == 'USER'}">
-                            <a href="/member/dibsOn">찜목록</a>
+            
+            <th:block th:if="${session.loginInfo == null}">
+                <ul>
+                    <li><a href="/room/roomMain">지도</a></li>
+                    <li>
+                        <th:block th:if="${session.loginInfo == null}">
+                            <a href="/member/loginForm">찜목록</a>
                         </th:block>
-                    </th:block>
-                </li>
-                <li>
-                    <th:block th:if="${session.loginInfo == null}">
-                        <a href="/member/loginForm">방 내놓기</a>
-                    </th:block>
-                    <th:block th:if="${session.loginInfo != null}">
-                        <th:block th:if="${session.loginInfo.loginType == 'USER'}">
+                        <th:block th:if="${session.loginInfo != null}">
+                            <th:block th:if="${session.loginInfo.loginType == 'REALTOR' or session.loginInfo.loginType == 'USER'}">
+                                <a href="/member/dibsOn">찜목록</a>
+                            </th:block>
+                        </th:block>
+                    </li>
+                    <li>
+                        <th:block th:if="${session.loginInfo == null}">
+                            <a href="/member/loginForm">방 내놓기</a>
+                        </th:block>
+                        <th:block th:if="${session.loginInfo != null}">
+                            <th:block th:if="${session.loginInfo.loginType == 'USER'}">
+                                <a th:href="@{/room/reg(userNo=${session.loginInfo.userNo})}">방 내놓기</a>
+                            </th:block>
+                        <th:block th:if="${session.loginInfo.loginType == 'REALTOR'}">
+                        <th:block th:if="${session.authorityAlarm == 1 or session.authorityAlarm == 2}">
                             <a th:href="@{/room/reg(userNo=${session.loginInfo.userNo})}">방 내놓기</a>
                         </th:block>
-                    <th:block th:if="${session.loginInfo.loginType == 'REALTOR'}">
-                    <th:block th:if="${session.authorityAlarm == 1 or session.authorityAlarm == 2}">
-                        <a th:href="@{/room/reg(userNo=${session.loginInfo.userNo})}">방 내놓기</a>
-                    </th:block>
-                    <th:block th:unless="${session.authorityAlarm == 1 or session.authorityAlarm == 2}">
-                        <a class="roomReg_a" href="javascript:void(0);" onclick="authorityYet();">방 내놓기</a>
-                    </th:block>
-                    </th:block>
-                    </th:block>
-                </li>
-                <li class="alarm_position">
-                    <th:block th:if="${session.loginInfo != null}">
-                        <th:block th:if="${session.loginInfo.loginType == 'REALTOR'}">
-                            <a class="alarm cursor" th:onclick="realtorAlarm([[${session.loginInfo.userNo}]],[[${session.authorityAlarm}]],[[${session.realtorInquiryCnt}]],[[${session.alarmCnt}]]);">알림
-                                <div th:if="${session.alarmCnt != 0}" class="alarmCnt">[[${session.alarmCnt}]]</div></a>
+                        <th:block th:unless="${session.authorityAlarm == 1 or session.authorityAlarm == 2}">
+                            <a class="roomReg_a" href="javascript:void(0);" onclick="authorityYet();">방 내놓기</a>
                         </th:block>
-                        <th:block th:if="${session.loginInfo.loginType == 'USER'}">
-                            <a class="alarm cursor" th:onclick="userAlarm([[${session.loginInfo.userNo}]],[[${session.loginInfo?.nickName}]],[[${session.userInquiryAnswer}]]);">알림
-                                <div th:if="${session.alarmCnt == 1}" class="alarmCnt">1</div>
-                            </a>
                         </th:block>
-                    </th:block>
-                    <th:block th:if="${session.loginInfo == null}">
-                        <a class="cursor" href="/member/loginForm">알림</span></a>
-                    </th:block>
-                    <div id="alarm_box">
-                        <div onclick="alarm_close();" class="cursor close-btn"></div>
-                        <div id="alarm_tag"></div>
-                    </div>
-                </li>
-            </ul>
+                        </th:block>
+                    </li>
+                    <li class="alarm_position">
+                        <th:block th:if="${session.loginInfo != null}">
+                            <th:block th:if="${session.loginInfo.loginType == 'REALTOR'}">
+                                <a class="alarm cursor" th:onclick="realtorAlarm([[${session.loginInfo.userNo}]],[[${session.authorityAlarm}]],[[${session.realtorInquiryCnt}]],[[${session.alarmCnt}]]);">알림
+                                    <div th:if="${session.alarmCnt != 0}" class="alarmCnt">[[${session.alarmCnt}]]</div></a>
+                            </th:block>
+                            <th:block th:if="${session.loginInfo.loginType == 'USER'}">
+                                <a class="alarm cursor" th:onclick="userAlarm([[${session.loginInfo.userNo}]],[[${session.loginInfo?.nickName}]],[[${session.userInquiryAnswer}]]);">알림
+                                    <div th:if="${session.alarmCnt == 1}" class="alarmCnt">1</div>
+                                </a>
+                            </th:block>
+                        </th:block>
+                        <th:block th:if="${session.loginInfo == null}">
+                            <a class="cursor" href="/member/loginForm">알림</span></a>
+                        </th:block>
+                        <div id="alarm_box">
+                            <div onclick="alarm_close();" class="cursor close-btn"></div>
+                            <div id="alarm_tag"></div>
+                        </div>
+                    </li>
+                </ul>
+            </th:block>
             <!-- 미로그인 시 나올 메뉴  -->
             <div th:if="${session.loginInfo == null}" class="member_login_join">
                 <button type="button" class="member_login_join_btn" onclick="location.href='/member/loginForm'">로그인<span class="bar"></span>회원가입</button>
@@ -125,7 +127,7 @@
             <div th:if="${session.loginInfo?.loginType == 'USER'}" class="member_nav">
                 <div class="member_intro" th:if="${session.loginInfo != null}">
                     <div size="32" class="member_profile" th:with="imagePath=${session.loginInfo.memberImgVO.profileImgName}">
-                        <img th:src="@{'http://localhost:8081/' + ${imagePath}}" alt="프로필 이미지" draggable="false">
+                        <img th:src="@{'/img/member/profileImg/' + ${session.loginInfo.memberImgVO.attachedProfileImgName}}" alt="프로필 이미지" draggable="false">
                     </div>
                     <div class="member_nickname" onclick="menuOpen()">
                         <p>[[${session.loginInfo?.nickName}]]님</p>
