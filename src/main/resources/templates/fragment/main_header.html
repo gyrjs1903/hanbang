@@ -127,7 +127,7 @@
             <div th:if="${session.loginInfo?.loginType == 'USER'}" class="member_nav">
                 <div class="member_intro" th:if="${session.loginInfo != null}">
                     <div size="32" class="member_profile" th:with="imagePath=${session.loginInfo.memberImgVO.profileImgName}">
-                        <img th:src="@{'/img/member/profileImg/' + ${session.loginInfo.memberImgVO.attachedProfileImgName}}" alt="프로필 이미지" draggable="false">
+                        <img th:src="@{'http://localhost:8081/img/member/profileImg/' + ${session.loginInfo.memberImgVO.attachedProfileImgName}}" alt="프로필 이미지" draggable="false">
                     </div>
                     <div class="member_nickname" onclick="menuOpen()">
                         <p>[[${session.loginInfo?.nickName}]]님</p>

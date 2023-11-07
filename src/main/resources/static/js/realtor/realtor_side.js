@@ -5,5 +5,7 @@ $(window).on('load',()=>{
         document.querySelector('.myPage').classList.add('active');
     } else if(pageUrl.indexOf('inquiryBoardList') > -1){
         document.querySelector('.boardList').classList.add('active');
+    } else if(pageUrl.indexOf('buyItemList') > -1){
+        document.querySelector('.buyItemList').classList.add('active');
     }
 })

@@ -1,12 +1,12 @@
 /* user_inquiry_write.js */
 
-const subImgInput = document.getElementById("subImg");
-const subImgList = document.getElementById("subImgList");
+const inquiryImgInput = document.getElementById("fileInput");
+const inquiryImgList = document.getElementById("preview-wrap");
 
 // 파일이 선택되었을 때 이벤트 핸들러 등록
 
-subImgInput.addEventListener("change", function () {
-    displaySelectedImages(subImgInput.files, subImgList, "상세내용 사진");
+inquiryImgInput.addEventListener("change", function () {
+    displaySelectedImages(inquiryImgInput.files, inquiryImgList, "상세내용 사진");
 });
 
 function displaySelectedImages(files, imageList, labelText) {

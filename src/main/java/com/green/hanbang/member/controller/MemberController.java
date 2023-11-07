@@ -146,7 +146,6 @@ public class MemberController {
         memberService.join(memberVO);
 
         String userNo = memberService.selectNextUserNo();
-        System.out.println(userNo);
 
         memberImgVO.setUserNo(userNo);
         memberImgVO.setProfileImgName("img/member/profileImg/default_profile_image.png");
@@ -187,8 +186,6 @@ public class MemberController {
         // 단일 첨부 파일 업로드
         MemberImgVO uploadedMemberImg = MemberUtil.MemberUploadFile(img);
         uploadedMemberImg.setUserNo(userNo); // 파일 업로드 후 유저 번호 설정
-
-        System.out.println(uploadedMemberImg);
 
         // DB에 프로필 이미지 정보 등록
         memberService.updateProfile(uploadedMemberImg);
@@ -306,7 +303,7 @@ public class MemberController {
 
     // 1:1문의 전송 (작성 후 문의 버튼 클릭)
     @PostMapping("/memberInquirySave")
-    public String memberInquirySave(HttpSession session, MultipartFile[] imgs, MemberInquiryVO memberInquiryVO, MemberInquiryImgVO memberInquiryImgVO){
+    public String memberInquirySave(HttpSession session, MultipartFile[] imgs, MemberInquiryVO memberInquiryVO){
 
         // 로그인 한 회원 번호 조회
         MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
@@ -314,23 +311,25 @@ public class MemberController {
         memberInquiryVO.setUserNo(userNo);
 
         memberInquiryService.insertMemberInquiry(memberInquiryVO);
+        System.out.println(memberInquiryVO);
+        System.out.println(imgs);
 
-        String memberInquiryWriteNo = memberInquiryService.selectNextInquiryNumber();
-
-        // 첨부 파일
+        // 첨부 파일 (여러개)
         List<MemberInquiryImgVO> inqImgList = MemberInquiryUtil.inquiryMultiUpload(imgs);
 
         for (MemberInquiryImgVO inquiryImgVO : inqImgList){
+            String memberInquiryWriteNo = memberInquiryService.selectNextInquiryNumber();
             inquiryImgVO.setMemberInquiryWriteNo(memberInquiryWriteNo);
-
         }
+
+        memberInquiryService.insertMemberInquiryImg((MemberInquiryImgVO) inqImgList);
 
         return "redirect:/member/memberInquiry";
     }
 
     // 1:1 문의 상세 페이지 이동
     @GetMapping("/memberInquiryDetail")
-    public String memberInquiryDetail(Model model, MemberInquiryVO memberInquiryVO, MemberInquiryImgVO memberInquiryImgVO, HttpSession session){
+    public String memberInquiryDetail(Model model, MemberInquiryVO memberInquiryVO, HttpSession session){
 
         // 문의 리스트 목록
         List<MemberInquiryVO> memberInquiryList = memberInquiryService.selectInquiryDetail(memberInquiryVO);

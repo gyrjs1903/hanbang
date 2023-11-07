@@ -34,7 +34,7 @@
 
     <!-- 다음 문의 작성 번호를 조회 -->
     <select id="selectNextInquiryNumber" resultType="String">
-        SELECT ('INQ_WR_'|| LPAD(NVL(MAX(TO_NUMBER(SUBSTR(MEMBER_INQUIRY_WRITE_NO, 8))), 0) + 1, 3, '0')) AS MEMBER_INQUIRY_WRITE_NO
+        SELECT ('INQ_WR_'|| LPAD(NVL(MAX(TO_NUMBER(SUBSTR(MEMBER_INQUIRY_WRITE_NO, 8))), 0), 3, '0')) AS MEMBER_INQUIRY_WRITE_NO
         FROM MEMBER_INQUIRY_WRITE
     </select>
 

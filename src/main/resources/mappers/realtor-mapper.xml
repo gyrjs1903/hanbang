@@ -100,14 +100,27 @@
         WHERE USER_NO = #{userNo}
     </select>
 
+    <!-- 승인 완료된 공인중개사 정보 마이페이지에 조회 -->
+    <select id="selectRealtorOfficeInfo" resultMap="realtorDetail">
+        SELECT REALTOR_CODE
+            , OFFICE_NAME
+            , IDENTIFICATION_NUM
+        FROM REALTOR_DETAIL
+        WHERE USER_NO = #{userNo}
+    </select>
+
     <!-- 공인중개사 정보 수정 -->
     <update id="updateRealtorInfo">
-        UPDATE MEMBER_USER
-        SET NICK_NAME = #{nickName}
-            , PHONE = #{phone}
+        UPDATE MEMBER_USER M
+        SET M.PHONE = #{phone}
+        WHERE M.USER_NO = #{userNo}
+    </update>
+    <!-- 공인중개사 정보 수정 -->
+    <update id="updateRealtorOffice">
+        UPDATE REALTOR_DETAIL
+        SET OFFICE_NAME = #{realtorDetailVO.officeName}
         WHERE USER_NO = #{userNo}
     </update>
-
     <!-- 공인중개사 문의글 조회 -->
     <select id="selectInquiryBoard" resultMap="roomMapper.inquiry">
         SELECT INQUIRY_CODE

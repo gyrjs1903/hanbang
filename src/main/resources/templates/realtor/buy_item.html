@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{fragment/main_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <th:block layout:fragment="content_css">
+        <link rel="stylesheet" href="/css/realtor/realtor_mypage.css">
+        <link rel="stylesheet" href="/css/realtor/buy_item.css">
+    </th:block>
+    <th:block layout:fragment="content">
+        <div id="wrap" class="realtor_page">
+            <div class="row">
+                <div class="col-2 side">
+                    <div class="cursor btn btn-light d-grid justify-content-start myPage" onclick="location.href='/realtor/myPage';">내 정보</div>
+                    <div class="cursor btn btn-light d-grid justify-content-start boardList" onclick="location.href='/realtor/inquiryBoardList';">문의글 확인하기</div>
+                    <div class="cursor btn btn-light d-grid justify-content-start buyItemList" onclick="location.href='/realtor/buyItemList';">상품구매목록</div>
+                </div>
+                <div class="col-10">
+                    <div class="row item-gnb">
+                        <div class="col packageBtn cursor" onclick="onPackage();">패키지 상품</div>
+                        <div class="col generalBtn cursor" onclick="onGeneral();">일반 상품</div>
+                        <div class="col plusBtn cursor" onclick="onPlus();">플러스 상품</div>
+                    </div>
+                    <div class="row packageForm active buy-item-div">
+                        <table class="buy-item-list-table">
+                            <colgroup>
+                                <col width="5%">
+                                <col width="*">
+                                <col width="13%">
+                                <col width="13%">
+                                <col width="13%">
+                                <col width="20%">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th rowspan="2">No</th>
+                                    <th rowspan="2">구매상품</th>
+                                    <th colspan="3">잔여</th>
+                                    <th rowspan="2">사용기한</th>
+                                </tr>
+                                <tr class="">
+                                    <th>일반권</th>
+                                    <th>플러스 정기권</th>
+                                    <th>플러스 1일권</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:if="${#lists.isEmpty(packageItemVOList)}">
+                                    <td colspan="6">구매하신 상품이 없습니다.</td>
+                                </tr>
+                                <tr th:unless="${#lists.isEmpty(packageItemVOList)}" th:each="pakage,state : ${packageItemVOList}">
+                                    <td>[[${#lists.size(packageItemVOList) - state.index}]]</td>
+                                    <td>[[${pakage.membershipName}]] [[${pakage.itemName}]]</td>
+                                    <td>[[${pakage.generalProductCnt}]]</td>
+                                    <td>[[${pakage.plusSeasonCnt}]]</td>
+                                    <td>[[${pakage.plusDayCnt}]]</td>
+                                    <td>[[${pakage.endDate}]]</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row generalForm buy-item-div">
+                        <table class="buy-item-list-table">
+                            <colgroup>
+                                <col width="5%">
+                                <col width="*">
+                                <col width="20%">
+                                <col width="20%">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>구매상품</th>
+                                    <th>잔여</th>
+                                    <th>사용기한</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:if="${#lists.isEmpty(generalItemVOList)}">
+                                    <td colspan="4">구매하신 상품이 없습니다.</td>
+                                </tr>
+                                <tr th:unless="${#lists.isEmpty(generalItemVOList)}" th:each="pakage,state : ${generalItemVOList}">
+                                    <td>[[${#lists.size(generalItemVOList) - state.index}]]</td>
+                                    <td>[[${pakage.itemName}]]</td>
+                                    <td>[[${pakage.generalProductCnt}]]</td>
+                                    <td>[[${pakage.endDate}]]</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row plusForm buy-item-div">
+                        <table class="buy-item-list-table">
+                            <colgroup>
+                                <col width="5%">
+                                <col width="*">
+                                <col width="20%">
+                                <col width="20%">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>구매상품</th>
+                                    <th>상단 노출 일자(일)</th>
+                                    <th>사용기한</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:if="${#lists.isEmpty(plusItemVOList)}">
+                                    <td colspan="4">구매하신 상품이 없습니다.</td>
+                                </tr>
+                                <tr th:unless="${#lists.isEmpty(plusItemVOList)}" th:each="pakage,state : ${plusItemVOList}">
+                                    <td>[[${#lists.size(plusItemVOList) - state.index}]]</td>
+                                    <td>[[${pakage.itemName}]]</td>
+                                    <th:block th:if="${pakage.plusType == 'D'}">
+                                        <td>1</td>
+                                    </th:block>
+                                    <th:block th:if="${pakage.plusType == 'S'}">
+                                        <td>30</td>
+                                    </th:block>
+                                    <td>[[${pakage.endDate}]]</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+    <th:block layout:fragment="content_js">
+        <script src="/js/realtor/realtor_side.js"></script>
+        <script src="/js/realtor/buy_item.js"></script>
+    </th:block>
+
+</body>
+</html>

@@ -221,7 +221,6 @@ document.getElementById("searchButton").addEventListener("click", function () {
             const roomContainer = document.createElement('div');
             selectRoomElement.innerHTML = '';
 
-            console.log(data);
             if (data.length == 0) {
                 roomContainer.className = 'not_room';
                 roomContainer.textContent = '조건에 맞는 방이 없습니다'
@@ -229,7 +228,6 @@ document.getElementById("searchButton").addEventListener("click", function () {
             } else {
                 data.forEach((room, idx) => {
 
-                    console.log(room)
                     const roomElement = document.createElement('div');
                     roomElement.className = 'room';
                     roomElement.setAttribute('onclick', `detailRoom('${room.roomCode}')`);
@@ -323,7 +321,6 @@ function drawPolygon(aa) {
             ob.location = cd_location;
 
             coordinates[0].forEach((coordinate, i) => {
-                console.log(coordinate[1], coordinate[0]);
                 ob.path.push(new kakao.maps.LatLng(coordinate[1], coordinate[0]));
             })
 
