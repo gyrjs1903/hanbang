@@ -4,6 +4,7 @@ import com.green.hanbang.member.vo.AlarmVO;
 import com.green.hanbang.member.vo.MemberImgVO;
 import com.green.hanbang.member.vo.MemberVO;
 import com.green.hanbang.realtor.vo.RealtorDetailVO;
+import com.green.hanbang.room.vo.FalseOfferingsVO;
 import com.green.hanbang.room.vo.InquiryVO;
 import lombok.RequiredArgsConstructor;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -109,5 +110,10 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void updateInquiryReadCnt(String inquiryCode) {
         sqlSession.update("memberMapper.updateInquiryReadCnt",inquiryCode);
+    }
+
+    @Override
+    public List<FalseOfferingsVO> selectFalseOfferingsList(String userNo) {
+        return sqlSession.selectList("memberMapper.selectFalseOfferingsList",userNo);
     }
 }

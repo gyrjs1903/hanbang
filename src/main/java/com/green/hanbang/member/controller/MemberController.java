@@ -257,11 +257,13 @@ public class MemberController {
     // -------- 허위 매물 신고 관련 --------------
     // 허위 매물 신고 내역 페이지 이동
     @GetMapping("/memberReport")
-    public String memberReport(HttpSession session) {
+    public String memberReport(HttpSession session,Model model) {
         MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
         if (loginInfo == null) {
             return "redirect:/member/loginForm";
         } else {
+            System.out.println(memberService.selectFalseOfferingsList(loginInfo.getUserNo()));
+            model.addAttribute("falseOfferingsList",memberService.selectFalseOfferingsList(loginInfo.getUserNo()));
             return "content/member/user_report"; // 문의 유형 목록
         }
     }

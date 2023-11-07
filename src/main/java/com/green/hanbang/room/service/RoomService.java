@@ -57,6 +57,9 @@ public interface RoomService {
     //허위매물 신고
     public int insertFalseOfferings(FalseOfferingsVO falseOfferingsVO);
 
+    //허위매물 중복신고 방기
+    public String selectDuplicateReport(FalseOfferingsVO falseOfferingsVO);
+
     //허위매물 방 이미지 조회
     public List<RoomIMGVO> selectFalseOfferingsImgs(String roomCode);
 

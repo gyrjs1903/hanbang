@@ -187,7 +187,8 @@
                                 </button>
                             </div>
                             <div class="col">
-                                <button type="button"  class="btn dibs_on_btn" th:onclick="likeRoom([[${roomDetail.roomCode}]], [[${roomDetail.subPropertyTypeCode}]])"></button>
+                                <button type="button" class="btn dibs_on_btn"
+                                    th:onclick="likeRoom([[${roomDetail.roomCode}]], [[${roomDetail.subPropertyTypeCode}]])"></button>
                             </div>
                         </div>
                     </div>
@@ -227,13 +228,16 @@
                                     다방에서 보고 연락한다고 말씀하시면,<br>
                                     더욱 빠른 예약이 가능합니다.</div>
                             </div>
-                            <div class="row">
-                                <div class="col">
-                                    <button th:if="${session.loginInfo.userNo != personInfo.userNo}"
-                                        th:onclick="loginResult([[${session.loginInfo}]]);"
-                                        class="btn btn-primary">문의하기</button>
+                            <th:block th:if="${session.loginInfo != null}">
+                                <div class="row">
+                                    <div class="col">
+                                        <th:block th:if="${session.loginInfo.userNo != personInfo.userNo}">
+                                            <button th:onclick="loginResult([[${session.loginInfo}]]);"
+                                                class="btn btn-primary">문의하기</button>
+                                        </th:block>
+                                    </div>
                                 </div>
-                            </div>
+                            </th:block>
                         </th:block>
                         <th:block th:if="${personInfo.loginType == 'USER'}">
                             <div class="row">
@@ -342,7 +346,8 @@
                             <div><input type="password" name="password" id="elDAS-password"></div>
                             <div class="elDAS-alert-box"></div>
                             <div class="modal-footer">
-                                <input type="button" id="elDAS-btn" class="btn btn-primary" onclick="elDAS();" value="본인확인"></input>
+                                <input type="button" id="elDAS-btn" class="btn btn-primary" onclick="elDAS();"
+                                    value="본인확인"></input>
                             </div>
                         </form>
                     </div>
@@ -398,7 +403,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" onclick="report();">신고하기</button>
+                        <button type="button" class="btn btn-primary"
+                            th:onclick="report([[${roomDetail.roomCode}]]);">신고하기</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>

@@ -1,5 +1,6 @@
 package com.green.hanbang.room.vo;
 
+import com.green.hanbang.member.vo.InquiryStatusVO;
 import lombok.Data;
 
 @Data
@@ -12,4 +13,6 @@ public class FalseOfferingsVO {
     private int reportCnt;
     private String reportDate;
     private RoomVO roomVO;
+    private String inquiryStCode;
+    private InquiryStatusVO inquiryStatusVO;
 }

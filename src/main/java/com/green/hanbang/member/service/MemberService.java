@@ -4,6 +4,7 @@ import com.green.hanbang.member.vo.AlarmVO;
 import com.green.hanbang.member.vo.MemberImgVO;
 import com.green.hanbang.member.vo.MemberVO;
 import com.green.hanbang.realtor.vo.RealtorDetailVO;
+import com.green.hanbang.room.vo.FalseOfferingsVO;
 import com.green.hanbang.room.vo.InquiryVO;
 
 import java.util.List;
@@ -64,4 +65,7 @@ public interface MemberService {
 
     //문의 답글 확인 후 ReadCnt 증가
     public void updateInquiryReadCnt(String inquiryCode);
+
+    //허위매물 신고 상태 조회
+    public List<FalseOfferingsVO> selectFalseOfferingsList(String userNo);
 }
