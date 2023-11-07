@@ -87,14 +87,14 @@
                             <th:block th:if="${session.loginInfo.loginType == 'USER'}">
                                 <a th:href="@{/room/reg(userNo=${session.loginInfo.userNo})}">방 내놓기</a>
                             </th:block>
-                        <th:block th:if="${session.loginInfo.loginType == 'REALTOR'}">
-                        <th:block th:if="${session.authorityAlarm == 1 or session.authorityAlarm == 2}">
-                            <a th:href="@{/room/reg(userNo=${session.loginInfo.userNo})}">방 내놓기</a>
-                        </th:block>
-                        <th:block th:unless="${session.authorityAlarm == 1 or session.authorityAlarm == 2}">
-                            <a class="roomReg_a" href="javascript:void(0);" onclick="authorityYet();">방 내놓기</a>
-                        </th:block>
-                        </th:block>
+                            <th:block th:if="${session.loginInfo.loginType == 'REALTOR'}">
+                                <th:block th:if="${session.authorityAlarm == 1 or session.authorityAlarm == 2}">
+                                     <a th:href="@{/room/reg(userNo=${session.loginInfo.userNo})}">방 내놓기</a>
+                                 </th:block>
+                                <th:block th:unless="${session.authorityAlarm == 1 or session.authorityAlarm == 2}">
+                                     <a class="roomReg_a" href="javascript:void(0);" onclick="authorityYet();">방 내놓기</a>
+                                </th:block>
+                            </th:block>
                         </th:block>
                     </li>
                     <li class="alarm_position">
