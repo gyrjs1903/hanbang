@@ -32,7 +32,7 @@
         <div>
             <div>
                 <p>
-                    총 <span></span>개의 최근 본 방이 있습니다.
+                    총 <span th:text="${recentViewList.size() - 1}"></span>개의 최근 본 방이 있습니다.
                 </p>
                 <p>
                     최근 본 방은 최대 30개까지 저장됩니다.
@@ -42,22 +42,16 @@
                 <li>
                     <div>
                         <div>
-                            <a>
-                                <ul>
+                            <a class="recentP">
+                                <ul th:each="recentViewList, state : ${recentViewList}" th:if="${state.index != 0}">
                                     <li>
-                                        <img id="cookieIsMain" src="" alt="매물 메인 이미지">
+                                        <img th:id="'randomImg' + ${state.index}" th:src="@{'/img/room/' + ${getRandomImage()}}" alt="매물 메인 이미지" style="width: 100px; height: 100px;">
                                     </li>
                                     <li>
-                                        <p id="cookiePropertyTypeName"></p>
+                                        <p>[[${recentViewList.deposit}]]/[[${recentViewList.monthlyLease}]], 관리비 [[${recentViewList.maintenanceCost}]]만</p>
                                     </li>
                                     <li>
-                                        <p id="cookieTradeTypeName"></p><p id="cookieMonthlyLease"></p><p id="cookieDeposit"></p>
-                                    </li>
-                                    <li>
-                                        <p id="cookieFloor"></p><p id="cookieRoomSizeM"></p><p id="cookieMaintenanceCost"></p>
-                                    </li>
-                                    <li>
-                                        <p id="cookieTitle"></p>
+                                        <p>[[${recentViewList.title}]]</p>
                                     </li>
                                 </ul>
                             </a>
@@ -65,11 +59,29 @@
                     </div>
                 </li>
             </ul>
-            <div class="inquiryCT">
+            <div class="inquiryCT" th:if="${recentViewList == null}">
                 <p>최근 본 방이 없습니다.</p>
                 <p>관심있는 방을 둘러보세요.</p>
             </div>
         </div>
+        <script th:inline="javascript">
+            function getRandomImage() {
+                var images = ["fec1a14f-93ef-48cf-8081-e610942fcbfd.jpg"
+                , "3bb61cad-4722-421e-a3cb-072aab926ce8.jpg"
+                , "3ad46480-f9d8-4356-9f7d-308915712bff.jpg"
+                , "2add7544-2e8a-41ac-9775-91384ce12ef1.jpg"
+                , "1d11ca72-3692-472a-9445-7c2f3f858ae7.jpg",];
+                var randomIndex = Math.floor(Math.random() * images.length);
+                return images[randomIndex];
+            }
+
+            document.addEventListener("DOMContentLoaded", function() {
+                var recentViewList = document.querySelectorAll('[id^=randomImg]');
+                recentViewList.forEach(function (imgElement) {
+                    imgElement.src = '/img/room/' + getRandomImage();
+                });
+            });
+        </script>
     </th:block>
     <th:block layout:fragment="content_js">
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>

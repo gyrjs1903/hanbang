@@ -108,11 +108,41 @@ function elDAS(){
 }
 
 //허위매물 신고하기
-function report(){
-    if(confirm('신고하시겠습니까?')){
-        document.getElementById('false-offerings').submit();
-        reportModal.hide();
-    }
+function report(roomCode){
+    fetch('/room/selectDuplicateReport', { //요청경로
+        method: 'POST',
+        cache: 'no-cache',
+        headers: {
+            'Content-Type': 'application/json; charset=UTF-8'
+        },
+        //컨트롤러로 전달할 데이터
+        body: JSON.stringify({
+           // 데이터명 : 데이터값
+           roomCode : roomCode,
+           userNo : document.querySelector('#report-person').value
+        })
+    })
+    .then((response) => {
+        return response.text(); //나머지 경우에 사용
+    })
+    //fetch 통신 후 실행 영역
+    .then((data) => {//data -> controller에서 리턴되는 데이터!
+        console.log(data);
+        if(data == ''){
+            if(confirm('신고하시겠습니까?')){
+                document.getElementById('false-offerings').submit();
+                reportModal.hide();
+            }
+        } else {
+            alert('이미 신고가 완료된 방입니다.');
+            reportModal.hide();
+        }
+    })
+    //fetch 통신 실패 시 실행 영역
+    .catch(err=>{
+        alert('fetch error!\nthen 구문에서 오류가 발생했습니다.\n콘솔창을 확인하세요!');
+        console.log(err);
+    });
 }
 
 //문의 시 로그인 여부
@@ -198,3 +228,47 @@ function likeRoom(roomCode, subPropertyTypeCode) {
         }
     });
 }
+// $(document).ready(function(){
+//     $("#dibs_on_btn").click(function(roomCode, subPropertyTypeCode){
+//         var roomCode = roomCode; 
+//         var subPropertyTypeCode = subPropertyTypeCode; 
+//         var isAlreadySaved = false; // 서버에서 받아온 찜 상태에 따라 값을 설정하세요.
+
+//         // 만약 이미 찜한 상태라면
+//         if (isAlreadySaved) {
+//             $.ajax({
+//                 type: "POST",
+//                 url: "/member/like",
+//                 data: {
+//                     roomCode: roomCode,
+//                     subPropertyTypeCode: subPropertyTypeCode
+//                 },
+//                 success: function(response) {
+//                     alert("찜이 취소되었습니다.");
+//                 },
+//                 error: function(error) {
+//                     alert("찜 취소를 실패했습니다.");
+//                     console.log(error);
+//                 }
+//             });
+//         }
+//         // 찜하지 않은 상태라면
+//         else {
+//             $.ajax({
+//                 type: "POST",
+//                 url: "/member/like",
+//                 data: {
+//                     roomCode: roomCode,
+//                     subPropertyTypeCode: subPropertyTypeCode
+//                 },
+//                 success: function(response) {
+//                     alert("찜목록에 추가되었습니다.");
+//                 },
+//                 error: function(error) {
+//                     alert("찜하기를 실패했습니다.");
+//                     console.log(error);
+//                 }
+//             });
+//         }
+//     });
+// });

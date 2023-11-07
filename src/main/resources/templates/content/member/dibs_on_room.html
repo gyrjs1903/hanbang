@@ -29,17 +29,17 @@
                 </div>
             </div>
         </header>
-        <div>
+        <div class="bodyWrap">
             <div>
                 <p>
-                    총 <span>[]</span>개의 찜한 방이 있습니다.
+                    총 <span th:text="${saveList.size()}"></span>개의 찜한 방이 있습니다.
                 </p>
             </div>
             <ul class="roomListWrap" th:if="${saveList != null}">
                 <li th:each="save, state : ${saveList}">
                     <div>
                         <div>
-                            <a th:onclick="detailRoom([[${save.roomCode}]]);">
+                            <a th:href="@{'/room/roomDetailInfo?roomCode=' + ${save.roomCode}}" class="dibsP">
                                 <div>
                                     <div>
                                         <div>
@@ -66,9 +66,6 @@
                                         </div>
                                         <div class="basicInfo">[[${save.roomVO.floor}]]층, [[${save.roomVO.roomSizeM}]]m², 관리비 [[${save.roomVO.maintenanceCost}]]만</div>
                                         <div class="detailInfo">[[${save.roomVO.content}]]</div>
-                                        <div class="dibsOn">
-                                            <button type="button" class="dibs_on_room"></button>
-                                        </div>
                                     </div>
                                 </div>
                             </a>
@@ -77,9 +74,9 @@
                 </li>
             </ul>
             <div>
-                <button type="button">방 비교하기</button>
+                <button type="button" class="btn btn-primary roomComparison">방 비교하기</button>
             </div>
-            <div class="inquiryCT" th:if="${memberSaveList == null}">
+            <div class="inquiryCT" th:if="${saveList == null}">
                 <p>찜한 방이 없습니다.</p>
                 <p>관심있는 방을 찜 해보세요.</p>
             </div>

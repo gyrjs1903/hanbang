@@ -18,4 +18,10 @@ public interface SaveService {
     // 찜목록 (아파트)
     public List<MemberSaveVO> selectSaveApartList();
 
+    // 이미 찜한 매물 확인
+    public boolean checkIfSaved(MemberSaveVO memberSaveVO);
+
+    // 찜취소
+    public void deleteSavedItem(MemberSaveVO memberSaveVO);
+
 }

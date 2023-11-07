@@ -31,4 +31,14 @@ public class SaveServiceServiceImpl implements SaveService{
     public List<MemberSaveVO> selectSaveApartList() {
         return sqlSession.selectList("saveMapper.selectSaveApartList");
     }
+
+    @Override
+    public boolean checkIfSaved(MemberSaveVO memberSaveVO) {
+        return sqlSession.selectOne("saveMapper.checkIfSaved", memberSaveVO);
+    }
+
+    @Override
+    public void deleteSavedItem(MemberSaveVO memberSaveVO) {
+        sqlSession.delete("saveMapper.deleteSavedItem", memberSaveVO);
+    }
 }

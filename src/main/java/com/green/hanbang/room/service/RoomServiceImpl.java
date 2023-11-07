@@ -53,6 +53,10 @@ public class RoomServiceImpl implements RoomService {
         return sqlSession.selectList("roomMapper.selectRoomAddr");
     }
 
+    @Override
+    public List<RoomVO> selectMainPageRoom() {
+        return sqlSession.selectList("roomMapper.selectMainPageRoom");
+    }
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -97,16 +101,19 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
+    public String selectDuplicateReport(FalseOfferingsVO falseOfferingsVO) {
+        return sqlSession.selectOne("roomMapper.selectDuplicateReport",falseOfferingsVO);
+    }
+
+    @Override
     public List<RoomIMGVO> selectFalseOfferingsImgs(String roomCode) {
         return sqlSession.selectList("adminMapper.selectFalseOfferingsImgs",roomCode);
     }
 
     @Override
     public int deleteRoom(String roomCode) {
-        sqlSession.delete("adminMapper.deleteFalseOfferings",roomCode);
-        sqlSession.delete("adminMapper.deleteFalseOfferingsImgs",roomCode);
-        sqlSession.delete("adminMapper.deleteAddr",roomCode);
-        return sqlSession.delete("adminMapper.deleteRoom",roomCode);
+        sqlSession.update("adminMapper.updateFalseOfferings",roomCode);
+        return sqlSession.delete("adminMapper.deleteFalseOfferingsImgs",roomCode);
     }
 
     @Override

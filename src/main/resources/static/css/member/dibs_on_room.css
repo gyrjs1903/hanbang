@@ -12,3 +12,17 @@
 .roomListWrap li {
     margin-left: 20px;
 }
+
+.bodyWrap {
+    position: relative;
+}
+
+.roomComparison {
+    position: absolute;
+    right: 0px;
+}
+
+.dibsP {
+    color: black;
+}
+

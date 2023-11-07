@@ -18,93 +18,22 @@
                     <a class="userHMC" onclick="location.href='/member/loginForm'">찜한 방</a>
                     <a class="userHMC" onclick="location.href='/member/recentViewedApartment'">최근 본 단지</a>
                     <a class="userHMC active" onclick="location.href='/member/loginForm'" aria-current="page">찜한 단지</a>
-                    <!-- <a class="userHMC" onclick="location.href='/member/loginForm'">즐겨찾기</a> -->
                 </div>
                 <div class="userHMD" th:if="${session.loginInfo != null}">
                     <a class="userHMC" onclick="location.href='/member/dibsOn'">최근 본 방</a>
                     <a class="userHMC" onclick="location.href='/member/dibsOnRoom'">찜한 방</a>
                     <a class="userHMC" onclick="location.href='/member/recentViewedApartment'">최근 본 단지</a>
                     <a class="userHMC active" onclick="location.href='/member/dibsOnApartment'" aria-current="page">찜한 단지</a>
-                    <!-- <a class="userHMC" onclick="location.href='/member/wishListFavorites'">즐겨찾기</a> -->
                 </div>
             </div>
         </header>
         <div>
-            <input type="hidden" th:value="${roomDetail.roomCode}" id="roomCodeNumber">
             <div>
                 <p>
-                    총 <span>[]</span>개의 찜한 방이 있습니다.
+                    총 <span>0</span>개의 찜한 방이 있습니다.
                 </p>
             </div>
-            <ul th:if="${memberSaveList != null}">
-                <li th:each="memberSave, state : ${memberSaveList}">
-                    <div>
-                        <div>
-                            <a href="">
-                                <div>
-                                    <div>
-                                    <th:block th:each="img : ${roomDetail.imgList}">
-                                        <div><img th:src="'/img/room/' + ${img.attachedFileName}" alt="매물 메인 사진"></div>
-                                    </th:block>
-                                        <div class="subPropertyTypeCodeArea">
-                                            <div th:if="${memberSave.subPropertyTypeCode == 'STYPE_001'}">원룸</div>
-                                            <div th:if="${memberSave.subPropertyTypeCode == 'STYPE_002'}">투룸</div>
-                                            <div th:if="${memberSave.subPropertyTypeCode == 'STYPE_003'}">쓰리룸 이상</div>
-                                            <div th:if="${memberSave.subPropertyTypeCode == 'STYPE_004'}">오피스텔(도시형)</div>
-                                            <div th:if="${memberSave.subPropertyTypeCode == 'STYPE_005'}">아파트</div>
-                                        </div>
-                                        <div class="tradeTypeCodeArea">
-                                            <div th:if="${roomDetail.tradeTypeCode == 'TTC_001'}">월세
-                                                <span th:if="${roomDetail.tradeTypeCode == 'TTC_001'}">
-                                                    [[${roomDetail.deposit}]]/[[${roomDetail.monthlyLease}]]
-                                                </span>
-                                            </div>
-                                            <div th:if="${roomDetail.tradeTypeCode == 'TTC_002'}">전세
-                                                <span th:if="${roomDetail.tradeTypeCode == 'TTC_002'}">
-                                                    [[${roomDetail.jeonseCost}]]
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="basicInfo">[[${roomDetail.floor}]]층, [[${roomDetail.roomSizeM}]]m², 관리비 [[${roomDetail.maintenanceCost}]]만</div>
-                                        <div class="detailInfo">[[${roomDetail.content}]]</div>
-                                        <div class="dibsOn">
-                                            <button type="button" class="dibs_on_room"></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-            <!-- <div th:if="${#lists.size(memberSave)} > 0">
-                <ul class="pagination">
-                    <li th:class="${currentPage == 1} ? disabled">
-                        <a th:if="${currentPage != 1}" th:href="@{/(page=1)}">처음</a>
-                        <span th:if="${currentPage == 1}">처음</span>
-                    </li>
-                    <li th:class="${currentPage == 1} ? disabled">
-                        <a th:if="${currentPage != 1}" th:href="@{/(page=${currentPage - 1})}">이전</a>
-                        <span th:if="${currentPage == 1}">이전</span>
-                    </li>
-                    <li th:each="i : ${#numbers.sequence(1, totalPages)}" th:class="${currentPage == i} ? active">
-                        <a th:if="${currentPage != i}" th:href="@{/(page=${i})}" th:text="${i}"></a>
-                        <span th:if="${currentPage == i}" th:text="${i}"></span>
-                    </li>
-                    <li th:class="${currentPage == totalPages} ? disabled">
-                        <a th:if="${currentPage != totalPages}" th:href="@{/(page=${currentPage + 1})}">다음</a>
-                        <span th:if="${currentPage == totalPages}">다음</span>
-                    </li>
-                    <li th:class="${currentPage == totalPages} ? disabled">
-                        <a th:if="${currentPage != totalPages}" th:href="@{/(page=${totalPages})}">마지막</a>
-                        <span th:if="${currentPage == totalPages}">마지막</span>
-                    </li>
-                </ul>
-            </div> -->
             <div>
-                <button type="button">방 비교하기</button>
-            </div>
-            <div class="inquiryCT">
                 <p>찜한 아파트가 없습니다.</p>
                 <p>관심있는 아파트를 찜해보세요.</p>
             </div>

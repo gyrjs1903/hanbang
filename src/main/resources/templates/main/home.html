@@ -28,7 +28,7 @@
         </div>
         <section class="main_content1">
             <div class="ai_picks">
-                <h1 class="ai_title1">한방 AI의 <span>[OO동]</span>추천 매물이예요!</h1>
+                <h1 class="ai_title1"><span>한방</span>추천 매물이예요!</h1>
                 <div class="ai_title2">
                     <p>
                         <span>[닉네임]님의</span>
@@ -44,113 +44,30 @@
                     <a href="">더 많은 방 보기 ></a>
                 </div>
                 <ul class="ai_room_list">
-                    <li>
-                        <div>
-                            <div class="ai_room1">
-                                <a href="" style="display: block;">
+                    <li th:each="room, state : ${selectMainPageRoomList}">
+                        <th:block th:if="${state.index &lt; 4}">
+                            <div>
+                                <div class="ai_room1">
                                     <div class="ai_room_img_wrap">
                                         <div class="ai_room_img_content">
-                                            <img src="" alt="매물사진">
-                                            <div class="ai_room_img"></div>
-                                            <div class="ai_room_img_f"></div>
-                                            <div class="ai_room_img_btn">
-                                                <button type="button"></button>
-                                            </div>
+                                            <img th:src="${'/img/' + 'room/' + room.imgList[0].attachedFileName}"
+                                                alt="매물사진">
                                         </div>
                                     </div>
                                     <div class="ai_room_info">
-                                        <p class="room_title">[매물 타입 · 매물 건물 이름(있으면 출력)]</p>
-                                        <h1 class="room_price">
-                                            [매물 가격 타입]
-                                            [보증금/월세]
-                                        </h1>
-                                        <p class="room_info">[층, 크기, 관리비 정보]</p>
-                                        <p class="room_info">[매물 설명...]</p>
+                                        <p class="room_title">[<span>[[${room.subPropertyTypeVO.subPropertyTypeName}]]</span>]</p>
+                                        <th:block th:if="${room.tradeTypeCode == 'TTC_001'}">
+                                            <h4>월세 [[${room.deposit}]]/[[${room.monthlyLease}]]</h4>
+                                        </th:block>
+                                        <th:block th:if="${room.tradeTypeCode == 'TTC_002'}">
+                                            <h4>전세 [[${room.jeonseCost}]]</h4>
+                                        </th:block>
+                                        <p class="room_info">[[${room.floor}]]층,  [[${room.roomSizeP}]]평</p>
+                                        <p class="room_info">[[${room.title}]]</p>
                                     </div>
-                                </a>
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <div class="ai_room1">
-                                <a href="" style="display: block;">
-                                    <div class="ai_room_img_wrap">
-                                        <div class="ai_room_img_content">
-                                            <img src="" alt="매물사진">
-                                            <div class="ai_room_img"></div>
-                                            <div class="ai_room_img_f"></div>
-                                            <div class="ai_room_img_btn">
-                                                <button type="button"></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ai_room_info">
-                                        <p class="room_title">[매물 타입 · 매물 건물 이름(있으면 출력)]</p>
-                                        <h1 class="room_price">
-                                            [매물 가격 타입]
-                                            [보증금/월세]
-                                        </h1>
-                                        <p class="room_info">[층, 크기, 관리비 정보]</p>
-                                        <p class="room_info">[매물 설명...]</p>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <div class="ai_room1">
-                                <a href="" style="display: block;">
-                                    <div class="ai_room_img_wrap">
-                                        <div class="ai_room_img_content">
-                                            <img src="" alt="매물사진">
-                                            <div class="ai_room_img"></div>
-                                            <div class="ai_room_img_f"></div>
-                                            <div class="ai_room_img_btn">
-                                                <button type="button"></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ai_room_info">
-                                        <p class="room_title">[매물 타입 · 매물 건물 이름(있으면 출력)]</p>
-                                        <h1 class="room_price">
-                                            [매물 가격 타입]
-                                            [보증금/월세]
-                                        </h1>
-                                        <p class="room_info">[층, 크기, 관리비 정보]</p>
-                                        <p class="room_info">[매물 설명...]</p>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <div class="ai_room1">
-                                <a href="" style="display: block;">
-                                    <div class="ai_room_img_wrap">
-                                        <div class="ai_room_img_content">
-                                            <img src="" alt="매물사진">
-                                            <div class="ai_room_img"></div>
-                                            <div class="ai_room_img_f"></div>
-                                            <div class="ai_room_img_btn">
-                                                <button type="button"></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ai_room_info">
-                                        <p class="room_title">[매물 타입 · 매물 건물 이름(있으면 출력)]</p>
-                                        <h1 class="room_price">
-                                            [매물 가격 타입]
-                                            [보증금/월세]
-                                        </h1>
-                                        <p class="room_info">[층, 크기, 관리비 정보]</p>
-                                        <p class="room_info">[매물 설명...]</p>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
+                        </th:block>
                     </li>
                 </ul>
             </div>
@@ -158,7 +75,7 @@
         <section class="main_content2">
             <div>
                 <p class="content2_title">
-                    <span>OO동</span>은 어떤 동네일까요?
+                    <span>한방</span> 매물가 평균
                 </p>
                 <div class="content2_wrap">
                     <button type="button" class="content2_btn_left"></button>
@@ -210,67 +127,6 @@
                                 <p class="monye_avg">평균</p>
                             </div>
                         </div>
-                        <div class="room_convenience_facilities">
-                            <div class="rcf_title">
-                                <p>편의시설</p>
-                            </div>
-                            <div class="rcf_content">
-                                <div>
-                                    <div class="rcf_icon"></div>
-                                    <p class="rcf_tit">편의점</p>
-                                    <p class="rcf_count">해당 동 편의점 갯수</p>
-                                </div>
-                                <div>
-                                    <div class="rcf_icon"></div>
-                                    <p class="rcf_tit">수퍼마켓</p>
-                                    <p class="rcf_count">해당 동 수퍼마켓 갯수</p>
-                                </div>
-                                <div>
-                                    <div class="rcf_icon"></div>
-                                    <p class="rcf_tit">세탁/빨래방</p>
-                                    <p class="rcf_count">해당 동 세탁/빨래방 갯수</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="room_inquiry_charts">
-                            <div>
-                                <p>[OO동]에서는</p>
-                                <h1>[매물 타입] 상담이 가장 많아요.</h1>
-                            </div>
-                            <!-- 차트 넣을껀데 7일 기준 가장 문의가 많은 매물 타입이 제일 위로 가게끔 -->
-                            <div>
-                                <ul>
-                                    <li>
-                                        <p>오피스텔</p>
-                                        <div>
-                                            <div>
-                                                <p>퍼센트</p>
-                                                <div>차트</div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <p>원룸</p>
-                                        <div>
-                                            <div>
-                                                <p></p>
-                                                <div></div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <p>투·쓰리룸</p>
-                                        <div>
-                                            <div>
-                                                <p></p>
-                                                <div></div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <p>※ 최근 7일간 문자/전화문의 수 기준</p>
-                            </div>
-                        </div>
                     </div>
                     <button type="button" class="content2_btn_right"></button>
                 </div>
@@ -296,7 +152,8 @@
                     <li>
                         <p class="title">상품소개</p>
                         <div th:each="cateList : ${cateList}" class="buyItemList">
-                            <a th:href="@{/buyItem(memCateCode=${cateList.memCateCode})}">[[${cateList.memCateName}]]</a>
+                            <a
+                                th:href="@{/buyItem(memCateCode=${cateList.memCateCode})}">[[${cateList.memCateName}]]</a>
                         </div>
                     </li>
                     <li>

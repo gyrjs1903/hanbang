@@ -217,17 +217,22 @@ public class RoomController {
         model.addAttribute("inquiryTitleList",roomService.selectInquiryTitle());
 
         // --쿠키 생성-----------------------------------------------------------------------------------
-        
+
         // 매물 이미지 쿠키
-        RoomIMGVO roomImg = new RoomIMGVO();
+        RoomIMGVO roomImgCookie = new RoomIMGVO();
+
         for (RoomIMGVO e: room.getImgList()){
             if (e.getIsMain().equals("Y")){
-                roomImg = e;
+                roomImgCookie = e;
             }
         }
 
-        Cookie cookie1 = new Cookie("isMain", roomImg.getAttachedFileName());
-        
+        String attachedFileNameCookie = roomImgCookie.getAttachedFileName();
+
+        attachedFileNameCookie = attachedFileNameCookie + "_" + roomImgCookie.getAttachedFileName();
+
+        Cookie cookie1 = new Cookie("isMain", attachedFileNameCookie);
+
         // 매물 제목 쿠키
         String originCookie = "";
 
@@ -242,9 +247,6 @@ public class RoomController {
         originCookie = originCookie + "_" + room.getTitle();
 
         Cookie cookie2 = new Cookie("title", originCookie);
-
-        String[] originCookieLsit = cookie2.getValue().split("_");
-
 
         // 매물 유형 쿠키
         String propertyTypeNameCookie = "";
@@ -268,7 +270,7 @@ public class RoomController {
             }
         }
 
-        tradeTypeNameCookie = tradeTypeNameCookie + "_" + room.getPropertyTypeVO().getPropertyTypeName();
+        tradeTypeNameCookie = tradeTypeNameCookie + "_" + room.getTradeTypeCode();
 
         Cookie cookie4 = new Cookie("tradeTypeName", tradeTypeNameCookie);
 
@@ -311,31 +313,31 @@ public class RoomController {
 
         Cookie cookie7 = new Cookie("floor", floorCookie);
 
-        // 평(m²) 정보 쿠키
-        String roomSizeMCookie = "";
-
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("roomSizeM")){
-                roomSizeMCookie = cookie.getValue();
-            }
-        }
-
-        roomSizeMCookie = roomSizeMCookie + "_" + room.getRoomSizeM();
-
-        Cookie cookie8 = new Cookie("roomSizeM", roomSizeMCookie);
-
-        // 관리비 정보 쿠키
-        String maintenanceCostCookie = "";
-
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("maintenanceCost")){
-                maintenanceCostCookie = cookie.getValue();
-            }
-        }
-
-        maintenanceCostCookie = maintenanceCostCookie + "_" + room.getMaintenanceCost();
-
-        Cookie cookie9 = new Cookie("maintenanceCost", maintenanceCostCookie);
+//        // 평(m²) 정보 쿠키
+//        String roomSizeMCookie = "";
+//
+//        for (Cookie cookie : cookies) {
+//            if (cookie.getName().equals("roomSizeM")){
+//                roomSizeMCookie = cookie.getValue();
+//            }
+//        }
+//
+//        roomSizeMCookie = roomSizeMCookie + "_" + room.getRoomSizeM();
+//
+//        Cookie cookie8 = new Cookie("roomSizeM", roomSizeMCookie);
+//
+//        // 관리비 정보 쿠키
+//        String maintenanceCostCookie = "";
+//
+//        for (Cookie cookie : cookies) {
+//            if (cookie.getName().equals("maintenanceCost")){
+//                maintenanceCostCookie = cookie.getValue();
+//            }
+//        }
+//
+//        maintenanceCostCookie = maintenanceCostCookie + "_" + room.getMaintenanceCost();
+//
+//        Cookie cookie9 = new Cookie("maintenanceCost", maintenanceCostCookie);
         
         // 쿠키를 보낼 URL 지정
         cookie1.setPath("/member/dibsOn");
@@ -345,8 +347,8 @@ public class RoomController {
         cookie5.setPath("/member/dibsOn");
         cookie6.setPath("/member/dibsOn");
         cookie7.setPath("/member/dibsOn");
-        cookie8.setPath("/member/dibsOn");
-        cookie9.setPath("/member/dibsOn");
+//        cookie8.setPath("/member/dibsOn");
+//        cookie9.setPath("/member/dibsOn");
 
         // 쿠키 24시간 저장
         cookie1.setMaxAge(24*60*60);
@@ -356,19 +358,15 @@ public class RoomController {
         cookie5.setMaxAge(24*60*60);
         cookie6.setMaxAge(24*60*60);
         cookie7.setMaxAge(24*60*60);
-        cookie8.setMaxAge(24*60*60);
-        cookie9.setMaxAge(24*60*60);
+//        cookie8.setMaxAge(24*60*60);
+//        cookie9.setMaxAge(24*60*60);
 
-        // 쿠키 저장
-        response.addCookie(cookie1);
-        response.addCookie(cookie2);
-        response.addCookie(cookie3);
-        response.addCookie(cookie4);
-        response.addCookie(cookie5);
-        response.addCookie(cookie6);
-        response.addCookie(cookie7);
-        response.addCookie(cookie8);
-        response.addCookie(cookie9);
+        // 각 쿠기들 저장
+        Cookie[] cookiesBox = {cookie1, cookie2, cookie3, cookie4, cookie5, cookie6, cookie7}; //, cookie8, cookie9
+
+        for (Cookie cookie : cookiesBox) {
+            response.addCookie(cookie);
+        }
 
         return "room/room_detail";
     }
@@ -390,6 +388,14 @@ public class RoomController {
             return "null";
         }
         return roomService.selectElDAS(memberVO);
+    }
+
+    //허위매물신고 중복방지
+    @ResponseBody
+    @PostMapping("/selectDuplicateReport")
+    public String selectDuplicateReport(@RequestBody FalseOfferingsVO falseOfferingsVO){
+        System.out.println(falseOfferingsVO);
+        return roomService.selectDuplicateReport(falseOfferingsVO);
     }
 
     //허위매물신고
