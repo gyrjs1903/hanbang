@@ -1,25 +1,35 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{fragment/main_layout}">
 <head>
 <meta charset="UTF-8">
 <title>공지사항 수정</title>
 </head>
 <body>
-    <form action="/admin/updateBoard" method="post">
-        <input type="hidden" name="boardNum" th:value="${board.boardNum}">
-        <div>
-            <div> 글 제목 </div>
-            <div><input type="text" name="infoTitle" required th:value="${board.infoTitle}"></div>
-        </div>
-        <div>
-            <div> 내용 </div>
-            <div>
-                <textarea cols="50" rows="10" name="infoContent" th:value="${board.infoContent}">[[${board.infoContent}]]</textarea>
-            </div>
+    <th:block layout:fragment="content">
+        <link rel="stylesheet" href="/css/admin/update_board.css">
+        <div class="whole-title">공지사항</div>
+        <div class="update-div">
+            <form action="/admin/updateBoard" method="post">
+                <input type="hidden" name="boardNum" th:value="${board.boardNum}">
+                <div class="board-title">
+                    <div class="title-text"> 제목 </div>
+                    <div class="title-input"><input type="text" name="infoTitle" required th:value="${board.infoTitle}"></div>
+                </div>
+                <div class="board-content">
+                    <div class="content-text">
+                        <div>내용</div>
+                    </div>
+                    <div class="content-input">
+                        <textarea cols="50" rows="10" name="infoContent" th:value="${board.infoContent}">[[${board.infoContent}]]</textarea>
+                    </div>
+                </div>
+                
+                <input type="submit" class="submitBtn" value="완료">
+            </form>
         </div>
         
-        <input type="submit" value="수정">
-    </form>
+    </th:block>
 </body>
 </html>

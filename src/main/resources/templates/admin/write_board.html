@@ -9,20 +9,26 @@
 <body>
     <th:block layout:fragment="content">
         <link rel="stylesheet" href="/css/admin/write_board.css">
-        <form action="/admin/writeBoard" method="post">
-            <div>
-                <div> 글 제목 </div>
-                <div><input type="text" name="infoTitle" required></div>
-            </div>
-            <div>
-                <div> 내용 </div>
-                <div>
-                    <textarea cols="50" rows="10" name="infoContent"></textarea>
+        <div class="board-title">공지사항</div>
+        <div class="write-form">
+            <form action="/admin/writeBoard" method="post">
+                <div class="title-div">
+                    <div class="title"> 제목 </div>
+                    <div class="title-input"><input type="text" name="infoTitle" required></div>
                 </div>
-            </div>
-            
-            <input type="submit" value="등록">
-        </form>
+                <div class="content-div">
+                    <div class="content"> 
+                        <div>내용</div> 
+                    </div>
+                    <div class="content-input">
+                        <textarea cols="50" rows="10" name="infoContent"></textarea>
+                    </div>
+                </div>
+                
+                <input type="submit" class="submitBtn" value="등록">
+            </form>
+        </div>
+        
     </th:block>
 </body>
 </html>

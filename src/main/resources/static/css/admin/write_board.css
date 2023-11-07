@@ -1,0 +1,65 @@
+@charset "UTF-8";
+
+/* write_board.css */
+.board-title{
+    margin: 80px 0px 64px;
+    font-size: 46px;
+    line-height: 70px;
+    letter-spacing: -1px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.write-form{
+    width: 100%;
+    margin: 80px 0px 64px;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+}
+.title-div, .content-div{
+    display: flex;
+}
+.title-div{
+    margin-bottom: 15px;
+}
+.title, .content {
+    margin-right: 20px;
+    width: 200px;
+    background-color: #f8f9fa;
+}
+.title{
+    padding: 8px;
+}
+.title-input > input{
+    padding: 5px;
+    width: 700px;
+}
+.content-input > textarea{
+    padding: 10px;
+    width: 700px;
+}
+.content-div{
+    margin-bottom: 15px;
+}
+.content{
+    position: relative;
+}
+.content > div{
+    position: absolute;
+    right: 85px;
+    top: 110px;
+}
+.submitBtn{
+    padding: 5px;
+    width: 80px;
+    float: right;
+    background-color: #f8f9fa;
+    border: 1px solid #f8f9fa;
+    border-radius: 5px;
+}
+.submitBtn:hover{
+    background-color: #dee2e6;
+    border: 1px solid #dee2e6;
+
+}

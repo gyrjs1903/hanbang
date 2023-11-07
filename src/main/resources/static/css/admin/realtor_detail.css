@@ -2,10 +2,12 @@
 /* realtor_detail.css */
 
 .table-title{
-    margin: 50px 0;
+    margin: 80px 0px 64px;
     text-align: center;
-    font-size: 25px;
+    font-size: 46px;
     font-weight: bold;
+    line-height: 70px;
+    letter-spacing: -1px;
 }
 
 .detail-info-table{

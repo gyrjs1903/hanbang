@@ -1,26 +1,36 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{fragment/main_layout}" >
 <head>
 <meta charset="UTF-8">
 <title>공지사항 상세 조회</title>
 </head>
 <body>
-    <div>
-        <div> 글 제목 </div>
-        <div>[[${boardVO.infoTitle}]]</div>
-    </div>
-    <div>
-        <div> 내용 </div>
-        <div>
-            [[${boardVO.infoContent}]]
+    <th:block layout:fragment="content">
+        <link rel="stylesheet" href="/css/admin/board_detail.css">
+        <div class="board-title">공지사항</div>
+        <div class="board-detail-div">
+            <div class="board-info-div">
+                <div class="title-div">
+                    <div class="title-text">[[${boardVO.infoTitle}]]</div>
+                </div>
+                <div class="date-div">
+                    <div class="date-text">작성 날짜</div>
+                    <div class="date">[[${boardVO.infoRegDate}]]</div>
+                </div>
+            </div>
+            <div class="board-content-div">
+                <div class="content-text">
+                    <pre>[[${boardVO.infoContent}]]</pre>
+                </div>
+            </div>
+            <input type="button" value="수정" class="editBtn" th:onclick="|location.href='@{/admin/updateBoardForm(boardNum=${boardVO.boardNum})}'|">
+            <input type="button" value="삭제" class="deleteBtn" th:onclick="|location.href='@{/admin/deleteBoard(boardNum=${boardVO.boardNum})}'|">
         </div>
-    </div>
-    <div>
-        <div>작성 날짜</div>
-        <div>[[${boardVO.infoRegDate}]]</div>
-    </div>
-    <input type="button" value="수정" th:onclick="|location.href='@{/admin/updateBoardForm(boardNum=${boardVO.boardNum})}'|">
-    <input type="button" value="삭제" th:onclick="|location.href='@{/admin/deleteBoard(boardNum=${boardVO.boardNum})}'|">
+    </th:block>
+        
+        
+    
 </body>
 </html>
