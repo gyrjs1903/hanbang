@@ -308,15 +308,16 @@ public class MemberController {
 
         memberInquiryService.insertMemberInquiry(memberInquiryVO);
         System.out.println(memberInquiryVO);
-        System.out.println(imgs);
+
 
         // 첨부 파일 (여러개)
         List<MemberInquiryImgVO> inqImgList = MemberInquiryUtil.inquiryMultiUpload(imgs);
-
+        System.out.println(imgs);
         for (MemberInquiryImgVO inquiryImgVO : inqImgList){
             String memberInquiryWriteNo = memberInquiryService.selectNextInquiryNumber();
             inquiryImgVO.setMemberInquiryWriteNo(memberInquiryWriteNo);
         }
+
 
         memberInquiryService.insertMemberInquiryImg((MemberInquiryImgVO) inqImgList);
 
@@ -503,17 +504,6 @@ public class MemberController {
 
         model.addAttribute("recentViewList", recentViewList);
 
-
-//        if(cookieBox!=null){
-//            for (Cookie c : cookieBox) {
-//                String name = c.getName(); // 쿠키 이름
-//                String value = c.getValue(); // 쿠키 값
-//                if (name.equals("title")) {
-//                    return value;
-//                }
-//            }
-//        }
-
         return "content/member/recent_viewed_room";
     }
 
@@ -557,17 +547,6 @@ public class MemberController {
 //        } else{
 //            return "content/member/wish_list_favorites";
 //        }
-//    }
-//    @RequestMapping("/setCookie")
-//    public String setCookie(HttpServletResponse response) {
-//        Cookie cookie = new Cookie("myCookie", "cookieValue");
-//        response.addCookie(cookie);
-//        return "Cookie is set";
-//    }
-//
-//    @RequestMapping("/getCookie")
-//    public String getCookie(@CookieValue(value = "myCookie", defaultValue = "defaultValue") String cookieValue){
-//        return "Cookie value is:" + cookieValue;
 //    }
 
 }
