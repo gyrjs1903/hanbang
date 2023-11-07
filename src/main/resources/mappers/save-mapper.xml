@@ -110,5 +110,21 @@
         AND RI.IS_MAIN = 'Y'
     </select>
 
+    <select id="checkIfSaved" resultMap="memberSave">
+        SELECT MEMBER_SAVE_NO
+            , ROOM_CODE
+            , USER_NO
+            , MEMBER_SAVE_CODE
+        FROM MEMBER_SAVE
+        WHERE USER_NO = #{userNo}
+        AND ROOM_CODE = #{roomCode}
+    </select>
+
+    <delete id="deleteSavedItem">
+        DELETE FROM MEMBER_SAVE
+        WHERE USER_NO = #{userNo}
+        AND ROOM_CODE = #{roomCode}
+    </delete>
+
 
 </mapper>

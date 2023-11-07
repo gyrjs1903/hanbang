@@ -29,7 +29,7 @@
                 </div>
             </div>
         </header>
-        <div>
+        <div class="bodyWrap">
             <div>
                 <p>
                     총 <span>[]</span>개의 찜한 방이 있습니다.
@@ -39,7 +39,7 @@
                 <li th:each="save, state : ${saveList}">
                     <div>
                         <div>
-                            <a th:onclick="detailRoom([[${save.roomCode}]]);">
+                            <a th:href="@{'/room/roomDetailInfo?roomCode=' + ${save.roomCode}}">
                                 <div>
                                     <div>
                                         <div>
@@ -77,9 +77,9 @@
                 </li>
             </ul>
             <div>
-                <button type="button">방 비교하기</button>
+                <button type="button" class="btn btn-primary roomComparison">방 비교하기</button>
             </div>
-            <div class="inquiryCT" th:if="${memberSaveList == null}">
+            <div class="inquiryCT" th:if="${saveList == null}">
                 <p>찜한 방이 없습니다.</p>
                 <p>관심있는 방을 찜 해보세요.</p>
             </div>

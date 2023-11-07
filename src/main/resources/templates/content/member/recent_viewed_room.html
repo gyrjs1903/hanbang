@@ -43,21 +43,15 @@
                     <div>
                         <div>
                             <a>
-                                <ul>
+                                <ul th:each="recentViewList, state : ${recentViewList}">
                                     <li>
-                                        <img id="cookieIsMain" src="" alt="매물 메인 이미지">
+                                        <img th:src="@{'/img/room/' + [[${recentViewList.isMain}]]}" alt="매물 메인 이미지">
                                     </li>
                                     <li>
-                                        <p id="cookiePropertyTypeName"></p>
+                                        <p>[[${recentViewList.deposit}]]/[[${recentViewList.monthlyLease}]], 관리비 [[${recentViewList.maintenanceCost}]]만</p>
                                     </li>
                                     <li>
-                                        <p id="cookieTradeTypeName"></p><p id="cookieMonthlyLease"></p><p id="cookieDeposit"></p>
-                                    </li>
-                                    <li>
-                                        <p id="cookieFloor"></p><p id="cookieRoomSizeM"></p><p id="cookieMaintenanceCost"></p>
-                                    </li>
-                                    <li>
-                                        <p id="cookieTitle"></p>
+                                        <p>[[${recentViewList.title}]]</p>
                                     </li>
                                 </ul>
                             </a>
@@ -65,7 +59,7 @@
                     </div>
                 </li>
             </ul>
-            <div class="inquiryCT">
+            <div class="inquiryCT" th:if="${recentViewList == null}">
                 <p>최근 본 방이 없습니다.</p>
                 <p>관심있는 방을 둘러보세요.</p>
             </div>
