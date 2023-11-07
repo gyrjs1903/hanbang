@@ -6,9 +6,7 @@ import com.green.hanbang.member.service.SaveService;
 import com.green.hanbang.member.vo.*;
 import com.green.hanbang.realtor.vo.RealtorDetailVO;
 import com.green.hanbang.room.service.RoomService;
-import com.green.hanbang.room.vo.InquiryVO;
-import com.green.hanbang.room.vo.RoomIMGVO;
-import com.green.hanbang.room.vo.RoomVO;
+import com.green.hanbang.room.vo.*;
 import com.green.hanbang.util.MemberInquiryUtil;
 import com.green.hanbang.util.MemberUtil;
 import jakarta.servlet.http.Cookie;
@@ -25,10 +23,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Array;
+import java.util.*;
 
 @Controller
 @RequestMapping("/member")
@@ -364,7 +360,7 @@ public class MemberController {
     // -------- 찜목록 관련 --------------
     // 찜하기 기능
     @PostMapping("/like")
-    public ResponseEntity<String> like(String subPropertyTypeCode, String roomCode, HttpSession session, Model model){
+    public ResponseEntity<String> like(String subPropertyTypeCode, String roomCode, HttpSession session){
         MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
 
         if(loginInfo == null){
@@ -378,22 +374,145 @@ public class MemberController {
 
         if (subPropertyTypeCode.equals("STYPE_005")) {
             memberSaveVO.setMemberSaveCode("SAVE_002");
-
             saveService.insertSaveRoom(memberSaveVO);
         }
         else {
             memberSaveVO.setMemberSaveCode("SAVE_001");
-
             saveService.insertSaveApart(memberSaveVO);
         }
-
         return ResponseEntity.ok().body("찜 목록에 추가되었습니다.");
+    }
+
+    // 찜 취소 기능
+    @PostMapping("/unLike")
+    public ResponseEntity<String> unLike(String subPropertyTypeCode, String roomCode, HttpSession session){
+        MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
+
+        if(loginInfo == null){
+            return ResponseEntity.badRequest().body("회원만 가능합니다.");
+        }
+
+        String userNo = loginInfo.getUserNo();
+        MemberSaveVO memberSaveVO = new MemberSaveVO();
+        memberSaveVO.setRoomCode(roomCode);
+        memberSaveVO.setUserNo(userNo);
+
+        // 이미 찜한 매물 인지 확인
+        boolean isAlreadySaved = saveService.checkIfSaved(memberSaveVO);
+
+        if (isAlreadySaved) {
+            saveService.deleteSavedItem(memberSaveVO);
+        }
+        return ResponseEntity.ok().body("찜이 취소되었습니다.");
+    }
+
+    // 찜 상태 확인 기능
+//    @GetMapping("/dibOnStatus")
+//    public ResponseEntity<String> check(String subPropertyTypeCode, String roomCode, HttpSession session){
+//
+//    }
+
+
+    // 쿠키에 있는 데이터 배열로 받기
+    private String[] getCookieValue(HttpServletRequest request, String name){
+        Cookie[] cookieBox = request.getCookies();
+        String[] result = null;
+
+        for(Cookie c : cookieBox){
+            if(c.getName().equals(name)){
+                result = c.getValue().split("_");
+            }
+        }
+
+        return result;
     }
 
     // 헤더에 찜목록 클릭 시 최근 본 방 페이지 이동
     @GetMapping("/dibsOn")
-    public String dibsOn(HttpServletRequest request) {
-        Cookie[] list = request.getCookies();
+    public String dibsOn(HttpServletRequest request, Model model) {
+
+        Cookie[] cookieBox = request.getCookies();
+
+        String[] recentViewTitleArr = getCookieValue(request, "title");
+        String[] recentViewImg = getCookieValue(request, "isMain");
+//        String[] recentViewPropertyTypeArr = getCookieValue(request, "propertyTypeName");
+//        String[] recentViewTradeTypeArr = getCookieValue(request, "tradeTypeName");
+        String[] recentViewDepositArr = getCookieValue(request, "deposit");
+        String[] recentViewMonthlyLeaseArr = getCookieValue(request, "monthlyLease");
+//        String[] recentViewFloorArr = getCookieValue(request, "floor");
+//        String[] recentViewRoomSizeMArr = getCookieValue(request, "roomSizeM");
+        String[] recentViewMaintenanceCostArr = getCookieValue(request, "maintenanceCost");
+
+        System.out.println(Arrays.toString(recentViewTitleArr));
+        System.out.println(Arrays.toString(recentViewImg));
+//        System.out.println(Arrays.toString(recentViewPropertyTypeArr));
+//        System.out.println(Arrays.toString(recentViewTradeTypeArr));
+        System.out.println(Arrays.toString(recentViewDepositArr));
+        System.out.println(Arrays.toString(recentViewMonthlyLeaseArr));
+//        System.out.println(Arrays.toString(recentViewFloorArr));
+//        System.out.println(Arrays.toString(recentViewRoomSizeMArr));
+        System.out.println(Arrays.toString(recentViewMaintenanceCostArr));
+
+        List<RoomVO> recentViewList = new ArrayList<>();
+
+        // 쿠키 정보의 개수만큼 반복해서 리스트에 저장
+        for(int i = 0 ; i < recentViewTitleArr.length ; i++){
+            RoomVO vo = new RoomVO();
+            // title cookie
+            vo.setTitle(recentViewTitleArr[i]);
+            // img cookie
+//            List<RoomIMGVO> imgList = new ArrayList<>();
+//            RoomIMGVO imgVO = new RoomIMGVO();
+////            String fileName = recentViewImg[i];
+////            int maxLength = 1;
+////            String trimmedFileName = fileName.substring(0, Math.min(fileName.length(), maxLength));
+////            imgVO.setAttachedFileName(trimmedFileName);
+//            imgVO.setAttachedFileName(recentViewImg[i]);
+//            imgList.add(imgVO);
+//            vo.setImgList(imgList);
+
+            // deposit cookie
+            vo.setDeposit(recentViewDepositArr[i]);
+            // monthlyLease cookie
+            vo.setMonthlyLease(recentViewMonthlyLeaseArr[i]);
+//            // propertyTypeName cookie
+//            List<PropertyTypeVO> propertyList = new ArrayList<>();
+//            PropertyTypeVO propertyVO = new PropertyTypeVO();
+//            propertyVO.setPropertyTypeName(recentViewPropertyTypeArr[i]);
+//            propertyList.add(propertyVO);
+//            vo.setPropertyTypeVO((PropertyTypeVO) propertyList);
+//            // tradeType cookie
+//            List<TradeTypeVO> tradeList = new ArrayList<>();
+//            TradeTypeVO tradeVO = new TradeTypeVO();
+//            tradeVO.setTradeTypeName(recentViewTradeTypeArr[i]);
+//            tradeList.add(tradeVO);
+//            vo.setTradeTypeCode(tradeList.toString());
+
+            // floor cookie
+            // roomSizeM cookie
+            // maintenanceCost cookie
+            vo.setMaintenanceCost(recentViewMaintenanceCostArr[i]);
+
+            recentViewList.add(vo);
+        }
+
+
+        for(RoomVO e  : recentViewList){
+            System.out.println(e);
+        }
+
+        model.addAttribute("recentViewList", recentViewList);
+
+
+//        if(cookieBox!=null){
+//            for (Cookie c : cookieBox) {
+//                String name = c.getName(); // 쿠키 이름
+//                String value = c.getValue(); // 쿠키 값
+//                if (name.equals("title")) {
+//                    return value;
+//                }
+//            }
+//        }
 
         return "content/member/recent_viewed_room";
     }
