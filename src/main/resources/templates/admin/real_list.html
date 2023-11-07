@@ -10,6 +10,7 @@
     <th:block layout:fragment="content">
         <link rel="stylesheet" href="/css/admin/realtor_list.css">
         <div class="realSearch-div">
+            <div class="title-div">회원 관리</div>
             <div class="realSearch-sub">
                 <div class="cursor btn btn-light d-grid justify-content-start user"
                     onclick="location.href='/admin/userList';">개인회원</div>
@@ -20,7 +21,7 @@
                  <!-- 검색 -->
                 <div class="searchForm-div">
                     <form action="/admin/realList" method="post">
-                        <input type="text" name="realSearch" class="searchInput">
+                        <input type="text" name="realSearch" class="searchInput" placeholder="검색어를 입력하세요.">
                         <input type="submit" value="검색" class="searchBtn">
                     </form>
                 </div>

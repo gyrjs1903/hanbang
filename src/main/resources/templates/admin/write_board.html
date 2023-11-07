@@ -1,24 +1,28 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+    layout:decorate="~{fragment/main_layout}">
 <head>
 <meta charset="UTF-8">
 <title>공지사항 작성하기</title>
 </head>
 <body>
-    <form action="/admin/writeBoard" method="post">
-        <div>
-            <div> 글 제목 </div>
-            <div><input type="text" name="infoTitle" required></div>
-        </div>
-        <div>
-            <div> 내용 </div>
+    <th:block layout:fragment="content">
+        <link rel="stylesheet" href="/css/admin/write_board.css">
+        <form action="/admin/writeBoard" method="post">
             <div>
-                <textarea cols="50" rows="10" name="infoContent"></textarea>
+                <div> 글 제목 </div>
+                <div><input type="text" name="infoTitle" required></div>
             </div>
-        </div>
-        
-        <input type="submit" value="등록">
-    </form>
+            <div>
+                <div> 내용 </div>
+                <div>
+                    <textarea cols="50" rows="10" name="infoContent"></textarea>
+                </div>
+            </div>
+            
+            <input type="submit" value="등록">
+        </form>
+    </th:block>
 </body>
 </html>

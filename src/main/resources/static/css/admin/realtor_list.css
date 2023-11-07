@@ -1,7 +1,14 @@
 @charset "UTF-8";
 
 /* realtor_list.css */
-
+.title-div{
+    margin: 80px 0px 64px;
+    font-size: 46px;
+    line-height: 70px;
+    letter-spacing: -1px;
+    font-weight: 700;
+    text-align: center;
+}
 .realSearch-sub{
     width: 100%;
     margin-top: 50px;
