@@ -49,11 +49,9 @@
                                 <a class="nav-link" th:href="@{/admin/eventList}">이벤트</a>
                             </li>
                             <li class="nav-item admin-alarm-li">
-                                <h4>
-                                    <span onclick="alarm();" class="cursor">
-                                        <span class="admin-alarm">알림</span>
-                                    </span>
-                                </h4>
+                                <span onclick="alarm();" class="cursor">
+                                    <span class="admin-alarm">알림</span>
+                                </span>
                                 <div class="adminAlarm" id="admin_alarm_tag">
                                     <div class="admin_alarm_header">
                                         <div class="cursor-default">알림</div>
@@ -75,7 +73,7 @@
                         <li><a href="/room/roomMain">지도</a></li>
                     </th:block>
                     <th:block
-                        th:if="${session.loginInfo != null && session.loginInfo.loginType == 'REALTOR' or session.loginInfo != null && session.loginInfo.loginType == 'USER'}">                        
+                        th:if="${session.loginInfo != null && session.loginInfo.loginType == 'REALTOR' or session.loginInfo != null && session.loginInfo.loginType == 'USER'}">
                         <li><a href="/room/roomMain">지도</a></li>
                     </th:block>
                     <li>
