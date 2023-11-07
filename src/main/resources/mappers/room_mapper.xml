@@ -57,8 +57,13 @@
         <result column="AVAILABLE_MOVE_IN_DATE" property="availableMoveInDate"/>
         <result column="CREATE_DATE" property="createDate"/>
         <result column="USER_NO" property="userNo"/>
+        <result column="MEM_TYPE" property="memType"/>
         <association property="roomAddrVO" resultMap="roomAddr"/>
         <association property="propertyTypeVO" resultMap="propertyType"/>
+        <association property="applyItemVO" resultMap="applyItem"/>
+        <association property="memItemVO" resultMap="adminMapper.memItem"/>
+        <association property="buyVO" resultMap="itemMapper.buy"/>
+        <association property="subPropertyTypeVO" resultMap="subPropertyType"/>
         <collection property="imgList" resultMap="roomImg"/>
     </resultMap>
 
@@ -254,8 +259,239 @@
         )
     </insert>
 
-    <!--방조회-->
+
     <select id="selectRoom" resultMap="room">
+        SELECT * FROM(
+                        SELECT
+                        R.ROOM_CODE,
+                        R.PROPERTY_TYPE_CODE,
+                        R.SUB_PROPERTY_TYPE_CODE,
+                        R.ROOM_SIZE_P,
+                        R.ROOM_SIZE_M,
+                        R.FLOOR,
+                        R.TRADE_TYPE_CODE,
+                        R.MONTHLY_LEASE,
+                        R.DEPOSIT,
+                        R.JEONSE_COST,
+                        R.MAINTENANCE_COST,
+                        R.DETAIL_OPTIONS,
+                        R.TITLE,
+                        R.CONTENT,
+                        TO_CHAR(R.CREATE_DATE, 'YYYY.MM.DD') CREATE_DATE,
+                        R.IMMEDIATE_OCCUPANCY,
+                        TO_CHAR(R.AVAILABLE_MOVE_IN_DATE,'YYYY.MM.DD') AVAILABLE_MOVE_IN_DATE,
+                        R.USER_NO,
+                        PT.PROPERTY_TYPE_NAME,
+                        RA.ADDR_CODE,
+                        RA.ADDR,
+                        RA.DETAIL_ADDR,
+                        RA.COORDINATE_X,
+                        RA.COORDINATE_Y,
+                        RI.IMG_CODE,
+                        RI.ORIGIN_FILE_NAME,
+                        RI.ATTACHED_FILE_NAME,
+                        AI.BUY_TYPE,
+                        MI.ITEM_CODE,
+                        'PLUS' as MEM_TYPE
+                        FROM ROOM R
+                        LEFT JOIN ROOM_ADDR RA ON R.ROOM_CODE = RA.ROOM_CODE
+                        LEFT JOIN ROOM_IMG RI ON R.ROOM_CODE = RI.ROOM_CODE
+                        LEFT JOIN PROPERTY_TYPE PT ON R.PROPERTY_TYPE_CODE = PT.PROPERTY_TYPE_CODE
+                        LEFT JOIN APPLY_ITEM AI ON AI.ROOM_CODE = R.ROOM_CODE
+                        LEFT JOIN BUY_ITEM BI ON BI.BUY_CODE = AI.BUY_CODE
+                        LEFT JOIN MEMITEM_TABLE MI ON MI.ITEM_CODE = BI.ITEM_CODE
+                        WHERE R.ROOM_CODE IN (SELECT ROOM_CODE
+                                                FROM APPLY_ITEM
+                                                WHERE (BUY_TYPE IN ('SEASON', 'DAY') OR BUY_TYPE IS NULL)
+                                                AND END_DATE >= SYSDATE
+                                                AND BUY_CODE IN (SELECT BUY_CODE
+                                                                FROM BUY_ITEM
+                                                                WHERE ITEM_CODE IN (SELECT ITEM_CODE
+                                                                                    FROM MEMITEM_TABLE
+                                                                                    WHERE MEM_CATE_CODE IN ('CATE_001', 'CATE_003'))))
+                        AND RI.IS_MAIN = 'Y'
+                    <if test='searchPropertyTypeCode != null and !searchPropertyTypeCode.equals("")'>
+                        AND R.PROPERTY_TYPE_CODE = #{searchPropertyTypeCode}
+                    </if>
+                    <if test='searchRoomSizePMin != 0 and !searchRoomSizePMin.equals("")'>
+                        AND R.ROOM_SIZE_P &lt;= #{searchRoomSizePMin}
+                    </if>
+                    <if test='searchFloor != 0 and !searchFloor.equals("")'>
+                        AND R.FLOOR &lt;= #{searchFloor}
+                    </if>
+                    <if test='searchTradeTypeCode != null and !searchTradeTypeCode.equals("")' >
+                        AND R.TRADE_TYPE_CODE = #{searchTradeTypeCode}
+                    </if>
+                    <if test='searchMonthlyLeaseMax != 0 and !searchMonthlyLeaseMax.equals("")'>
+                        AND R.MONTHLY_LEASE &gt;= #{searchMonthlyLeaseMax}
+                    </if>
+                    <if test='searchDeposit != 0 and !searchDeposit.equals("")'>
+                        AND R.DEPOSIT &gt;= #{searchDeposit}
+                    </if>
+                    <if test='searchJeonseCost != 0 and !searchJeonseCost.equals("")'>
+                        AND R.JEONSE_COST &gt;= #{searchJeonseCost}
+                    </if>
+                    <if test='searchMaintenanceCost != 0 and !searchMaintenanceCost.equals("")'>
+                        AND R.MAINTENANCE_COST &gt;= #{searchMaintenanceCost}
+                    </if>
+                    <if test='searchDetailOptions != null and !searchDetailOptions.equals("")'>
+
+                        <foreach collection="searchDetailOptions" item="detailOption" separator=" AND " open="AND (" close=")">
+                            R.DETAIL_OPTIONS LIKE '%' || #{detailOption} || '%'
+                        </foreach>
+
+                    </if>
+                    <if test='searchAddr != null and !searchAddr.equals("")'>
+                        AND UPPER(RA.ADDR) LIKE '%' || #{searchAddr} || '%'
+                    </if>
+                    ORDER BY DBMS_RANDOM.VALUE)
+        UNION ALL
+        SELECT * FROM (
+                        SELECT
+                        R.ROOM_CODE,
+                        R.PROPERTY_TYPE_CODE,
+                        R.SUB_PROPERTY_TYPE_CODE,
+                        R.ROOM_SIZE_P,
+                        R.ROOM_SIZE_M,
+                        R.FLOOR,
+                        R.TRADE_TYPE_CODE,
+                        R.MONTHLY_LEASE,
+                        R.DEPOSIT,
+                        R.JEONSE_COST,
+                        R.MAINTENANCE_COST,
+                        R.DETAIL_OPTIONS,
+                        R.TITLE,
+                        R.CONTENT,
+                        TO_CHAR(R.CREATE_DATE, 'YYYY.MM.DD') CREATE_DATE,
+                        R.IMMEDIATE_OCCUPANCY,
+                        TO_CHAR(R.AVAILABLE_MOVE_IN_DATE,'YYYY.MM.DD') AVAILABLE_MOVE_IN_DATE,
+                        R.USER_NO,
+                        PT.PROPERTY_TYPE_NAME,
+                        RA.ADDR_CODE,
+                        RA.ADDR,
+                        RA.DETAIL_ADDR,
+                        RA.COORDINATE_X,
+                        RA.COORDINATE_Y,
+                        RI.IMG_CODE,
+                        RI.ORIGIN_FILE_NAME,
+                        RI.ATTACHED_FILE_NAME,
+                        AI.BUY_TYPE,
+                        MI.ITEM_CODE,
+                        'GENERAL' as MEM_TYPE
+                        FROM ROOM R
+                        LEFT JOIN ROOM_ADDR RA ON R.ROOM_CODE = RA.ROOM_CODE
+                        LEFT JOIN ROOM_IMG RI ON R.ROOM_CODE = RI.ROOM_CODE
+                        LEFT JOIN PROPERTY_TYPE PT ON R.PROPERTY_TYPE_CODE = PT.PROPERTY_TYPE_CODE
+                        LEFT JOIN APPLY_ITEM AI ON AI.ROOM_CODE = R.ROOM_CODE
+                        LEFT JOIN BUY_ITEM BI ON BI.BUY_CODE = AI.BUY_CODE
+                        LEFT JOIN MEMITEM_TABLE MI ON MI.ITEM_CODE = BI.ITEM_CODE
+                        WHERE R.ROOM_CODE IN (SELECT ROOM_CODE
+                                                FROM APPLY_ITEM
+                                                WHERE (BUY_TYPE = 'GENERAL' OR BUY_TYPE IS NULL)
+                                                AND END_DATE >= SYSDATE
+                                                AND BUY_CODE IN  (SELECT BUY_CODE
+                                                                    FROM BUY_ITEM
+                                                                    WHERE ITEM_CODE IN (SELECT ITEM_CODE
+                                                                                        FROM MEMITEM_TABLE
+                                                                                        WHERE MEM_CATE_CODE IN ('CATE_001', 'CATE_002'))))
+                        AND RI.IS_MAIN = 'Y'
+                        UNION
+                        SELECT
+                        R.ROOM_CODE,
+                        R.PROPERTY_TYPE_CODE,
+                        R.SUB_PROPERTY_TYPE_CODE,
+                        R.ROOM_SIZE_P,
+                        R.ROOM_SIZE_M,
+                        R.FLOOR,
+                        R.TRADE_TYPE_CODE,
+                        R.MONTHLY_LEASE,
+                        R.DEPOSIT,
+                        R.JEONSE_COST,
+                        R.MAINTENANCE_COST,
+                        R.DETAIL_OPTIONS,
+                        R.TITLE,
+                        R.CONTENT,
+                        TO_CHAR(R.CREATE_DATE, 'YYYY.MM.DD') CREATE_DATE,
+                        R.IMMEDIATE_OCCUPANCY,
+                        TO_CHAR(R.AVAILABLE_MOVE_IN_DATE,'YYYY.MM.DD') AVAILABLE_MOVE_IN_DATE,
+                        R.USER_NO,
+                        PT.PROPERTY_TYPE_NAME,
+                        RA.ADDR_CODE,
+                        RA.ADDR,
+                        RA.DETAIL_ADDR,
+                        RA.COORDINATE_X,
+                        RA.COORDINATE_Y,
+                        RI.IMG_CODE,
+                        RI.ORIGIN_FILE_NAME,
+                        RI.ATTACHED_FILE_NAME,
+                        AI.BUY_TYPE,
+                        MI.ITEM_CODE,
+                        'NONE' as MEM_TYPE
+                        FROM ROOM R
+                        LEFT JOIN ROOM_ADDR RA ON R.ROOM_CODE = RA.ROOM_CODE
+                        LEFT JOIN ROOM_IMG RI ON R.ROOM_CODE = RI.ROOM_CODE
+                        LEFT JOIN PROPERTY_TYPE PT ON R.PROPERTY_TYPE_CODE = PT.PROPERTY_TYPE_CODE
+                        LEFT JOIN APPLY_ITEM AI ON AI.ROOM_CODE = R.ROOM_CODE
+                        LEFT JOIN BUY_ITEM BI ON BI.BUY_CODE = AI.BUY_CODE
+                        LEFT JOIN MEMITEM_TABLE MI ON MI.ITEM_CODE = BI.ITEM_CODE
+                        WHERE R.ROOM_CODE NOT IN (SELECT ROOM_CODE
+                                                    FROM APPLY_ITEM
+                                                    WHERE (BUY_TYPE = 'GENERAL' OR BUY_TYPE IS NULL)
+                                                    AND END_DATE >= SYSDATE
+                                                    AND BUY_CODE IN  (SELECT BUY_CODE
+                                                                        FROM BUY_ITEM
+                                                                        WHERE ITEM_CODE IN (SELECT ITEM_CODE
+                                                                                            FROM MEMITEM_TABLE
+                                                                                            WHERE MEM_CATE_CODE IN ('CATE_001', 'CATE_002')))
+                                                    UNION
+                                                    SELECT ROOM_CODE
+                                                    FROM APPLY_ITEM
+                                                    WHERE (BUY_TYPE IN ('SEASON', 'DAY') OR BUY_TYPE IS NULL)
+                                                    AND END_DATE >= SYSDATE
+                                                    AND BUY_CODE IN (SELECT BUY_CODE
+                                                                        FROM BUY_ITEM
+                                                                        WHERE ITEM_CODE IN (SELECT ITEM_CODE
+                                                                                            FROM MEMITEM_TABLE
+                                                                                            WHERE MEM_CATE_CODE IN ('CATE_001', 'CATE_003'))))
+                        AND RI.IS_MAIN = 'Y'
+                        <if test='searchPropertyTypeCode != null and !searchPropertyTypeCode.equals("")'>
+                            AND R.PROPERTY_TYPE_CODE = #{searchPropertyTypeCode}
+                        </if>
+                        <if test='searchRoomSizePMin != 0 and !searchRoomSizePMin.equals("")'>
+                            AND R.ROOM_SIZE_P &lt;= #{searchRoomSizePMin}
+                        </if>
+                        <if test='searchFloor != 0 and !searchFloor.equals("")'>
+                            AND R.FLOOR &lt;= #{searchFloor}
+                        </if>
+                        <if test='searchTradeTypeCode != null and !searchTradeTypeCode.equals("")' >
+                            AND R.TRADE_TYPE_CODE = #{searchTradeTypeCode}
+                        </if>
+                        <if test='searchMonthlyLeaseMax != 0 and !searchMonthlyLeaseMax.equals("")'>
+                            AND R.MONTHLY_LEASE &gt;= #{searchMonthlyLeaseMax}
+                        </if>
+                        <if test='searchDeposit != 0 and !searchDeposit.equals("")'>
+                            AND R.DEPOSIT &gt;= #{searchDeposit}
+                        </if>
+                        <if test='searchJeonseCost != 0 and !searchJeonseCost.equals("")'>
+                            AND R.JEONSE_COST &gt;= #{searchJeonseCost}
+                        </if>
+                        <if test='searchMaintenanceCost != 0 and !searchMaintenanceCost.equals("")'>
+                            AND R.MAINTENANCE_COST &gt;= #{searchMaintenanceCost}
+                        </if>
+                        <if test='searchDetailOptions != null and !searchDetailOptions.equals("")'>
+                            <foreach collection="searchDetailOptions" item="detailOption" separator=" AND " open="AND (" close=")">
+                                R.DETAIL_OPTIONS LIKE '%' || #{detailOption} || '%'
+                            </foreach>
+                        </if>
+                        <if test='searchAddr != null and !searchAddr.equals("")'>
+                            AND UPPER(RA.ADDR) LIKE '%' || #{searchAddr} || '%'
+                        </if>
+        )
+    </select>
+
+
+    <!--메인페이지 방조회-->
+    <select id="selectMainPageRoom" resultMap="room">
         SELECT
         R.ROOM_CODE,
         R.PROPERTY_TYPE_CODE,
@@ -283,47 +519,27 @@
         RA.COORDINATE_Y,
         RI.IMG_CODE,
         RI.ORIGIN_FILE_NAME,
-        RI.ATTACHED_FILE_NAME
+        RI.ATTACHED_FILE_NAME,
+        SPT.SUB_PROPERTY_TYPE_NAME,
+        'PLUS' as MEM_TYPE
         FROM ROOM R
         LEFT JOIN ROOM_ADDR RA ON R.ROOM_CODE = RA.ROOM_CODE
         LEFT JOIN ROOM_IMG RI ON R.ROOM_CODE = RI.ROOM_CODE
         LEFT JOIN PROPERTY_TYPE PT ON R.PROPERTY_TYPE_CODE = PT.PROPERTY_TYPE_CODE
-        WHERE 1 = 1
-        AND IS_MAIN='Y'
-        <if test='searchPropertyTypeCode != null and !searchPropertyTypeCode.equals("")'>
-        AND R.PROPERTY_TYPE_CODE = #{searchPropertyTypeCode}
-        </if>
-        <if test='searchRoomSizePMin != 0 and !searchRoomSizePMin.equals("")'>
-        AND R.ROOM_SIZE_P &lt;= #{searchRoomSizePMin}
-        </if>
-        <if test='searchFloor != 0 and !searchFloor.equals("")'>
-        AND R.FLOOR &lt;= #{searchFloor}
-        </if>
-        <if test='searchTradeTypeCode != null and !searchTradeTypeCode.equals("")' >
-        AND R.TRADE_TYPE_CODE = #{searchTradeTypeCode}
-        </if>
-        <if test='searchMonthlyLeaseMax != 0 and !searchMonthlyLeaseMax.equals("")'>
-        AND R.MONTHLY_LEASE &gt;= #{searchMonthlyLeaseMax}
-        </if>
-        <if test='searchDeposit != 0 and !searchDeposit.equals("")'>
-        AND R.DEPOSIT &gt;= #{searchDeposit}
-        </if>
-        <if test='searchJeonseCost != 0 and !searchJeonseCost.equals("")'>
-        AND R.JEONSE_COST &gt;= #{searchJeonseCost}
-        </if>
-        <if test='searchMaintenanceCost != 0 and !searchMaintenanceCost.equals("")'>
-        AND R.MAINTENANCE_COST &gt;= #{searchMaintenanceCost}
-        </if>
-        <if test='searchDetailOptions != null and !searchDetailOptions.equals("")'>
-
-            <foreach collection="searchDetailOptions" item="detailOption" separator=" AND " open="AND (" close=")">
-                R.DETAIL_OPTIONS LIKE '%' || #{detailOption} || '%'
-            </foreach>
-
-        </if>
-        <if test='searchAddr != null and !searchAddr.equals("")'>
-            AND UPPER(RA.ADDR) LIKE '%' || #{searchAddr} || '%'
-        </if>
+        LEFT JOIN SUB_PROPERTY_TYPE SPT ON SPT.PROPERTY_TYPE_CODE = PT.PROPERTY_TYPE_CODE
+        WHERE R.ROOM_CODE IN (SELECT ROOM_CODE
+                                FROM APPLY_ITEM
+                                WHERE (BUY_TYPE IN ('SEASON', 'DAY') OR BUY_TYPE IS NULL)
+                                AND END_DATE >= SYSDATE
+                                AND BUY_CODE IN (SELECT BUY_CODE
+                                                FROM BUY_ITEM
+                                                WHERE ITEM_CODE IN (SELECT ITEM_CODE
+                                                                    FROM MEMITEM_TABLE
+                                                                    WHERE MEM_CATE_CODE IN ('CATE_001', 'CATE_003'))))
+        AND RI.IS_MAIN = 'Y'
+        AND R.SUB_PROPERTY_TYPE_CODE = SPT.SUB_PROPERTY_TYPE_CODE
+<!--        AND UPPER(RA.ADDR) LIKE '%' || '울산' || '%'-->
+        ORDER BY DBMS_RANDOM.VALUE
     </select>
 
     <select id="selectRoomAddr" resultMap="roomAddr">

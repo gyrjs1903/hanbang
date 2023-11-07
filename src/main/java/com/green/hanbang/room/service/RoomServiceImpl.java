@@ -53,6 +53,10 @@ public class RoomServiceImpl implements RoomService {
         return sqlSession.selectList("roomMapper.selectRoomAddr");
     }
 
+    @Override
+    public List<RoomVO> selectMainPageRoom() {
+        return sqlSession.selectList("roomMapper.selectMainPageRoom");
+    }
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////

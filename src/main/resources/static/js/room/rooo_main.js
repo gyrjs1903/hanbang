@@ -245,6 +245,19 @@ document.getElementById("searchButton").addEventListener("click", function () {
                     const roomInfo = document.createElement('div');
                     roomInfo.className = 'room-info';
 
+                    if (room.memType == 'PLUS') {
+                        const plusSpan = document.createElement('span');
+                        plusSpan.className = 'plus';
+                        plusSpan.textContent = '플러스';
+                        roomInfo.appendChild(plusSpan);
+                    }
+                    if (room.memType == 'GENERAL') {
+                        const generalSpan = document.createElement('span');
+                        generalSpan.className = 'general';
+                        generalSpan.textContent = '일반';
+                        roomInfo.appendChild(generalSpan);
+                    }
+
                     //전월세 추가
                     if (room.tradeTypeCode !== 'TTC_001') {
                         const jeonseInfo = document.createElement('h4');
@@ -277,6 +290,7 @@ document.getElementById("searchButton").addEventListener("click", function () {
                     roomContainer.appendChild(roomElement);
 
                     selectRoomElement.appendChild(roomContainer);
+
                 });
             }
 
