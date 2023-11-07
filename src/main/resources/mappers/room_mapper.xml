@@ -89,7 +89,9 @@
         <result column="REPORT_CONTENT" property="reportContent"/>
         <result column="REPORT_CNT" property="reportCnt"/>
         <result column="REPORT_DATE" property="reportDate"/>
+        <result column="INQUIRY_ST_CODE" property="inquiryStCode"/>
         <association property="roomVO" resultMap="room"/>
+        <collection property="inquiryStatusVO" resultMap="inquiryMapper.inquiryStatus"/>
     </resultMap>
 
     <!-- 허위매물 사유 -->
@@ -430,6 +432,14 @@
         , (SELECT NVL(MAX(REPORT_CNT),0) FROM FALSE_OFFERINGS WHERE ROOM_CODE = #{roomCode}) + 1
         )
     </insert>
+
+    <!-- 허위매물 중복신고 방지-->
+    <select id="selectDuplicateReport" resultType="String">
+        SELECT USER_NO
+        FROM FALSE_OFFERINGS
+        WHERE ROOM_CODE = #{roomCode}
+        AND USER_NO = #{userNo}
+    </select>
 
     <!-- 문의 제목 목록 -->
     <select id="selectInquiryTitle" resultMap="inquiryTitle">

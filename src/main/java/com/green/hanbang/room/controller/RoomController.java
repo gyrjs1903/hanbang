@@ -390,6 +390,14 @@ public class RoomController {
         return roomService.selectElDAS(memberVO);
     }
 
+    //허위매물신고 중복방지
+    @ResponseBody
+    @PostMapping("/selectDuplicateReport")
+    public String selectDuplicateReport(@RequestBody FalseOfferingsVO falseOfferingsVO){
+        System.out.println(falseOfferingsVO);
+        return roomService.selectDuplicateReport(falseOfferingsVO);
+    }
+
     //허위매물신고
     @PostMapping("/falseOfferings")
     public String insertFalseOfferings(FalseOfferingsVO falseOfferingsVO){

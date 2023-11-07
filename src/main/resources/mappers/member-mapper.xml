@@ -236,4 +236,18 @@
         SET INQUIRY_READ_CNT = (SELECT NVL(MAX(INQUIRY_READ_CNT),0) FROM INQUIRY) +1
         WHERE INQUIRY_CODE = #{inquiryCode}
     </update>
+
+    <!-- 일반회원 허위매물 신고 상태 조회 -->
+    <select id="selectFalseOfferingsList" resultMap="roomMapper.falseOfferings">
+        SELECT USER_NO
+            , F.ROOM_CODE
+            , TO_CHAR(REPORT_DATE,'YYYY-MM-DD') REPORT_DATE
+            , STATUS_NAME
+            , ADDR
+        FROM FALSE_OFFERINGS F , ROOM_ADDR R, INQUIRY_STATUS I
+        WHERE F.ROOM_CODE = R.ROOM_CODE
+        AND I.INQUIRY_ST_CODE = F.INQUIRY_ST_CODE
+        AND USER_NO = #{userNo}
+        ORDER BY REPORT_DATE DESC
+    </select>
 </mapper>

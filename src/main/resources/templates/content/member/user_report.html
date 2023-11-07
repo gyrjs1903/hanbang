@@ -35,24 +35,26 @@
                     <tr>
                         <th>No</th>
                         <th>매물</th>
-                        <th>제 목</th>
                         <th>문의일</th>
                         <th>상태</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <th:block th:if="${inquiryList == null}">
+                    <th:block th:if="${#lists.size(falseOfferingsList)==0}">
                         <tr class="reportCT">
+<<<<<<< HEAD
+                            <td colspan="4">신고내역이 없습니다.</td>
+=======
                             <td colspan="5">내역이 없습니다.</td>
+>>>>>>> 48c04b6f5cdc64c3ca8e8c0352422de1bc9191aa
                         </tr>
                     </th:block>
-                    <th:block th:if="${inquiryList != null}">
-                        <tr th:each="inquiry, state : ${inquiryList}">
-                            <td>[[${#lists.size(inquiryList) - state.index}]]</td>
-                            <td>[[${inquiry.}]]</td>
-                            <td>[[${inquiry.inquiryTitleVO.inquiryTitle}]]</td>
-                            <td>[[${inquiry.inquiryDate}]]</td>
-                            <td>[[status]]</td>
+                    <th:block th:if="${#lists.size(falseOfferingsList)!=0}">
+                        <tr th:each="inquiry, state : ${falseOfferingsList}">
+                            <td>[[${#lists.size(falseOfferingsList) - state.index}]]</td>
+                            <td>[[${inquiry.roomVO.RoomAddrVO.addr}]]</td>
+                            <td>[[${inquiry.reportDate}]]</td>
+                            <td>[[${inquiry.inquiryStatusVO.statusName}]]</td>
                         </tr>
                     </th:block>
                 </tbody>
