@@ -6,6 +6,7 @@ import com.green.hanbang.member.service.MemberService;
 import com.green.hanbang.member.vo.AlarmVO;
 import com.green.hanbang.member.vo.MemberVO;
 import com.green.hanbang.realtor.vo.RealtorDetailVO;
+import com.green.hanbang.room.service.RoomService;
 import com.green.hanbang.room.vo.InquiryVO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -26,13 +27,14 @@ import java.util.List;
 public class IndexController {
     private final MemberService memberService;
     private final MembershipService membershipService;
+    private final RoomService roomService;
 
     // 시작페이지
     @GetMapping("/")
     public String main(Model model, HttpSession session) {
         // 대분류 조회
         model.addAttribute("cateList", membershipService.selectCategory());
-
+        model.addAttribute("selectMainPageRoomList", roomService.selectMainPageRoom());
         if(session.getAttribute("loginInfo") != null){
 
             MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
@@ -40,7 +42,6 @@ public class IndexController {
             setAlarmData(loginInfo);
         }
         return "main/home";
-
     }
 
     //다른페이지에서 알림창 확인 메소드

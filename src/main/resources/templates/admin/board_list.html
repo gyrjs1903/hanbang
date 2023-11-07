@@ -1,39 +1,49 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{fragment/main_layout}" >
 <head>
 <meta charset="UTF-8">
 <title>공지사항</title>
 </head>
 <body>
-    <table>
-        <colgroup>
-            <col width="5%" style="display: none;">
-            <col width="15%">
-            <col width="15%">
-        </colgroup>
-        <thead>
-            <tr>
-                <td style="display: none;">NO</td>
-                <td>제목</td>
-                <td>날짜</td>
-            </tr>
-        </thead>
-        <tbody>
-            <th:block th:if="${#lists.size(boardList)==0}">
+    <th:block layout:fragment="content">
+        <link rel="stylesheet" href="/css/admin/board_list.css">
+        <div class="board-title">공지사항</div>
+        <table class="board-table">
+            <colgroup>
+                <col width="5%" style="display: none;">
+                <col width="10%">
+                <col width="2%">
+            </colgroup>
+            <thead>
                 <tr>
-                    <td colspan="5">등록된 공지사항이 없습니다.</td>
+                    <td style="display: none;">NO</td>
+                    <td>제목</td>
+                    <td>날짜</td>
                 </tr>
+            </thead>
+            <th:block th:if="${#lists.size(boardList)==0}">
+                <tbody>
+                    <tr class="no_board">
+                        <td colspan="5">등록된 공지사항이 없습니다.</td>
+                    </tr>
+                </tbody>
             </th:block>
             <th:block th:if="${#lists.size(boardList)!=0}">
-                <tr th:each="board, state : ${boardList}">
-                    <td th:style="${'display:none'}">[[${#lists.size(boardList)-state.index}]]</td>
-                    <td><a th:href="@{/admin/boardDetail(boardNum=${board.boardNum})}">[[${board.infoTitle}]]</a></td>
-                    <td>[[${board.infoRegDate}]]</td>
-                </tr>
+                <tbody>
+                    <tr th:each="board, state : ${boardList}">
+                        <td th:style="${'display:none'}">[[${#lists.size(boardList)-state.index}]]</td>
+                        <td class="board-info-title"><a th:href="@{/admin/boardDetail(boardNum=${board.boardNum})}">[[${board.infoTitle}]]</a></td>
+                        <td>[[${board.infoRegDate}]]</td>
+                    </tr>
+                </tbody>
             </th:block>
-        </tbody>
-    </table>
-    <input type="button" value="글쓰기" onclick="location.href='/admin/writeForm';">
+        </table>
+        <div class="writBtn-div">
+            <div class="cursor btn btn-light d-grid justify-content-start writeBtn" onclick="location.href='/admin/writeForm';">글쓰기</div>
+        </div>
+    </th:block>
+    
 </body>
 </html>

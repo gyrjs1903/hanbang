@@ -8,7 +8,15 @@
 </head>
 <body>
     <th:block layout:fragment="content">
-        <table>
+        <link rel="stylesheet" href="/css/admin/realtor_detail.css">
+        <div class="table-title">회원 상세 정보</div>
+        <div class="basic-info-title">
+            <div>
+                <span>	&ndash;</span>
+                <span class="basic-info-span">공인중개사 기본 정보</span>	
+            </div>
+        </div>
+        <table class="detail-info-table">
             <colgroup>
                 <col width="5%">
                 <col width="10%"> 
@@ -37,7 +45,9 @@
                     <td>[[${rDetail.realTorCode}]]</td>
                     <td>[[${rDetail.officeName}]]</td>
                     <td>[[${rDetail.identificationNum}]]</td>
-                    <td>[[${rDetail.licenseFileName}]]</td>
+                    <td>
+                        [[${rDetail.licenseFileName}]]
+                    </td>
                     <td>
                         [[${rDetail.authority}]]
                         <div th:style="${rDetail.authority == 'N' ? 'display : block':'display : none'}">
@@ -46,7 +56,7 @@
                     </td>
                     <td>[[${rDetail.requestDate}]]</td>
                     <td>
-                        <input type="submit" value="삭제" th:onclick="|location.href='@{/admin/deleteReal(identificationNum=${rDetail.identificationNum})}'|">
+                        <input type="submit" class="deleteBtn" value="삭제" th:onclick="|location.href='@{/admin/deleteReal(identificationNum=${rDetail.identificationNum})}'|">
                     </td>
                 </tr>
             </tbody>

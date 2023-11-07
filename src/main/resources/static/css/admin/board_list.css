@@ -1,0 +1,48 @@
+@charset "UTF-8";
+
+/* board_list.css */
+
+.board-table{
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    border-collapse: collapse;
+    border-top: 2px solid #a3a3a3;
+}
+
+tbody > tr:hover {
+    background-color: #e9e5e5;
+}
+
+td{
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+}
+
+.no_board td{
+    font-size: 18px;
+    font-weight: bold;
+}
+.board-title{
+    margin: 80px 0px 64px;
+    font-size: 46px;
+    line-height: 70px;
+    letter-spacing: -1px;
+    text-align: center;
+    font-weight: bold;
+}
+.writBtn-div{
+    margin-top: 30px;
+    float: right;
+}
+.writeBtn{
+    padding: 10px 22px;
+}
+.board-info-title{
+    padding-left: 30px;
+    text-align: left;
+}
+.board-info-title > a{
+    color: black;
+    text-decoration: none;
+}

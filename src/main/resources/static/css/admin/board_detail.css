@@ -1,0 +1,61 @@
+@charset "UTF-8";
+
+/* board_detail.css */
+
+.board-title{
+    margin: 80px 0px ;
+    font-size: 46px;
+    line-height: 70px;
+    letter-spacing: -1px;
+    text-align: center;
+    font-weight: bold;
+}
+.board-detail-div{
+    width: 1000px;
+    margin: 0 auto;
+    justify-content: center;
+}
+.board-info-div{
+    display: flex;
+    position: relative;
+    margin-bottom: 20px;
+    padding: 0 10px 10px 10px;
+    border-bottom: 3px solid #dee2e6;
+}
+.title-text{
+    font-size: 22px;
+    font-weight: bold;
+}
+.date-div{
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    display: flex;
+}
+.date-text{
+    margin-right: 10px;
+}
+.board-content-div{
+    height: auto;
+    border-bottom: 3px solid #dee2e6;
+    margin-bottom: 20px;
+}
+.content-text{
+    padding: 10px 20px;
+}
+.deleteBtn{
+    margin-right: 10px;
+}
+.editBtn, .deleteBtn{
+    padding: 5px;
+    width: 80px;
+    float: right;
+    background-color: #f8f9fa;
+    border: 1px solid #f8f9fa;
+    border-radius: 5px;
+}
+.editBtn:hover, .deleteBtn:hover{
+    background-color: #dee2e6;
+    border: 1px solid #dee2e6;
+
+}

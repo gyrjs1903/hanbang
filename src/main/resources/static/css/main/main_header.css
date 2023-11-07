@@ -41,7 +41,7 @@ dl, ol, ul{
   padding-bottom: 10px;
 }
 
-.menu_bar >ul >  li:hover>  a {
+.menu_bar > ul >  li:hover>  a {
   position: relative;
   color: #bfc9d0;
 }
@@ -262,13 +262,33 @@ dl, ol, ul{
   background-color: #5c75bb;
   color: #d4dfe6;
 }
+/* .menu_bar > .adminMenu  > li { 
+  margin: 0 15px;
+  line-height: 90px;
+}
 
-.nav-item > a:after{
+.menu_bar > .adminMenu  > li >  a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  transition: color 0.3s;
+  padding-bottom: 10px;
+}
+.menu_bar > .adminMenu > li:hover{
+  position: relative;
+  color: rgb(255, 255, 255);
+}
+.menu_bar > .adminMenu > li:hover > a::after{
   content: "";
   position: absolute;
-  bottom: 0;
+  bottom: 35px;
   left: 0;
   right: 0;
   height: 2px;
   background-color: #bfc9d0;
+
+} */
+.nav-link{
+  pointer-events: none;
 }

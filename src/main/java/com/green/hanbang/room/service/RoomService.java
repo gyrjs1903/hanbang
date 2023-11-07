@@ -32,6 +32,8 @@ public interface RoomService {
     //주소 및 좌표 조회
     public List<RoomAddrVO> selectRoomAddr();
 
+    public List<RoomVO> selectMainPageRoom();
+
 ///////////////////////////////////////////////////////////////
     //room테이블 디테일정보 조회
     public RoomVO selectRoomInfo(String roomCode);

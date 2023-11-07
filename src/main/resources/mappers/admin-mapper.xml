@@ -15,8 +15,9 @@
         <result column="IDENTIFICATION_NUM"  property="identificationNum"/>
         <result column="LICENSE_FILE_NAME"   property="licenseFileName"/>
         <result column="AUTHORITY"           property="authority"/>
+        <result column="REQUEST_DATE"        property="requestDate"/>
     </resultMap>
-    
+
     <resultMap id="board" type="com.green.hanbang.admin.vo.BoardVO">
         <result column="BOARD_NUM"      property="boardNum"/>
         <result column="INFO_TITLE"     property="infoTitle"/>

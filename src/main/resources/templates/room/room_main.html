@@ -14,7 +14,7 @@
             <!-- <link href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" rel="stylesheet"> -->
             <div class="container">
                 <h2>지도</h2>
-                <form  class="form_con">
+                <form class="form_con">
                     <div class="filter_menu">
                         <div class="addr">
                             <label>지역검색</label>
@@ -71,7 +71,8 @@
                         </div>
                         <div class="floor">
                             <label>층수</label>
-                            <input type="range" id="floorSlider" name="searchFloor" min="0" max="100" value="100" step="1">
+                            <input type="range" id="floorSlider" name="searchFloor" min="0" max="100" value="100"
+                                step="1">
                             <div class="text_span">
                                 <span>0 ~</span>
                                 <span id="floorValue">100</span>
@@ -139,10 +140,17 @@
             <div class="main_con">
                 <div class="col-4 select_room">
                     <div th:each="room : ${roomList}" class="room" th:onclick="detailRoom([[${room.roomCode}]]);">
+
                         <div class="img_frame">
                             <img th:src="${'/img/' + 'room/' + room.imgList[0].attachedFileName}" alt="">
                         </div>
                         <div class="room-info">
+                            <th:block th:if="${room.memType == 'PLUS'}">
+                                <span class="plus">플러스</span>
+                            </th:block>
+                            <th:block th:if="${room.memType == 'GENERAL'}">
+                                <span class="general">일반</span>
+                            </th:block>
                             <th:block th:if="${room.tradeTypeCode == 'TTC_001'}">
                                 <h4>월세 [[${room.deposit}]]/[[${room.monthlyLease}]]</h4>
                             </th:block>
@@ -160,6 +168,7 @@
                             </p>
                             <p>[[${room.title}]]</p>
                         </div>
+
                     </div>
                 </div>
                 <div class="col-8" id="map"></div>

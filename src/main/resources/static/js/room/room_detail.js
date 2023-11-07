@@ -210,65 +210,65 @@ elDASForm.addEventListener("keypress", (e)=>{
 
 // ----------------------------찜하기------------------------------------------------------
 
-// function likeRoom(roomCode, subPropertyTypeCode) {
-//     $.ajax({
-//         type: "POST",
-//         url: "/member/like",
-//         data: {
-//             roomCode: roomCode,
-//             subPropertyTypeCode : subPropertyTypeCode
-//         },
-//         success: function(response) {
-//             alert("찜목록에 추가되었습니다.");
-//         },
-//         error: function(error) {
-//             alert("로그인 한 회원만 찜하기가 가능합니다.");
-//             console.log(roomCode);
-//             console.log(subPropertyTypeCode);
-//         }
-//     });
-// }
-$(document).ready(function(){
-    $("#dibs_on_btn").click(function(roomCode, subPropertyTypeCode){
-        var roomCode = roomCode; 
-        var subPropertyTypeCode = subPropertyTypeCode; 
-        var isAlreadySaved = false; // 서버에서 받아온 찜 상태에 따라 값을 설정하세요.
-
-        // 만약 이미 찜한 상태라면
-        if (isAlreadySaved) {
-            $.ajax({
-                type: "POST",
-                url: "/member/like",
-                data: {
-                    roomCode: roomCode,
-                    subPropertyTypeCode: subPropertyTypeCode
-                },
-                success: function(response) {
-                    alert("찜이 취소되었습니다.");
-                },
-                error: function(error) {
-                    alert("찜 취소를 실패했습니다.");
-                    console.log(error);
-                }
-            });
-        }
-        // 찜하지 않은 상태라면
-        else {
-            $.ajax({
-                type: "POST",
-                url: "/member/like",
-                data: {
-                    roomCode: roomCode,
-                    subPropertyTypeCode: subPropertyTypeCode
-                },
-                success: function(response) {
-                    alert("찜목록에 추가되었습니다.");
-                },
-                error: function(error) {
-                    alert("찜하기를 실패했습니다.");
-                    console.log(error);
-                }
-            });
+function likeRoom(roomCode, subPropertyTypeCode) {
+    $.ajax({
+        type: "POST",
+        url: "/member/like",
+        data: {
+            roomCode: roomCode,
+            subPropertyTypeCode : subPropertyTypeCode
+        },
+        success: function(response) {
+            alert("찜목록에 추가되었습니다.");
+        },
+        error: function(error) {
+            alert("로그인 한 회원만 찜하기가 가능합니다.");
+            console.log(roomCode);
+            console.log(subPropertyTypeCode);
         }
     });
-});
+}
+// $(document).ready(function(){
+//     $("#dibs_on_btn").click(function(roomCode, subPropertyTypeCode){
+//         var roomCode = roomCode; 
+//         var subPropertyTypeCode = subPropertyTypeCode; 
+//         var isAlreadySaved = false; // 서버에서 받아온 찜 상태에 따라 값을 설정하세요.
+
+//         // 만약 이미 찜한 상태라면
+//         if (isAlreadySaved) {
+//             $.ajax({
+//                 type: "POST",
+//                 url: "/member/like",
+//                 data: {
+//                     roomCode: roomCode,
+//                     subPropertyTypeCode: subPropertyTypeCode
+//                 },
+//                 success: function(response) {
+//                     alert("찜이 취소되었습니다.");
+//                 },
+//                 error: function(error) {
+//                     alert("찜 취소를 실패했습니다.");
+//                     console.log(error);
+//                 }
+//             });
+//         }
+//         // 찜하지 않은 상태라면
+//         else {
+//             $.ajax({
+//                 type: "POST",
+//                 url: "/member/like",
+//                 data: {
+//                     roomCode: roomCode,
+//                     subPropertyTypeCode: subPropertyTypeCode
+//                 },
+//                 success: function(response) {
+//                     alert("찜목록에 추가되었습니다.");
+//                 },
+//                 error: function(error) {
+//                     alert("찜하기를 실패했습니다.");
+//                     console.log(error);
+//                 }
+//             });
+//         }
+//     });
+// });

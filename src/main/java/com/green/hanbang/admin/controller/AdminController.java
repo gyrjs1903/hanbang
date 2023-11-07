@@ -205,7 +205,7 @@ public class AdminController {
     @GetMapping("/membershipList")
     public String membershipList(Model model, String memCateCode){
         List<MembershipVO> membershipList = membershipService.selectMembershipItemList(memCateCode);
-        model.addAttribute("membershipList", membershipList);
+        model.addAttribute("membershipItemList", membershipList);
         return "admin/membershipList";
     }
 
