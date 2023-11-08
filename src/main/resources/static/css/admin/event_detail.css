@@ -1,0 +1,21 @@
+@charset "UTF-8";
+/* eventForm.css */
+
+.event-title{
+    margin: 80px 0px 64px;
+    font-size: 46px;
+    line-height: 70px;
+    letter-spacing: -1px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.event-detail-div{
+    width: 1000px;
+    margin : 0 auto;
+    padding-top: 20px;
+}
+.event-content-top{
+    padding-bottom: 30px;
+    border-bottom: 3px solid #dee2e6;
+}

@@ -151,3 +151,16 @@ function authorityYet(){
     alert('승인완료 후 매물 등록이 가능합니다.\n관리자에게 문의하세요.');
     location.href='/realtor/myPage';
 }
+
+// adminMenu 
+function itemOpen(){
+    let click = document.querySelector(".membershipList");
+    if (click.style.display === "none" || click.style.display === "") {
+
+        click.style.display = "block";
+
+    } else {
+        click.style.display = "none";
+
+    }
+}

@@ -1,11 +1,83 @@
 @charset "UTF-8";
 /* regmembership.css */
-
+.regMembership-title{
+    margin: 80px 0px ;
+    font-size: 46px;
+    line-height: 70px;
+    letter-spacing: -1px;
+    text-align: center;
+    font-weight: bold;
+}
+.cateBox-div{
+    margin-bottom: 30px;
+}
+.item-info-title{
+    font-size: 20px;
+    font-weight: bold;
+    margin: 20px 0;
+}
 .cate, .midCate{
     border: 1px solid black;
     padding-top: 1rem;
     height: 250px;
     overflow-y: auto;
+}
+.itemDetailList{
+    padding: 10px;
+    margin-left: 30px;
+}
+.itemDetailList > ul >li {
+    display: flex;
+}
+.itemDetailList > ul{
+    counter-reset: list-counter;
+    list-style: none;
+}
+.itemDetailList > ul > li:before{
+    content: counter(list-counter);
+    counter-increment: list-counter;
+    font-family: arial;
+    color:#5c75bb;
+    font: bold;
+    font-size: 1.7em;
+    margin-right: .5em;
+    margin-top: -7px;
+}
+.itemNameSpan input {
+    margin-left: 66px;
+}
+.itemPriceSpan input {
+    margin-left: 49px;
+}
+.itemIntroSpan textarea {
+    margin-left: 48px;
+}
+.itemContentSpan textarea {
+    margin-left: 10px;
+}
+.editBtn{
+    padding: 5px;
+    width: 80px;
+    background-color: #f8f9fa;
+    border: 1px solid #f8f9fa;
+    border-radius: 5px;
+}
+.editBtn:hover{
+    background-color: #dee2e6;
+    border: 1px solid #dee2e6;
+}
+.membershipRegForm-title{
+    font-size: 20px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+.membershipRegForm > form{
+    position: relative;
+}
+.resetBtn{
+    position: absolute;
+    bottom: 0;
+    margin-left: 100px;
 }
 
 /* 임의의 영역 생성 */
