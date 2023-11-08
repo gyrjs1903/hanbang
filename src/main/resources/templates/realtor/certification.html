@@ -1,31 +1,39 @@
 <!DOCTYPE html>
-<html lang="ko" xlmns:th="http://www.thymeleaf.org"
-xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-layout:decorate="~{fragment/main_layout}">
+<html lang="ko" xlmns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{fragment/main_layout}">
+
 <head>
-<meta charset="UTF-8">
-<title></title>
+    <meta charset="UTF-8">
+    <title></title>
 </head>
+
 <body>
-    <th:block layout:fragment="content">
+    <th:block layout:fragment="content_css">
         <link rel="stylesheet" href="/css/realtor/certification.css">
-        <span class="title">중개사무소 정보</span>
-        <form action="/realtor/certification" method="post" enctype="multipart/form-data" id="certificationForm">
-            <div class="txt">중개사무소명</div>
-            <div class="tag"><input type="text" name="officeName" id="officeName"></div>
-            <div class="error-div" id="name-error-div"></div>
-            <div class="txt">대표자명</div>
-            <div class="tag"><input type="text" name="realtorName" id="realtorName"></div>
-            <div class="error-div" id="realtor-name-error-div"></div>
-            <div class="txt">사업자등록번호</div>
-            <div class="tag"><input type="text" id="identificationNum" name="identificationNum"></div>
-            <div class="error-div" id="id-error-div"></div>
-            <div class="txt">사업자등록증</div>
-            <div class="tag img"><input type="file" class="form-control" name="licenseImg" id="licenseImg"></div>
-            <div class="error-div" id="img-error-div"></div>
-            <input type="button" onclick="duplication();" value="공인중개사 인증하기" class="btn btn-outline-primary">
-        </form>
+    </th:block>
+    <th:block layout:fragment="content">
+        <div class="certification">
+            <span class="title">중개사무소 정보</span>
+            <form action="/realtor/certification" method="post" enctype="multipart/form-data" id="certificationForm">
+                <div class="txt">중개사무소명</div>
+                <div class="tag"><input type="text" name="officeName" id="officeName"></div>
+                <div class="error-div" id="name-error-div"></div>
+                <div class="txt">대표자명</div>
+                <div class="tag"><input type="text" name="realtorName" id="realtorName"></div>
+                <div class="error-div" id="realtor-name-error-div"></div>
+                <div class="txt">사업자등록번호</div>
+                <div class="tag"><input type="text" id="identificationNum" name="identificationNum"></div>
+                <div class="error-div" id="id-error-div"></div>
+                <div class="txt">사업자등록증</div>
+                <div class="tag img"><input type="file" class="form-control" name="licenseImg" id="licenseImg"></div>
+                <div class="error-div" id="img-error-div"></div>
+                <input type="button" onclick="duplication();" value="공인중개사 인증하기" class="btn btn-outline-primary">
+            </form>
+        </div>
+    </th:block>
+    <th:block layout:fragment="content_js">
         <script src="/js/realtor/certification.js"></script>
     </th:block>
 </body>
+
 </html>

@@ -32,7 +32,9 @@
 #admin_alarm_tag{
     display: none;
     position: absolute;
-    width: 320px;
+    top: 67px;
+    right: -258px;
+    width: 340px;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 5px;

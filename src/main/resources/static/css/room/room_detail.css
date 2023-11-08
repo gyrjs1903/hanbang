@@ -36,12 +36,18 @@
     margin-bottom: 100px;
 }
 .title_a{
+    font-weight: 700;
     margin-bottom: 30px;
 }
 .box > ul > li{
     display: flex;
     align-items: center;
     margin-bottom: 30px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f1eeee;
+}
+.option-box > ul > li, .security-box > ul >li{
+    border-bottom: none;
 }
 .box > ul > li > div{
     margin-right: 20px;
@@ -49,6 +55,11 @@
 .box > ul > li > div:first-child{
     font-size: 15px;
     font-weight: 700;
+}
+.detail-explanation div{
+    background-color: #f1eeee;
+    padding: 30px 20px;
+    border-radius: 10px;
 }
 .wd25 > .col{
     flex: none;
@@ -78,6 +89,9 @@
 .wing > .wing-box > .row{
     margin-bottom: 15px; 
 }
+.wing .room_number{
+    font-weight: bold;
+}
 .info-box{
     margin-bottom: 40px;
 }
@@ -97,7 +111,20 @@
 .flx > div{
     margin-right: 15px;
 }
-
+.realtor-inquiry-info{
+    margin-bottom: 20px;
+    color: rgb(50, 108, 249);
+}
+.direct-box{
+    margin-bottom: 20px;
+}
+.direct-call > div{
+    color: rgb(50, 108, 249);
+}
+.direct-call .call,.realtor-inquiry-info .call{
+    font-weight: bold;
+    margin: 10px 0;
+}
 .dibs_on_btn {
     display: flex;
     -webkit-box-align: center;
@@ -111,4 +138,71 @@
     background-image: url("/img/member/dibsOn.svg");
     background-repeat: no-repeat;
     background-position: center;
+}
+
+/* 모달창 */
+.inquiry-modal-box form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.inquiry-modal-box select{
+    padding: 5px;
+    margin-bottom: 20px;
+    width: 90%;
+}
+#inquiryContent{
+    margin-bottom: 20px;
+}
+.inquiry-modal-box input[type="button"]{
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+}
+.inquiry-modal-box input[type="button"]:hover{
+    background-color: #ddd;
+}
+.persnalInfo-agree{
+    width: 600px;
+}
+.txt{
+    margin: 10px;
+}
+.elDAS-form-box{
+    width: 60%;
+    margin: 0px auto 20px
+}
+.elDAS-form-box > div {
+    margin: 5px;
+}
+.elDAS-form-box input {
+    width: 100%;
+    padding: 5px;
+}
+.report-room-info{
+    margin-bottom: 30px;
+}
+.report-room-info li{
+    display: flex;
+    border-bottom: 1px solid #bfc9d0;
+}
+.report-room-info li > div {
+    padding: 10px;
+}
+.report-room-info li:last-child {
+    border-bottom: none;
+}
+.li-gnb{
+    width: 125px;
+    background-color: #5c75bb;
+    color: #fff;
+}
+.title_b{
+    font-size: 22px;
+}
+.reason-inner-box div {
+    margin: 9px 0;
+}
+.reason-inner-box input {
+    margin: 5px;
 }

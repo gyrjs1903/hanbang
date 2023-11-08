@@ -42,9 +42,7 @@ function duplication(){
             alert('fetch error!\nthen 구문에서 오류가 발생했습니다.\n콘솔창을 확인하세요!');
             console.log(err);
         });
-    } else {
-        alert('모든 정보를 입력해주세요.')
-}
+    }
 }
 
 function inputInvalidate(tagId, message){

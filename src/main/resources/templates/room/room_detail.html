@@ -102,7 +102,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="box" th:if="${optionList !='on'}">
+                        <div class="box option-box" th:if="${optionList !='on'}">
                             <h3 class="title_a">옵션</h3>
                             <ul class="option-box">
                                 <th:block th:each="option : ${optionList}">
@@ -117,7 +117,7 @@
                                 </th:block>
                             </ul>
                         </div>
-                        <div class="box" th:if="${optionList!='on'}">
+                        <div class="box security-box" th:if="${optionList!='on'}">
                             <h3 class="title_a">보안/안전시설</h3>
                             <ul class="option-box">
                                 <th:block th:each="option : ${optionList}">
@@ -132,7 +132,7 @@
                                 </th:block>
                             </ul>
                         </div>
-                        <div class="box">
+                        <div class="box detail-explanation">
                             <h3 class="title_a">상세설명</h3>
                             <div>[[${roomDetail.content}]]</div>
                         </div>
@@ -145,7 +145,7 @@
                 <div class="wing">
                     <div class="wing-box">
                         <div class="row">
-                            <div class="col">매물번호 [[${number}]]</div>
+                            <div class="col">매물번호 <span class="room_number">[[${number}]]</span></div>
                         </div>
                         <div class="row">
                             <div th:if="${roomDetail.tradeTypeCode == 'TTC_001'}">
@@ -221,8 +221,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col">[[${personInfo.phone}]]</div>
+                            <div class="row realtor-inquiry-info">
+                                <div class="col call">[[${personInfo.phone}]]</div>
                                 <div>중개사무소에 연락하여 방문일을 예약하세요.<br>
                                     다방에서 보고 연락한다고 말씀하시면,<br>
                                     더욱 빠른 예약이 가능합니다.</div>
@@ -239,11 +239,11 @@
                             </th:block>
                         </th:block>
                         <th:block th:if="${personInfo.loginType == 'USER'}">
-                            <div class="row">
+                            <div class="row direct-box">
                                 <div class="col">[[${personInfo.nickName}]](직거래)</div>
                             </div>
-                            <div class="row">
-                                <div class="col">[[${personInfo.phone}]]</div>
+                            <div class="row direct-box direct-call">
+                                <div class="col call">[[${personInfo.phone}]]</div>
                                 <div>개인과의 직거래 시 언제나 안전에 유의하세요.</div>
                             </div>
                         </th:block>
@@ -262,7 +262,7 @@
                         <h5 class="modal-title">문의하기</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body inquiry-modal-box">
                         <form action="/room/insertInquiry" method="post">
                             <input type="hidden" th:value="${personInfo.userNo}" name="toUserNo" id="toUserNo">
                             <input type="hidden" th:value="${roomDetail.roomCode}" name="roomCode" id="inquiryRoomCode">
@@ -270,7 +270,7 @@
                                 <option th:value="${title.inquiryTitleCode}" th:each="title : ${inquiryTitleList}">
                                     [[${title.inquiryTitles}]]</option>
                             </select>
-                            <textarea name="inquiryContent" id="inquiryContent" cols="30" rows="10"></textarea>
+                            <textarea name="inquiryContent" id="inquiryContent" cols="50" rows="10"></textarea>
                             <input type="button" value="문의하기" th:onclick="inquiry([[${roomDetail.roomCode}]]);">
                         </form>
                     </div>
@@ -283,7 +283,7 @@
         <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" id="report-modal"
             aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog  modal-dialog-scrollable">
-                <div class="modal-content">
+                <div class="modal-content persnalInfo-agree">
                     <div class="modal-header">
                         <h5 class="modal-title">개인정보 수집 및 이용에 대한 안내</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -334,16 +334,18 @@
             <div class="modal-dialog  modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">inner-modal</h5>
+                        <h5 class="modal-title">본인인증</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <form action="/room/elDAS" method="post" id="elDASForm">
-                            <div>아이디</div>
-                            <div><input type="text" name="userName" id="elDAS-userName"></div>
-                            <div>비밀번호</div>
-                            <div><input type="password" name="password" id="elDAS-password"></div>
-                            <div class="elDAS-alert-box"></div>
+                            <div class="elDAS-form-box">
+                                <div>아이디</div>
+                                <div><input type="text" name="userName" id="elDAS-userName"></div>
+                                <div>비밀번호</div>
+                                <div><input type="password" name="password" id="elDAS-password"></div>
+                                <div class="elDAS-alert-box"></div>
+                            </div>
                             <div class="modal-footer">
                                 <input type="button" id="elDAS-btn" class="btn btn-primary" onclick="elDAS();"
                                     value="본인확인"></input>
@@ -358,14 +360,14 @@
             <div class="modal-dialog  modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">inner-modal</h5>
+                        <h5 class="modal-title">매물 신고</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="report-room-info">
                             <ul>
                                 <li>
-                                    <div>매물구분</div>
+                                    <div class="li-gnb">매물구분</div>
                                     <div>
                                         <span th:if="${roomDetail.subPropertyTypeCode == 'STYPE_001'}">원룸 </span>
                                         <span th:if="${roomDetail.subPropertyTypeCode == 'STYPE_002'}">투룸 </span>
@@ -377,26 +379,26 @@
                                     </div>
                                 </li>
                                 <li>
-                                    <div>매물소재지</div>
+                                    <div class="li-gnb">매물소재지</div>
                                     <div>[[${roomDetail.roomAddrVO.addr}]] [[${roomDetail.roomAddrVO.detailAddr}]]</div>
                                 </li>
                                 <li>
-                                    <div>매물상세내역</div>
+                                    <div class="li-gnb">매물상세내역</div>
                                     <div>전용면적 : [[${roomDetail.roomSizeP}]]</div>
                                 </li>
                             </ul>
                         </div>
                         <div class="reason-box">
-                            <h3 class="titla_b">매물신고사유</h3>
+                            <h3 class="title_b">매물신고사유</h3>
                             <div class="reason-inner-box">
                                 <form action="/room/falseOfferings" method="post" id="false-offerings">
                                     <input type="hidden" name="roomCode" th:value="${roomDetail.roomCode}">
                                     <input type="hidden" name="userNo" id="report-person" value="none">
                                     <th:block th:each="reason : ${reasonList}">
                                         <div><input type="radio" name="reasonCode"
-                                                th:value="${reason.reasonCode}">[[${reason.reason}]]</div>
+                                                th:value="${reason.reasonCode}" required>[[${reason.reason}]]</div>
                                     </th:block>
-                                    <textarea name="reportContent" cols="10" rows="3"></textarea>
+                                    <textarea name="reportContent" cols="50" rows="3"></textarea>
                                 </form>
                             </div>
                         </div>

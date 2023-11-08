@@ -1,6 +1,8 @@
 @charset "UTF-8";
 /* certification.css */
-
+.certification{
+    margin: 100px 0;
+}
 .title{
     display: block;
     font-size: 24px;

@@ -1,0 +1,84 @@
+@charset "UTF-8";
+
+.offerings-list-table{
+    padding-top: 120px;
+    margin-bottom: 217px;
+}
+.offerings-list-table table{
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    border-collapse: collapse;
+}
+.offerings-list-table thead{
+    background-color: #ccc;
+}
+.offerings-list-table td{
+    padding: 10px 0;
+    border: 1px solid #ccc;
+}
+.offerings-list-table td.cursor:hover{
+    text-decoration: underline;
+}
+.offerings-one-info{
+    padding-top: 120px;
+    margin-bottom: 60px;
+}
+.offerings-one-info .head{
+    font-size: 26px;
+    font-weight: bold;
+    border-bottom: 2px solid #aaa;
+    padding-bottom: 5px;
+    margin: 10px
+}
+.offerings-one-box{
+    position: relative;
+}
+.offerings-one-box > div{
+    margin: 13px 0 13px 10px;
+}
+.offerings-one-box span{
+    font-weight: bold;
+}
+.offerings-one-box button{
+    position: absolute;
+    right: 10px;
+    bottom: 6px;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+}
+.offerings-one-box button:hover{
+    background-color: #d1d1d1;
+}
+.offerings-detail-table{
+    position: relative;
+    margin-bottom: 211px;
+}
+.offerings-detail-table table{
+    width: 95%;
+    margin: 0 auto;
+    text-align: center;
+    border-collapse: collapse;
+}
+.offerings-detail-table thead{
+    background-color: #ddd;
+}
+.offerings-detail-table td{
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+.offerings-detail-table button{
+    position: absolute;
+    right: 27px;
+    bottom: -50px;
+    border: none;
+    padding: 8px;
+    border-radius: 6px;
+}
+.offerings-detail-table .listBtn{
+    right: 155px;
+}
+.offerings-detail-table button:hover{
+    background-color: #d1d1d1;
+}
