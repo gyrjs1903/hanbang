@@ -49,6 +49,9 @@ public class AdminController {
     // 회원 목록 페이지
     @RequestMapping(value = "/userList")
     public String userList(Model model, MemberManageVO memberManageVO){
+        List<MemCateVO> membershipCate = membershipService.selectCategory();
+        model.addAttribute("membershipCate", membershipCate );
+
         List<MemberManageVO> userList = memberManageService.userList(memberManageVO);
         model.addAttribute("userList", userList );
         return "admin/user_list";
@@ -57,6 +60,9 @@ public class AdminController {
     // 회원 상세 조회
     @GetMapping("/userDetail")
     public String userDetail(String userNo, Model model){
+        List<MemCateVO> membershipCate = membershipService.selectCategory();
+        model.addAttribute("membershipCate", membershipCate );
+
         MemberManageVO userDetail = memberManageService.userDetail(userNo);
         model.addAttribute("userDetail", userDetail);
         return "admin/user_detail";
@@ -71,6 +77,9 @@ public class AdminController {
     // 공인중개사 목록 페이지
     @RequestMapping(value = "/realList")
     public String realList(Model model, MemberManageVO memberManageVO){
+        List<MemCateVO> membershipCate = membershipService.selectCategory();
+        model.addAttribute("membershipCate", membershipCate );
+
         List<MemberManageVO> realList = memberManageService.realList(memberManageVO);
         model.addAttribute("realList", realList );
         return "admin/real_list";
@@ -79,6 +88,9 @@ public class AdminController {
     // 공인중개사 상세 조회
     @GetMapping("/realDetail")
     public String realDetail(String identificationNum, Model model){
+        List<MemCateVO> membershipCate = membershipService.selectCategory();
+        model.addAttribute("membershipCate", membershipCate );
+
         MemberManageVO realDetail = memberManageService.realDetail(identificationNum);
         model.addAttribute("realDetail", realDetail);
         return "admin/real_detail";
@@ -151,6 +163,9 @@ public class AdminController {
     // 공지사항 목록 조회
     @GetMapping("/infoBoard")
     public String selectBoardList(Model model, BoardVO boardVO){
+        List<MemCateVO> membershipCate = membershipService.selectCategory();
+        model.addAttribute("membershipCate", membershipCate );
+
         List<BoardVO> boardList = boardService.selectBoardList();
         model.addAttribute("boardList",boardList);
         return "admin/board_list";
@@ -172,6 +187,9 @@ public class AdminController {
     // 공지사항 상세 조회
     @GetMapping("/boardDetail")
     public String detailBoard(int boardNum, Model model){
+        List<MemCateVO> membershipCate = membershipService.selectCategory();
+        model.addAttribute("membershipCate", membershipCate );
+
         BoardVO boardVO = boardService.detailBoard(boardNum);
         model.addAttribute("boardVO", boardVO);
         return "admin/board_detail";
@@ -204,6 +222,9 @@ public class AdminController {
     // 맴버쉽 카테고리 별 상품 조회 (중분류 및 소분류 조회) --> membershipList에서 조회
     @GetMapping("/membershipList")
     public String membershipList(Model model, String memCateCode){
+        List<MemCateVO> membershipCate = membershipService.selectCategory();
+        model.addAttribute("membershipCate", membershipCate );
+
         List<MembershipVO> membershipList = membershipService.selectMembershipItemList(memCateCode);
         model.addAttribute("membershipItemList", membershipList);
         return "admin/membershipList";
@@ -213,6 +234,9 @@ public class AdminController {
     // 맴버쉽 등록 페이지 이동
     @GetMapping("/regMembershipForm")
     public String regMembershipForm(@RequestParam(name = "memCateCode", required = false, defaultValue = "CATE_001") String memCateCode, Model model){
+        List<MemCateVO> membershipCate = membershipService.selectCategory();
+        model.addAttribute("membershipCate", membershipCate );
+
         // 대분류 조회
         model.addAttribute("cateList", membershipService.selectCategory());
         // 중분류 조회
@@ -241,6 +265,7 @@ public class AdminController {
     @ResponseBody
     @PostMapping("/getItemCateList")
     public List<MemItemVO> selectItemListByMidCate(MemItemVO memItemVO){
+
 
         return membershipService.selectItemListByMidCate(memItemVO);
     }
@@ -324,6 +349,9 @@ public class AdminController {
     // 이벤트 목록 조회
     @GetMapping("/eventList")
     public String goEventList (EventVO eventVO, Model model){
+        List<MemCateVO> membershipCate = membershipService.selectCategory();
+        model.addAttribute("membershipCate", membershipCate );
+
         List<EventVO> eventLists = eventService.selectEventList();
         model.addAttribute("eventLists", eventLists);
         return "admin/event_list";
@@ -365,6 +393,9 @@ public class AdminController {
     // 이벤트 상세 조회
     @GetMapping("/eventDetail")
     public String eventDetail(String eventCode, Model model){
+        List<MemCateVO> membershipCate = membershipService.selectCategory();
+        model.addAttribute("membershipCate", membershipCate );
+
         EventVO eventVO = eventService.selectEventDetail(eventCode);
         model.addAttribute("event", eventVO);
         eventService.updateReadCnt(eventCode);
