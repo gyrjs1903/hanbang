@@ -84,6 +84,12 @@
         <result column="COORDINATE_Y" property="coordinateY"/>
         <result column="ROOM_CODE" property="roomCode"/>
     </resultMap>
+    <resultMap id="typeAvg" type="com.green.hanbang.room.vo.TypeAvgVO">
+        <result column="AVG_DEPOSIT" property="avgDeposit"/>
+        <result column="AVG_JEONSE_COST" property="avgJeonseCost"/>
+        <result column="AVG_MONTHLY_LEASE" property="avgMonthlyLease"/>
+        <association property="subPropertyTypeVO" resultMap="subPropertyType"/>
+    </resultMap>
 
     <!-- 허위매물 신고된 방 -->
     <resultMap id="falseOfferings" type="com.green.hanbang.room.vo.FalseOfferingsVO">
@@ -179,23 +185,27 @@
             , ROOM_SIZE_M
             , FLOOR
             , TRADE_TYPE_CODE
+            <if test='monthlyLease != null and !monthlyLease.equals("")'>
             , MONTHLY_LEASE
+            </if>
+            <if test='deposit != null and !deposit.equals("")'>
             , DEPOSIT
-            <if test='jeonseCost != null and jeonseCost.equals("")'>
+            </if>
+            <if test='jeonseCost != null and !jeonseCost.equals("")'>
                 , JEONSE_COST
             </if>
-            <if test='maintenanceCost != null and maintenanceCost.equals("")'>
+            <if test='maintenanceCost != null and !maintenanceCost.equals("")'>
                 , MAINTENANCE_COST
             </if>
             , DETAIL_OPTIONS
             , TITLE
             , CONTENT
             , IMMEDIATE_OCCUPANCY
-        <if test='availableMoveInDate != null and availableMoveInDate.equals("")'>
+            <if test='availableMoveInDate != null and !availableMoveInDate.equals("")'>
             , AVAILABLE_MOVE_IN_DATE
-        </if>
+            </if>
             , USER_NO
-        )VALUES(
+            )VALUES(
             (SELECT 'ROOM_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ROOM_CODE,7))),0)+1, 4, '0') FROM ROOM)
             , #{propertyTypeCode}
             , #{subPropertyTypeCode}
@@ -203,19 +213,23 @@
             , #{roomSizeM}
             , #{floor}
             , #{tradeTypeCode}
+            <if test='monthlyLease != null and !monthlyLease.equals("")'>
             , NVL(#{monthlyLease},'')
+            </if>
+            <if test='deposit != null and !deposit.equals("")'>
             , NVL(#{deposit},'')
-            <if test='jeonseCost != null and jeonseCost.equals("")'>
+            </if>
+            <if test='jeonseCost != null and !jeonseCost.equals("")'>
                 , #{jeonseCost}
             </if>
-            <if test='maintenanceCost != null and maintenanceCost.equals("")'>
+            <if test='maintenanceCost != null and !maintenanceCost.equals("")'>
                 , #{maintenanceCost}
             </if>
             , #{detailOptions}
             , #{title}
             , #{content}
             , #{immediateOccupancy}
-        <if test='availableMoveInDate != null and availableMoveInDate.equals("")'>
+        <if test='availableMoveInDate != null and !availableMoveInDate.equals("")'>
             , #{availableMoveInDate}
         </if>
             , #{userNo}
@@ -542,6 +556,17 @@
         AND R.SUB_PROPERTY_TYPE_CODE = SPT.SUB_PROPERTY_TYPE_CODE
 <!--        AND UPPER(RA.ADDR) LIKE '%' || '울산' || '%'-->
         ORDER BY DBMS_RANDOM.VALUE
+    </select>
+    <select id="avgRoom" resultMap="typeAvg">
+        SELECT ROUND(AVG(R.DEPOSIT)) AS AVG_DEPOSIT
+        , ROUND(AVG(R.JEONSE_COST)) AS AVG_JEONSE_COST
+        , ROUND(AVG(R.MONTHLY_LEASE)) AS AVG_MONTHLY_LEASE
+        , R.SUB_PROPERTY_TYPE_CODE
+        , SPT.SUB_PROPERTY_TYPE_NAME
+        FROM ROOM R
+        JOIN SUB_PROPERTY_TYPE SPT ON R.SUB_PROPERTY_TYPE_CODE = SPT.SUB_PROPERTY_TYPE_CODE
+        GROUP BY R.SUB_PROPERTY_TYPE_CODE, SPT.SUB_PROPERTY_TYPE_NAME
+        ORDER BY R.SUB_PROPERTY_TYPE_CODE
     </select>
 
     <select id="selectRoomAddr" resultMap="roomAddr">

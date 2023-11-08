@@ -15,11 +15,11 @@
         <div class="search_room">
             <h3>어떤 방을 찾으세요?</h3>
             <div class="h_search">
-                <form>
+                <form method="get" action="/room/roomMain">
                     <fieldset>
                         <legend class="hide">매물 검색 폼</legend>
                         <div>
-                            <input class="insertAddr" placeholder="지역 또는 단지명을 입력하세요." value="">
+                            <input class="insertAddr" name="searchAddr" placeholder="지역을 입력하세요." value="">
                             <input class="searchBtn" type="submit" value="">
                         </div>
                     </fieldset>
@@ -32,22 +32,15 @@
                 <div class="ai_title2">
                     <p>
                         <span>[닉네임]님의</span>
-                        <span>OO동</span>
-                        <span>|</span>
-                        <span>월세</span>
-                        <span>|</span>
-                        <span>전세</span>
-                        <span>|</span>
-                        <span>매매</span>
-                        검색 조건으로 추천된 매물이예요!
+                         추천된 매물이예요!
                     </p>
                     <a href="">더 많은 방 보기 ></a>
                 </div>
                 <ul class="ai_room_list">
-                    <li th:each="room, state : ${selectMainPageRoomList}">
+                    <li th:each="room, state : ${selectMainPageRoomList}" th:onclick="detailRoom([[${room.roomCode}]]);">
                         <th:block th:if="${state.index &lt; 4}">
                             <div>
-                                <div class="ai_room1">
+                                <div class="ai_room1" >
                                     <div class="ai_room_img_wrap">
                                         <div class="ai_room_img_content">
                                             <img th:src="${'/img/' + 'room/' + room.imgList[0].attachedFileName}"
@@ -62,8 +55,9 @@
                                         <th:block th:if="${room.tradeTypeCode == 'TTC_002'}">
                                             <h4 class="room_price">전세 [[${room.jeonseCost}]]</h4>
                                         </th:block>
-                                        <p class="room_info">[[${room.floor}]]층,  [[${room.roomSizeM}]], <th:block th:if="${room.maintenanceCost!=null}">관리비[[${room.maintenanceCost}]]만</th:block></p>
-                                        <p class="room_info">[[${room.title}]]</p>
+                                        <p class="room_info">[[${room.floor}]]층,  [[${room.roomSizeM}]]m&#178;, <th:block th:if="${room.maintenanceCost!=null}">관리비[[${room.maintenanceCost}]]만</th:block></p>
+                                        <p class="room_info">[[${room.roomAddrVO.addr}]]</p>
+                                        <p class="room_info">[[${room.content}]]</p>
                                     </div>
                                 </div>
                             </div>
@@ -80,51 +74,15 @@
                 <div class="content2_wrap">
                     <button type="button" class="content2_btn_left"></button>
                     <div>
-                        <div class="room_avg_price_info">
+                        <div class="room_avg_price_info" th:each="typeAvg : ${typeAvgList}">
                             <div class="rapi_title">
-                                <p>원룸 평균 매물가</p>
-                            </div>
-                            <div>
-                                <p class="monye">월세</p>
-                                <p class="monye_avg">평균 보증금/평균 월세</p>
-                                <p class="monye">전세</p>
-                                <p class="monye_avg">평균 전세</p>
-                            </div>
-                            <p class="area">* 전용면적 33㎡(10평)이하</p>
-                        </div>
-                        <div class="room_avg_price_info">
-                            <div class="rapi_title">
-                                <p>투·쓰리룸 평균 매물가</p>
+                                <p>[[${typeAvg.subPropertyTypeVO.subPropertyTypeName}]] 평균가</p>
                             </div>
                             <div class="rapi_info">
                                 <p class="monye">월세</p>
-                                <p class="monye_avg">평균 보증금/평균 월세</p>
+                                <p class="monye_avg">[[${typeAvg.avgDeposit}]]/[[${typeAvg.avgMonthlyLease}]]</p>
                                 <p class="monye">전세</p>
-                                <p class="monye_avg">평균 전세</p>
-                            </div>
-                            <p class="area">* 전용면적 60㎡(18평)이하</p>
-                        </div>
-                        <div class="room_avg_price_info">
-                            <div class="rapi_title">
-                                <p>오피스텔 평균 매물가</p>
-                            </div>
-                            <div class="rapi_info">
-                                <p class="monye">월세</p>
-                                <p class="monye_avg">평균 보증금/평균 월세</p>
-                                <p class="monye">전세</p>
-                                <p class="monye_avg">평균 전세</p>
-                            </div>
-                            <p class="area">* 전용면적 33㎡(10평)이하</p>
-                        </div>
-                        <div class="room_avg_price_info">
-                            <div class="rapi_title">
-                                <p>아파트</p> 평균 매물가</p>
-                            </div>
-                            <div class="rapi_info">
-                                <p class="monye">매매</p>
-                                <p class="monye_avg">평균</p>
-                                <p class="monye">전세</p>
-                                <p class="monye_avg">평균</p>
+                                <p class="monye_avg">[[${typeAvg.avgJeonseCost}]]</p>
                             </div>
                         </div>
                     </div>
@@ -174,6 +132,7 @@
         <th:block layout:fragment="content_js">
             <script src="https://code.jquery.com/jquery-latest.min.js"></script>
             <script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+            <script src="/js/main/home.js"></script>
         </th:block>
     </th:block>
 </body>

@@ -141,13 +141,13 @@ public class RoomController {
         return "redirect:/room/roomMain";
     }
     @GetMapping("/roomMain")
-    public String roomMain(Model model, RoomSearchVO roomSearchVO){
+    public String roomMain(Model model, RoomSearchVO roomSearchVO, String searchAddr){
 
         model.addAttribute("tradeTypeList", roomService.selectTradeType());
-        model.addAttribute("roomList", roomService.selectRoom(roomSearchVO));
+        model.addAttribute("roomList", roomService.selectRoom(roomSearchVO, searchAddr));
         model.addAttribute("propertyTypeList", roomService.selectProperty());
         model.addAttribute("Options", roomService.selectOptions());
-        List<RoomVO> room= roomService.selectRoom(roomSearchVO);
+        List<RoomVO> room= roomService.selectRoom(roomSearchVO, searchAddr);
         System.out.println(room);
         return "room/room_main";
     }
@@ -161,13 +161,13 @@ public class RoomController {
     }
     @ResponseBody
     @PostMapping("/roomSearch")
-    public List<RoomVO> roomSearch(@RequestBody Map<String, Object> searchData){
+    public List<RoomVO> roomSearch(@RequestBody Map<String, Object> searchData, String searchAddr){
         System.out.println(searchData);
 
         ObjectMapper mapper = new ObjectMapper();
         RoomSearchVO roomSearchVO= mapper.convertValue(searchData, RoomSearchVO.class);
         System.out.println(roomSearchVO);
-        List<RoomVO> roomList = roomService.selectRoom(roomSearchVO);
+        List<RoomVO> roomList = roomService.selectRoom(roomSearchVO, searchAddr);
     return roomList;
 
     }

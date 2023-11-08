@@ -8,6 +8,7 @@ import com.green.hanbang.member.vo.MemberVO;
 import com.green.hanbang.realtor.vo.RealtorDetailVO;
 import com.green.hanbang.room.service.RoomService;
 import com.green.hanbang.room.vo.InquiryVO;
+import com.green.hanbang.room.vo.RoomVO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -32,8 +33,12 @@ public class IndexController {
     // 시작페이지
     @GetMapping("/")
     public String main(Model model, HttpSession session) {
+        //가격 조회
+        model.addAttribute("typeAvgList", roomService.avgRoom());
+
         // 대분류 조회
         model.addAttribute("cateList", membershipService.selectCategory());
+        //룸조회
         model.addAttribute("selectMainPageRoomList", roomService.selectMainPageRoom());
         if(session.getAttribute("loginInfo") != null){
 

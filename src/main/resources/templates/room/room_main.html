@@ -4,12 +4,14 @@
 
 <head>
     <meta charset="UTF-8">
+    <th:block layout:fragment="content_css">
+        <link rel="stylesheet" href="/css/room/room_main.css">
+    </th:block>
     <title></title>
 </head>
 
 <body>
     <th:block layout:fragment="content">
-        <link rel="stylesheet" href="/css/room/room_main.css">
         <div class="content">
             <!-- <link href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" rel="stylesheet"> -->
             <div class="container">
@@ -174,6 +176,9 @@
                 <div class="col-8" id="map"></div>
             </div>
         </div>
+
+    </th:block>
+    <th:block layout:fragment="content_js">
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
         <script type="text/javascript"
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=22ce9cdc2a0d0a47b1149d42f3bab1c0&libraries=services,clusterer,drawing"></script>

@@ -44,7 +44,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public List<RoomVO> selectRoom(RoomSearchVO roomSearchVO) {
+    public List<RoomVO> selectRoom(RoomSearchVO roomSearchVO, String searchAddr) {
         return sqlSession.selectList("roomMapper.selectRoom", roomSearchVO);
     }
 
@@ -56,6 +56,11 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public List<RoomVO> selectMainPageRoom() {
         return sqlSession.selectList("roomMapper.selectMainPageRoom");
+    }
+
+    @Override
+    public List<TypeAvgVO> avgRoom() {
+        return sqlSession.selectList("roomMapper.avgRoom");
     }
 
 

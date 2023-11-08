@@ -27,12 +27,16 @@ public interface RoomService {
     public void insertRoom(RoomVO roomVO);
 
     //방 조회
-    public List<RoomVO> selectRoom(RoomSearchVO roomSearchVO);
+    public List<RoomVO> selectRoom(RoomSearchVO roomSearchVO, String searchAddr);
 
     //주소 및 좌표 조회
     public List<RoomAddrVO> selectRoomAddr();
 
+    //메인페이지 룸 조회
     public List<RoomVO> selectMainPageRoom();
+
+    //평균을 조회
+    public List<TypeAvgVO> avgRoom();
 
 ///////////////////////////////////////////////////////////////
     //room테이블 디테일정보 조회

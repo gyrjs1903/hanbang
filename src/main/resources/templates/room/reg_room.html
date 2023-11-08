@@ -4,13 +4,16 @@
 
 <head>
     <meta charset="UTF-8">
+    <th:block layout:fragment="content_css">
+        <link rel="stylesheet" href="/css/room/reg_room.css">
+    </th:block>
     <title></title>
 </head>
 
 <body>
     <th:block layout:fragment="content">
         <!-- <link href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" rel="stylesheet"> -->
-        <link rel="stylesheet" href="/css/room/reg_room.css">
+        
         <h1 class="title">방내놓기</h1>
         <div id="error-div"><span class="close">닫기</span></div>
         <div>
@@ -161,7 +164,7 @@
                                 </div>
                                 <div>
                                     <label for="maintenanceCost">관리비</label>
-                                    <input type="text" name="maintenanceCost" id="maintenanceCost" readonly>
+                                    <input type="text" name="maintenanceCost" id="maintenanceCost">
                                 </div>
                             </td>
                         </tr>
@@ -408,6 +411,8 @@
                 <input type="button" id="submitButton" onclick="roomInsertCkeck();" value="매물등록">
             </form>
         </div>
+    </th:block>
+    <th:block layout:fragment="content_js">
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         <script type="text/javascript"
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=22ce9cdc2a0d0a47b1149d42f3bab1c0&libraries=services,clusterer,drawing"></script>

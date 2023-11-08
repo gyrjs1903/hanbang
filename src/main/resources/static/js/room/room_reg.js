@@ -351,47 +351,91 @@ function roomInsertCkeck() {
     const roomForm = document.querySelector('#roomForm')
     if (roomForm.addr.value == '') {
         inputInvalidate('주소를 기입해주세요')
+        window.scroll({
+            top: 573,
+            behavior: "smooth",
+          });
         return;
     }
     if (roomForm.roomSizeP.value == '' && roomForm.roomSizeM.value == '') {
         inputInvalidate('전용면적을 기입해주세요')
+        window.scroll({
+            top: 873,
+            behavior: "smooth",
+          });
         return;
     }
     if (roomForm.floor.value == '') {
         inputInvalidate('층수을 기입해주세요')
+        window.scroll({
+            top: 958,
+            behavior: "smooth",
+          });
         return;
     }
     if (tradeTypeCode_TTC_001 && roomForm.deposit.value == '' && roomForm.monthlyLease.value == '' && !tradeTypeCode_TTC_002) {
         inputInvalidate('보증금 또는 월세를 기입해주세요')
+        window.scroll({
+            top: 1108,
+            behavior: "smooth",
+          });
         return;
     }
     if (tradeTypeCode_TTC_002 && roomForm.jeonseCost.value == '' && !tradeTypeCode_TTC_001) {
-        alert(111111);
         inputInvalidate('전세를 기입해주세요')
+        window.scroll({
+            top: 1108,
+            behavior: "smooth",
+          });
         return;
     }
     if (maintenanceYes && roomForm.maintenanceCost.value == '') {
         inputInvalidate('관리비를 기입해주세요')
+        window.scroll({
+            top: 1108,
+            behavior: "smooth",
+          });
         return;
     }
     if (immediateOccupancyNo && roomForm.availableMoveInDate.value == '') {
         inputInvalidate('입주가능일자를 기입해주세요')
+        window.scroll({
+            top: 1108,
+            behavior: "smooth",
+          });
         return;
     }
     if (roomForm.mainImg.value == '') {
         inputInvalidate('대표이미지를 선택해주세요')
+        window.scroll({
+            top: 2007,
+            behavior: "smooth",
+          });
         return;
     }
     if (roomForm.subImg.value == '') {
         inputInvalidate('상세내용이미지를 선택해주세요')
+        window.scroll({
+            top: 2007,
+            behavior: "smooth",
+          });
         return;
     }
     if (roomForm.title.value == '') {
         inputInvalidate('제목란에 기입해주세요')
+        window.scroll({
+            top: 2637,
+            behavior: "smooth",
+          });
         return;
     }
     if (roomForm.content.value == '') {
         inputInvalidate('상세설명란에 기입해주세요')
+        inputInvalidate('제목란에 기입해주세요')
+        window.scroll({
+            top: 2637,
+            behavior: "smooth",
+          });
         return;
     }
 
@@ -486,5 +530,10 @@ if(plusDayCnt == 0){
     const checkPlusDay = document.querySelector('#checkPlusDay');
     checkGeneral.disabled= true;
 }
+
+
+
+
+
 
 
