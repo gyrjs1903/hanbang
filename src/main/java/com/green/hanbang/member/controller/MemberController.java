@@ -333,6 +333,8 @@ public class MemberController {
         // 문의 리스트 목록
         List<MemberInquiryVO> memberInquiryList = memberInquiryService.selectInquiryDetail(memberInquiryVO);
 
+
+
         model.addAttribute("memberInquiryList", memberInquiryList);
 
         MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
@@ -438,22 +440,22 @@ public class MemberController {
 
         String[] recentViewTitleArr = getCookieValue(request, "title");
         String[] recentViewImg = getCookieValue(request, "isMain");
-//        String[] recentViewPropertyTypeArr = getCookieValue(request, "propertyTypeName");
-//        String[] recentViewTradeTypeArr = getCookieValue(request, "tradeTypeName");
+        String[] recentViewPropertyTypeArr = getCookieValue(request, "propertyTypeName");
+        String[] recentViewTradeTypeArr = getCookieValue(request, "tradeTypeName");
         String[] recentViewDepositArr = getCookieValue(request, "deposit");
         String[] recentViewMonthlyLeaseArr = getCookieValue(request, "monthlyLease");
-//        String[] recentViewFloorArr = getCookieValue(request, "floor");
-//        String[] recentViewRoomSizeMArr = getCookieValue(request, "roomSizeM");
+        String[] recentViewFloorArr = getCookieValue(request, "floor");
+        String[] recentViewRoomSizeMArr = getCookieValue(request, "roomSizeM");
         String[] recentViewMaintenanceCostArr = getCookieValue(request, "maintenanceCost");
 
         System.out.println(Arrays.toString(recentViewTitleArr));
         System.out.println(Arrays.toString(recentViewImg));
-//        System.out.println(Arrays.toString(recentViewPropertyTypeArr));
-//        System.out.println(Arrays.toString(recentViewTradeTypeArr));
+        System.out.println(Arrays.toString(recentViewPropertyTypeArr));
+        System.out.println(Arrays.toString(recentViewTradeTypeArr));
         System.out.println(Arrays.toString(recentViewDepositArr));
         System.out.println(Arrays.toString(recentViewMonthlyLeaseArr));
-//        System.out.println(Arrays.toString(recentViewFloorArr));
-//        System.out.println(Arrays.toString(recentViewRoomSizeMArr));
+        System.out.println(Arrays.toString(recentViewFloorArr));
+        System.out.println(Arrays.toString(recentViewRoomSizeMArr));
         System.out.println(Arrays.toString(recentViewMaintenanceCostArr));
 
         List<RoomVO> recentViewList = new ArrayList<>();
@@ -494,7 +496,7 @@ public class MemberController {
             // floor cookie
             // roomSizeM cookie
             // maintenanceCost cookie
-            vo.setMaintenanceCost(recentViewMaintenanceCostArr[i]);
+            //vo.setMaintenanceCost(recentViewMaintenanceCostArr[i]);
 
             recentViewList.add(vo);
         }
