@@ -82,3 +82,9 @@ input{
     border: 2px solid #fff;
     font-size: 17px;
 }
+.item-gnb .btnActive{
+    background-color: #e8ebed;
+}
+.item-gnb > div:hover {
+    background-color: #e8ebed;
+}
