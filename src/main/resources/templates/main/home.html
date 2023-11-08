@@ -57,12 +57,12 @@
                                     <div class="ai_room_info">
                                         <p class="room_title">[<span>[[${room.subPropertyTypeVO.subPropertyTypeName}]]</span>]</p>
                                         <th:block th:if="${room.tradeTypeCode == 'TTC_001'}">
-                                            <h4>월세 [[${room.deposit}]]/[[${room.monthlyLease}]]</h4>
+                                            <h4 class="room_price">월세 [[${room.deposit}]]/[[${room.monthlyLease}]]</h4>
                                         </th:block>
                                         <th:block th:if="${room.tradeTypeCode == 'TTC_002'}">
-                                            <h4>전세 [[${room.jeonseCost}]]</h4>
+                                            <h4 class="room_price">전세 [[${room.jeonseCost}]]</h4>
                                         </th:block>
-                                        <p class="room_info">[[${room.floor}]]층,  [[${room.roomSizeP}]]평</p>
+                                        <p class="room_info">[[${room.floor}]]층,  [[${room.roomSizeM}]], <th:block th:if="${room.maintenanceCost!=null}">관리비[[${room.maintenanceCost}]]만</th:block></p>
                                         <p class="room_info">[[${room.title}]]</p>
                                     </div>
                                 </div>
@@ -118,7 +118,7 @@
                         </div>
                         <div class="room_avg_price_info">
                             <div class="rapi_title">
-                                <p>이 지역 평당가</p>
+                                <p>아파트</p> 평균 매물가</p>
                             </div>
                             <div class="rapi_info">
                                 <p class="monye">매매</p>
