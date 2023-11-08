@@ -3,16 +3,31 @@
 .admin-alarm-li{
     position: relative;
 }
+.menu_bar > ul > .admin-alarm-li > #admin_alarm_tag{
+    line-height: 24px;
+}
 .admin-alarm{
     font-weight: bold;
     font-size: 16px;
     color: #fff;
     line-height: 90px;
 }
-.admin-alarm:hover{
+.admin-alarm-li:hover .admin-alarm{
     position: relative;
     color: #bfc9d0;
     transition: 0.3s;
+}
+.admin-alarm-li .admin-alarm{
+    padding-bottom: 10px;
+}
+.admin-alarm-li:hover .admin-alarm::after{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #bfc9d0;
 }
 #admin_alarm_tag{
     display: none;
@@ -39,6 +54,9 @@
     padding: 15px;
     background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 20px;
+}
+#admin_today_alarm > div:hover{
+  background-color: #d1eef7;
 }
 .cnt{
     font-size: 19px;
