@@ -14,7 +14,7 @@ public class MemberInquiryVO {
     private String userNo;
     private String inquiryStCode;
 
-    private List<MemberInquiryImgVO> memberInquiryImgVOList;
+    private MemberInquiryImgVO memberInquiryImgVO;
     private MemberInquiryTypeVO memberInquiryTypeVO;
     private InquiryStatusVO inquiryStatusVO;
 }

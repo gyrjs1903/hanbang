@@ -65,8 +65,8 @@ public class MemberController {
     // 기존 비밀 번호 체크
     @ResponseBody
     @PostMapping("/changeForPassWordDuplicationCheckFetch")
-    public String changeForPassWordDuplicationCheckFetch(@RequestParam String passWord){
-        return memberService.passWordCheck(passWord);
+    public String changeForPassWordDuplicationCheckFetch(@RequestParam String oldPassWord){
+        return memberService.passWordCheck(oldPassWord);
     }
 
     // -------- 회원 기본 기능 --------------
@@ -102,8 +102,9 @@ public class MemberController {
 
     // 회원 탈퇴
     @GetMapping("/deleteMember")
-    public int deleteMember(int userNo){
-        return memberService.deleteMember(userNo);
+    public String deleteMember(){
+
+        return "redirect:/member/logout";
     }
 
     // 로그인
@@ -301,7 +302,7 @@ public class MemberController {
 
     // 1:1문의 전송 (작성 후 문의 버튼 클릭)
     @PostMapping("/memberInquirySave")
-    public String memberInquirySave(HttpSession session, MultipartFile[] imgs, MemberInquiryVO memberInquiryVO){
+    public String memberInquirySave(HttpSession session, MultipartFile[] imgs, MultipartFile img, MemberInquiryVO memberInquiryVO){
 
         // 로그인 한 회원 번호 조회
         MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
@@ -311,17 +312,27 @@ public class MemberController {
         memberInquiryService.insertMemberInquiry(memberInquiryVO);
         System.out.println(memberInquiryVO);
 
+        String memberInquiryWriteNo = memberInquiryVO.getMemberInquiryWriteNo();
 
-        // 첨부 파일 (여러개)
-        List<MemberInquiryImgVO> inqImgList = MemberInquiryUtil.inquiryMultiUpload(imgs);
-        System.out.println(imgs);
-        for (MemberInquiryImgVO inquiryImgVO : inqImgList){
-            String memberInquiryWriteNo = memberInquiryService.selectNextInquiryNumber();
-            inquiryImgVO.setMemberInquiryWriteNo(memberInquiryWriteNo);
-        }
+        // 첨부 파일 (단일)
 
+        // 단일 첨부 파일 업로드
+        MemberInquiryImgVO uploadedMemberInquiryImg = MemberInquiryUtil.inquiryUploadFile(img);
+        uploadedMemberInquiryImg.setMemberInquiryWriteNo(memberInquiryWriteNo); // 파일 업로드 후 유저 번호 설정
 
-        memberInquiryService.insertMemberInquiryImg((MemberInquiryImgVO) inqImgList);
+        // DB에 문의 이미지 정보 등록
+        memberInquiryService.insertMemberInquiryImg(uploadedMemberInquiryImg);
+
+//        // 첨부 파일 (여러개)
+//        List<MemberInquiryImgVO> inqImgList = MemberInquiryUtil.inquiryMultiUpload(imgs);
+//        System.out.println(imgs);
+//        for (MemberInquiryImgVO inquiryImgVO : inqImgList){
+//            String memberInquiryWriteNo = memberInquiryService.selectNextInquiryNumber();
+//            inquiryImgVO.setMemberInquiryWriteNo(memberInquiryWriteNo);
+//        }
+//
+//
+//        memberInquiryService.insertMemberInquiryImg((MemberInquiryImgVO) inqImgList);
 
         return "redirect:/member/memberInquiry";
     }
@@ -332,6 +343,8 @@ public class MemberController {
 
         // 문의 리스트 목록
         List<MemberInquiryVO> memberInquiryList = memberInquiryService.selectInquiryDetail(memberInquiryVO);
+
+
 
         model.addAttribute("memberInquiryList", memberInquiryList);
 
@@ -438,22 +451,22 @@ public class MemberController {
 
         String[] recentViewTitleArr = getCookieValue(request, "title");
         String[] recentViewImg = getCookieValue(request, "isMain");
-//        String[] recentViewPropertyTypeArr = getCookieValue(request, "propertyTypeName");
-//        String[] recentViewTradeTypeArr = getCookieValue(request, "tradeTypeName");
+        String[] recentViewPropertyTypeArr = getCookieValue(request, "propertyTypeName");
+        String[] recentViewTradeTypeArr = getCookieValue(request, "tradeTypeName");
         String[] recentViewDepositArr = getCookieValue(request, "deposit");
         String[] recentViewMonthlyLeaseArr = getCookieValue(request, "monthlyLease");
-//        String[] recentViewFloorArr = getCookieValue(request, "floor");
-//        String[] recentViewRoomSizeMArr = getCookieValue(request, "roomSizeM");
+        String[] recentViewFloorArr = getCookieValue(request, "floor");
+        String[] recentViewRoomSizeMArr = getCookieValue(request, "roomSizeM");
         String[] recentViewMaintenanceCostArr = getCookieValue(request, "maintenanceCost");
 
         System.out.println(Arrays.toString(recentViewTitleArr));
         System.out.println(Arrays.toString(recentViewImg));
-//        System.out.println(Arrays.toString(recentViewPropertyTypeArr));
-//        System.out.println(Arrays.toString(recentViewTradeTypeArr));
+        System.out.println(Arrays.toString(recentViewPropertyTypeArr));
+        System.out.println(Arrays.toString(recentViewTradeTypeArr));
         System.out.println(Arrays.toString(recentViewDepositArr));
         System.out.println(Arrays.toString(recentViewMonthlyLeaseArr));
-//        System.out.println(Arrays.toString(recentViewFloorArr));
-//        System.out.println(Arrays.toString(recentViewRoomSizeMArr));
+        System.out.println(Arrays.toString(recentViewFloorArr));
+        System.out.println(Arrays.toString(recentViewRoomSizeMArr));
         System.out.println(Arrays.toString(recentViewMaintenanceCostArr));
 
         List<RoomVO> recentViewList = new ArrayList<>();
@@ -494,7 +507,7 @@ public class MemberController {
             // floor cookie
             // roomSizeM cookie
             // maintenanceCost cookie
-            vo.setMaintenanceCost(recentViewMaintenanceCostArr[i]);
+            //vo.setMaintenanceCost(recentViewMaintenanceCostArr[i]);
 
             recentViewList.add(vo);
         }

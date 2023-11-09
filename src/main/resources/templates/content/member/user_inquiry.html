@@ -46,20 +46,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <th:block th:if="${memberInquiryList == null}">
-                        <tr>
-                            <td>최근 6개월간 문의하신 내역이 없습니다.</td>
-                        </tr>
-                    </th:block>
                     <th:block th:if="${memberInquiryList != null}">
                         <tr th:each="memberInquiry, state : ${memberInquiryList}">
                             <td>[[${#lists.size(memberInquiryList) - state.index}]]</td>
                             <td>[[${memberInquiry.memberInquiryTypeVO.memberInquiryName}]]</td>
-                            <td><a onclick="location.href='/member/memberInquiryDetail'">
+                            <td><a class="text123" th:href="@{/member/memberInquiryDetail?(memberInquiryWriteNo=${memberInquiry.memberInquiryWriteNo})}">
                                 [[${memberInquiry.memberInquiryTitle}]]
                             </a></td>
                             <td>[[${memberInquiry.memberInquiryWriteDate}]]</td>
                             <td>[[${memberInquiry.inquiryStatusVO.statusName}]]</td>
+                        </tr>
+                    </th:block>
+                    <th:block th:if="${memberInquiryList == null}">
+                        <tr>
+                            <td colspan="5">최근 6개월간 문의하신 내역이 없습니다.</td>
                         </tr>
                     </th:block>
                 </tbody>

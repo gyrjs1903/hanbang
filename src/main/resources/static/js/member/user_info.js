@@ -54,7 +54,6 @@ function displaySelectedImages(file, image, label) {
             $("#PWC").modal("show");
         });
     });
-
     $(document).ready(function() {
 
         var oldVal = ""; // 이전 입력 값을 저장할 변수
@@ -90,7 +89,7 @@ function displaySelectedImages(file, image, label) {
             async function checkOldPasswordOnServer(oldPassWord) {
                 
                 // 기존 비밀번호 일치 체크
-                const response = await fetch('/member/checkOldPassword', {
+                const response = await fetch('/member/changeForPassWordDuplicationCheckFetch', {
                     method: 'POST',
                     cache: 'no-cache',
                     headers: {
@@ -118,93 +117,94 @@ function displaySelectedImages(file, image, label) {
     
             checkOldPasswordOnServer(oldPassWord); // 함수 호출을 추가하여 실행하도록 함
         }); 
-    
-        /* 새로운 비밀번호 */
-        $("#newPassWord").on("propertychange change keyup paste input", async function() {
-            var currentVal = $(this).val();
-            if (currentVal === oldVal) {
-                return;
-            }
-    
-            oldVal = currentVal;
-    
-            /* 비밀번호 데이터 유효성 검사 정규식 */
-            // 대문자, 소문자, 숫자, 특수 문자 각 1개 이상 포함하여 8-20자
-            let passWordCheck = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,20}$/;
-    
-            var newPassWordInputCheck = $("#newPassWordInputCheck");
-            var newPassWordFormCheck = $("#newPassWordFormCheck");
-    
-            /* 비밀번호 입력 값 */
-            var newPassWord = currentVal;
-    
-            /* 비밀번호 체크 */
-            if (passWord === '') {
-                newPassWordInputCheck.show();
-                newPassWordFormCheck.hide();
-            } else if (!passWord.match(passWordCheck)) {
-                newPassWordInputCheck.hide();
-                newPassWordFormCheck.show();
-            } else {
-                try {
-                    newPassWordInputCheck.hide();
-                    newPassWordFormCheck.hide();
-                    const response = await fetch('/member/newPassWordCheckFetch', {
-                        method: 'POST',
-                        cache: 'no-cache',
-                        headers: {
-                            'Content-Type': 'application/json; charset=UTF-8'
-                        },
-                        body: JSON.stringify({ newPassWord: newPassWord })
-                    });
-                    const data = await response.json();
-                    // 서버로부터의 응답에 따른 추가 처리
-                } catch (err) {
-                    alert('fetch error!\nthen 구문에서 오류가 발생했습니다.\n콘솔창을 확인하세요!');
-                    console.error(err);
-                }
-            }
-        });
-    
-        /* 새로운 비밀번호 확인 */
-        $("#passWordCheck").on("propertychange change keyup paste input", async function() {
-            var currentVal = $(this).val();
-            if (currentVal === oldVal) {
-                return;
-            }
-            oldVal = currentVal;
-    
-            var newPassWordCheckInputCheck = $("#newPassWordCheckInputCheck");
-            var newPassWordCheckCheck = $("#newPassWordCheckCheck");
-    
-            /* 비밀번호 확인 입력 값 */
-            var newPassWordCheck = currentVal;
-    
-            /* 비밀번호 확인 체크 */
-            if (passWordCheck === '') {
-                newPassWordCheckInputCheck.show();
-                newPassWordCheckCheck.hide();
-            } else {
-                try {
-                    newPassWordCheckInputCheck.hide();
-                    newPassWordCheckCheck.hide();
-                    const response = await fetch('/member/newPassWordCheckCheckFetch', {
-                        method: 'POST',
-                        cache: 'no-cache',
-                        headers: {
-                            'Content-Type': 'application/json; charset=UTF-8'
-                        },
-                        body: JSON.stringify({ newPassWordCheck: newPassWordCheck })
-                    });
-                    const data = await response.json();
-                    // 서버로부터의 응답에 따른 추가 처리
-                } catch (err) {
-                    alert('fetch error!\nthen 구문에서 오류가 발생했습니다.\n콘솔창을 확인하세요!');
-                    console.error(err);
-                }
-            }
-        });
     });
+
+    //     /* 새로운 비밀번호 */
+    //     $("#newPassWord").on("propertychange change keyup paste input", async function() {
+    //         var currentVal = $(this).val();
+    //         if (currentVal === oldVal) {
+    //             return;
+    //         }
+    
+    //         oldVal = currentVal;
+    
+    //         /* 비밀번호 데이터 유효성 검사 정규식 */
+    //         // 대문자, 소문자, 숫자, 특수 문자 각 1개 이상 포함하여 8-20자
+    //         let passWordCheck = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,20}$/;
+    
+    //         var newPassWordInputCheck = $("#newPassWordInputCheck");
+    //         var newPassWordFormCheck = $("#newPassWordFormCheck");
+    
+    //         /* 비밀번호 입력 값 */
+    //         var newPassWord = currentVal;
+    
+    //         /* 비밀번호 체크 */
+    //         if (passWord === '') {
+    //             newPassWordInputCheck.show();
+    //             newPassWordFormCheck.hide();
+    //         } else if (!passWord.match(passWordCheck)) {
+    //             newPassWordInputCheck.hide();
+    //             newPassWordFormCheck.show();
+    //         } else {
+    //             try {
+    //                 newPassWordInputCheck.hide();
+    //                 newPassWordFormCheck.hide();
+    //                 const response = await fetch('/member/newPassWordCheckFetch', {
+    //                     method: 'POST',
+    //                     cache: 'no-cache',
+    //                     headers: {
+    //                         'Content-Type': 'application/json; charset=UTF-8'
+    //                     },
+    //                     body: JSON.stringify({ newPassWord: newPassWord })
+    //                 });
+    //                 const data = await response.json();
+    //                 // 서버로부터의 응답에 따른 추가 처리
+    //             } catch (err) {
+    //                 alert('fetch error!\nthen 구문에서 오류가 발생했습니다.\n콘솔창을 확인하세요!');
+    //                 console.error(err);
+    //             }
+    //         }
+    //     });
+    
+    //     /* 새로운 비밀번호 확인 */
+    //     $("#passWordCheck").on("propertychange change keyup paste input", async function() {
+    //         var currentVal = $(this).val();
+    //         if (currentVal === oldVal) {
+    //             return;
+    //         }
+    //         oldVal = currentVal;
+    
+    //         var newPassWordCheckInputCheck = $("#newPassWordCheckInputCheck");
+    //         var newPassWordCheckCheck = $("#newPassWordCheckCheck");
+    
+    //         /* 비밀번호 확인 입력 값 */
+    //         var newPassWordCheck = currentVal;
+    
+    //         /* 비밀번호 확인 체크 */
+    //         if (passWordCheck === '') {
+    //             newPassWordCheckInputCheck.show();
+    //             newPassWordCheckCheck.hide();
+    //         } else {
+    //             try {
+    //                 newPassWordCheckInputCheck.hide();
+    //                 newPassWordCheckCheck.hide();
+    //                 const response = await fetch('/member/newPassWordCheckCheckFetch', {
+    //                     method: 'POST',
+    //                     cache: 'no-cache',
+    //                     headers: {
+    //                         'Content-Type': 'application/json; charset=UTF-8'
+    //                     },
+    //                     body: JSON.stringify({ newPassWordCheck: newPassWordCheck })
+    //                 });
+    //                 const data = await response.json();
+    //                 // 서버로부터의 응답에 따른 추가 처리
+    //             } catch (err) {
+    //                 alert('fetch error!\nthen 구문에서 오류가 발생했습니다.\n콘솔창을 확인하세요!');
+    //                 console.error(err);
+    //             }
+    //         }
+    //     });
+    // });
 
 /* 비밀번호 확인 버튼 활성화/비활성화 */
     // $(document).ready(function() {
@@ -266,3 +266,13 @@ $(function(){
     });
 });
 
+
+  function deleteMember() {
+    var result = confirm("정말 탈퇴하시겠습니까?");
+    if (result == true) {
+      alert("탈퇴 완료.");
+      window.location.href = "/member/deleteMember";
+    } else {
+        window.location.href = "/";
+    }
+  };

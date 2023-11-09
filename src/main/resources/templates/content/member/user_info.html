@@ -35,7 +35,7 @@
                 </div>
             </div>
             <ul class="info_list">
-                <li>
+                <li style="display: none;">
                     <div class="infoT"> 
                         <h1>연결된 소셜계정</h1>
                     </div>
@@ -46,7 +46,7 @@
                     </div>
                 </li>
                 <li>
-                    <div class="infoT"> 
+                    <div class="infoT">
                         <h1>닉네임</h1>
                     </div>
                     <div class="loginUserData">
@@ -84,8 +84,8 @@
                         <p></p>
                     </div>
                     <div class="cp">
-                        <button type="button" id="NNCBtn">
-                            <img src="/img/member/right_icon.png" alt="닉네임 변경 창" class="rightBtn">
+                        <button type="button" id="NNCBtn" style="display: none;">
+                            <img src="/img/member/right_icon.png" alt="" class="rightBtn">
                         </button>
                     </div>
                 </li>
@@ -100,8 +100,8 @@
                         </div>
                     </div>
                     <div class="cp">
-                        <button type="button" id="NNCBtn">
-                            <img src="/img/member/right_icon.png" alt="닉네임 변경 창" class="rightBtn">
+                        <button type="button" id="NNCBtn" style="display: none;">
+                            <img src="/img/member/right_icon.png" alt="" class="rightBtn">
                         </button>
                     </div>
                 </li>
@@ -125,7 +125,7 @@
                 <button type="button" font-weight="regular" class="seceBtn">
                     <div>
                         <span class="seceSpan">
-                            <a onclick="location.href='/member/deleteMember';">회원탈퇴</a>
+                            <a onclick="deleteMember();" id="memberDelete">회원탈퇴</a>
                         </span>
                     </div>
                 </button>
@@ -141,9 +141,11 @@
                             <h1 class="modal-title">닉네임 재설정</h1>
                             <div class="modal-body">
                                 <h4>닉네임</h4>
-                                <label for="nickName" class="form-label"></label>
-                                <input autocomplete="off" type="text" placeholder="닉네임을 입력해주세요." id="nickName" name="nickName" oninput="countCharacters()" maxlength="10">
-                                <p id="characterCount">0/10</p>
+                                <div>
+                                    <label for="nickName" class="form-label"></label>
+                                    <input autocomplete="off" type="text" placeholder="닉네임을 입력해주세요." id="nickName" name="nickName" oninput="countCharacters()" maxlength="10">
+                                    <p id="characterCount">0/10</p>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary data" data-bs-dismiss="modal">닫기</button>
@@ -166,7 +168,7 @@
                                 <div>
                                     <h4>기존 비밀번호</h4>
                                     <label for="oldPassWord" class="form-label"></label>
-                                    <input id="oldPassWord" autocomplete="off" type="password" placeholder="기존 비밀번호를 입력해주세요." name="oldPassWord" oninput="countCharacters()" style="width: 100%;">
+                                    <input class="pwd1" id="oldPassWord" autocomplete="off" type="password" placeholder="기존 비밀번호를 입력해주세요." name="oldPassWord" oninput="countCharacters()" style="width: 100%;">
                                     <img id="pwShow1" src="/img/member/password_show.png" alt="pwShow/Hide">
                                     <p id="oldPassWordFormCheck">기존 비밀번호를 입력해주세요.</p>
                                     <p id="oldPassWordDuplicationCheck">기존 비밀번호와 일치하지 않습니다.</p>
@@ -174,7 +176,7 @@
                                 <div>
                                     <h4>새로운 비밀번호</h4>
                                     <label for="newPassWord" class="form-label"></label>
-                                    <input id="newPassWord" type="password" placeholder="새로운 비밀번호을 입력해주세요."  name="newPassWord" oninput="countCharacters()" style="width: 100%;">
+                                    <input class="pwd2" id="newPassWord" type="password" placeholder="새로운 비밀번호을 입력해주세요."  name="newPassWord" oninput="countCharacters()" style="width: 100%;">
                                     <img id="pwShow2" src="/img/member/password_show.png" alt="pwShow/Hide">
                                     <p id="newPassWordInputCheck">비밀번호를 입력해주세요.</p>
                                     <p id="newPassWordFormCheck">비밀번호는 문자, 숫자, 특수문자를 포함하여 8-20자 이내로 입력하세요.</p>
@@ -182,7 +184,7 @@
                                 <div>
                                     <h4>새로운 비밀번호 확인</h4>
                                     <label for="newPassWordCheck" class="form-label"></label>
-                                    <input id="newPassWordCheck" type="password" placeholder="새로운 비밀번호 확인을 입력해주세요." name="newPassWordCheck" oninput="countCharacters()" style="width: 100%;">
+                                    <input class="pwd3" id="newPassWordCheck" type="password" placeholder="새로운 비밀번호 확인을 입력해주세요." name="newPassWordCheck" oninput="countCharacters()" style="width: 100%;">
                                     <img id="pwShow3" src="/img/member/password_show.png" alt="pwShow/Hide">
                                     <p id="newPassWordCheckInputCheck">비밀번호 확인를 입력해주세요.</p>
                                     <p id="newPassWordCheckCheck">입력한 비밀번호가 서로 일치하지 않습니다.</p>
