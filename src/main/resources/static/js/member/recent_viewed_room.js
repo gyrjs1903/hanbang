@@ -48,3 +48,38 @@
     // // 매물 평(m²) 쿠키 값 가져와서 출력
     // var roomSizeMFromCookie= getCookieValue("roomSizeM");
     // document.getElementById("cookieRoomSizeM").innerText = roomSizeMFromCookie + "m²";
+
+
+    function getRandomImage() {
+        var images = ["fec1a14f-93ef-48cf-8081-e610942fcbfd.jpg"
+        , "3bb61cad-4722-421e-a3cb-072aab926ce8.jpg"
+        , "3ad46480-f9d8-4356-9f7d-308915712bff.jpg"
+        , "2add7544-2e8a-41ac-9775-91384ce12ef1.jpg"
+        , "1d11ca72-3692-472a-9445-7c2f3f858ae7.jpg",];
+        var randomIndex = Math.floor(Math.random() * images.length);
+        return images[randomIndex];
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        var recentViewList = document.querySelectorAll('[id^=randomImg]');
+        recentViewList.forEach(function (imgElement) {
+            imgElement.src = '/img/room/' + getRandomImage();
+        });
+    });
+
+    function getRandomImage() {
+        var images = [
+            "f2e729d3-7629-415e-a671-ef5c6ff580c4.png",
+            "dff2fbab-8194-44b1-baba-f811558b2b1c.png",
+            "d1e58bf2-d785-48e7-a438-e3a45eed906d.png"
+        ];
+        var randomIndex = Math.floor(Math.random() * images.length);
+        return images[randomIndex];
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        var recentViewList = document.querySelectorAll('[id^=randomImg]');
+        recentViewList.forEach(function (imgElement) {
+            imgElement.src = '/img/room/' + getRandomImage();
+        });
+    });

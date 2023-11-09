@@ -10,7 +10,7 @@
         <result column="MEMBER_INQUIRY_WRITE_DATE"      property="memberInquiryWriteDate"/>
         <result column="USER_NO"                        property="userNo"/>
         <result column="INQUIRY_ST_CODE"                property="inquiryStCode"/>
-        <collection property="memberInquiryImgVOList"   resultMap="memberInquiryImg"/>
+        <collection property="memberInquiryImgVO"       resultMap="memberInquiryImg"/>
         <collection property="memberInquiryTypeVO"      resultMap="memberInquiryType"/>
         <collection property="inquiryStatusVO"          resultMap="inquiryStatus"/>
     </resultMap>

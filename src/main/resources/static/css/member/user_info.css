@@ -335,3 +335,13 @@
     color: red;
     display: none;
 }
+
+#characterCount {
+    position: absolute;
+    top: 54px;
+    right: 200px;
+}
+
+#nickName {
+    width: 60%;
+}

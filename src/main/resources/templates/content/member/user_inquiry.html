@@ -50,7 +50,7 @@
                         <tr th:each="memberInquiry, state : ${memberInquiryList}">
                             <td>[[${#lists.size(memberInquiryList) - state.index}]]</td>
                             <td>[[${memberInquiry.memberInquiryTypeVO.memberInquiryName}]]</td>
-                            <td><a th:href="@{/member/memberInquiryDetail?(memberInquiryWriteNo=${memberInquiry.memberInquiryWriteNo})}">
+                            <td><a class="text123" th:href="@{/member/memberInquiryDetail?(memberInquiryWriteNo=${memberInquiry.memberInquiryWriteNo})}">
                                 [[${memberInquiry.memberInquiryTitle}]]
                             </a></td>
                             <td>[[${memberInquiry.memberInquiryWriteDate}]]</td>

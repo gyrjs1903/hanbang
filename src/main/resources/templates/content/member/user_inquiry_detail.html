@@ -10,6 +10,7 @@
     <th:block layout:fragment="content">
         <th:block layout:fragment="content_css">
             <link rel="stylesheet" href="/css/member/user_inquiry_detail.css">
+            <link rel="stylesheet" href="/css/member/member_common.css">
             <link rel="stylesheet" href="/css/member/list.css">
         </th:block>
         <header class="user_header">
@@ -52,7 +53,7 @@
                     </tr>
                     <tr>
                         <th>문의 사진</th>
-                        <td>[[${memberInquiry.memberInquiryImgVOList.memberAttachedInquiryImgName}]]</td>
+                        <td>[[${memberInquiry.memberInquiryImgVO.memberAttachedInquiryImgName}]]</td>
                     </tr>
                     <tr>
                         <th>답변 내용</th>
