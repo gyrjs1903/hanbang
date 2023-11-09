@@ -29,21 +29,21 @@
                             <li class="nav-item">
                                 <a th:href="@{/admin/infoBoard}">공지사항</a>
                             </li>
-                            <li class="nav-item dropdown">
+                            <li class="nav-item memItemList" onclick="itemOpen()" >
                                 <a href="#" aria-expanded="false">
                                     맴버쉽 상품
                                 </a>
-                                <th:block>
-                                    <ul class="membershipList">
-                                        <li th:each="mCategory : ${membershipCate}">
-                                            <a class="membership-item"
-                                                th:href="@{/admin/membershipList(memCateCode=${mCategory.memCateCode})}">[[${mCategory.memCateName}]]</a>
-                                        </li>
-                                        <li><input type="button" value="신규 등록" class="w-btn-outline w-btn-blue-outline"
-                                                onclick="location.href='/admin/regMembershipForm';"></li>
-                                    </ul>
-                                </th:block>
                             </li>
+                            <th:block> 
+                                <div class="membershipList" style="display: none;" >
+                                    <div th:each="mCategory : ${membershipCate}">
+                                        <a class="membership-item"
+                                            th:href="@{/admin/membershipList(memCateCode=${mCategory.memCateCode})}">[[${mCategory.memCateName}]]</a>
+                                    </div>
+                                    <div><input type="button" value="수정 및 등록" class="w-btn-outline w-btn-blue-outline"
+                                            onclick="location.href='/admin/regMembershipForm';"></div>
+                                </div>
+                            </th:block>
                             <li class="nav-item">
                                 <a th:href="@{/admin/eventList}">이벤트</a>
                             </li>

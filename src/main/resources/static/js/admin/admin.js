@@ -240,7 +240,7 @@ function showItemDetail(itemCode){
             str += `
                     <ul>
                         <li>
-                            <p>상품명 :</p>
+                            <p>상품명 : </p>
                             <p><span class="itemNameSpan">${element.itemName}</span></p>
                         </li>
                         <li>
@@ -256,7 +256,7 @@ function showItemDetail(itemCode){
                             <p><span class="itemContentSpan">${element.itemContent}</span></p>
                         </li>
                     </ul> 
-                    <input type="button" onclick="editItemDetail(this, '${element.itemCode}');" value="수정하기">
+                    <input type="button" class="editBtn" onclick="editItemDetail(this, '${element.itemCode}');" value="수정하기">
                     `;
         });
 

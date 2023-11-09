@@ -1,31 +1,38 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{fragment/main_layout}" >
 <head>
 <meta charset="UTF-8">
-<title></title>
-<link rel="stylesheet" href="/css/admin/membership_list.css">
+<title>맴버쉽 아이템 리스트</title>
 </head>
 <body>
+    <th:block layout:fragment="content">
+        <link rel="stylesheet" href="/css/admin/membership_list.css">
+        <div class="memItemList-title">맴버쉽 상품</div>
 
-    <div style="height: 30px;;"></div>
-    
-    <th:block th:each="membershipItemList : ${membershipItemList}">
-        <div class="membershipTitle">[[${membershipItemList.membershipName}]]</div>
-        <div class="membership-div" style="margin-bottom: 10px;">
-            <div class="membershipList" th:each="itemInfo : ${membershipItemList.memItemList}">
-                <div class="itemName">[[${itemInfo.itemName}]]</div>
-                <div class="itemPrice">[[${itemInfo.itemPrice}]]</div>
-                <div class="itemIntro">[[${itemInfo.itemIntro}]]</div>
-                <div class="itemContent">[[${itemInfo.itemContent}]]</div>
+        <th:block th:each="membershipItemList : ${membershipItemList}">
+            <div class="membershipTitle-div">
+                <span>[[${membershipItemList.membershipName}]]</span>
             </div>
-        </div>
+            <div class="memItemList-div">
+                <div class="memItemList-sub-div" th:each="itemInfo : ${membershipItemList.memItemList}">
+                    <div class="top-div">
+                        <p class="itemName">[[${itemInfo.itemName}]]</p>
+                        <p class="itemIntro">[[${itemInfo.itemIntro}]]</p>
+                    </div>
+                    <p class="itemContent">
+                        [[${itemInfo.itemContent}]]
+                    </p>
+                    <p class="itemPrice">[[${#numbers.formatCurrency(itemInfo.itemPrice)}]]</p>
+                </div>
+            </div>
+        </th:block>
+
+        <script src="/js/admin/membership_item_list.js"></script>
 
     </th:block>
 
-
-
-
-
+    
 </body>
 </html>

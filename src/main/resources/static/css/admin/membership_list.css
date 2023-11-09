@@ -1,6 +1,37 @@
 @charset "UTF-8";
 /* membership_ist.css */
-
+.membershipList{
+    border: none;
+    right: 32.3%
+}
+.memItemList-title{
+    margin: 80px 0px 64px;
+    font-size: 46px;
+    line-height: 70px;
+    letter-spacing: -1px;
+    text-align: center;
+    font-weight: bold;
+}
+.membershipTitle-div{
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+.memItemList-div{
+    display: flex;
+}
+.memItemList-sub-div{
+    border: 2px solid rgba(92, 117, 187, 0.3);
+    border-radius: 10px;
+    margin-bottom: 30px;
+    margin-right: 10px;
+    font-size: 13px;
+    text-align: center;
+    width: 25%;
+    height: auto;
+}
+.memItemList-sub-div:last-child{
+    margin-right: 0;
+}
 .cateName{
     font-weight: bold;
     font-size: x-large;
@@ -22,6 +53,40 @@
 .membershipList > div{
     margin-bottom: 5px;
     text-align: center;
+}
+.top-div{
+    background-color:rgba(92, 117, 187, 0.3);
+    border-radius: 7px;
+    padding-top: 15px ;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+.itemName{
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+.itemIntro{
+    font-size: 12px;
+    font-weight: bold;
+    color: #646464;
+    margin-bottom: 5px;
+}
+.itemContent{
+    margin: 0px auto;
+    margin-top: 20px;
+    width: 180px;
+    padding: 10px;
+}
+.itemContent > p {
+    text-align: start;
+    line-height: 10px;
+    padding-left: 10px;
+}
+.itemPrice{
+    border-top: 1px solid #a3a3a3;
+    padding-top: 18px;
+    font-size: 18px;
 }
 .buyBtn {
     width:100px;
