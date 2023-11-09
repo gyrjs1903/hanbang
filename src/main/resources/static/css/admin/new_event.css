@@ -1,0 +1,51 @@
+@charset "UTF-8";
+/* new_event.css */
+
+.new-event-title{
+    margin: 80px 0px 64px;
+    font-size: 46px;
+    line-height: 70px;
+    letter-spacing: -1px;
+    text-align: center;
+    font-weight: bold;
+}
+.new-event-form-div {
+    margin: 0 auto;
+    width: 1000px;
+}
+.new-event-form-div > form {
+    width: 100%;
+    text-align: -webkit-center;
+}
+.new-event-form-div > form > div:nth-child(-n + 4) {
+    display: flex;
+    margin-bottom: 30px;
+}
+.form-label{
+    width: 20%;
+    margin-right: 10px;
+    background-color: #f8f9fa;
+    margin-bottom: 0;
+    padding: 5px;
+}
+.form-control{
+    width: 80%;
+}
+#eventContent{
+    height: 300px;
+}
+.addBtn-div{
+    float: right;
+}
+.addBtn{
+    padding: 5px;
+    width: 80px;
+    background-color: #5c75bb;
+    border: 1px solid #5c75bb;
+    color: white;
+    border-radius: 5px;
+}
+.addBtn:hover{
+    background-color: #6985d3;
+    border: 1px solid #6985d3;
+}

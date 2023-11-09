@@ -296,7 +296,7 @@ input[type="checkbox"]:checked::before {
     height: 80px;
     line-height: 24px;
     position: absolute;
-    bottom: 0;
+    bottom: -30px;
     left: 50%;
     transform: translate(-50%);
 
@@ -508,6 +508,7 @@ label.custom-file-label:hover {
 /* ----------------------------------------------------------------------------- */
 /* 상품 적용 모달창 디자인 */
 #apply-item-input{
+    margin-left: 50px;
     width: 300px;
 }
 .cateName{
@@ -547,4 +548,20 @@ label.custom-file-label:hover {
 .packageIsValid, .generalIsValid, .plusIsValid{
     display: none;
 }
-
+.packageDateilInfo > div > label, .generalDateilInfo > div > label{
+    border: 1px solid #5c75bb ;
+    border-radius: 10px;
+    padding: 10px;
+}
+.plusDateilInfo > div >label{
+    border: none;
+}
+.leftCntInfo{
+    margin-bottom: 5px;
+}
+.useItem-title{
+    margin-left: 20px;
+    font-weight: bold;
+    background-color: rgb(252,252,252);
+    line-height: 50px;
+}
