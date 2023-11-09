@@ -261,7 +261,9 @@ document.getElementById("searchButton").addEventListener("click", function () {
                     //전월세 추가
                     if (room.tradeTypeCode !== 'TTC_001') {
                         const jeonseInfo = document.createElement('h4');
-                        jeonseInfo.textContent = '전세 ' + room.jeonseCost;
+                        const jeonseCost = room.jeonseCost;
+                        const formattedJeonseCost = formatKoreanCurrency(jeonseCost);
+                        jeonseInfo.textContent = '전세 ' + formattedJeonseCost;
                         roomInfo.appendChild(jeonseInfo);
                     } else {
                         const leaseInfo = document.createElement('h4');
@@ -508,13 +510,23 @@ $(document).ready(function () {
 });
 
 
-//   document.querySelector('.menu_type').addEventListener('click', (e) => {
-//     alert(11);
-//     e.target.querySelector('span').classList.remove('arrow-a');
-//     e.target.querySelector('span').classList.add('arrow-b');
-//   });
-//   document.querySelector('.menu_type').addEventListener('blur', (e) => {
-//     alert(22);
-//     e.target.querySelector('span').classList.remove('arrow-b');
-//     e.target.querySelector('span').classList.add('arrow-a');
-//   });
+function formatKoreanCurrency(number) {
+    // 숫자를 문자열로 변환
+    const numberString = number.toString();
+    
+    // 1억 이상인 경우 처리
+    if (number >= 10000) {
+      const wonPart = Math.floor(number / 10000); // 1억 이상의 부분
+      const unitPart = number % 10000; // 1억 이하의 부분
+  
+      if (unitPart > 0) {
+        return wonPart + '억 ' + unitPart;
+      } else {
+        return wonPart + '억';
+      }
+    }
+    // 1억 미만인 경우 처리
+    else {
+      return number.toString();
+    }
+  }

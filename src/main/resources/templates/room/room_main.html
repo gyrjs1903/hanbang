@@ -157,7 +157,16 @@
                                 <h4>월세 [[${room.deposit}]]/[[${room.monthlyLease}]]</h4>
                             </th:block>
                             <th:block th:if="${room.tradeTypeCode == 'TTC_002'}">
-                                <h4>전세 [[${room.jeonseCost}]]</h4>
+                                <h4>전세 <span th:if="${room.jeonseCost != null}">
+                                        <span th:with="jeonseCostInt=${T(java.lang.Integer).parseInt(room.jeonseCost)}">
+                                            <span th:with="billions=${jeonseCostInt / 10000}">
+                                                <span th:with="millions=${jeonseCostInt % 10000}">
+                                                    <span th:if="${billions > 0}" th:text="${billions + '억'}"></span>
+                                                    <span th:if="${millions > 0}" th:text="${millions}"></span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span></h4>
                             </th:block>
                             <p>[[${room.roomAddrVO.addr}]]</p>
                             <input type="hidden" th:value="${room.roomAddrVO.coordinateX}" class="coordinate-X">

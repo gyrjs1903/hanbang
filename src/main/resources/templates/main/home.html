@@ -28,13 +28,9 @@
         </div>
         <section class="main_content1">
             <div class="ai_picks">
-                <h1 class="ai_title1"><span>한방</span>추천 매물이예요!</h1>
+                <h1 class="ai_title1"><span class="imo">&#x1F3E0; </span><span>한방</span>추천 매물이예요!</h1>
                 <div class="ai_title2">
-                    <p>
-                        <span>[닉네임]님의</span>
-                         추천된 매물이예요!
-                    </p>
-                    <a href="">더 많은 방 보기 ></a>
+                    <a href='javascript:void(0);' class="room_more" onclick="location.href='/room/roomMain'">더 많은 방 보기 ></a>
                 </div>
                 <ul class="ai_room_list">
                     <li th:each="room, state : ${selectMainPageRoomList}" th:onclick="detailRoom([[${room.roomCode}]]);">
@@ -53,11 +49,22 @@
                                             <h4 class="room_price">월세 [[${room.deposit}]]/[[${room.monthlyLease}]]</h4>
                                         </th:block>
                                         <th:block th:if="${room.tradeTypeCode == 'TTC_002'}">
-                                            <h4 class="room_price">전세 [[${room.jeonseCost}]]</h4>
+                                            <h4 class="room_price">전세
+                                                <span th:if="${room.jeonseCost != null}">
+                                                    <span th:with="jeonseCostInt=${T(java.lang.Integer).parseInt(room.jeonseCost)}">
+                                                        <span th:with="billions=${jeonseCostInt / 10000}">
+                                                            <span th:with="millions=${jeonseCostInt % 10000}">
+                                                                <span th:if="${billions > 0}" th:text="${billions + '억'}"></span>
+                                                                <span th:if="${millions > 0}" th:text="${millions}"></span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </h4>
                                         </th:block>
                                         <p class="room_info">[[${room.floor}]]층,  [[${room.roomSizeM}]]m&#178;, <th:block th:if="${room.maintenanceCost!=null}">관리비[[${room.maintenanceCost}]]만</th:block></p>
                                         <p class="room_info">[[${room.roomAddrVO.addr}]]</p>
-                                        <p class="room_info">[[${room.content}]]</p>
+                                        <p class="room_info">[[${room.title}]]</p>
                                     </div>
                                 </div>
                             </div>
@@ -69,7 +76,7 @@
         <section class="main_content2">
             <div>
                 <p class="content2_title">
-                    <span>한방</span> 매물가 평균
+                    <span class="imo">&#x1F3E0; </span><span>한방</span> 매물가 평균
                 </p>
                 <div class="content2_wrap">
                     <button type="button" class="content2_btn_left"></button>
@@ -82,7 +89,18 @@
                                 <p class="monye">월세</p>
                                 <p class="monye_avg">[[${typeAvg.avgDeposit}]]/[[${typeAvg.avgMonthlyLease}]]</p>
                                 <p class="monye">전세</p>
-                                <p class="monye_avg">[[${typeAvg.avgJeonseCost}]]</p>
+                                <p class="money_avg">
+                                    <span th:if="${typeAvg.avgJeonseCost != null}">
+                                        <span th:with="avgJeonseCostInt=${T(java.lang.Integer).parseInt(typeAvg.avgJeonseCost)}">
+                                            <span th:with="billions=${avgJeonseCostInt / 10000}">
+                                                <span th:with="millions=${avgJeonseCostInt % 10000}">
+                                                    <span th:if="${billions > 0}" th:text="${billions + '억'}"></span>
+                                                    <span th:if="${millions > 0}" th:text="${millions}"></span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </p>
                             </div>
                         </div>
                     </div>
