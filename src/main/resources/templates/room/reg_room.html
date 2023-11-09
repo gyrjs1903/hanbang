@@ -281,7 +281,7 @@
 
                 <!-- ////////////////// 최수연 추가 ///////////////////////// -->
                 <!-- 상품 목록 모달 -->
-                <span data-bs-toggle="modal" data-bs-target="#ltem-list-modal">상품 사용하기</span>
+                <span class="useItem-title" data-bs-toggle="modal" data-bs-target="#ltem-list-modal">상품 사용하기</span>
                 <input id="apply-item-input" type="text" class="" value="현재 적용중인 상품이 없습니다." width="500px;">
                 <input id="apply-item-buyCode" type="hidden" name="buyCode" class="" value="" width="500px;">
                 <input id="apply-item-buyType" type="hidden" name="buyType" class="" value="" width="500px;">
@@ -314,7 +314,7 @@
                                         </div>
                                         <div class="packageDateilInfo">
                                             <div>
-                                                <label class="btn btn-outline-primary" >
+                                                <label>
                                                     <div class="itemName">일반 상품</div>
                                                     <div class="leftCntInfo">
                                                         <span>잔여</span>
@@ -324,7 +324,7 @@
                                                 </label>
                                             </div>
                                             <div>
-                                                <label class="btn btn-outline-primary" >
+                                                <label>
                                                     <div class="itemName">플러스 정기권</div>
                                                     <div class="leftCntInfo">
                                                         <span>잔여</span>
@@ -334,7 +334,7 @@
                                                 </label>
                                             </div>
                                             <div>
-                                                <label class="btn btn-outline-primary" >
+                                                <label>
                                                     <div class="itemName">플러스 일일권</div>
                                                     <div class="leftCntInfo">
                                                         <span>잔여</span>
@@ -359,7 +359,7 @@
                                         </div>
                                         <div class="generalDateilInfo">
                                             <div>
-                                                <label class="btn btn-outline-primary" >
+                                                <label >
                                                     <div class="itemName">일반 상품</div>
                                                     <div class="leftCntInfo">
                                                         <span>잔여</span>
@@ -384,14 +384,12 @@
                                         </div>
                                         <div class="plusDateilInfo">
                                             <div th:if="${plusItem.plusType == 'S'}">
-                                                <label class="btn btn-outline-primary" >
-                                                    <div class="itemName">플러스 정기권</div>
+                                                <label>
                                                     <input type="radio" class="btn-check" name="btnradio" th:value="${plusItem.itemName}" th:data-buy-code="${plusItem.buyCode}" th:data-mem-cate-code="${plusItem.memCateCode}">
                                                 </label>
                                             </div>
                                             <div th:if="${plusItem.plusType == 'D'}">
-                                                <label class="btn btn-outline-primary" >
-                                                    <div class="itemName">플러스 일일권</div>
+                                                <label>
                                                     <input type="radio" class="btn-check" name="btnradio" th:value="${plusItem.itemName}" th:data-buy-code="${plusItem.buyCode}" th:data-mem-cate-code="${plusItem.memCateCode}">
                                                 </label>
                                             </div>

@@ -51,7 +51,7 @@
                     <td>
                         [[${rDetail.authority}]]
                         <div th:style="${rDetail.authority == 'N' ? 'display : block':'display : none'}">
-                            <input type="button" value="승인" th:onclick = "updateAuthority([[${rDetail.realTorCode}]],[[${rDetail.userNo}]]);">    
+                            <input type="button" class="permitBtn" value="승인" th:onclick = "updateAuthority([[${rDetail.realTorCode}]],[[${rDetail.userNo}]]);">    
                         </div>
                     </td>
                     <td>[[${rDetail.requestDate}]]</td>

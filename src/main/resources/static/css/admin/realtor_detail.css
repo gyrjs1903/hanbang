@@ -38,3 +38,13 @@ td{
     border: 1px solid red;
     border-radius: 8px;
 }
+.permitBtn{
+    font-size: 13px;
+    padding: 3px;
+    float: right;
+    margin-top: -25px;
+    color: white;
+    background-color: #405795;
+    border: 1px solid #405795;
+    border-radius: 5px;
+}
