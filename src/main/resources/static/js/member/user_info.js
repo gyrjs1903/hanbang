@@ -101,7 +101,6 @@ function displaySelectedImages(file, image, label) {
                 });
         
                 if (!response.ok) {
-                    alert('fetch error!\n컨트롤러로 통신 중에 오류가 발생했습니다.');
                     return;
                 }
         

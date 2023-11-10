@@ -145,8 +145,8 @@ public class MemberController {
         String userNo = memberService.selectNextUserNo();
 
         memberImgVO.setUserNo(userNo);
-        memberImgVO.setProfileImgName("img/member/profileImg/default_profile_image.png");
-        memberImgVO.setAttachedProfileImgName("img/member/profileImg/default_profile_image.png");
+        memberImgVO.setProfileImgName("default_profile_image.png");
+        memberImgVO.setAttachedProfileImgName("default_profile_image.png");
 
         // 프로필 이미지 등록
         memberService.insertProfile(memberImgVO);
@@ -310,18 +310,18 @@ public class MemberController {
         memberInquiryVO.setUserNo(userNo);
 
         memberInquiryService.insertMemberInquiry(memberInquiryVO);
-        System.out.println(memberInquiryVO);
-
-        String memberInquiryWriteNo = memberInquiryVO.getMemberInquiryWriteNo();
-
-        // 첨부 파일 (단일)
-
-        // 단일 첨부 파일 업로드
-        MemberInquiryImgVO uploadedMemberInquiryImg = MemberInquiryUtil.inquiryUploadFile(img);
-        uploadedMemberInquiryImg.setMemberInquiryWriteNo(memberInquiryWriteNo); // 파일 업로드 후 유저 번호 설정
-
-        // DB에 문의 이미지 정보 등록
-        memberInquiryService.insertMemberInquiryImg(uploadedMemberInquiryImg);
+//        System.out.println(memberInquiryVO);
+//
+//        String memberInquiryWriteNo = memberInquiryVO.getMemberInquiryWriteNo();
+//
+//        // 첨부 파일 (단일)
+//
+//        // 단일 첨부 파일 업로드
+//        MemberInquiryImgVO uploadedMemberInquiryImg = MemberInquiryUtil.inquiryUploadFile(img);
+//        uploadedMemberInquiryImg.setMemberInquiryWriteNo(memberInquiryWriteNo); // 파일 업로드 후 유저 번호 설정
+//
+//        // DB에 문의 이미지 정보 등록
+//        memberInquiryService.insertMemberInquiryImg(uploadedMemberInquiryImg);
 
 //        // 첨부 파일 (여러개)
 //        List<MemberInquiryImgVO> inqImgList = MemberInquiryUtil.inquiryMultiUpload(imgs);
@@ -388,14 +388,9 @@ public class MemberController {
         memberSaveVO.setRoomCode(roomCode);
         memberSaveVO.setUserNo(userNo);
 
-        if (subPropertyTypeCode.equals("STYPE_005")) {
-            memberSaveVO.setMemberSaveCode("SAVE_002");
-            saveService.insertSaveRoom(memberSaveVO);
-        }
-        else {
-            memberSaveVO.setMemberSaveCode("SAVE_001");
-            saveService.insertSaveApart(memberSaveVO);
-        }
+        saveService.insertSaveRoom(memberSaveVO);
+        saveService.insertSaveApart(memberSaveVO);
+
         return ResponseEntity.ok().body("찜 목록에 추가되었습니다.");
     }
 
