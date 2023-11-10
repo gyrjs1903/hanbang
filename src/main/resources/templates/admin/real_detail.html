@@ -15,52 +15,92 @@
                 <span>	&ndash;</span>
                 <span class="basic-info-span">공인중개사 기본 정보</span>	
             </div>
+            <table class="detail-info-table">
+                <colgroup>
+                    <col width="5%">
+                    <col width="10%"> 
+                    <col width="10%">
+                    <col width="5%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="5%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <td>No</td>
+                        <td>코드</td>
+                        <td>공인중개사명</td>
+                        <td>사업자번호</td>
+                        <td>자격증 파일</td>
+                        <td>권한 여부</td>
+                        <td>승인 신청 날짜</td>
+                        <td>탈퇴</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="rDetail : ${realDetail}">
+                        <td>[[${rDetail.userNo}]]</td>
+                        <td>[[${rDetail.realTorCode}]]</td>
+                        <td>[[${rDetail.officeName}]]</td>
+                        <td>[[${rDetail.identificationNum}]]</td>
+                        <td>
+                            [[${rDetail.licenseFileName}]]
+                        </td>
+                        <td>
+                            [[${rDetail.authority}]]
+                            <div th:style="${rDetail.authority == 'N' ? 'display : block':'display : none'}">
+                                <input type="button" class="permitBtn" value="승인" th:onclick = "updateAuthority([[${rDetail.realTorCode}]],[[${rDetail.userNo}]]);">    
+                            </div>
+                        </td>
+                        <td>[[${rDetail.requestDate}]]</td>
+                        <td>
+                            <input type="submit" class="deleteBtn" value="삭제" th:onclick="|location.href='@{/admin/deleteReal(identificationNum=${rDetail.identificationNum})}'|">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <table class="detail-info-table">
-            <colgroup>
-                <col width="5%">
-                <col width="10%"> 
-                <col width="10%">
-                <col width="5%">
-                <col width="10%">
-                <col width="10%">
-                <col width="10%">
-                <col width="5%">
-            </colgroup>
-            <thead>
-                <tr>
-                    <td>No</td>
-                    <td>코드</td>
-                    <td>공인중개사명</td>
-                    <td>사업자번호</td>
-                    <td>자격증 파일</td>
-                    <td>권한 여부</td>
-                    <td>승인 신청 날짜</td>
-                    <td>탈퇴</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="rDetail : ${realDetail}">
-                    <td>[[${rDetail.userNo}]]</td>
-                    <td>[[${rDetail.realTorCode}]]</td>
-                    <td>[[${rDetail.officeName}]]</td>
-                    <td>[[${rDetail.identificationNum}]]</td>
-                    <td>
-                        [[${rDetail.licenseFileName}]]
-                    </td>
-                    <td>
-                        [[${rDetail.authority}]]
-                        <div th:style="${rDetail.authority == 'N' ? 'display : block':'display : none'}">
-                            <input type="button" class="permitBtn" value="승인" th:onclick = "updateAuthority([[${rDetail.realTorCode}]],[[${rDetail.userNo}]]);">    
-                        </div>
-                    </td>
-                    <td>[[${rDetail.requestDate}]]</td>
-                    <td>
-                        <input type="submit" class="deleteBtn" value="삭제" th:onclick="|location.href='@{/admin/deleteReal(identificationNum=${rDetail.identificationNum})}'|">
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div>
+            <span>	&ndash;</span>
+            <span class="basic-info-span">등록한 매물 내역</span>	
+        </div>
+        <div class="room-div">
+            <table class="room-detail-table">
+                <colgroup>
+                    <col width="5%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="5%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <td>매물 번호</td>
+                        <td>제목</td>
+                        <td>주소</td>
+                        <td>상세주소</td>
+                        <td>등록일</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <th:block th:if="${#lists.size(roomInfo) ==0}">
+                        <tr>
+                            <td colspan="5">등록한 매물이 없습니다.</td>
+                        </tr>
+                    </th:block>
+                    <th:block th:unless="${#lists.size(roomInfo) ==0}">
+                        <tr th:each="roomInfo : ${roomInfo}">
+                            <td>[[${roomInfo.roomCode}]]</td>
+                            <td>[[${roomInfo.title}]]</td>
+                            <td>[[${roomInfo.roomAddrVO.addr}]]</td>
+                            <td>[[${roomInfo.roomAddrVO.detailAddr}]]</td>
+                            <td>[[${roomInfo.createDate}]]</td>
+                        </tr>
+                    </th:block>
+                </tbody>
+            </table>
+        </div>
     </th:block>
     <th:block layout:fragment="content_js">
         <script src="/js/admin/admin.js"></script>

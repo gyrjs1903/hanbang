@@ -28,11 +28,14 @@
                 </div>
             </div>
         </div>
-        <div class="btn-collection">
-            <input type="button" value="수정" class="editBtn" th:onclick="|location.href='@{/admin/updateEventInfoForm(eventCode=${event.eventCode})}'|">
-            <input type="button" value="삭제" class="delBtn" th:onclick="|location.href='@{/admin/deleteEvent(eventCode=${event.eventCode})}'|">
-        </div>
-        
+        <th:block th:if="${session.loginInfo != null}">
+            <th:block th:if="${session.loginInfo.loginType == 'ADMIN'}" style="display: block;">
+                <div class="btn-collection">
+                    <input type="button" value="수정" class="editBtn" th:onclick="|location.href='@{/admin/updateEventInfoForm(eventCode=${event.eventCode})}'|">
+                    <input type="button" value="삭제" class="delBtn" th:onclick="|location.href='@{/admin/deleteEvent(eventCode=${event.eventCode})}'|">
+                </div>
+            </th:block>
+        </th:block>
     </th:block>
 
    
