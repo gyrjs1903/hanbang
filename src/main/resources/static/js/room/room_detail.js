@@ -228,6 +228,7 @@ function likeRoom(roomCode, subPropertyTypeCode) {
         }
     });
 }
+
 // $(document).ready(function(){
 //     $("#dibs_on_btn").click(function(roomCode, subPropertyTypeCode){
 //         var roomCode = roomCode; 
@@ -238,7 +239,7 @@ function likeRoom(roomCode, subPropertyTypeCode) {
 //         if (isAlreadySaved) {
 //             $.ajax({
 //                 type: "POST",
-//                 url: "/member/like",
+//                 url: "/member/unlike",
 //                 data: {
 //                     roomCode: roomCode,
 //                     subPropertyTypeCode: subPropertyTypeCode
