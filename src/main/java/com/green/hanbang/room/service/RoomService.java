@@ -42,6 +42,9 @@ public interface RoomService {
     //room테이블 디테일정보 조회
     public RoomVO selectRoomInfo(String roomCode);
 
+    // roomCode 조회
+    public List<String> selectRoomCode (String userNo);
+
     //detailOption값 조회(roomMapper)
    // public List<OptionsVO> selectOptions();
 

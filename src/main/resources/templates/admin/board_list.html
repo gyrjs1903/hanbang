@@ -40,9 +40,14 @@
                 </tbody>
             </th:block>
         </table>
-        <div class="writBtn-div">
-            <div class="cursor btn btn-light d-grid justify-content-start writeBtn" onclick="location.href='/admin/writeForm';">글쓰기</div>
-        </div>
+        <th:block th:if="${session.loginInfo != null}">
+            <th:block th:if="${session.loginInfo.loginType == 'ADMIN'}" style="display: block;">
+                <div class="writBtn-div">
+                    <div class="cursor btn btn-light d-grid justify-content-start writeBtn" onclick="location.href='/admin/writeForm';">글쓰기</div>
+                </div>
+            </th:block>
+        </th:block>
+        
     </th:block>
     
 </body>

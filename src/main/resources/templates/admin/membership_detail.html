@@ -6,7 +6,6 @@
 <title></title>
 </head>
 <body>
-<<<<<<< HEAD
     <th:block th:each="memDetailItem : ${memDetailItem}">
         <div>
             <h4>분류</h4>
@@ -20,16 +19,6 @@
             <h4>상품 소개</h4>
             <div></div>
         </div>
-=======
-    
-    <div>
-        <h4>대분류</h4>
-        <div>[[${memDetailItem.memCateName}]]<div>
-    </div>
-    <div th:if="${memDetailItem.memCateCode != 'CATE_001'}">
-        <h4>상품명</h4>
-        <div>[[${memDetailItem.membershipList[0].membershipName}]]</div>
->>>>>>> jyllds22
         <div>
             <h4>상품 설명</h4>
             <div>[[${memDetailItem.membershipList[0].membershipContent}]]</div>

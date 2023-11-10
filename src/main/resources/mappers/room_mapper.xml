@@ -609,6 +609,12 @@
         AND R.ROOM_CODE = A.ROOM_CODE
     </select>
 
+    <select id="selectRoomCode" resultType="String">
+        SELECT ROOM_CODE
+        FROM ROOM
+        WHERE USER_NO = #{userNo}
+    </select>
+
     <!-- 등록한 사람 LOGIN_TYPE 조회 -->
     <select id="selectLoginType" resultType="String">
         SELECT LOGIN_TYPE

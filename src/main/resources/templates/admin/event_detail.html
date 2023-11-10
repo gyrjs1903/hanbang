@@ -12,24 +12,13 @@
         <div class="event-title">이벤트</div>
         <div class="row justify-content-center event-detail-div">
             <div class="col-6 event-content-div">
-                <div class="row mb-3 event-content-top">
-                    <div class="col-5">
-                        <th:block th:each="eventImg : ${event.eventImgList}">
-                            <th:block th:if="${eventImg.isMain == 'Y'}">
-                                <img width="100%" height="280px;" th:src="${'/img/admin/' + eventImg.eventAttachedFileName}" alt="">
-                            </th:block>
-                        </th:block>
-                    </div>
-                    <div class="col-7">
-                        <div class="row mb-3">
-                            <div class="col">[[${event.eventTitle}]]</div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col">[[${event.eventRegDate}]]</div>
-                        </div>
+                <div class="row event-content-top">
+                    <div class="event-top">
+                        <div class="event-title-div">[[${event.eventTitle}]]</div>
+                        <div class="event-date">[[${event.eventRegDate}]]</div>
                     </div>
                 </div>
-                <div class="row mb-3">
+                <div class="row event-content-middle">
                     <div class="col">[[${event.eventContent}]]</div>
                 </div>
                 <div class="row">
@@ -39,8 +28,14 @@
                 </div>
             </div>
         </div>
-        <input type="button" value="수정" th:onclick="|location.href='@{/admin/updateEventInfoForm(eventCode=${event.eventCode})}'|">
-        <input type="button" value="삭제" th:onclick="|location.href='@{/admin/deleteEvent(eventCode=${event.eventCode})}'|">
+        <th:block th:if="${session.loginInfo != null}">
+            <th:block th:if="${session.loginInfo.loginType == 'ADMIN'}" style="display: block;">
+                <div class="btn-collection">
+                    <input type="button" value="수정" class="editBtn" th:onclick="|location.href='@{/admin/updateEventInfoForm(eventCode=${event.eventCode})}'|">
+                    <input type="button" value="삭제" class="delBtn" th:onclick="|location.href='@{/admin/deleteEvent(eventCode=${event.eventCode})}'|">
+                </div>
+            </th:block>
+        </th:block>
     </th:block>
 
    

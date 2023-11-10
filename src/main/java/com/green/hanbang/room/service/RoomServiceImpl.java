@@ -70,6 +70,11 @@ public class RoomServiceImpl implements RoomService {
         return sqlSession.selectOne("roomMapper.selectRoomInfo",roomCode);
     }
 
+    @Override
+    public List<String> selectRoomCode(String userNo) {
+        return sqlSession.selectList("roomMapper.selectRoomCode", userNo);
+    }
+
 //    @Override
 //    public List<OptionsVO> selectOptions() {
 //        return sqlSession.selectList("roomMapper.selectOptions");

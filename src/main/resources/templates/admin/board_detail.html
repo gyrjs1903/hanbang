@@ -25,8 +25,12 @@
                     <pre>[[${boardVO.infoContent}]]</pre>
                 </div>
             </div>
-            <input type="button" value="수정" class="editBtn" th:onclick="|location.href='@{/admin/updateBoardForm(boardNum=${boardVO.boardNum})}'|">
-            <input type="button" value="삭제" class="deleteBtn" th:onclick="|location.href='@{/admin/deleteBoard(boardNum=${boardVO.boardNum})}'|">
+            <th:block th:if="${session.loginInfo != null}">
+                <th:block th:if="${session.loginInfo.loginType == 'ADMIN'}" style="display: block;">
+                    <input type="button" value="수정" class="editBtn" th:onclick="|location.href='@{/admin/updateBoardForm(boardNum=${boardVO.boardNum})}'|">
+                    <input type="button" value="삭제" class="deleteBtn" th:onclick="|location.href='@{/admin/deleteBoard(boardNum=${boardVO.boardNum})}'|">
+                </th:block>
+            </th:block>
         </div>
     </th:block>
         
