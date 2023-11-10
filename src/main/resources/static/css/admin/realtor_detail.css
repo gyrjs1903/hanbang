@@ -12,7 +12,7 @@
 
 .detail-info-table{
     width: 100%;
-    margin: 20px auto 0 auto;
+    margin: 20px auto 50px auto;
     text-align: center;
     border-collapse: collapse;
     border-top: 2px solid #a3a3a3;
@@ -47,4 +47,11 @@ td{
     background-color: #405795;
     border: 1px solid #405795;
     border-radius: 5px;
+}
+.room-div{
+    width: 100%;
+    margin: 20px auto 50px auto;
+    text-align: center;
+    border-collapse: collapse;
+    border-top: 2px solid #a3a3a3;
 }

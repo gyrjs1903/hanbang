@@ -121,7 +121,7 @@
             , USER_NO
             , TO_CHAR(REQUEST_DATE,'YYYY-MM-DD') REQUEST_DATE
         FROM REALTOR_DETAIL
-        WHERE IDENTIFICATION_NUM = #{identificationNum}
+        WHERE USER_NO = #{userNo}
     </select>
 
 <!-- 공인 중개사 승인 -->
