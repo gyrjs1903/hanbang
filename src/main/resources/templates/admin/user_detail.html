@@ -54,7 +54,86 @@
                 </tbody>
             </table>
         </div>
-        
+        <div class="falseOffering-div">
+            <div>
+                <span>	&ndash;</span>
+                <span class="basic-info-span">허위 매물 신고 내역</span>	
+            </div>
+            <table class="falseOffering-detail-table">
+                <colgroup>
+                    <col width="5%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <td>매물 번호</td>
+                        <td>신고 코드</td>
+                        <td>신고 내용</td>
+                        <td>등록일</td>
+                        <td>처리 상태</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <th:block th:if="${#lists.size(falseOfferingsList) ==0}">
+                        <tr>
+                            <td colspan="5">신고한 허위매물이 없습니다.</td>
+                        </tr>
+                    </th:block>
+                    <th:block th:unless="${#lists.size(falseOfferingsList) ==0}">
+                        <tr th:each="falseOffering : ${falseOfferingsList}">
+                            <td>[[${falseOffering.roomCode}]]</td>
+                            <td>[[${falseOffering.reasonCode}]]</td>
+                            <td>[[${falseOffering.reportContent}]]</td>
+                            <td>[[${falseOffering.reportDate}]]</td>
+                            <td>[[${falseOffering.inquiryStatusVO.statusName}]]</td>
+                        </tr>
+                    </th:block>
+                </tbody>
+            </table>
+        </div>
+        <div class="room-div">
+            <div>
+                <span>	&ndash;</span>
+                <span class="basic-info-span">등록한 매물 내역</span>	
+            </div>
+            <table class="room-detail-table">
+                <colgroup>
+                    <col width="5%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <td>매물 번호</td>
+                        <td>주소</td>
+                        <td>상세주소</td>
+                        <td>등록일</td>
+                        <td>제목</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <th:block th:if="${#lists.size(roomInfo) ==0}">
+                        <tr>
+                            <td colspan="5">등록한 매물이 없습니다.</td>
+                        </tr>
+                    </th:block>
+                    <th:block th:unless="${#lists.size(roomInfo) ==0}">
+                        <tr th:each="roomInfo : ${roomInfo}">
+                            <td>[[${roomInfo.roomCode}]]</td>
+                            <td>[[${roomInfo.roomAddrVO.addr}]]</td>
+                            <td>[[${roomInfo.roomAddrVO.detailAddr}]]</td>
+                            <td>[[${roomInfo.createDate}]]</td>
+                            <td>[[${roomInfo.title}]]</td>
+                        </tr>
+                    </th:block>
+                </tbody>
+            </table>
+        </div>
     </th:block>
     
     

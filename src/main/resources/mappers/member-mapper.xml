@@ -243,6 +243,8 @@
             , F.ROOM_CODE
             , TO_CHAR(REPORT_DATE,'YYYY-MM-DD') REPORT_DATE
             , STATUS_NAME
+            , F.REASON_CODE
+            , F.REPORT_CONTENT
             , ADDR
         FROM FALSE_OFFERINGS F , ROOM_ADDR R, INQUIRY_STATUS I
         WHERE F.ROOM_CODE = R.ROOM_CODE

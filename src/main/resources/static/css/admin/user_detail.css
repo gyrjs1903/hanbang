@@ -12,7 +12,7 @@
 
 .detail-info-table{
     width: 100%;
-    margin: 20px auto 0 auto;
+    margin: 20px auto 50px auto;
     text-align: center;
     border-collapse: collapse;
     border-top: 2px solid #a3a3a3;
@@ -37,4 +37,18 @@ td{
     padding: 5px;
     border: 1px solid red;
     border-radius: 8px;
+}
+.falseOffering-detail-table{
+    width: auto;
+    margin: 20px auto 50px auto;
+    text-align: center;
+    border-collapse: collapse;
+    border-top: 2px solid #a3a3a3;
+}
+.room-detail-table{
+    width: auto;
+    margin: 20px auto 50px auto;
+    text-align: center;
+    border-collapse: collapse;
+    border-top: 2px solid #a3a3a3;
 }

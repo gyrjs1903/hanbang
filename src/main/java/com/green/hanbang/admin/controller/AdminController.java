@@ -7,12 +7,16 @@ import com.green.hanbang.admin.service.MembershipService;
 import com.green.hanbang.admin.vo.*;
 import com.green.hanbang.member.service.MemberService;
 import com.green.hanbang.member.vo.AlarmVO;
+import com.green.hanbang.member.vo.MemberVO;
 import com.green.hanbang.realtor.vo.RealtorDetailVO;
 import com.green.hanbang.room.service.RoomService;
 import com.green.hanbang.room.vo.FalseOfferingsVO;
+import com.green.hanbang.room.vo.RoomAddrVO;
 import com.green.hanbang.room.vo.RoomIMGVO;
+import com.green.hanbang.room.vo.RoomVO;
 import com.green.hanbang.util.ConstantVariable;
 import com.green.hanbang.util.EventUtil;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
@@ -23,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Console;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +45,10 @@ public class AdminController {
 
     // 관리자 페이지 ( + 맴버쉽 상품의 대분류 조회)
     @GetMapping("/manage")
-    public String adminManage(Model model, MemCateVO memCateVO){
+    public String adminManage(Model model, MemCateVO memCateVO, HttpSession session){
+
+        System.out.println(session.getAttribute("loginInfo"));
+
         List<MemCateVO> membershipCate = membershipService.selectCategory();
         model.addAttribute("membershipCate", membershipCate );
         return "admin/admin_manage";
@@ -59,18 +67,32 @@ public class AdminController {
 
     // 회원 상세 조회
     @GetMapping("/userDetail")
-    public String userDetail(String userNo, Model model){
+    public String userDetail(String userNo, Model model, HttpSession session, FalseOfferingsVO falseOfferingsVO, RoomVO roomVO){
+
         List<MemCateVO> membershipCate = membershipService.selectCategory();
         model.addAttribute("membershipCate", membershipCate );
 
         MemberManageVO userDetail = memberManageService.userDetail(userNo);
         model.addAttribute("userDetail", userDetail);
+
+        model.addAttribute("falseOfferingsList",memberService.selectFalseOfferingsList(userNo));
+
+        List<String> roomCodeList = roomService.selectRoomCode(roomVO.getUserNo());
+        List<RoomVO> roomVOList = new ArrayList<>();
+
+        for ( String e : roomCodeList){
+
+            roomVOList.add(roomService.selectRoomInfo(e));
+        }
+
+        model.addAttribute("roomInfo",roomVOList);
+
         return "admin/user_detail";
     }
 
     // 회원 삭제하기
     @GetMapping("/deleteUser")
-    public String deleteUser(String userNo){
+    public String deleteUser(String userNo, HttpSession session){
         memberManageService.deleteUser(userNo);
         return "redirect:/admin/userList";
     }
@@ -87,12 +109,23 @@ public class AdminController {
 
     // 공인중개사 상세 조회
     @GetMapping("/realDetail")
-    public String realDetail(String identificationNum, Model model){
+    public String realDetail(String userNo, Model model, RoomVO roomVO){
         List<MemCateVO> membershipCate = membershipService.selectCategory();
         model.addAttribute("membershipCate", membershipCate );
 
-        MemberManageVO realDetail = memberManageService.realDetail(identificationNum);
+        MemberManageVO realDetail = memberManageService.realDetail(userNo);
         model.addAttribute("realDetail", realDetail);
+
+        List<String> roomCodeList = roomService.selectRoomCode(userNo);
+        List<RoomVO> roomVOList = new ArrayList<>();
+
+        for ( String e : roomCodeList){
+
+            roomVOList.add(roomService.selectRoomInfo(e));
+        }
+
+        model.addAttribute("roomInfo",roomVOList);
+
         return "admin/real_detail";
     }
 
@@ -163,11 +196,14 @@ public class AdminController {
     // 공지사항 목록 조회
     @GetMapping("/infoBoard")
     public String selectBoardList(Model model, BoardVO boardVO){
+
         List<MemCateVO> membershipCate = membershipService.selectCategory();
         model.addAttribute("membershipCate", membershipCate );
 
         List<BoardVO> boardList = boardService.selectBoardList();
         model.addAttribute("boardList",boardList);
+
+
         return "admin/board_list";
     }
 

@@ -21,16 +21,29 @@
                 <th scope="col">조회수</th>
               </tr>
             </thead>
-            <tbody>
-              <tr th:each="eventList : ${eventLists}">
-                <td><img class="eventMainImg" th:src="${'/img/admin/'+eventList.eventImgList[0].eventAttachedFileName}" alt="..."></td>
-                <td><a th:href="@{/admin/eventDetail(eventCode=${eventList.eventCode})}">[[${eventList.eventTitle}]]</a></td>
-                <td>[[${eventList.eventRegDate}]]</td>
-                <td>[[${eventList.eventReadCnt}]]</td>
-              </tr>
-            </tbody>
+            <th:block th:if="${#lists.size(eventLists)==0}">
+              <tbody>
+                <tr class="no_event">
+                    <td colspan="4">등록된 이벤트가 없습니다.</td>
+                </tr>
+              </tbody>
+            </th:block>
+            <th:block th:if="${#lists.size(eventLists)!=0}">
+              <tbody>
+                <tr th:each="eventList : ${eventLists}">
+                  <td><img class="eventMainImg" th:src="${'/img/admin/'+eventList.eventImgList[0].eventAttachedFileName}" alt="..."></td>
+                  <td><a th:href="@{/admin/eventDetail(eventCode=${eventList.eventCode})}">[[${eventList.eventTitle}]]</a></td>
+                  <td>[[${eventList.eventRegDate}]]</td>
+                  <td>[[${eventList.eventReadCnt}]]</td>
+                </tr>
+              </tbody>
+            </th:block>
           </table>
-        <input class="eventAddBtn" type="button" value="신규 등록" onclick="location.href='/admin/regEventForm';">
+          <th:block th:if="${session.loginInfo != null}">
+            <th:block th:if="${session.loginInfo.loginType == 'ADMIN'}" style="display: block;">
+              <input class="eventAddBtn" type="button" value="신규 등록" onclick="location.href='/admin/regEventForm';">
+            </th:block>
+          </th:block>
     </div>
 
     <script src="/js/admin/admin.js"></script>

@@ -64,6 +64,7 @@
     height: 100%;
     margin: 0px auto;
     padding: 0px 10px;
+    position: relative;
 }
 
 .ai_title1{
@@ -80,10 +81,13 @@
 }
 
 .ai_title2{
+    position: absolute;
     display: flex;
     -webkit-box-align: center;
     align-items: center;
     margin-top: 4px;
+    top: 5px;
+    right: 20px;
 }
 
 .ai_title2 > p{
@@ -197,6 +201,8 @@
 
 .ai_room_info{
     padding-top: 20px;
+    padding-left: 10px;
+    padding-bottom: 20px;
 }
 
 .room_title{
@@ -696,4 +702,13 @@
     font-size: 15px;
     line-height: 30px;
     color: rgb(136, 136, 136);
+}
+.money_avg{
+    color: rgb(34, 34, 34);
+    font-size: 18px;
+    line-height: 30px;
+    font-weight: 600;
+}
+.imo{
+    margin-right: 5px;
 }
