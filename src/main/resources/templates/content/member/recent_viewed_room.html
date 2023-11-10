@@ -45,7 +45,7 @@
                             <a class="recentP">
                                 <ul th:each="recentViewList, state : ${recentViewList}" th:if="${state.index != 0}">
                                     <li>
-                                        <img id="randomImg" th:src="@{'/img/room/' + ${getRandomImage();}}" alt="매물 메인 이미지" style="width: 100px; height: 100px;">
+                                        <img id="randomImg" src="/img/room/1cc01e6d-4717-49f7-a36f-3e6ce4666bc3.jpg" alt="매물 메인 이미지" style="width: 100px; height: 100px;">
                                     </li>
                                     <li>
                                         <p>[[${recentViewList.deposit}]]/[[${recentViewList.monthlyLease}]], 관리비 [[${recentViewList.maintenanceCost}]]만</p>
